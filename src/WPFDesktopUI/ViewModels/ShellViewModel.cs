@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using QBConnect;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,14 @@ namespace WPFDesktopUI.ViewModels {
 			}
 		}
 
+		private string _qbDescription;
+
+		public string QbDescription {
+			get { return _qbDescription; }
+			set { _qbDescription = value; }
+		}
+
+
 		public bool CanClearText(string firstName, string lastName) {
 			if (string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName)) {
 				return false;
@@ -69,6 +78,10 @@ namespace WPFDesktopUI.ViewModels {
 		public void ClearText(string firstName, string lastName) {
 			FirstName = "";
 			LastName = "";
+		}
+
+		public void QbImport() {
+			BasicImporter.Import(QbDescription);
 		}
 	}
 }

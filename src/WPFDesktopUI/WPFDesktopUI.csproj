@@ -109,6 +109,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\QBConnect\QBConnect.csproj">
+      <Project>{370F8889-4815-4BC4-ADBF-BF305A4A41A3}</Project>
+      <Name>QBConnect</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
