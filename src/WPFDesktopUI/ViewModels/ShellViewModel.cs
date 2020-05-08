@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Microsoft.Win32;
 using QBConnect;
 using System;
 using System.Collections.Generic;
@@ -78,6 +79,12 @@ namespace WPFDesktopUI.ViewModels {
 		public void ClearText(string firstName, string lastName) {
 			FirstName = "";
 			LastName = "";
+		}
+
+		public void BtnOpenFile(object sender) {
+			OpenFileDialog openFileDialog = new OpenFileDialog();
+			openFileDialog.ShowDialog();
+			Console.WriteLine(openFileDialog.FileName);
 		}
 
 		public void QbImport() {

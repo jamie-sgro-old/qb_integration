@@ -55,6 +55,10 @@
                      Grid.Column="2" 
                      MinWidth="100">
             </TextBox>
+            <Button x:Name="BtnOpenFile"
+                    Grid.Row="0"
+                    Grid.Column="3">Select file
+            </Button>
 
             <!-- Row 2 -->
             <ComboBox x:Name="People" 
