@@ -1,5 +1,5 @@
 ﻿using Caliburn.Micro;
-using Microsoft.Win32;
+using MCBusinessLogic.Controllers;
 using QBConnect;
 using System;
 using System.Collections.Generic;
@@ -82,9 +82,8 @@ namespace WPFDesktopUI.ViewModels {
 		}
 
 		public void BtnOpenFile(object sender) {
-			OpenFileDialog openFileDialog = new OpenFileDialog();
-			openFileDialog.ShowDialog();
-			Console.WriteLine(openFileDialog.FileName);
+			string FileName = FileSystemHelper.GetFile("Quickbooks |*.qbw");
+			Console.WriteLine(FileName);
 		}
 
 		public void QbImport() {
