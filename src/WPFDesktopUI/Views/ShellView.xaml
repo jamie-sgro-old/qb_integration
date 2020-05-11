@@ -29,14 +29,25 @@
             
             <!-- Row 0 -->
             <TextBlock Text="{Binding Path=FullName, Mode=OneWay}" 
-                       Grid.ColumnSpan="2"
                        Grid.Row="0" 
+                       Grid.ColumnSpan="2"
                        Grid.Column="0">
             </TextBlock>
             <TextBlock Text="Description" 
-                       Grid.ColumnSpan="2"
                        Grid.Row="0" 
+                       Grid.ColumnSpan="2"
                        Grid.Column="2">
+            </TextBlock>
+            <Button x:Name="BtnOpenFile"
+                    Grid.Row="0"
+                    Grid.Column="3">Select file
+            </Button>
+            <TextBlock Text="{Binding Path=QbFilePath, Mode=OneWay}" 
+                       Grid.Row="0" 
+                       Grid.Column="4"
+                       Grid.ColumnSpan="2"
+                       FontSize="12"
+                       TextWrapping="WrapWithOverflow">
             </TextBlock>
 
             <!-- Row 1 -->
@@ -55,10 +66,6 @@
                      Grid.Column="2" 
                      MinWidth="100">
             </TextBox>
-            <Button x:Name="BtnOpenFile"
-                    Grid.Row="0"
-                    Grid.Column="3">Select file
-            </Button>
 
             <!-- Row 2 -->
             <ComboBox x:Name="People" 
@@ -78,7 +85,7 @@
                     Grid.Column="0">
                 Clear Text
             </Button>
-            <Button x:Name="QbImport" 
+            <Button x:Name="BtnQbImport" 
                     Grid.Row="3"
                     Grid.Column="2">
                 Import to QB

@@ -14,6 +14,7 @@ namespace WPFDesktopUI.ViewModels {
 		private string _lastName;
 		private BindableCollection<PersonModel> _people = new BindableCollection<PersonModel>();
 		private PersonModel _seletedPerson;
+		private string _qbFilePath;
 
 		public ShellViewModel() {
 			People.Add(new PersonModel { FirstName = "Amy", LastName = "Adams" });
@@ -82,11 +83,21 @@ namespace WPFDesktopUI.ViewModels {
 		}
 
 		public void BtnOpenFile(object sender) {
-			string FileName = FileSystemHelper.GetFile("Quickbooks |*.qbw");
-			Console.WriteLine(FileName);
+			string FileName = FileSystemHelper.GetFilePath("Quickbooks |*.qbw");
+			QbFilePath = FileName;
 		}
 
-		public void QbImport() {
+
+		public string QbFilePath {
+			get { return _qbFilePath; }
+			set {
+				_qbFilePath = value;
+				NotifyOfPropertyChange(() => QbFilePath);
+			}
+		}
+
+
+		public void BtnQbImport() {
 			BasicImporter.Import(QbDescription);
 		}
 	}
