@@ -110,6 +110,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MCBusinessLogic\MCBusinessLogic.csproj">
+      <Project>{83EAEC0B-5CAF-4767-841B-21D913A8557A}</Project>
+      <Name>MCBusinessLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QBConnect\QBConnect.csproj">
       <Project>{370F8889-4815-4BC4-ADBF-BF305A4A41A3}</Project>
       <Name>QBConnect</Name>

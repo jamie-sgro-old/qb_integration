@@ -12,7 +12,7 @@ namespace MCBusinessLogic.Controllers {
     bool SelectFile();
   }
 
-  public class FileSystemHandler : IFileSystemHandler {
+  internal class FileSystemHandler : IFileSystemHandler {
 
     private string _fileName;
     private string _filter;
