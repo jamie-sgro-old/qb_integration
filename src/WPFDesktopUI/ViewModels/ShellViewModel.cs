@@ -1,5 +1,5 @@
 ﻿using Caliburn.Micro;
-using QBConnect;
+using MCBusinessLogic.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +13,7 @@ namespace WPFDesktopUI.ViewModels {
 		private string _lastName;
 		private BindableCollection<PersonModel> _people = new BindableCollection<PersonModel>();
 		private PersonModel _seletedPerson;
+		private string _qbFilePath;
 
 		public ShellViewModel() {
 			People.Add(new PersonModel { FirstName = "Amy", LastName = "Adams" });
@@ -80,8 +81,42 @@ namespace WPFDesktopUI.ViewModels {
 			LastName = "";
 		}
 
-		public void QbImport() {
-			BasicImporter.Import(QbDescription);
+		public void BtnOpenFile(object sender) {
+			string FileName = FileSystemHelper.GetFilePath("Quickbooks |*.qbw");
+			QbFilePath = FileName;
+		}
+
+
+		public string QbFilePath {
+			get { return _qbFilePath; }
+			set {
+				_qbFilePath = value;
+				NotifyOfPropertyChange(() => QbFilePath);
+			}
+		}
+
+		private string _consoleMessage;
+
+		public string ConsoleMessage {
+			get { return _consoleMessage; }
+			set { 
+				_consoleMessage = value;
+				NotifyOfPropertyChange(() => ConsoleMessage);
+
+			}
+		}
+
+
+		public void BtnQbImport() {
+			try {
+				ConsoleMessage = "Importing, please stand by...";
+				QbImportController.Import();
+				ConsoleMessage = "Import has successfully completed";
+			}
+			catch (Exception e) {
+				ConsoleMessage = e.Message;
+				Console.WriteLine(e.StackTrace);
+			}
 		}
 	}
 }
