@@ -10,7 +10,7 @@ namespace QBConnect {
   public class BasicImporter {
     private const string _qbwFilePath = "C:\\Users\\Jamie\\Nextcloud\\Sangwa\\Clients\\NX - Nexim Healthcare\\01 - Invoicing\\QB Mock\\NX Mock.qbw";
 
-    public static void Import(InvoiceLineItemModel staff) {
+    public static void Import(InvoiceHeaderModel header, InvoiceLineItemModel lineItem) {
       QBSessionManager sessionManager = null;
       bool _sessionBegun = false;
       bool _connectionOpen = false;
@@ -30,9 +30,13 @@ namespace QBConnect {
         _sessionBegun = true;
 
         // Put main process here:
-        BuildInvoiceAddRq(requestMsgSet, staff);
+        BuildInvoiceAddRq(requestMsgSet, header, lineItem);
+        BuildCustomerQuery(requestMsgSet);
 
         IMsgSetResponse responseMsgSet = sessionManager.DoRequests(requestMsgSet);
+
+        // Temp
+        Console.WriteLine(responseMsgSet.ToXMLString());
 
         //End the session and close the connection to QuickBooks
         sessionManager.EndSession();
@@ -51,21 +55,108 @@ namespace QBConnect {
       }
     }
 
-    static void BuildInvoiceAddRq(IMsgSetRequest requestMsgSet, InvoiceLineItemModel lineItem) {
+    static void BuildInvoiceAddRq(IMsgSetRequest requestMsgSet, InvoiceHeaderModel header, InvoiceLineItemModel lineItem) {
       // Init invoice variable
-      IInvoiceAdd InvoiceAddRq = requestMsgSet.AppendInvoiceAddRq();
+      IInvoiceAdd Header = requestMsgSet.AppendInvoiceAddRq();
 
 
       #region Header
 
-      // Fill CUSTOMER:JOB input box by string value
-      InvoiceAddRq.CustomerRef.FullName.SetValue("CLASS");
+      // Accounts Recievable Ref
+      if (header.ARAccountRefFullName != null) {
+        Header.ARAccountRef.FullName.SetValue(header.ARAccountRefFullName); 
+      }
 
-      // Fill CLASS input box by string value
-      InvoiceAddRq.ClassRef.FullName.SetValue("Barrie Area:Barrie Corporate");
+      if (header.ARAccountRefListID != null) {
+        Header.ARAccountRef.ListID.SetValue(header.ARAccountRefListID); 
+      }
 
-      // Fill TEMPLATE input box by string value
-      InvoiceAddRq.TemplateRef.FullName.SetValue("NEXIM's Invoice with credits &");
+      // CLASS Header Box
+      if (header.ClassRefFullName != null) {
+        Header.ClassRef.FullName.SetValue(header.ClassRefFullName);
+      }
+
+      if (header.ClassRefListID != null) {
+        Header.ClassRef.ListID.SetValue(header.ClassRefListID); 
+      }
+
+      // CUSTOMER MESSAGE Footer Box
+      if (header.CustomerMsgRefFullName != null) {
+        Header.CustomerMsgRef.FullName.SetValue(header.CustomerMsgRefFullName); 
+      }
+
+      if (header.CustomerMsgRefListID != null) {
+        Header.CustomerMsgRef.ListID.SetValue(header.CustomerMsgRefListID); 
+      }
+
+      // CUSTOMER:JOB Header Box
+      if (header.CustomerRefFullName != null) {
+        Header.CustomerRef.FullName.SetValue(header.CustomerRefFullName); 
+      }
+
+      if (header.CustomerRefListID != null) {
+        Header.CustomerRef.ListID.SetValue(header.CustomerRefListID); 
+      }
+
+      // Due Date
+      if (header.DueDate != null) {
+        DateTime dueDate = Convert.ToDateTime(header.DueDate);
+        Header.DueDate.SetValue(dueDate);
+      }
+
+      // Sales Tax Code
+      if (header.CustomerSalesTaxCodeRefFullName != null) {
+        Header.CustomerSalesTaxCodeRef.FullName
+            .SetValue(header.CustomerSalesTaxCodeRefFullName); 
+      }
+
+      if (header.CustomerSalesTaxCodeRefListID != null) {
+        Header.CustomerSalesTaxCodeRef.ListID
+            .SetValue(header.CustomerSalesTaxCodeRefListID);
+      }
+
+      // P.O. NO. Header Box
+      if (header.PONumber != null) {
+        Header.PONumber.SetValue(header.PONumber);
+      }
+
+      // Is Tax Included
+      if (header.IsTaxIncluded != null) {
+        bool isTaxIncluded = Convert.ToBoolean(header.IsTaxIncluded);
+        Header.IsTaxIncluded.SetValue(isTaxIncluded); 
+      }
+
+      // Email Later Checkbox
+      if (header.IsToBeEmailed != null) {
+        bool isToBeEmailed = Convert.ToBoolean(header.IsToBeEmailed);
+        Header.IsToBeEmailed.SetValue(isToBeEmailed);
+      }
+
+      // Print Later Checkbox
+      if (header.IsToBePrinted != null) {
+        bool isToBePrinted = Convert.ToBoolean(header.IsToBePrinted);
+        Header.IsToBePrinted.SetValue(isToBePrinted);
+      }
+
+      // TEMPLATE Header Box
+      if (header.TemplateRefFullName != null) {
+        Header.TemplateRef.FullName.SetValue(header.TemplateRefFullName); 
+      }
+
+      if (header.TemplateRefListID != null) {
+        Header.TemplateRef.ListID.SetValue(header.TemplateRefListID); 
+      }
+
+      // TERMS Header Box
+      if (header.TermsRefFullName != null) {
+        Header.TermsRef.FullName.SetValue(header.TermsRefFullName); 
+      }
+
+      if (header.TermsRefListID != null) {
+        Header.TermsRef.ListID.SetValue(header.TermsRefListID); 
+      }
+
+
 
       #endregion Header
 
@@ -74,7 +165,7 @@ namespace QBConnect {
 
 
       // Create variable for adding new lines to the invoice
-      IORInvoiceLineAdd LineItem = InvoiceAddRq.ORInvoiceLineAddList.Append();
+      IORInvoiceLineAdd LineItem = Header.ORInvoiceLineAddList.Append();
 
       if (lineItem.Amount != null) {
         double amount = Convert.ToDouble(lineItem.Amount);
@@ -196,11 +287,17 @@ namespace QBConnect {
 
 
       // Add SubTotal line item
-      IORInvoiceLineAdd SubTotal = InvoiceAddRq.ORInvoiceLineAddList.Append();
+      IORInvoiceLineAdd SubTotal = Header.ORInvoiceLineAddList.Append();
 
       SubTotal.InvoiceLineAdd.ItemRef.FullName.SetValue("Sub- Totals");
 
       #endregion LineItems
+    }
+  
+    static void BuildCustomerQuery(IMsgSetRequest requestMsgSet) {
+      ICustomerQuery CustomerQueryRq = requestMsgSet.AppendCustomerQueryRq();
+      CustomerQueryRq.ORCustomerListQuery.CustomerListFilter.TotalBalanceFilter.Operator.SetValue(ENOperator.oGreaterThanEqual);
+      CustomerQueryRq.ORCustomerListQuery.CustomerListFilter.TotalBalanceFilter.Amount.SetValue(0);
     }
   }
 }

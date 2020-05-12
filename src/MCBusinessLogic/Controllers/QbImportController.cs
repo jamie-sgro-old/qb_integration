@@ -20,6 +20,12 @@ namespace MCBusinessLogic.Controllers {
         ItemRef = "CLASS - DSW1"
       };
 
+      QbInvoiceModel invoiceTemplate = new QbInvoiceModel {
+        ClassRefFullName = "Barrie Area:Barrie Corporate",
+        CustomerRefFullName = "CLASS",
+        TemplateRefFullName = "NEXIM's Invoice with credits &"
+      };
+
       // Modify the model to match QB types
       // TODO: Verify this column (Other1) corresponds with the "TIME IN - TIME OUT" column in QB
       // TODO: Verify this column (Other2) corresponds with the "STAFF NAME" column in QB
@@ -31,9 +37,13 @@ namespace MCBusinessLogic.Controllers {
         ServiceDate = staff.ServiceDate
       };
 
+      InvoiceHeaderModel header = new InvoiceHeaderModel {
+        ClassRefFullName = invoiceTemplate.ClassRefFullName,
+        CustomerRefFullName = invoiceTemplate.CustomerRefFullName,
+        TemplateRefFullName = invoiceTemplate.TemplateRefFullName,
+      };
 
-
-      BasicImporter.Import(lineItem);
+      BasicImporter.Import(header, lineItem);
     }
   }
 }
