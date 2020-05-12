@@ -92,10 +92,13 @@
             </Button>
 
             <!-- Row 4 -->
-            <ContentControl x:Name="ActiveItem" 
-                            Grid.Row="4" 
-                            Grid.Column="0">
-            </ContentControl>
+            <TextBlock Text="{Binding Path=ConsoleMessage, Mode=OneWay}"
+                       Grid.Row="4" 
+                       Grid.Column="0"
+                       Grid.ColumnSpan="4"
+                       FontSize="18"
+                       Foreground="Red">
+            </TextBlock>
         </Grid>
     </Border>
 </Window>

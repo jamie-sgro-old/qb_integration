@@ -1,6 +1,5 @@
 ﻿using Caliburn.Micro;
 using MCBusinessLogic.Controllers;
-using QBConnect;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,9 +95,28 @@ namespace WPFDesktopUI.ViewModels {
 			}
 		}
 
+		private string _consoleMessage;
+
+		public string ConsoleMessage {
+			get { return _consoleMessage; }
+			set { 
+				_consoleMessage = value;
+				NotifyOfPropertyChange(() => ConsoleMessage);
+
+			}
+		}
+
 
 		public void BtnQbImport() {
-			BasicImporter.Import(QbDescription);
+			try {
+				ConsoleMessage = "Importing, please stand by...";
+				QbImportController.Import();
+				ConsoleMessage = "Import has successfully completed";
+			}
+			catch (Exception e) {
+				ConsoleMessage = e.Message;
+				Console.WriteLine(e.StackTrace);
+			}
 		}
 	}
 }

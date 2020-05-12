@@ -44,10 +44,15 @@
   <ItemGroup>
     <Compile Include="Controllers\FileSystemHandler.cs" />
     <Compile Include="Controllers\FileSystemHelper.cs" />
+    <Compile Include="Controllers\QbImportController.cs" />
+    <Compile Include="Models\QbStaffModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <ProjectReference Include="..\QBConnect\QBConnect.csproj">
+      <Project>{370F8889-4815-4BC4-ADBF-BF305A4A41A3}</Project>
+      <Name>QBConnect</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
