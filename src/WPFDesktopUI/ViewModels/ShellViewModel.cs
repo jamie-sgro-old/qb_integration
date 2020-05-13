@@ -81,10 +81,27 @@ namespace WPFDesktopUI.ViewModels {
 			LastName = "";
 		}
 
-		public void BtnOpenFile(object sender) {
+		public void BtnOpenQbwFile(object sender) {
 			string FileName = FileSystemHelper.GetFilePath("Quickbooks |*.qbw");
 			QbFilePath = FileName;
 		}
+
+		public void BtnOpenCsvFile(object sender) {
+			string FileName = FileSystemHelper.GetFilePath("CSV (Comma delimited) |*.csv");
+			CsvFilePath = FileName;
+			CsvParser.ParseFromFile(FileName, ",");
+		}
+
+		private string _csvFilePath;
+
+		public string CsvFilePath {
+			get { return _csvFilePath; }
+			set {
+				_csvFilePath = value;
+				NotifyOfPropertyChange(() => CsvFilePath);
+			}
+		}
+
 
 
 		public string QbFilePath {

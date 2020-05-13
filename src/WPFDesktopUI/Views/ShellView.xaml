@@ -33,12 +33,12 @@
                        Grid.ColumnSpan="2"
                        Grid.Column="0">
             </TextBlock>
-            <TextBlock Text="Description" 
+            <TextBlock Text="QuickBooks"
                        Grid.Row="0" 
                        Grid.ColumnSpan="2"
                        Grid.Column="2">
             </TextBlock>
-            <Button x:Name="BtnOpenFile"
+            <Button x:Name="BtnOpenQbwFile"
                     Grid.Row="0"
                     Grid.Column="3">Select file
             </Button>
@@ -78,7 +78,23 @@
                        Grid.Row="2"
                        Grid.Column="1">
             </TextBlock>
-            
+            <TextBlock Text="CSV"
+                       Grid.Row="2" 
+                       Grid.ColumnSpan="2"
+                       Grid.Column="2">
+            </TextBlock>
+            <Button x:Name="BtnOpenCsvFile"
+                    Grid.Row="2"
+                    Grid.Column="3">Select file
+            </Button>
+            <TextBlock Text="{Binding Path=CsvFilePath, Mode=OneWay}" 
+                       Grid.Row="2" 
+                       Grid.Column="4"
+                       Grid.ColumnSpan="2"
+                       FontSize="12"
+                       TextWrapping="WrapWithOverflow">
+            </TextBlock>
+
             <!-- Row 3 -->
             <Button x:Name="ClearText" 
                     Grid.Row="3"

@@ -36,6 +36,7 @@
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.2.0.35\lib\net461\Dapper.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -51,10 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CsvParser.cs" />
     <Compile Include="Controllers\FileSystemHandler.cs" />
     <Compile Include="Controllers\FileSystemHelper.cs" />
     <Compile Include="Controllers\QbImportController.cs" />
     <Compile Include="DataAccess\SqliteDataAccess.cs" />
+    <Compile Include="Models\CsvModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\QbInvoiceModel.cs" />
     <Compile Include="Models\QbStaffModel.cs" />
