@@ -15,16 +15,24 @@ namespace MCBusinessLogic.DataAccess {
       return ConfigurationManager.ConnectionStrings[id].ConnectionString;
     }
 
-    public static List<CustomerModel> LoadData() {
+    public static List<T> LoadData<T>(string sql, T data) {
       using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString())) {
-        var output = cnn.Query<CustomerModel>("SELECT * FROM customer", new DynamicParameters());
+        var output = cnn.Query<T>(sql, data);
         return output.ToList();
       }
     }
 
-    public static void SaveData(CustomerModel customer) {
+    public static List<T> LoadData<T>(string sql) {
       using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString())) {
-        cnn.Execute("INSERT INTO customer (StaffName, Quantity) VALUES (@StaffName, @Quantity)", customer);
+        var output = cnn.Query<T>(sql, new DynamicParameters());
+        return output.ToList();
+      }
+    }
+    
+    public static void SaveData<T>(string sql, T data) {
+      using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString())) {
+        cnn.Execute(sql, data);
+        // cnn.Execute("INSERT INTO customer (name, po_number) VALUES (@name, @po_number)", data);
       }
     }
   }

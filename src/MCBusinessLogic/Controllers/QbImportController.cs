@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 namespace MCBusinessLogic.Controllers {
   public class QbImportController {
     public static void Import() {
-      SqliteDataAccess.LoadData();
+      SqliteDataAccess.LoadData<CustomerModel>("SELECT * FROM customer", null);
+      // new DynamicParameters()
 
       // Temp hardcoded data
       QbStaffModel staff = new QbStaffModel {
