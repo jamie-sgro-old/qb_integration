@@ -1,4 +1,5 @@
-﻿using MCBusinessLogic.Models;
+﻿using MCBusinessLogic.DataAccess;
+using MCBusinessLogic.Models;
 using QBConnect;
 using QBConnect.Models;
 using System;
@@ -10,6 +11,9 @@ using System.Threading.Tasks;
 namespace MCBusinessLogic.Controllers {
   public class QbImportController {
     public static void Import() {
+      SqliteDataAccess.LoadData<CustomerModel>("SELECT * FROM customer", null);
+      // new DynamicParameters()
+
       // Temp hardcoded data
       QbStaffModel staff = new QbStaffModel {
         Item = "CLASS - DSW1",
@@ -27,23 +31,30 @@ namespace MCBusinessLogic.Controllers {
       };
 
       // Modify the model to match QB types
+      InvoiceLineItemModel lineItem = MapLineItem(staff);
+      InvoiceHeaderModel header = MapHeader(invoiceTemplate);
+
+      BasicImporter.Import(header, lineItem);
+    }
+
+    private static InvoiceLineItemModel MapLineItem(QbStaffModel staff) {
       // TODO: Verify this column (Other1) corresponds with the "TIME IN - TIME OUT" column in QB
       // TODO: Verify this column (Other2) corresponds with the "STAFF NAME" column in QB
-      InvoiceLineItemModel lineItem = new InvoiceLineItemModel {
-        ItemRef = staff.Item, 
-        Quantity = staff.Quantity, 
+      return _ = new InvoiceLineItemModel {
+        ItemRef = staff.Item,
+        Quantity = staff.Quantity,
         Other1 = staff.TimeInOut,
         Other2 = staff.StaffName,
         ServiceDate = staff.ServiceDate
       };
+    }
 
-      InvoiceHeaderModel header = new InvoiceHeaderModel {
+    private static InvoiceHeaderModel MapHeader(QbInvoiceModel invoiceTemplate) {
+      return _ = new InvoiceHeaderModel {
         ClassRefFullName = invoiceTemplate.ClassRefFullName,
         CustomerRefFullName = invoiceTemplate.CustomerRefFullName,
         TemplateRefFullName = invoiceTemplate.TemplateRefFullName,
       };
-
-      BasicImporter.Import(header, lineItem);
     }
   }
 }
