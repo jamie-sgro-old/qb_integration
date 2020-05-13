@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using MCBusinessLogic.Controllers;
+using MCBusinessLogic.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,8 +90,19 @@ namespace WPFDesktopUI.ViewModels {
 		public void BtnOpenCsvFile(object sender) {
 			string FileName = FileSystemHelper.GetFilePath("CSV (Comma delimited) |*.csv");
 			CsvFilePath = FileName;
-			CsvParser.ParseFromFile(FileName, ",");
+			CsvData = CsvParser.ParseFromFile(FileName, ",");
 		}
+
+		private List<CsvModel> _csvData = new List<CsvModel>();
+
+		public List<CsvModel> CsvData {
+			get { return _csvData; }
+			set { 
+				_csvData = value;
+				NotifyOfPropertyChange(() => CsvData);
+			}
+		}
+
 
 		private string _csvFilePath;
 

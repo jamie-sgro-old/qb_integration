@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MCBusinessLogic.Controllers {
   public class CsvParser {
-    public static void ParseFromFile(string path, string delim) {
+    public static List<CsvModel> ParseFromFile(string path, string delim) {
       //var path = @"C:\Users\Jamie\Nextcloud\Sangwa\Clients\NX - Nexim Healthcare\01 - Invoicing\Sample Documents\test.csv";
       using (TextFieldParser csvParser = new TextFieldParser(path)) {
         csvParser.CommentTokens = new string[] { "#" };
@@ -25,7 +25,7 @@ namespace MCBusinessLogic.Controllers {
           string[] fields = csvParser.ReadFields();
           csvData.Add(new CsvModel() { FirstName = fields[0], LastName = fields[1] });
         }
-        Console.WriteLine(csvData);
+        return csvData;
       }
     }
   }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MCBusinessLogic.Models {
-  class CsvModel {
+  public class CsvModel {
     public string FirstName { get; set; }
     public string LastName { get; set; }
   }
