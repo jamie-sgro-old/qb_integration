@@ -13,7 +13,10 @@
             <Setter Property="Padding" Value="10,0"/>
         </Style>
         <Style x:Key="Pref2" TargetType="TextBlock">
-            <Setter Property="Padding" Value="20,0,10,0"/>
+            <Setter Property="Padding" Value="40,0,10,0"/>
+        </Style>
+        <Style x:Key="Radio1" TargetType="RadioButton">
+            <Setter Property="Margin" Value="30,2,10,2"/>
         </Style>
     </UserControl.Resources>
 
@@ -43,44 +46,70 @@
 
         <!-- ROW 1 -->
 
-        <TextBlock Text="Value Separation" 
-                   Grid.Row="1"
-                   Grid.Column="0"
-                   Style="{StaticResource Pref1}" />
-        <Separator Grid.Row="1"
-                   Grid.Column="1" />
+        <StackPanel  Orientation="Vertical"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    >
+            <Separator Grid.ColumnSpan="2"/>
+            <TextBlock Text="Value Separation" 
+                       Style="{StaticResource Pref1}" />
+        </StackPanel >
+
+
         
         <!-- ROW 2 -->
-        <RadioButton x:Name="TopButton" 
-                     Margin="5" 
+        <RadioButton x:Name="CommaSeparation"
+                     IsChecked="{Binding Path=CommaSeparationIsChecked, Mode=OneWay}"
+                     Style="{StaticResource Radio1}"
                      GroupName="Value Separation"
-                     Content="First Choice"
+                     Content="Comma Separation"
                      Grid.Row="2"
                      Grid.Column="0">
         </RadioButton>
         
         <!-- ROW 3 -->
-        <RadioButton x:Name="MiddleButton" 
-                     Margin="5" 
+        <RadioButton x:Name="TabSeparation" 
+                     IsChecked="{Binding Path=TabSeparationIsChecked, Mode=OneWay}"
+                     Style="{StaticResource Radio1}"
                      GroupName="Value Separation"
-                     Content="Second Choice"
+                     Content="Tab Separation"
                      Grid.Row="3"
                      Grid.Column="0">
         </RadioButton>
         
         <!-- ROW 4 -->
-        <RadioButton x:Name="LowerButton" 
-                     Margin="5" 
+        <RadioButton x:Name="CustomSeparation"
+                     IsChecked="{Binding Path=CustomSeparationIsChecked, Mode=OneWay}"
+                     Style="{StaticResource Radio1}"
                      GroupName="Value Separation"
-                     Content="Third Choice"
+                     Content="Custom Separation"
                      Grid.Row="4"
                      Grid.Column="0">
         </RadioButton>
 
         <!-- ROW 5 -->
-        <TextBox Text="{Binding Source={StaticResource Settings}, Path=Default.StnCsvSeparation}"
-                 Grid.Row="5"
-                 Grid.Column="0"/>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Margin="10,0">
+            <TextBlock Style="{StaticResource Pref2}">
+                Specify Custom Separation: 
+            </TextBlock>
+            <TextBox x:Name="CustomSeparationTextBox" Text="{Binding Source={StaticResource Settings}, Path=Default.StnCsvSeparation}"
+                     IsEnabled="{Binding Path=CustomSeparationTextBox, Mode=OneWay}"
+                     MinWidth="50" Height="18" VerticalAlignment="Bottom"
+                     />
+        </StackPanel>
+
+        <!-- ROW 6 -->
+        <StackPanel  Orientation="Vertical"
+                    Grid.Row="6"
+                    Grid.ColumnSpan="2"
+                    >
+            <Separator Grid.ColumnSpan="2"/>
+            <TextBlock Text="Next Setting" 
+                       Style="{StaticResource Pref1}" />
+        </StackPanel >
 
     </Grid>
 </UserControl>

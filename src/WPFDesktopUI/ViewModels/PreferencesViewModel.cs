@@ -13,9 +13,21 @@ namespace WPFDesktopUI.ViewModels {
 
     #region Button
 
+    /// <summary>
+    /// Window close event triggered by user pressing the red 
+    /// x on the top right corner of the screen
+    /// </summary>
+    public void OnClose() {
+      SaveSettings();
+    }
+
     public void BtnClose() {
-      Properties.Settings.Default.Save();
+      SaveSettings();
       Shutdown("Preferences");
+    }
+
+    private void SaveSettings() {
+      Properties.Settings.Default.Save();
     }
 
     /// <summary>
