@@ -6,21 +6,70 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using WPFDesktopUI.Models;
 
 namespace WPFDesktopUI.ViewModels {
-  public class ShellViewModel : Screen {
-		private string _firstName = "Jamie";
+  public class ShellViewModel : Conductor<object> {
+
+		public ShellViewModel() {
+			this.CustomerViewModel = new CustomerViewModel();
+			this.ImportViewModel = new ImportViewModel();
+			// this.PreferencesViewModel = new PreferencesViewModel();
+		}
+
+		public CustomerViewModel CustomerViewModel { get; }
+		public ImportViewModel ImportViewModel { get; }
+		// public PreferencesViewModel PreferencesViewModel { get; }
+
+		public void MenuItemClose() {
+			Application.Current.Shutdown();
+		}
+
+		public void MenuItemMinimize() {
+			Application.Current.MainWindow.WindowState = WindowState.Minimized;
+		}
+
+		public void MenuItemMaximize() {
+			Application.Current.MainWindow.WindowState = WindowState.Maximized;
+		}
+
+		public void MenuItemRestore() {
+			Application.Current.MainWindow.WindowState = WindowState.Normal;
+		}
+
+		public void MenuItemPreferences() {
+			IWindowManager manager = new WindowManager();
+
+			manager.ShowWindow(new PreferencesViewModel(), null, null);
+			//PreferencesView preferences = new PreferencesView();
+			//preferences.Show();
+		}
+
+
+
+
+
+
+
+		private string _firstName;
 		private string _lastName;
 		private BindableCollection<PersonModel> _people = new BindableCollection<PersonModel>();
 		private PersonModel _seletedPerson;
-		private string _qbFilePath;
 
-		public ShellViewModel() {
+		public void LoadPageOne() {
+			ActivateItem(new SecondChildViewModel());
+		}
+
+		public void LoadCustomerViewModel() {
+			ActivateItem(new CustomerViewModel());
+		}
+
+		/*public ShellViewModel() {
 			People.Add(new PersonModel { FirstName = "Amy", LastName = "Adams" });
 			People.Add(new PersonModel { FirstName = "Bill", LastName = "Bobert" });
 			People.Add(new PersonModel { FirstName = "Cory", LastName = "Chase" });
-		}
+		}*/
 
 		public string FirstName {
 			get { 
@@ -80,48 +129,6 @@ namespace WPFDesktopUI.ViewModels {
 		public void ClearText(string firstName, string lastName) {
 			FirstName = "";
 			LastName = "";
-		}
-
-		public void BtnOpenQbwFile(object sender) {
-			string FileName = FileSystemHelper.GetFilePath("Quickbooks |*.qbw");
-			QbFilePath = FileName;
-		}
-
-		public void BtnOpenCsvFile(object sender) {
-			string FileName = FileSystemHelper.GetFilePath("CSV (Comma delimited) |*.csv");
-			CsvFilePath = FileName;
-			CsvData = CsvParser.ParseFromFile(FileName, ",");
-		}
-
-		private List<CsvModel> _csvData = new List<CsvModel>();
-
-		public List<CsvModel> CsvData {
-			get { return _csvData; }
-			set { 
-				_csvData = value;
-				NotifyOfPropertyChange(() => CsvData);
-			}
-		}
-
-
-		private string _csvFilePath;
-
-		public string CsvFilePath {
-			get { return _csvFilePath; }
-			set {
-				_csvFilePath = value;
-				NotifyOfPropertyChange(() => CsvFilePath);
-			}
-		}
-
-
-
-		public string QbFilePath {
-			get { return _qbFilePath; }
-			set {
-				_qbFilePath = value;
-				NotifyOfPropertyChange(() => QbFilePath);
-			}
 		}
 
 		private string _consoleMessage;

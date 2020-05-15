@@ -4,126 +4,51 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFDesktopUI.Views"
-        mc:Ignorable="d" FontSize="28"
-        Title="ShellView" Height="450" Width="800">
-    <Border BorderThickness="20">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            
-            <!-- Row 0 -->
-            <TextBlock Text="{Binding Path=FullName, Mode=OneWay}" 
-                       Grid.Row="0" 
-                       Grid.ColumnSpan="2"
-                       Grid.Column="0">
-            </TextBlock>
-            <TextBlock Text="QuickBooks"
-                       Grid.Row="0" 
-                       Grid.ColumnSpan="2"
-                       Grid.Column="2">
-            </TextBlock>
-            <Button x:Name="BtnOpenQbwFile"
-                    Grid.Row="0"
-                    Grid.Column="3">Select file
-            </Button>
-            <TextBlock Text="{Binding Path=QbFilePath, Mode=OneWay}" 
-                       Grid.Row="0" 
-                       Grid.Column="4"
-                       Grid.ColumnSpan="2"
-                       FontSize="12"
-                       TextWrapping="WrapWithOverflow">
-            </TextBlock>
-
-            <!-- Row 1 -->
-            <TextBox x:Name="FirstName" 
-                     Grid.Row="1" 
-                     Grid.Column="0" 
-                     MinWidth="100">
-            </TextBox>
-            <TextBox x:Name="LastName" 
-                     Grid.Row="1" 
-                     Grid.Column="1" 
-                     MinWidth="100">
-            </TextBox>
-            <TextBox x:Name="QbDescription" 
-                     Grid.Row="1" 
-                     Grid.Column="2" 
-                     MinWidth="100">
-            </TextBox>
-
-            <!-- Row 2 -->
-            <ComboBox x:Name="People" 
-                      Grid.Row="2" 
-                      Grid.Column="0"
-                      SelectedItem="{Binding Path=SelectedPerson, Mode=OneWayToSource}"
-                      DisplayMemberPath="FirstName">
-            </ComboBox>
-            <TextBlock x:Name="SelectedPerson_LastName"
-                       Grid.Row="2"
-                       Grid.Column="1">
-            </TextBlock>
-            <TextBlock Text="CSV"
-                       Grid.Row="2" 
-                       Grid.ColumnSpan="2"
-                       Grid.Column="2">
-            </TextBlock>
-            <Button x:Name="BtnOpenCsvFile"
-                    Grid.Row="2"
-                    Grid.Column="3">Select file
-            </Button>
-            <TextBlock Text="{Binding Path=CsvFilePath, Mode=OneWay}" 
-                       Grid.Row="2" 
-                       Grid.Column="4"
-                       Grid.ColumnSpan="2"
-                       FontSize="12"
-                       TextWrapping="WrapWithOverflow">
-            </TextBlock>
-
-            <!-- Row 3 -->
-            <Button x:Name="ClearText" 
-                    Grid.Row="3"
-                    Grid.Column="0">
-                Clear Text
-            </Button>
-            <Button x:Name="BtnQbImport" 
-                    Grid.Row="3"
-                    Grid.Column="2">
-                Import to QB
-            </Button>
-
-            <!-- Row 4 -->
-            <TextBlock Text="{Binding Path=ConsoleMessage, Mode=OneWay}"
-                       Grid.Row="4" 
-                       Grid.Column="0"
-                       Grid.ColumnSpan="3"
-                       FontSize="18"
-                       Foreground="Red">
-            </TextBlock>
-            <DataGrid x:Name="CsvData"
-                      Grid.Row="4"
-                      Grid.Column="3"
-                      Grid.RowSpan="5"
-                      Grid.ColumnSpan="4"
-                      AlternatingRowBackground="LightGray"
-                      CanUserAddRows="False">
-            </DataGrid>
-                          
-        </Grid>
-    </Border>
+        xmlns:NewUserControl="clr-namespace:WPFDesktopUI.Views"
+        mc:Ignorable="d"
+        Title="ShellView" Height="600" Width="1000">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Restore"
+                          x:Name="MenuItemRestore"/>
+                <MenuItem Header="_Minimize"
+                          x:Name="MenuItemMinimize"/>
+                <MenuItem Header="_Maximize"
+                          x:Name="MenuItemMaximize" >
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="_Close"
+                          x:Name="MenuItemClose"
+                          InputGestureText="Alt+F4" 
+                          FontWeight="Bold" />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Command="Cut" />
+                <MenuItem Command="Copy" />
+                <MenuItem Command="Paste" />
+            </MenuItem>
+            <MenuItem Header="_Tools">
+                <MenuItem Header="_Manage users" />
+                <MenuItem Header="_Show groups" IsCheckable="True" IsChecked="True" />
+            </MenuItem>
+            <MenuItem Header="_Settings">
+                <MenuItem Header="_Preferences..."
+                          x:Name="MenuItemPreferences"/>
+            </MenuItem>
+        </Menu>
+        <TabControl DockPanel.Dock="Top">
+            <TabItem Header="Import">
+                <ContentControl x:Name="ImportViewModel" />
+                <!--<NewUserControl:ImportView/>-->
+            </TabItem>
+            <TabItem Header="Customer" >
+                <ContentControl x:Name="CustomerViewModel" />
+                <!--<NewUserControl:CustomerView/>-->
+            </TabItem>
+            <TabItem Header="Dump" >
+                <NewUserControl:DumpView/>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
 </Window>

@@ -1,0 +1,146 @@
+﻿<Window x:Class="WPFDesktopUI.Views.PreferencesView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:cal="http://www.caliburnproject.org"
+        xmlns:local="clr-namespace:WPFDesktopUI.Views"
+        mc:Ignorable="d"
+        Title="Preferences" Height="450" Width="800" MinHeight="200" MinWidth="400">
+
+    <Window.Resources>
+        <Style x:Key="ButtonClose" TargetType="Button">
+            <Setter Property="Padding" Value="10,2"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+
+        <!-- DOCKPANEL LEFT -->
+
+        <!-- PREFERENCESLIST -->
+
+        <ListBox x:Name="PreferencesList"
+                 DockPanel.Dock="Left"
+                 Margin="10">
+
+            <!-- GENERAL -->
+
+            <ListBoxItem Name="General"
+                         IsSelected="True">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Selected">
+                        <cal:ActionMessage MethodName="General">
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                General
+            </ListBoxItem>
+
+            <!-- CSVIMPORT -->
+
+            <ListBoxItem Name="CsvImport">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Selected">
+                        <cal:ActionMessage MethodName="CsvImport">
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                Csv Import
+            </ListBoxItem>
+            <ListBoxItem>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Selected">
+                        <cal:ActionMessage MethodName="NextItem">
+                            <!--<cal:Parameter Value="{Binding ElementName=Name, Path=Text}" />-->
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                NextItem
+            </ListBoxItem>
+            
+            <!-- DEFAULT -->
+            
+            <ListBoxItem Name="Default"
+                         Visibility="Hidden">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Selected">
+                        <cal:ActionMessage MethodName="Default">
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListBoxItem>
+        </ListBox>
+        
+        <!--<TreeView Name="myTreeViewEvent">
+            
+            --><!-- STYLE --><!--
+            
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="True" />
+                </Style>
+            </TreeView.ItemContainerStyle>
+            
+             --><!--TREE 0 --><!-- 
+            
+            <TreeViewItem Header="General" IsSelected="True">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Selected">
+                        <cal:ActionMessage MethodName="General">
+                            --><!--<cal:Parameter Value="{Binding ElementName=Name, Path=Text}" />--><!--
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TreeViewItem>
+
+            --><!--TREE 1 --><!--
+            
+            <TreeViewItem Header="Data">
+
+                --><!--TREE 1.1 --><!--
+
+                <TreeViewItem Header="Csv Import">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Selected">
+                            <cal:ActionMessage MethodName="CsvImport">
+                                --><!--<cal:Parameter Value="{Binding ElementName=Name, Path=Text}" />--><!--
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TreeViewItem>
+                
+            </TreeViewItem>
+        </TreeView>-->
+
+        <!-- DOCKPANEL BOTTOM -->
+
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"  />
+                <ColumnDefinition Width="auto"  />
+                <ColumnDefinition Width="auto"  />
+            </Grid.ColumnDefinitions>
+
+            <!--<Button x:Name="BtnOkay"
+                    Grid.Column="1"
+                    Style="{StaticResource ButtonClose}"
+                    >
+                Okay
+                Okay
+            </Button>-->
+            <Button x:Name="BtnClose"
+                    Grid.Column="2"
+                    Style="{StaticResource ButtonClose}"
+                    >
+                Close
+            </Button>
+        </Grid>
+
+        <!-- DOCKPANEL CENTER -->
+
+        <ContentControl x:Name="ActiveItem" />
+    </DockPanel>
+</Window>
