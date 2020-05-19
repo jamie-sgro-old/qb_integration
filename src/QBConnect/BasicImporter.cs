@@ -11,6 +11,22 @@ namespace QBConnect {
     private const string _qbwFilePath = "C:\\Users\\Jamie\\Nextcloud\\Sangwa\\Clients\\NX - Nexim Healthcare\\01 - Invoicing\\QB Mock\\NX Mock.qbw";
 
     public static void Import(InvoiceHeaderModel header, InvoiceLineItemModel lineItem) {
+
+      // null TEMPLATE throws error
+      if (header.TemplateRefFullName == null && header.TemplateRefListID == null) {
+        string paramName = nameof(header.TemplateRefFullName);
+
+        // Default to ID if both templates are null
+        if (header.TemplateRefListID == null) {
+          paramName = nameof(header.TemplateRefListID);
+        }
+
+        throw new ArgumentNullException(paramName: paramName,
+          message: "No QuickBooks invoice template has been specified.");
+      }
+      /*throw new ArgumentException(paramName: "testparamname",
+        message: "testmsg");*/
+
       QBSessionManager sessionManager = null;
       bool _sessionBegun = false;
       bool _connectionOpen = false;
@@ -30,13 +46,14 @@ namespace QBConnect {
         _sessionBegun = true;
 
         // Put main process here:
-        BuildInvoiceAddRq(requestMsgSet, header, lineItem);
-        BuildCustomerQuery(requestMsgSet);
+        // BuildInvoiceAddRq(requestMsgSet, header, lineItem);
+        // BuildCustomerQuery(requestMsgSet);
+        GetTemplateList(requestMsgSet, sessionManager);
 
         IMsgSetResponse responseMsgSet = sessionManager.DoRequests(requestMsgSet);
 
         // Temp
-        Console.WriteLine(responseMsgSet.ToXMLString());
+        // Console.WriteLine(responseMsgSet.ToXMLString());
 
         //End the session and close the connection to QuickBooks
         sessionManager.EndSession();
@@ -140,7 +157,7 @@ namespace QBConnect {
 
       // TEMPLATE Header Box
       if (header.TemplateRefFullName != null) {
-        Header.TemplateRef.FullName.SetValue(header.TemplateRefFullName); 
+        Header.TemplateRef.FullName.SetValue(header.TemplateRefFullName);
       }
 
       if (header.TemplateRefListID != null) {
@@ -298,6 +315,60 @@ namespace QBConnect {
       ICustomerQuery CustomerQueryRq = requestMsgSet.AppendCustomerQueryRq();
       CustomerQueryRq.ORCustomerListQuery.CustomerListFilter.TotalBalanceFilter.Operator.SetValue(ENOperator.oGreaterThanEqual);
       CustomerQueryRq.ORCustomerListQuery.CustomerListFilter.TotalBalanceFilter.Amount.SetValue(0);
+    }
+
+    private static void GetTemplateList(IMsgSetRequest requestMsgSet, QBSessionManager sessionManager) {
+      ITemplateQuery TemplateQueryRq = requestMsgSet.AppendTemplateQueryRq();
+
+      TemplateQueryRq.metaData.SetValue(ENmetaData.mdMetaDataAndResponseData);
+
+      IMsgSetResponse responseMsgSet = sessionManager.DoRequests(requestMsgSet);
+      if (responseMsgSet == null) return;
+
+      IResponseList responseList = responseMsgSet.ResponseList;
+      if (responseList == null) return;
+
+      // get data from first response from AppendTemplateQueryRq request
+      IResponse response = responseList.GetAt(0);
+
+      // Verify
+      //check the status code of the response, 0=ok, >0 is warning
+      if (response.StatusCode < 0) return;
+
+      //the request-specific response is in the details, make sure we have some
+      if (response.Detail == null) return;
+
+      //make sure the response is the type we're expecting
+      ENResponseType responseType = (ENResponseType)response.Type.GetValue();
+      if (responseType != ENResponseType.rtTemplateQueryRs) return;
+
+      //upcast to more specific type here, this is safe because we checked with response. Type check above
+      ITemplateRetList TemplateRet = (ITemplateRetList)response.Detail;
+
+
+      List<string> names = GetTemplateNames(TemplateRet);
+
+      foreach (string name in names) {
+        Console.WriteLine(name);
+      }
+
+      // Temp
+      // Console.WriteLine(responseMsgSet.ToXMLString());
+    }
+
+    private static List<string> GetTemplateNames(ITemplateRetList TemplateRet) {
+      if (TemplateRet == null) return null;
+
+      List<string> names = new List<string>();
+
+      for (int i = 0; i < TemplateRet.Count; i++) {
+        ITemplateRet template = TemplateRet.GetAt(i);
+        string name = (string)template.Name.GetValue();
+
+        names.Add(name);
+      }
+
+      return names;
     }
   }
 }
