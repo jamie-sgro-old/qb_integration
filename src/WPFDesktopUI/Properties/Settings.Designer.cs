@@ -34,5 +34,29 @@ namespace WPFDesktopUI.Properties {
                 this["StnCsvSeparation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string StnQbInvTemplateName {
+            get {
+                return ((string)(this["StnQbInvTemplateName"]));
+            }
+            set {
+                this["StnQbInvTemplateName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool StnQbInvHasTemplate {
+            get {
+                return ((bool)(this["StnQbInvHasTemplate"]));
+            }
+            set {
+                this["StnQbInvHasTemplate"] = value;
+            }
+        }
     }
 }

@@ -79,6 +79,8 @@
     <Compile Include="ViewModels\PreferencesViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesCsvImportViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesGeneralViewModel.cs" />
+    <Compile Include="ViewModels\Preferences\PreferencesQuickBooksViewModel.cs" />
+    <Compile Include="ViewModels\QuickBooksViewModel.cs" />
     <Compile Include="ViewModels\SecondChildViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\CustomerView.xaml.cs">
@@ -98,6 +100,12 @@
     </Compile>
     <Compile Include="Views\Preferences\PreferencesGeneralView.xaml.cs">
       <DependentUpon>PreferencesGeneralView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Preferences\PreferencesQuickBooksView.xaml.cs">
+      <DependentUpon>PreferencesQuickBooksView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\QuickBooksView.xaml.cs">
+      <DependentUpon>QuickBooksView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
@@ -127,6 +135,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Preferences\PreferencesGeneralView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Preferences\PreferencesQuickBooksView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\QuickBooksView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

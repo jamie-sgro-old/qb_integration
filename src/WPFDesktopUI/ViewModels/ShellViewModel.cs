@@ -146,7 +146,16 @@ namespace WPFDesktopUI.ViewModels {
 		public void BtnQbImport() {
 			try {
 				ConsoleMessage = "Importing, please stand by...";
-				QbImportController.Import();
+
+				bool hasTemplate = Convert.ToBoolean(Properties.Settings.Default["StnQbInvHasTemplate"]);
+				if (!hasTemplate) {
+					MessageBox.Show("No method implemented for StnQbInvHasTemplate == false", "NotImplementedException", MessageBoxButton.OK, MessageBoxImage.Error);
+					throw new NotImplementedException("No method implemented for StnQbInvHasTemplate == false");
+				}
+
+				string template = Properties.Settings.Default["StnQbInvTemplateName"].ToString();
+				// "NEXIM's Invoice with credits &"
+				QbImportController.Import(template);
 				ConsoleMessage = "Import has successfully completed";
 			}
 			catch (Exception e) {

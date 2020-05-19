@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="WPFDesktopUI.Views.Preferences.PreferencesQuickBooksView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFDesktopUI.Views.Preferences"
+             mc:Ignorable="d" 
+             Background="White"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Style x:Key="Pref1" TargetType="TextBlock">
+            <Setter Property="Padding" Value="10,0"/>
+        </Style>
+        <Style x:Key="Pref2" TargetType="TextBlock">
+            <Setter Property="Padding" Value="40,0,10,0"/>
+        </Style>
+        <Style x:Key="Check1" TargetType="CheckBox">
+            <Setter Property="Margin" Value="30,2,10,2"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- ROW 0 -->
+
+        <TextBlock Text="QuickBooks"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   Style="{StaticResource Pref1}"
+                   FontWeight="Bold" />
+
+        <!-- ROW 1 -->
+
+        <StackPanel  Orientation="Vertical"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    >
+            <Separator Grid.ColumnSpan="2"/>
+            <TextBlock Text="Invoice" 
+                       Style="{StaticResource Pref1}" />
+        </StackPanel >
+
+
+
+        <!-- ROW 2 -->
+        <CheckBox x:Name="UsingTemplate"
+                  IsChecked="{Binding Source={StaticResource Settings}, Path=Default.StnQbInvHasTemplate}"
+                  Style="{StaticResource Check1}"
+                  Content="Using Custom Template"
+                  Grid.Row="2"
+                  Grid.Column="0">
+        </CheckBox>
+
+        <!-- ROW 3 -->
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Margin="10,0">
+            <TextBlock Style="{StaticResource Pref2}">
+                Template Name:
+            </TextBlock>
+            <TextBox x:Name="TemplateNameTextBox"
+                     IsEnabled="{Binding IsChecked, ElementName=UsingTemplate, Mode=OneWay}"
+                     Text="{Binding Source={StaticResource Settings}, Path=Default.StnQbInvTemplateName}"
+                     MinWidth="100" Height="18"
+                     />
+        </StackPanel>
+
+        <!-- ROW 4 -->
+        <StackPanel  Orientation="Vertical"
+                    Grid.Row="4"
+                    Grid.ColumnSpan="2"
+                    >
+            <Separator Grid.ColumnSpan="2"/>
+            <TextBlock Text="Next Setting" 
+                       Style="{StaticResource Pref1}" />
+        </StackPanel >
+
+        <!-- ROW 5 -->
+
+
+        <!-- ROW 6 -->
+
+
+    </Grid>
+</UserControl>

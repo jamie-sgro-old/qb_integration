@@ -59,6 +59,10 @@ namespace WPFDesktopUI.ViewModels {
       ActivateItem(new PreferencesCsvImportViewModel());
     }
 
+    public void QuickBooks() {
+      ActivateItem(new PreferencesQuickBooksViewModel());
+    }
+
     public void Default() {
       ActivateItem(new PreferencesGeneralViewModel());
     }

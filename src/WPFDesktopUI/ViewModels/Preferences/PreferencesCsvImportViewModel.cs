@@ -28,6 +28,5 @@ namespace WPFDesktopUI.ViewModels.Preferences {
       get => Properties.Settings.Default["StnCsvSeparation"].ToString() != "," &&
              Properties.Settings.Default["StnCsvSeparation"].ToString() != "\t";
     }
-
   }
 }

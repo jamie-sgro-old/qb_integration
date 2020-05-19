@@ -51,6 +51,21 @@
                 </i:Interaction.Triggers>
                 Csv Import
             </ListBoxItem>
+
+            <!-- QUICKBOOKS -->
+
+            <ListBoxItem Name="QuickBooks">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Selected">
+                        <cal:ActionMessage MethodName="QuickBooks">
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                QuickBooks
+            </ListBoxItem>
+            
+            <!-- NEXTITEM -->
+            
             <ListBoxItem>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Selected">
@@ -61,7 +76,7 @@
                 </i:Interaction.Triggers>
                 NextItem
             </ListBoxItem>
-            
+
             <!-- DEFAULT -->
             
             <ListBoxItem Name="Default"

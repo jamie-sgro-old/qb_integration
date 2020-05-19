@@ -46,6 +46,10 @@
                 <ContentControl x:Name="CustomerViewModel" />
                 <!--<NewUserControl:CustomerView/>-->
             </TabItem>
+            <TabItem Header="QuickBooks" >
+                <ContentControl x:Name="QuickBooksViewModel" />
+                <!--<NewUserControl:QuickBooksView/>-->
+            </TabItem>
             <TabItem Header="Dump" >
                 <NewUserControl:DumpView/>
             </TabItem>
