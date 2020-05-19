@@ -45,8 +45,8 @@ namespace WPFDesktopUI.ViewModels {
 					return;
 				}
 			} catch (ArgumentException e) {
-				if (e.ParamName == "ParamName") {
-					// insert code here
+				if (e.ParamName == "TemplateRefFullName") {
+					ConsoleMessage = GetTemplateWrong();
 					return;
 				}
 				ConsoleMessage = "ParamName was caught by modelview";
@@ -64,8 +64,22 @@ namespace WPFDesktopUI.ViewModels {
 				 			 "\t3. Go to the QuickBooks tab\n" +
 				 			 "\t4. Under 'Invoice' check 'Using Custom Template'\n" +
 				 			 "\t5. Beside 'Template Name' write the name of the QuickBooks template" +
-				 						"name you wish to use on import\n" +
+				 					 " name you wish to use on import\n" +
 				 			 "\t6. Click Close";
+		}
+
+		private string GetTemplateWrong() {
+			return "Could not complete import. Could not find '" + 
+						  Properties.Settings.Default["StnQbInvTemplateName"].ToString() +
+						 "' in QuickBooks template list.\n" +
+						 "To resolve this issue:\n" +
+							 "\t1. Click on the Settings Menu\n" +
+								"\t2. Select Preferences\n" +
+								"\t3. Go to the QuickBooks tab\n" +
+								"\t4. Under 'Invoice' check 'Using Custom Template'\n" +
+								"\t5. Beside 'Template Name' write the name of the QuickBooks template" +
+				 						" name you wish to use on import\n" +
+								"\t6. Click Close";
 		}
 
 	}

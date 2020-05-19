@@ -24,8 +24,6 @@ namespace QBConnect {
         throw new ArgumentNullException(paramName: paramName,
           message: "No QuickBooks invoice template has been specified.");
       }
-      /*throw new ArgumentException(paramName: "testparamname",
-        message: "testmsg");*/
 
       QBSessionManager sessionManager = null;
       bool _sessionBegun = false;
@@ -45,10 +43,19 @@ namespace QBConnect {
         sessionManager.BeginSession(_qbwFilePath, ENOpenMode.omDontCare);
         _sessionBegun = true;
 
-        // Put main process here:
-        // BuildInvoiceAddRq(requestMsgSet, header, lineItem);
+        #region Main Process
+
+        bool isValidTemplate = IsValidTemplate(requestMsgSet, sessionManager, GetUserTemplateName(header));
+
+        if (!isValidTemplate) {
+          throw new ArgumentException(paramName: nameof(header.TemplateRefFullName),
+            message: "Could not find '" + GetUserTemplateName(header) + "' in QuickBooks template list");
+        }
+
+        BuildInvoiceAddRq(requestMsgSet, header, lineItem);
         // BuildCustomerQuery(requestMsgSet);
-        GetTemplateList(requestMsgSet, sessionManager);
+        
+        #endregion Main Process
 
         IMsgSetResponse responseMsgSet = sessionManager.DoRequests(requestMsgSet);
 
@@ -317,52 +324,71 @@ namespace QBConnect {
       CustomerQueryRq.ORCustomerListQuery.CustomerListFilter.TotalBalanceFilter.Amount.SetValue(0);
     }
 
-    private static void GetTemplateList(IMsgSetRequest requestMsgSet, QBSessionManager sessionManager) {
-      ITemplateQuery TemplateQueryRq = requestMsgSet.AppendTemplateQueryRq();
+    private static bool IsValidTemplate(IMsgSetRequest requestMsgSet, QBSessionManager sessionManager, string userTemplateName) {
+      List<string> templateNamesList = GetTemplateList(requestMsgSet, sessionManager);
+      return templateNamesList.Contains(userTemplateName);
+    }
 
-      TemplateQueryRq.metaData.SetValue(ENmetaData.mdMetaDataAndResponseData);
+    private static string GetUserTemplateName(InvoiceHeaderModel header) {
+      if (header.TemplateRefListID != null) {
+        return header.TemplateRefListID;
+      }
+      if (header.TemplateRefFullName != null) {
+        return header.TemplateRefFullName;
+      }
+      throw new ArgumentNullException(paramName: nameof(header.TemplateRefFullName),
+        message: "No QuickBooks invoice template has been specified.");
+    }
+
+    private static List<string> GetTemplateList(IMsgSetRequest requestMsgSet, QBSessionManager sessionManager) {
+      
+      // Generate request for a template query
+      // to be executed when .DoRequests() is run
+      ITemplateQuery templateQueryRq = requestMsgSet.AppendTemplateQueryRq();
+      templateQueryRq.metaData.SetValue(ENmetaData.mdMetaDataAndResponseData);
 
       IMsgSetResponse responseMsgSet = sessionManager.DoRequests(requestMsgSet);
-      if (responseMsgSet == null) return;
+      if (responseMsgSet == null) new List<string>();
 
       IResponseList responseList = responseMsgSet.ResponseList;
-      if (responseList == null) return;
+      if (responseList == null) new List<string>();
 
       // get data from first response from AppendTemplateQueryRq request
       IResponse response = responseList.GetAt(0);
 
-      // Verify
+      #region Verify
+
       //check the status code of the response, 0=ok, >0 is warning
-      if (response.StatusCode < 0) return;
+      if (response.StatusCode < 0) new List<string>();
 
       //the request-specific response is in the details, make sure we have some
-      if (response.Detail == null) return;
+      if (response.Detail == null) new List<string>();
 
       //make sure the response is the type we're expecting
       ENResponseType responseType = (ENResponseType)response.Type.GetValue();
-      if (responseType != ENResponseType.rtTemplateQueryRs) return;
+      if (responseType != ENResponseType.rtTemplateQueryRs) new List<string>();
+      
+      #endregion
 
       //upcast to more specific type here, this is safe because we checked with response. Type check above
-      ITemplateRetList TemplateRet = (ITemplateRetList)response.Detail;
+      ITemplateRetList templateRetList = (ITemplateRetList)response.Detail;
 
 
-      List<string> names = GetTemplateNames(TemplateRet);
-
-      foreach (string name in names) {
-        Console.WriteLine(name);
-      }
-
-      // Temp
-      // Console.WriteLine(responseMsgSet.ToXMLString());
+      return GetTemplateNames(templateRetList);
     }
 
-    private static List<string> GetTemplateNames(ITemplateRetList TemplateRet) {
-      if (TemplateRet == null) return null;
+    /// <summary>
+    /// From a template return list, compile and return a list of all template names
+    /// </summary>
+    /// <param name="templateRetList">A template return list</param>
+    /// <returns>Empty list of strings if null, else a list of template names</returns>
+    private static List<string> GetTemplateNames(ITemplateRetList templateRetList) {
+      if (templateRetList == null) return new List<string>();
 
       List<string> names = new List<string>();
 
-      for (int i = 0; i < TemplateRet.Count; i++) {
-        ITemplateRet template = TemplateRet.GetAt(i);
+      for (int i = 0; i < templateRetList.Count; i++) {
+        ITemplateRet template = templateRetList.GetAt(i);
         string name = (string)template.Name.GetValue();
 
         names.Add(name);
