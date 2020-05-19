@@ -15,12 +15,12 @@ namespace WPFDesktopUI.ViewModels {
 		public ShellViewModel() {
 			this.CustomerViewModel = new CustomerViewModel();
 			this.ImportViewModel = new ImportViewModel();
-			// this.PreferencesViewModel = new PreferencesViewModel();
+			this.QuickBooksViewModel = new QuickBooksViewModel();
 		}
 
 		public CustomerViewModel CustomerViewModel { get; }
 		public ImportViewModel ImportViewModel { get; }
-		// public PreferencesViewModel PreferencesViewModel { get; }
+		public QuickBooksViewModel QuickBooksViewModel { get; }
 
 		public void MenuItemClose() {
 			Application.Current.Shutdown();
@@ -138,7 +138,6 @@ namespace WPFDesktopUI.ViewModels {
 			set { 
 				_consoleMessage = value;
 				NotifyOfPropertyChange(() => ConsoleMessage);
-
 			}
 		}
 
