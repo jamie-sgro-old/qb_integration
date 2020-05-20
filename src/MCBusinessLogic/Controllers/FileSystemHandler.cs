@@ -6,12 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MCBusinessLogic.Controllers {
-  interface IFileSystemHandler {
-    string FileName { get; }
-    string Filter { get; set; }
-    bool SelectFile();
-  }
-
   internal class FileSystemHandler : IFileSystemHandler {
 
     private string _fileName;
