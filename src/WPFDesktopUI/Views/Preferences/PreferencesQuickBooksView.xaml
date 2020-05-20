@@ -8,20 +8,12 @@
              Background="White"
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <UserControl.Resources>
-        <Style x:Key="Pref1" TargetType="TextBlock">
-            <Setter Property="Padding" Value="10,0"/>
-        </Style>
-        <Style x:Key="Pref2" TargetType="TextBlock">
-            <Setter Property="Padding" Value="40,0,10,0"/>
-        </Style>
-        <Style x:Key="Check1" TargetType="CheckBox">
-            <Setter Property="Margin" Value="30,2,10,2"/>
-        </Style>
-    </UserControl.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
@@ -32,7 +24,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" MaxWidth="400"/>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
@@ -45,7 +37,6 @@
                    FontWeight="Bold" />
 
         <!-- ROW 1 -->
-
         <StackPanel  Orientation="Vertical"
                     Grid.Row="1"
                     Grid.ColumnSpan="2"
@@ -54,8 +45,6 @@
             <TextBlock Text="Invoice" 
                        Style="{StaticResource Pref1}" />
         </StackPanel >
-
-
 
         <!-- ROW 2 -->
         <CheckBox x:Name="UsingTemplate"
@@ -66,36 +55,81 @@
                   Grid.Column="0">
         </CheckBox>
 
+
+
         <!-- ROW 3 -->
         <StackPanel Orientation="Horizontal"
                     Grid.Row="3"
                     Grid.Column="0"
                     Margin="10,0">
             <TextBlock Style="{StaticResource Pref2}">
-                Template Name:
+                    Template Name:
             </TextBlock>
-            <TextBox x:Name="TemplateNameTextBox"
-                     IsEnabled="{Binding IsChecked, ElementName=UsingTemplate, Mode=OneWay}"
-                     Text="{Binding Source={StaticResource Settings}, Path=Default.StnQbInvTemplateName}"
-                     MinWidth="100" Height="18"
-                     />
         </StackPanel>
 
         <!-- ROW 4 -->
+        <TextBox x:Name="TemplateNameTextBox"
+                Grid.Row="4"
+                Grid.Column="0"
+                IsEnabled="{Binding IsChecked, ElementName=UsingTemplate, Mode=OneWay}"
+                Text="{Binding Source={StaticResource Settings}, Path=Default.StnQbInvTemplateName}"
+                Margin="30,0"
+                MinWidth="100"
+                HorizontalAlignment="Left"
+                Height="18"
+                />
+
+        <!-- ROW 5 -->
         <StackPanel  Orientation="Vertical"
-                    Grid.Row="4"
+                    Grid.Row="5"
+                    Grid.ColumnSpan="2"
+                    >
+            <Separator Grid.ColumnSpan="2"/>
+            <TextBlock Text="File" 
+                       Style="{StaticResource Pref1}" >
+            </TextBlock>
+        </StackPanel >
+
+        <!-- ROW 6 -->
+
+        <TextBlock Grid.Row="6"
+                   Grid.Column="0"
+                   Margin="30,2,10,2">
+            .qbw File Location:
+        </TextBlock>
+
+
+        <!-- ROW 7 -->
+        <TextBox x:Name="QbFileLocation"
+                 Grid.Row="7"
+                 Grid.Column="0"
+                 HorizontalAlignment="Left"
+                 Margin="30,0,10,0"
+                 MinWidth="100"
+                 Text="{Binding Source={StaticResource Settings}, Path=Default.StnQbFilePath}"
+                 Height="18"
+                     />
+        <Button x:Name="BtnOpenQbwFile"
+                Grid.Row="7"
+                Grid.Column="1"
+                Style="{StaticResource ButtonInline}"
+                MinWidth="100"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Left">
+            Browse...
+        </Button>
+
+
+        <!-- ROW 8 -->
+        <StackPanel  Orientation="Vertical"
+                    Grid.Row="8"
                     Grid.ColumnSpan="2"
                     >
             <Separator Grid.ColumnSpan="2"/>
             <TextBlock Text="Next Setting" 
-                       Style="{StaticResource Pref1}" />
+                       Style="{StaticResource Pref1}"
+                       />
         </StackPanel >
-
-        <!-- ROW 5 -->
-
-
-        <!-- ROW 6 -->
-
 
     </Grid>
 </UserControl>

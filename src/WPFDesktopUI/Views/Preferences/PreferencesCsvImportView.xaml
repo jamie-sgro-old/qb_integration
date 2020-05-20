@@ -7,19 +7,7 @@
              mc:Ignorable="d" 
              Background="White"
              d:DesignHeight="450" d:DesignWidth="800">
-
-    <UserControl.Resources>
-        <Style x:Key="Pref1" TargetType="TextBlock">
-            <Setter Property="Padding" Value="10,0"/>
-        </Style>
-        <Style x:Key="Pref2" TargetType="TextBlock">
-            <Setter Property="Padding" Value="40,0,10,0"/>
-        </Style>
-        <Style x:Key="Radio1" TargetType="RadioButton">
-            <Setter Property="Margin" Value="30,2,10,2"/>
-        </Style>
-    </UserControl.Resources>
-
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -96,7 +84,7 @@
                 Specify Custom Separation: 
             </TextBlock>
             <TextBox x:Name="CustomSeparationTextBox" Text="{Binding Source={StaticResource Settings}, Path=Default.StnCsvSeparation}"
-                     IsEnabled="{Binding Path=CustomSeparationTextBox, Mode=OneWay}"
+                     IsEnabled="{Binding IsChecked, ElementName=CustomSeparation, Mode=OneWay}"
                      MinWidth="50" Height="18" VerticalAlignment="Bottom"
                      />
         </StackPanel>

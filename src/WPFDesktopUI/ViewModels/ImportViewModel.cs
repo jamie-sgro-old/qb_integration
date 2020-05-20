@@ -10,21 +10,7 @@ using System.Threading.Tasks;
 namespace WPFDesktopUI.ViewModels {
   public class ImportViewModel : Screen {
 
-    #region Private
-
-    private string _qbFilePath;
-    private string _csvFilePath;
-    private List<CsvModel> _csvData = new List<CsvModel>();
-
-    #endregion Private
-
     #region Methods
-
-    public void BtnOpenQbwFile(object sender) {
-      string FileName = FileSystemHelper.GetFilePath("Quickbooks |*.qbw");
-      QbFilePath = FileName;
-    }
-
 
     public void BtnOpenCsvFile(object sender) {
       string FileName = FileSystemHelper.GetFilePath("CSV (Comma delimited) |*.csv");
@@ -37,13 +23,8 @@ namespace WPFDesktopUI.ViewModels {
 
     #region Properties
 
-    public string QbFilePath {
-      get { return _qbFilePath; }
-      set {
-        _qbFilePath = value;
-        NotifyOfPropertyChange(() => QbFilePath);
-      }
-    }
+    private string _csvFilePath;
+    private List<CsvModel> _csvData = new List<CsvModel>();
 
     public string CsvFilePath {
       get { return _csvFilePath; }

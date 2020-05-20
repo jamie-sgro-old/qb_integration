@@ -10,6 +10,7 @@
                     <local:Bootstrapper x:Key="Bootstrapper" />
                     <properties:Settings x:Key="Settings" />
                 </ResourceDictionary>
+            <ResourceDictionary Source="Style.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

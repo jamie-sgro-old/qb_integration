@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MCBusinessLogic.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,39 +9,21 @@ using System.Windows.Controls;
 
 namespace WPFDesktopUI.ViewModels.Preferences {
   public class PreferencesQuickBooksViewModel : Screen {
+    /*private string _qbFilePath;
 
-		private bool _usingCutomTemplate;
-		private string _templateNameTextBox;
+    public string QbFilePath {
+      get { return _qbFilePath; }
+      set {
+        _qbFilePath = value;
+        NotifyOfPropertyChange(() => QbFilePath);
+      }
+    }*/
 
-		public bool UsingCutomTemplate {
-			get {
-				return _usingCutomTemplate; 
-			}
-			set {
-				_usingCutomTemplate = value;
-				NotifyOfPropertyChange(() => UsingCutomTemplate);
-			}
-		}
-
-		public bool CanTemplateNameTextBox() {
-			return false;
-		}
-
-		public string TemplateNameTextBox {
-			get {
-				return _templateNameTextBox;
-			}
-			set { 
-				_templateNameTextBox = value;
-				NotifyOfPropertyChange(() => TemplateNameTextBox);
-			}
-		}
-
-		/*public bool TemplateNameIsEnabled() {
-			return false;
-			return UsingCutomTemplate.IsChecked == true;
-		}*/
-
-
-	}
+    public void BtnOpenQbwFile(object sender) {
+      string FileName = FileSystemHelper.GetFilePath("Quickbooks |*.qbw");
+      if (FileName != "") {
+        Properties.Settings.Default["StnQbFilePath"] = FileName;
+      }
+    }
+  }
 }

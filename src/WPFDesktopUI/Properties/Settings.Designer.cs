@@ -58,5 +58,17 @@ namespace WPFDesktopUI.Properties {
                 this["StnQbInvHasTemplate"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string StnQbFilePath {
+            get {
+                return ((string)(this["StnQbFilePath"]));
+            }
+            set {
+                this["StnQbFilePath"] = value;
+            }
+        }
     }
 }
