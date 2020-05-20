@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicImporter.cs" />
+    <Compile Include="Classes\Interfaces\IInvoiceLineAppender.cs" />
+    <Compile Include="Classes\LineItem.cs" />
     <Compile Include="Models\InvoiceHeaderModel.cs" />
     <Compile Include="Models\InvoiceLineItemModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,6 +58,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
