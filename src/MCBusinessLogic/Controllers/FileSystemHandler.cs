@@ -23,6 +23,7 @@ namespace MCBusinessLogic.Controllers {
 
     public bool SelectFile() {
       OpenFileDialog fso = new OpenFileDialog();
+      fso.ValidateNames = false;
       fso.Filter = _filter;
       fso.ShowDialog();
       _fileName = fso.FileName;

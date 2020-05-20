@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace QBConnect {
   public class BasicImporter {
-    private const string _qbwFilePath = "C:\\Users\\Jamie\\Nextcloud\\Sangwa\\Clients\\NX - Nexim Healthcare\\01 - Invoicing\\QB Mock\\NX Mock.qbw";
 
-    public static void Import(InvoiceHeaderModel header, InvoiceLineItemModel lineItem) {
+    public static void Import(string _qbwFilePath, InvoiceHeaderModel header, InvoiceLineItemModel lineItem) {
 
       // null TEMPLATE throws error
       bool isNullTemplate = header.TemplateRefFullName == null && header.TemplateRefListID == null;

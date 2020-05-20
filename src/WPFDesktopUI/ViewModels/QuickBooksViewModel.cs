@@ -35,8 +35,10 @@ namespace WPFDesktopUI.ViewModels {
 					template = null;
 				}
 
-				// "NEXIM's Invoice with credits &"
-				QbImportController.Import(template);
+				string qbFilePath = Properties.Settings.Default["StnQbFilePath"].ToString();
+
+				// We currently are testing on: "NEXIM's Invoice with credits &"
+				QbImportController.Import(qbFilePath, template);
 				ConsoleMessage = "Import has successfully completed";
 			}
 			catch (ArgumentNullException e) {
@@ -51,6 +53,12 @@ namespace WPFDesktopUI.ViewModels {
 				}
 				ConsoleMessage = "ParamName was caught by modelview";
 			} catch (Exception e) {
+				if (e.TargetSite.Name.ToString() == "BeginSession") {
+					ConsoleMessage = GetBeginSessionFailed(e.Message);
+					return;
+				}
+
+				// Default Behaviour
 				ConsoleMessage = e.Message;
 				Console.WriteLine(e.StackTrace);
 			}
@@ -82,5 +90,17 @@ namespace WPFDesktopUI.ViewModels {
 								"\t6. Click Close";
 		}
 
+		private string GetBeginSessionFailed(string errMsg) {
+			return errMsg + ". This could be an issue with your .QBW file.\n" +
+						 "To resolve this issue:\n" +
+							 "\t1. Click on the Settings Menu\n" +
+								"\t2. Select Preferences\n" +
+								"\t3. Go to the QuickBooks tab\n" +
+								"\t4. Under 'File' locate the '.qbw File Location' section\n" +
+								"\t5. Below the header: '.qbw File Location' verify the file path matches a valid QuickBooks company file\n" +
+							  "\t\t Note: You can verify the integrity of the file by running it in QuickBooks Desktop\n" +
+								"\t6. Click Close and try again" +
+								"\t\t If the issue persists, please contact your system administrator.";
+		}
 	}
 }
