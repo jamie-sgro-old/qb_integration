@@ -57,6 +57,7 @@
     <Compile Include="Controllers\FileSystemHelper.cs" />
     <Compile Include="Controllers\IFileSystemHandler.cs" />
     <Compile Include="Controllers\QbImportController.cs" />
+    <Compile Include="Controllers\QbImportExceptionHandler.cs" />
     <Compile Include="DataAccess\SqliteDataAccess.cs" />
     <Compile Include="Models\CsvModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
