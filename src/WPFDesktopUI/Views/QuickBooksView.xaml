@@ -25,9 +25,23 @@
             <!-- Row 0 -->
             <Button x:Name="BtnQbImport" 
                     Grid.Row="0"
-                    Grid.Column="0">
+                    Grid.Column="0"
+                    >
                 Import to QB
             </Button>
+            <Grid Name="QbProgressBarIsVisible"
+                  Grid.Row="0"
+                  Grid.Column="1">
+                <ProgressBar x:Name="QbProgressBar" 
+                         Grid.Row="0"
+                         Grid.Column="1"
+                         Minimum="0"
+                         Maximum="100"
+                         IsIndeterminate="True"
+                         Margin="10,0"
+                         >
+                </ProgressBar>
+            </Grid>
 
             <!-- Row 1 -->
             <TextBlock Text="{Binding Path=ConsoleMessage, Mode=OneWay}"

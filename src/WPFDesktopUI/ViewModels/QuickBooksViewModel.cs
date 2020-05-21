@@ -10,19 +10,55 @@ using System.Windows;
 namespace WPFDesktopUI.ViewModels {
   public class QuickBooksViewModel : Screen {
 
+		#region Properties
+
 		private string _consoleMessage;
+		private bool _canBtnQbImport = true;
+		private bool _qbProgressBarIsVisible = false;
+		private bool _sessionBegin;
 
 		public string ConsoleMessage {
 			get { return _consoleMessage; }
 			set {
 				_consoleMessage = value;
 				NotifyOfPropertyChange(() => ConsoleMessage);
-
 			}
 		}
 
-		public void BtnQbImport() {
+		public bool CanBtnQbImport {
+			get { return _canBtnQbImport; }
+			set { 
+				_canBtnQbImport = value;
+				NotifyOfPropertyChange(() => CanBtnQbImport);
+			}
+		}
+
+		public bool QbProgressBarIsVisible {
+			get { return _qbProgressBarIsVisible; }
+			set {
+				_qbProgressBarIsVisible = value;
+				NotifyOfPropertyChange(() => QbProgressBarIsVisible);
+			}
+		}
+
+		private bool SessionBegin {
+			get { return _sessionBegin; }
+			set {
+				_sessionBegin = value;
+				CanBtnQbImport = !value;
+				QbProgressBarIsVisible = value;
+				NotifyOfPropertyChange(() => SessionBegin);
+			}
+		}
+
+		#endregion Properties
+
+
+		#region Methods
+
+		public async Task BtnQbImport() {
 			try {
+				SessionBegin = true;
 				ConsoleMessage = "Importing, please stand by...";
 
 				bool hasTemplate = Convert.ToBoolean(Properties.Settings.Default["StnQbInvHasTemplate"]);
@@ -38,7 +74,10 @@ namespace WPFDesktopUI.ViewModels {
 				string qbFilePath = Properties.Settings.Default["StnQbFilePath"].ToString();
 
 				// We currently are testing on: "NEXIM's Invoice with credits &"
-				QbImportController.Import(qbFilePath, template);
+				await Task.Run(() => {
+					QbImportController.Import(qbFilePath, template);
+				});
+
 				ConsoleMessage = "Import has successfully completed";
 			}
 			catch (ArgumentNullException e) {
@@ -53,6 +92,8 @@ namespace WPFDesktopUI.ViewModels {
 			} catch (Exception e) {
 				ConsoleMessage = GetDefaultError(e);
 				return;
+			} finally {
+				SessionBegin = false;
 			}
 		}
 
@@ -148,5 +189,7 @@ namespace WPFDesktopUI.ViewModels {
 			Console.WriteLine(e.StackTrace);
 			return e.Message;
 		}
+		
+		#endregion Methods
 	}
 }
