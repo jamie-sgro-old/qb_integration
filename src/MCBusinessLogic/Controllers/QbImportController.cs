@@ -15,13 +15,17 @@ namespace MCBusinessLogic.Controllers {
       // new DynamicParameters()
 
       // Temp while types are being figured out
-      InvoiceLineItemModel sqlLineItem = new InvoiceLineItemModel {
-        ItemRef = csvData[0].Item,
-        Quantity = Convert.ToDouble(csvData[0].Quantity),
-        Other1 = csvData[0].TimeInOut,
-        Other2 = csvData[0].StaffName,
-        ServiceDate = Convert.ToDateTime(csvData[0].ServiceDate)
-      };
+      var sqlLineItems = new List<InvoiceLineItemModel>();
+      foreach (CsvModel csvDatum in csvData) {
+        sqlLineItems.Add(new InvoiceLineItemModel() {
+          ItemRef = csvDatum.Item,
+          Quantity = Convert.ToDouble(csvDatum.Quantity),
+          Other1 = csvDatum.TimeInOut,
+          Other2 = csvDatum.StaffName,
+          ServiceDate = Convert.ToDateTime(csvDatum.ServiceDate)
+        });
+      }
+
 
 
       // Temp hardcoded data
@@ -45,7 +49,7 @@ namespace MCBusinessLogic.Controllers {
       InvoiceLineItemModel lineItem = MapLineItem(staff);
       InvoiceHeaderModel header = MapHeader(invoiceTemplate);
 
-      BasicImporter.Import(qbFilePath, header, sqlLineItem);
+      BasicImporter.Import(qbFilePath, header, sqlLineItems);
     }
 
     private static InvoiceLineItemModel MapLineItem(QbStaffModel staff) {

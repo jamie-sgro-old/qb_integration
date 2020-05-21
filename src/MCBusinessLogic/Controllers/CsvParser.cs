@@ -17,7 +17,7 @@ namespace MCBusinessLogic.Controllers {
         // Skip the row with the column names
         csvParser.ReadLine();
 
-        List<CsvModel> csvData = new List<CsvModel>();
+        var csvData = new List<CsvModel>();
 
         while (!csvParser.EndOfData) {
           // Read current line fields, pointer moves to the next line.
