@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPFDesktopUI.Views"
         xmlns:NewUserControl="clr-namespace:WPFDesktopUI.Views"
         mc:Ignorable="d"
-        Icon="Images/icon-sangwa.png"
+        Icon="Images/icon-sangwa.ico"
         Title="ShellView" Height="600" Width="1000">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
