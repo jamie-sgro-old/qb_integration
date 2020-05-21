@@ -74,7 +74,39 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Models\PersonModel.cs" />
+    <Compile Include="ViewModels\CustomerViewModel.cs" />
+    <Compile Include="ViewModels\ImportViewModel.cs" />
+    <Compile Include="ViewModels\PreferencesViewModel.cs" />
+    <Compile Include="ViewModels\Preferences\PreferencesCsvImportViewModel.cs" />
+    <Compile Include="ViewModels\Preferences\PreferencesGeneralViewModel.cs" />
+    <Compile Include="ViewModels\Preferences\PreferencesQuickBooksViewModel.cs" />
+    <Compile Include="ViewModels\QuickBooksViewModel.cs" />
+    <Compile Include="ViewModels\SecondChildViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\CustomerView.xaml.cs">
+      <DependentUpon>CustomerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DumpView.xaml.cs">
+      <DependentUpon>DumpView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImportView.xaml.cs">
+      <DependentUpon>ImportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PreferencesView.xaml.cs">
+      <DependentUpon>PreferencesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Preferences\PreferencesCsvImportView.xaml.cs">
+      <DependentUpon>PreferencesCsvImportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Preferences\PreferencesGeneralView.xaml.cs">
+      <DependentUpon>PreferencesGeneralView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Preferences\PreferencesQuickBooksView.xaml.cs">
+      <DependentUpon>PreferencesQuickBooksView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\QuickBooksView.xaml.cs">
+      <DependentUpon>QuickBooksView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
@@ -82,6 +114,46 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Style.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\css\Style.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CustomerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DumpView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ImportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PreferencesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Preferences\PreferencesCsvImportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Preferences\PreferencesGeneralView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Preferences\PreferencesQuickBooksView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\QuickBooksView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ShellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -127,7 +199,15 @@
       <Name>QBConnect</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Views\Images\icon-sangwa.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\Images\icon-sangwa.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Images\icon-sangwa.svg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -94,12 +94,6 @@ namespace QBConnect.Models {
     public string ORRatePriceLevelPriceLevelRef { get; set; }
 
     /// <summary>
-    /// The serial number of the asset.
-    /// </summary>
-    public string ORSerialLotNumberSerialNumber { get; set; }
-    public string ORSerialLotNumberLotNumber { get; set; }
-
-    /// <summary>
     /// Other, Other1, and Other2 are standard QuickBooks custom
     /// fields available to transactions. The Other field is a 
     /// transaction-level field, like the FOB field, PO Number 

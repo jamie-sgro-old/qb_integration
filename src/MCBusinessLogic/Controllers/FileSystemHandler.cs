@@ -6,12 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MCBusinessLogic.Controllers {
-  interface IFileSystemHandler {
-    string FileName { get; }
-    string Filter { get; set; }
-    bool SelectFile();
-  }
-
   internal class FileSystemHandler : IFileSystemHandler {
 
     private string _fileName;
@@ -29,6 +23,7 @@ namespace MCBusinessLogic.Controllers {
 
     public bool SelectFile() {
       OpenFileDialog fso = new OpenFileDialog();
+      fso.ValidateNames = false;
       fso.Filter = _filter;
       fso.ShowDialog();
       _fileName = fso.FileName;

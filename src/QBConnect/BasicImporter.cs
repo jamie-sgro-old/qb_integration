@@ -1,4 +1,5 @@
-﻿using QBConnect.Models;
+﻿using QBConnect.Classes.Interfaces;
+using QBConnect.Models;
 using QBFC13Lib;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,24 @@ using System.Threading.Tasks;
 
 namespace QBConnect {
   public class BasicImporter {
-    private const string _qbwFilePath = "C:\\Users\\Jamie\\Nextcloud\\Sangwa\\Clients\\NX - Nexim Healthcare\\01 - Invoicing\\QB Mock\\NX Mock.qbw";
 
-    public static void Import(InvoiceHeaderModel header, InvoiceLineItemModel lineItem) {
+    public static void Import(string _qbwFilePath, InvoiceHeaderModel header, InvoiceLineItemModel lineItem) {
+
+      // null TEMPLATE throws error
+      bool isNullTemplate = header.TemplateRefFullName == null && header.TemplateRefListID == null;
+
+      if (isNullTemplate) {
+        string paramName = nameof(header.TemplateRefFullName);
+
+        // Default to ID if both templates are null
+        if (header.TemplateRefListID == null) {
+          paramName = nameof(header.TemplateRefListID);
+        }
+
+        throw new ArgumentNullException(paramName: paramName,
+          message: "No QuickBooks invoice template has been specified.");
+      }
+
       QBSessionManager sessionManager = null;
       bool _sessionBegun = false;
       bool _connectionOpen = false;
@@ -29,20 +45,32 @@ namespace QBConnect {
         sessionManager.BeginSession(_qbwFilePath, ENOpenMode.omDontCare);
         _sessionBegun = true;
 
-        // Put main process here:
+        #region Main Process
+
+        bool isValidTemplate = IsValidTemplate(requestMsgSet, sessionManager, GetUserTemplateName(header));
+        
+        if (!isValidTemplate) {
+          throw new ArgumentException(paramName: nameof(header.TemplateRefFullName),
+            message: "Could not find '" + GetUserTemplateName(header) + "' in QuickBooks template list");
+        }
+
         BuildInvoiceAddRq(requestMsgSet, header, lineItem);
-        BuildCustomerQuery(requestMsgSet);
+        // BuildCustomerQuery(requestMsgSet);
+        
+        #endregion Main Process
 
         IMsgSetResponse responseMsgSet = sessionManager.DoRequests(requestMsgSet);
 
         // Temp
-        Console.WriteLine(responseMsgSet.ToXMLString());
+        // Console.WriteLine(responseMsgSet.ToXMLString());
 
         //End the session and close the connection to QuickBooks
         sessionManager.EndSession();
         sessionManager.CloseConnection();
       } catch (Exception e) {
 
+
+        Console.WriteLine(e.GetType());
         Console.WriteLine(e.Message);
         throw;
       } finally {
@@ -140,7 +168,7 @@ namespace QBConnect {
 
       // TEMPLATE Header Box
       if (header.TemplateRefFullName != null) {
-        Header.TemplateRef.FullName.SetValue(header.TemplateRefFullName); 
+        Header.TemplateRef.FullName.SetValue(header.TemplateRefFullName);
       }
 
       if (header.TemplateRefListID != null) {
@@ -165,124 +193,12 @@ namespace QBConnect {
 
 
       // Create variable for adding new lines to the invoice
-      IORInvoiceLineAdd LineItem = Header.ORInvoiceLineAddList.Append();
+      IInvoiceLineAppender newLine = new Classes.LineItem(Header);
+      newLine.AddLine(lineItem);
 
-      if (lineItem.Amount != null) {
-        double amount = Convert.ToDouble(lineItem.Amount);
-        LineItem.InvoiceLineAdd.Amount.SetValue(amount);
-      }
+      new Classes.LineItem(Header).AddLine(lineItem);
 
-      // CLASS
-      if (lineItem.ClassRef != null) {
-        LineItem.InvoiceLineAdd.ClassRef.FullName.SetValue(lineItem.ClassRef);
-      }
-
-      // DESCRIPTION
-      if (lineItem.Desc != null) {
-        LineItem.InvoiceLineAdd.Desc.SetValue(lineItem.Desc);
-      }
-
-      if (lineItem.InventorySiteLocationRef != null) {
-        LineItem.InvoiceLineAdd.InventorySiteLocationRef.FullName
-          .SetValue(lineItem.InventorySiteLocationRef); 
-      }
-
-      if (lineItem.InventorySiteRef != null) {
-        LineItem.InvoiceLineAdd.InventorySiteRef.FullName
-            .SetValue(lineItem.InventorySiteRef); 
-      }
-
-      if (lineItem.IsTaxable != null) {
-        bool isTaxable = Convert.ToBoolean(lineItem.IsTaxable);
-        LineItem.InvoiceLineAdd.IsTaxable.SetValue(isTaxable);
-      }
-
-      // ITEM
-      if (lineItem.ItemRef != null) {
-        LineItem.InvoiceLineAdd.ItemRef.FullName.SetValue(lineItem.ItemRef);
-      }
-
-
-      if (lineItem.LinkToTxnTxnID != null) {
-        LineItem.InvoiceLineAdd.LinkToTxn.TxnID.SetValue(lineItem.LinkToTxnTxnID); 
-      }
-
-      if (lineItem.LinkToTxnTxnLineID != null) {
-        LineItem.InvoiceLineAdd.LinkToTxn.TxnLineID.SetValue(lineItem.LinkToTxnTxnLineID);
-      }
-
-      if (lineItem.ORRatePriceLevelRate != null) {
-        double orRatePriceLevelRate = Convert.ToDouble(lineItem.ORRatePriceLevelRate);
-        LineItem.InvoiceLineAdd.ORRatePriceLevel.Rate.SetValue(orRatePriceLevelRate); 
-      }
-
-      if (lineItem.ORRatePriceLevelRatePercent != null) {
-        double orRatePriceLevelRatePercent = Convert
-          .ToDouble(lineItem.ORRatePriceLevelRatePercent);
-
-        LineItem.InvoiceLineAdd.ORRatePriceLevel.RatePercent
-          .SetValue(orRatePriceLevelRatePercent);
-      }
-
-      if (lineItem.ORRatePriceLevelPriceLevelRef != null) {
-        LineItem.InvoiceLineAdd.ORRatePriceLevel.PriceLevelRef
-          .FullName.SetValue(lineItem.ORRatePriceLevelPriceLevelRef);
-      }
-
-      // SERIAL NUMBER
-      if (lineItem.ORSerialLotNumberSerialNumber != null) {
-        LineItem.InvoiceLineAdd.ORSerialLotNumber.SerialNumber
-          .SetValue(lineItem.ORSerialLotNumberSerialNumber); 
-      }
-
-      // LOT NUMBER
-      if (lineItem.ORSerialLotNumberLotNumber != null) {
-        LineItem.InvoiceLineAdd.ORSerialLotNumber.LotNumber
-          .SetValue(lineItem.ORSerialLotNumberLotNumber);
-      }
-
-      // OTHER1
-      if (lineItem.Other1 != null) {
-        LineItem.InvoiceLineAdd.Other1.SetValue(lineItem.Other1); 
-      }
-
-      // OTHER2
-      if (lineItem.Other2 != null) {
-        LineItem.InvoiceLineAdd.Other2.SetValue(lineItem.Other2); 
-      }
-
-      if (lineItem.OverrideItemAccountRef != null) {
-        LineItem.InvoiceLineAdd.OverrideItemAccountRef.FullName
-      .SetValue(lineItem.OverrideItemAccountRef); 
-      }
-
-      // QTY
-      if (lineItem.Quantity != null) {
-        double quantity = Convert.ToDouble(lineItem.Quantity);
-        LineItem.InvoiceLineAdd.Quantity.SetValue(quantity);
-      }
-
-      if (lineItem.SalesTaxCodeRef != null) {
-        LineItem.InvoiceLineAdd.SalesTaxCodeRef.FullName.SetValue(lineItem.SalesTaxCodeRef); 
-      }
-
-      // DATE
-      if (lineItem.ServiceDate != null) {
-        DateTime serviceDate = Convert.ToDateTime(lineItem.ServiceDate);
-        LineItem.InvoiceLineAdd.ServiceDate.SetValue(serviceDate); 
-      }
-
-      // TAX AMOUNT
-      if (lineItem.TaxAmount != null) {
-        double taxAmount = Convert.ToDouble(lineItem.TaxAmount);
-        LineItem.InvoiceLineAdd.TaxAmount.SetValue(taxAmount); 
-      }
-
-      // UNIT OF MEASURE
-      if (lineItem.UnitOfMeasure != null) {
-        LineItem.InvoiceLineAdd.UnitOfMeasure.SetValue(lineItem.UnitOfMeasure); 
-      }
-
+      //IORInvoiceLineAdd LineItem = Header.ORInvoiceLineAddList.Append();
 
 
 
@@ -298,6 +214,79 @@ namespace QBConnect {
       ICustomerQuery CustomerQueryRq = requestMsgSet.AppendCustomerQueryRq();
       CustomerQueryRq.ORCustomerListQuery.CustomerListFilter.TotalBalanceFilter.Operator.SetValue(ENOperator.oGreaterThanEqual);
       CustomerQueryRq.ORCustomerListQuery.CustomerListFilter.TotalBalanceFilter.Amount.SetValue(0);
+    }
+
+    private static bool IsValidTemplate(IMsgSetRequest requestMsgSet, QBSessionManager sessionManager, string userTemplateName) {
+      List<string> templateNamesList = GetTemplateList(requestMsgSet, sessionManager);
+      return templateNamesList.Contains(userTemplateName);
+    }
+
+    private static string GetUserTemplateName(InvoiceHeaderModel header) {
+      if (header.TemplateRefListID != null) {
+        return header.TemplateRefListID;
+      }
+      if (header.TemplateRefFullName != null) {
+        return header.TemplateRefFullName;
+      }
+      throw new ArgumentNullException(paramName: nameof(header.TemplateRefFullName),
+        message: "No QuickBooks invoice template has been specified.");
+    }
+
+    private static List<string> GetTemplateList(IMsgSetRequest requestMsgSet, QBSessionManager sessionManager) {
+      
+      // Generate request for a template query
+      // to be executed when .DoRequests() is run
+      ITemplateQuery templateQueryRq = requestMsgSet.AppendTemplateQueryRq();
+      templateQueryRq.metaData.SetValue(ENmetaData.mdMetaDataAndResponseData);
+
+      IMsgSetResponse responseMsgSet = sessionManager.DoRequests(requestMsgSet);
+      if (responseMsgSet == null) new List<string>();
+
+      IResponseList responseList = responseMsgSet.ResponseList;
+      if (responseList == null) new List<string>();
+
+      // get data from first response from AppendTemplateQueryRq request
+      IResponse response = responseList.GetAt(0);
+
+      #region Verify
+
+      //check the status code of the response, 0=ok, >0 is warning
+      if (response.StatusCode < 0) new List<string>();
+
+      //the request-specific response is in the details, make sure we have some
+      if (response.Detail == null) new List<string>();
+
+      //make sure the response is the type we're expecting
+      ENResponseType responseType = (ENResponseType)response.Type.GetValue();
+      if (responseType != ENResponseType.rtTemplateQueryRs) new List<string>();
+      
+      #endregion
+
+      //upcast to more specific type here, this is safe because we checked with response. Type check above
+      ITemplateRetList templateRetList = (ITemplateRetList)response.Detail;
+
+
+      return GetTemplateNames(templateRetList);
+    }
+
+    /// <summary>
+    /// From a template return list, compile and return a list of all template names
+    /// </summary>
+    /// <param name="templateRetList">A template return list</param>
+    /// <returns>Empty list of strings if null, else a list of template names</returns>
+    private static List<string> GetTemplateNames(ITemplateRetList templateRetList) {
+      if (templateRetList == null) return new List<string>();
+
+      List<string> names = new List<string>();
+
+      for (int i = 0; i < templateRetList.Count; i++) {
+        ITemplateRet template = templateRetList.GetAt(i);
+        string name = (string)template.Name.GetValue();
+
+        names.Add(name);
+      }
+
+      return names;
     }
   }
 }

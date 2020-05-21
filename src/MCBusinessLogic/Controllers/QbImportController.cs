@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MCBusinessLogic.Controllers {
   public class QbImportController {
-    public static void Import() {
+    public static void Import(string qbFilePath, string template) {
       SqliteDataAccess.LoadData<CustomerModel>("SELECT * FROM customer", null);
       // new DynamicParameters()
 
@@ -27,14 +27,14 @@ namespace MCBusinessLogic.Controllers {
       QbInvoiceModel invoiceTemplate = new QbInvoiceModel {
         ClassRefFullName = "Barrie Area:Barrie Corporate",
         CustomerRefFullName = "CLASS",
-        TemplateRefFullName = "NEXIM's Invoice with credits &"
+        TemplateRefFullName = template
       };
 
       // Modify the model to match QB types
       InvoiceLineItemModel lineItem = MapLineItem(staff);
       InvoiceHeaderModel header = MapHeader(invoiceTemplate);
 
-      BasicImporter.Import(header, lineItem);
+      BasicImporter.Import(qbFilePath, header, lineItem);
     }
 
     private static InvoiceLineItemModel MapLineItem(QbStaffModel staff) {
