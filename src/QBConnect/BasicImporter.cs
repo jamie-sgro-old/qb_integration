@@ -69,6 +69,8 @@ namespace QBConnect {
         sessionManager.CloseConnection();
       } catch (Exception e) {
 
+
+        Console.WriteLine(e.GetType());
         Console.WriteLine(e.Message);
         throw;
       } finally {

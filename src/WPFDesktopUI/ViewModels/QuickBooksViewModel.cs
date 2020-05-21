@@ -42,26 +42,66 @@ namespace WPFDesktopUI.ViewModels {
 				ConsoleMessage = "Import has successfully completed";
 			}
 			catch (ArgumentNullException e) {
-				if (e.ParamName == "TemplateRefListID" || e.ParamName == "TemplateRefFullName") {
-					ConsoleMessage = GetTemplateNull();
-					return;
-				}
+				ConsoleMessage = HandleArgumentNullException(e) ?? GetDefaultError(e);
+				return;
 			} catch (ArgumentException e) {
-				if (e.ParamName == "TemplateRefFullName") {
-					ConsoleMessage = GetTemplateWrong();
-					return;
-				}
-				ConsoleMessage = "ParamName was caught by modelview";
+				ConsoleMessage = HandleArgumentException(e) ?? GetDefaultError(e);
+				return;
+			} catch (System.Runtime.InteropServices.COMException e) {
+				ConsoleMessage = HandleCOMException(e) ?? GetDefaultError(e);
+				return;
 			} catch (Exception e) {
-				if (e.TargetSite.Name.ToString() == "BeginSession") {
-					ConsoleMessage = GetBeginSessionFailed(e.Message);
-					return;
-				}
-
-				// Default Behaviour
-				ConsoleMessage = e.Message;
-				Console.WriteLine(e.StackTrace);
+				ConsoleMessage = GetDefaultError(e);
+				return;
 			}
+		}
+
+		private string HandleArgumentNullException(ArgumentNullException e) {
+			if (e.ParamName == "TemplateRefListID" || e.ParamName == "TemplateRefFullName") {
+				return GetTemplateNull();
+			}
+			return null;
+		}
+
+		private string HandleArgumentException(ArgumentException e) {
+			if (e.ParamName == "TemplateRefFullName") {
+				return GetTemplateWrong();
+			}
+			return "An unhandled ArgumentNullException was caught by modelview";
+		}
+
+		private string HandleCOMException(System.Runtime.InteropServices.COMException e) {
+			if (e.Source == "QBXMLRP2.RequestProcessor.2") {
+				if (e.TargetSite.DeclaringType.FullName == "QBFC13Lib.IQBSessionManager") {
+					if (e.TargetSite.Name.ToString() == "BeginSession") {
+						return HandleBeginSessionFailed(e) ?? GetDefaultError(e);
+					}
+				}
+			}
+			return null;
+		}
+
+		private string HandleBeginSessionFailed(Exception e) {
+			if (e.Message == "Could not start QuickBooks.") {
+				return QbNoStart(e.Message);
+			}
+
+			string pemErr = GetPemSrcErrMsg();
+			bool isPermissionErr = e.Message.Substring(0, pemErr.Count()) == pemErr;
+			if (isPermissionErr) {
+				return GetPermissionError(e.Message);
+			}
+			return null;
+		}
+
+		private string GetPermissionError(string errMsg) {
+			return errMsg;
+		}
+
+		private string GetPemSrcErrMsg() {
+			return "This application is unable to log into this QuickBooks company" +
+					" data file automatically. The QuickBooks administrator must grant permission" +
+					" for an automatic login through the Integrated Application preferences.";
 		}
 
 		private string GetTemplateNull() {
@@ -90,7 +130,7 @@ namespace WPFDesktopUI.ViewModels {
 								"\t6. Click Close";
 		}
 
-		private string GetBeginSessionFailed(string errMsg) {
+		private string QbNoStart(string errMsg) {
 			return errMsg + ". This could be an issue with your .QBW file.\n" +
 						 "To resolve this issue:\n" +
 							 "\t1. Click on the Settings Menu\n" +
@@ -99,8 +139,14 @@ namespace WPFDesktopUI.ViewModels {
 								"\t4. Under 'File' locate the '.qbw File Location' section\n" +
 								"\t5. Below the header: '.qbw File Location' verify the file path matches a valid QuickBooks company file\n" +
 							  "\t\t Note: You can verify the integrity of the file by running it in QuickBooks Desktop\n" +
-								"\t6. Click Close and try again" +
+								"\t6. Click Close and try again\n" +
 								"\t\t If the issue persists, please contact your system administrator.";
+		}
+
+		private string GetDefaultError(Exception e) {
+			Console.WriteLine(e.GetType());
+			Console.WriteLine(e.StackTrace);
+			return e.Message;
 		}
 	}
 }

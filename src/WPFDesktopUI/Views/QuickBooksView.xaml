@@ -13,12 +13,13 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <!-- Row 0 -->
@@ -32,10 +33,13 @@
             <TextBlock Text="{Binding Path=ConsoleMessage, Mode=OneWay}"
                        Grid.Row="1" 
                        Grid.Column="1"
+                       HorizontalAlignment="Stretch"
+                       TextWrapping="Wrap"
                        Foreground="Red">
             </TextBlock>
 
             <!-- Row 2 -->
+
 
 
             <!-- Row 3 -->

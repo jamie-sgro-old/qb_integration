@@ -113,7 +113,6 @@
                 Grid.Row="7"
                 Grid.Column="1"
                 Style="{StaticResource ButtonInline}"
-                MinWidth="100"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Left">
             Browse...
