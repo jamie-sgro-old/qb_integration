@@ -21,5 +21,9 @@ namespace WPFDesktopUI.Views {
     public ImportView() {
       InitializeComponent();
     }
-  }
+
+        private void CsvData_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+
+        }
+    }
 }

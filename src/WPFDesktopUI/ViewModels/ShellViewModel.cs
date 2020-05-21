@@ -49,18 +49,6 @@ namespace WPFDesktopUI.ViewModels {
 
 
 
-
-
-
-		private string _firstName;
-		private string _lastName;
-		private BindableCollection<PersonModel> _people = new BindableCollection<PersonModel>();
-		private PersonModel _seletedPerson;
-
-		public void LoadPageOne() {
-			ActivateItem(new SecondChildViewModel());
-		}
-
 		public void LoadCustomerViewModel() {
 			ActivateItem(new CustomerViewModel());
 		}

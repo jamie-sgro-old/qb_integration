@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace MCBusinessLogic.Models {
   public class CsvModel {
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
+    public string Item { get; set; }
+    public string Quantity { get; set; }
+    public string StaffName { get; set; }
+    public string TimeInOut { get; set; }
+    public string ServiceDate { get; set; }
   }
 }

@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using MCBusinessLogic.Controllers;
+using MCBusinessLogic.DataAccess;
 using MCBusinessLogic.Models;
 using System;
 using System.Collections.Generic;
@@ -9,17 +10,6 @@ using System.Threading.Tasks;
 
 namespace WPFDesktopUI.ViewModels {
   public class ImportViewModel : Screen {
-
-    #region Methods
-
-    public void BtnOpenCsvFile(object sender) {
-      string FileName = FileSystemHelper.GetFilePath("CSV (Comma delimited) |*.csv");
-      CsvFilePath = FileName;
-      string sep = Properties.Settings.Default["StnCsvSeparation"].ToString();
-      CsvData = CsvParser.ParseFromFile(FileName, sep);
-    }
-
-    #endregion Methods
 
     #region Properties
 
@@ -43,5 +33,24 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     #endregion Properties
+
+    #region Methods
+
+    public async Task BtnOpenCsvFile(object sender) {
+      string FileName = FileSystemHelper.GetFilePath("CSV (Comma delimited) |*.csv");
+      CsvFilePath = FileName;
+      string sep = Properties.Settings.Default["StnCsvSeparation"].ToString();
+
+      await Task.Run(() => {
+        CsvData = CsvParser.ParseFromFile(FileName, sep);
+      });
+
+      //temp import to sql
+      SqliteDataAccess.SaveData<CsvModel>(@"INSERT INTO csv_data
+        (Item, Quantity, StaffName, TimeInOut, ServiceDate)
+        VALUES(@Item, @Quantity, @StaffName, @TimeInOut, @ServiceDate);", CsvData);
+    }
+
+    #endregion Methods
   }
 }
