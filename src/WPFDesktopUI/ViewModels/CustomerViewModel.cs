@@ -13,7 +13,7 @@ namespace WPFDesktopUI.ViewModels {
 		}
 
 		public void CxName() {
-			Console.WriteLine("cx_name");
+			
 		}
 	}
 }

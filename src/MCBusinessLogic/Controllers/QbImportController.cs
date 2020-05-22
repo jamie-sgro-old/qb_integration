@@ -11,19 +11,10 @@ using System.Threading.Tasks;
 namespace MCBusinessLogic.Controllers {
   public class QbImportController {
     public static void Import(string qbFilePath, string template) {
-      SqliteDataAccess.LoadData<CustomerModel>("SELECT * FROM customer", null);
+      List<CsvModel> csvData = SqliteDataAccess.LoadData<CsvModel>("SELECT * FROM csv_data", null);
       // new DynamicParameters()
 
       // Temp hardcoded data
-      QbStaffModel staff = new QbStaffModel {
-        Item = "CLASS - DSW1",
-        Quantity = 8,
-        StaffName = "Jamie Sgro",
-        TimeInOut = "03:00 PM - 11:00 PM",
-        ServiceDate = new DateTime(2020, 04, 04),
-        ItemRef = "CLASS - DSW1"
-      };
-
       QbInvoiceModel invoiceTemplate = new QbInvoiceModel {
         ClassRefFullName = "Barrie Area:Barrie Corporate",
         CustomerRefFullName = "CLASS",
@@ -31,22 +22,26 @@ namespace MCBusinessLogic.Controllers {
       };
 
       // Modify the model to match QB types
-      InvoiceLineItemModel lineItem = MapLineItem(staff);
+      List<InvoiceLineItemModel> sqlLineItems  = MapLineItems(csvData);
       InvoiceHeaderModel header = MapHeader(invoiceTemplate);
 
-      BasicImporter.Import(qbFilePath, header, lineItem);
+      BasicImporter.Import(qbFilePath, header, sqlLineItems);
     }
 
-    private static InvoiceLineItemModel MapLineItem(QbStaffModel staff) {
+    private static List<InvoiceLineItemModel> MapLineItems(List<CsvModel> lineItems) {
       // TODO: Verify this column (Other1) corresponds with the "TIME IN - TIME OUT" column in QB
       // TODO: Verify this column (Other2) corresponds with the "STAFF NAME" column in QB
-      return _ = new InvoiceLineItemModel {
-        ItemRef = staff.Item,
-        Quantity = staff.Quantity,
-        Other1 = staff.TimeInOut,
-        Other2 = staff.StaffName,
-        ServiceDate = staff.ServiceDate
-      };
+      var sqlLineItems = new List<InvoiceLineItemModel>();
+      foreach (CsvModel item in lineItems) {
+        sqlLineItems.Add(new InvoiceLineItemModel() {
+          ItemRef = item.Item,
+          Quantity = Convert.ToDouble(item.Quantity),
+          Other1 = item.TimeInOut,
+          Other2 = item.StaffName,
+          ServiceDate = Convert.ToDateTime(item.ServiceDate)
+        });
+      }
+      return sqlLineItems;
     }
 
     private static InvoiceHeaderModel MapHeader(QbInvoiceModel invoiceTemplate) {
