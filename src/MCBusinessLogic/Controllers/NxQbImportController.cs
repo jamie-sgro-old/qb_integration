@@ -11,6 +11,7 @@ namespace MCBusinessLogic.Controllers {
       var csvData = SqliteDataAccess.LoadData<CsvModel>("SELECT * FROM csv_data", null);
       PreLineItems = MapCsvDataToLineItems(csvData);
     }
+    public sealed override List<QbStaffModel> PreLineItems { get; set; }
 
     public List<QbStaffModel> MapCsvDataToLineItems(List<CsvModel> lineItems) {
       var sqlLineItems = new List<QbStaffModel>();
@@ -25,5 +26,6 @@ namespace MCBusinessLogic.Controllers {
       }
       return sqlLineItems;
     }
+
   }
 }
