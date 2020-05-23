@@ -19,10 +19,10 @@ namespace WPFDesktopUI.ViewModels.Preferences {
       }
     }*/
 
-    public void BtnOpenQbwFile(object sender) {
-      string FileName = FileSystemHelper.GetFilePath("Quickbooks |*.qbw");
-      if (FileName != "") {
-        Properties.Settings.Default["StnQbFilePath"] = FileName;
+    public void BtnOpenQbwFile() {
+      var fileName = FileSystemHelper.GetFilePath("Quickbooks |*.qbw");
+      if (fileName != "") {
+        Properties.Settings.Default["StnQbFilePath"] = fileName;
       }
     }
   }

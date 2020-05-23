@@ -70,5 +70,29 @@ namespace WPFDesktopUI.Properties {
                 this["StnQbFilePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool StnQbInvHasHeaderOther {
+            get {
+                return ((bool)(this["StnQbInvHasHeaderOther"]));
+            }
+            set {
+                this["StnQbInvHasHeaderOther"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Other")]
+        public string StnQbInvHeaderOtherName {
+            get {
+                return ((string)(this["StnQbInvHeaderOtherName"]));
+            }
+            set {
+                this["StnQbInvHeaderOtherName"] = value;
+            }
+        }
     }
 }

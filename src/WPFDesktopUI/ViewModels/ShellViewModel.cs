@@ -13,12 +13,10 @@ namespace WPFDesktopUI.ViewModels {
   public class ShellViewModel : Conductor<object> {
 
 		public ShellViewModel() {
-			this.CustomerViewModel = new CustomerViewModel();
 			this.ImportViewModel = new ImportViewModel();
 			this.QuickBooksViewModel = new QuickBooksViewModel();
 		}
 
-		public CustomerViewModel CustomerViewModel { get; }
 		public ImportViewModel ImportViewModel { get; }
 		public QuickBooksViewModel QuickBooksViewModel { get; }
 
@@ -45,12 +43,5 @@ namespace WPFDesktopUI.ViewModels {
 			//PreferencesView preferences = new PreferencesView();
 			//preferences.Show();
 		}
-
-
-
-
-		public void LoadCustomerViewModel() {
-			ActivateItem(new CustomerViewModel());
-		}
-	}
+  }
 }

@@ -17,7 +17,7 @@ namespace WPFDesktopUI.ViewModels {
     private List<CsvModel> _csvData = new List<CsvModel>();
 
     public string CsvFilePath {
-      get { return _csvFilePath; }
+      get => _csvFilePath;
       set {
         _csvFilePath = value;
         NotifyOfPropertyChange(() => CsvFilePath);
@@ -25,7 +25,7 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     public List<CsvModel> CsvData {
-      get { return _csvData; }
+      get => _csvData;
       set {
         _csvData = value;
         NotifyOfPropertyChange(() => CsvData);
@@ -36,13 +36,13 @@ namespace WPFDesktopUI.ViewModels {
 
     #region Methods
 
-    public async Task BtnOpenCsvFile(object sender) {
-      string FileName = FileSystemHelper.GetFilePath("CSV (Comma delimited) |*.csv");
-      CsvFilePath = FileName;
-      string sep = Properties.Settings.Default["StnCsvSeparation"].ToString();
+    public async Task BtnOpenCsvFile() {
+      var fileName = FileSystemHelper.GetFilePath("CSV (Comma delimited) |*.csv");
+      CsvFilePath = fileName;
+      var sep = Properties.Settings.Default["StnCsvSeparation"].ToString();
 
       await Task.Run(() => {
-        CsvData = CsvParser.ParseFromFile(FileName, sep);
+        CsvData = CsvParser.ParseFromFile(fileName, sep);
       });
 
       //temp import to sql

@@ -14,5 +14,11 @@
     <Setting Name="StnQbFilePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="StnQbInvHasHeaderOther" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="StnQbInvHeaderOtherName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Other</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

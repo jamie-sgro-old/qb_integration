@@ -7,9 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WPFDesktopUI.ViewModels.QuickBooks;
+using MCBusinessLogic.Models;
 
 namespace WPFDesktopUI.ViewModels {
-  public class QuickBooksViewModel : Screen {
+  public class QuickBooksViewModel : Conductor<object> {
+
+		#region Constructor
+
+		public QuickBooksViewModel() {
+			QuickBooksSidePaneViewModel = new QuickBooksSidePaneViewModel();
+		}
+
+		#endregion Constructor
+
 
 		#region Properties
 
@@ -20,33 +31,35 @@ namespace WPFDesktopUI.ViewModels {
 		private bool _hasTemplate;
 		private string _template;
 
+		public QuickBooksSidePaneViewModel QuickBooksSidePaneViewModel { get; }
+
 		public string ConsoleMessage {
-			get { return _consoleMessage; }
-			set {
+			get => _consoleMessage;
+      set {
 				_consoleMessage = value;
 				NotifyOfPropertyChange(() => ConsoleMessage);
 			}
 		}
 
 		public bool CanBtnQbImport {
-			get { return _canBtnQbImport; }
-			set { 
+			get => _canBtnQbImport;
+      set { 
 				_canBtnQbImport = value;
 				NotifyOfPropertyChange(() => CanBtnQbImport);
 			}
 		}
 
 		public bool QbProgressBarIsVisible {
-			get { return _qbProgressBarIsVisible; }
-			set {
+			get => _qbProgressBarIsVisible;
+      set {
 				_qbProgressBarIsVisible = value;
 				NotifyOfPropertyChange(() => QbProgressBarIsVisible);
 			}
 		}
 
 		private bool SessionBegin {
-			get { return _sessionBegin; }
-			set {
+			get => _sessionBegin;
+      set {
 				_sessionBegin = value;
 				CanBtnQbImport = !value;
 				QbProgressBarIsVisible = value;
@@ -62,16 +75,13 @@ namespace WPFDesktopUI.ViewModels {
 		}
 
 		private string Template {
-			get {
+			get
+      {
 				// Use template if preference is check, else let DB.dll return ArgumentNullException
-				if (HasTemplate) {
-					_template = Properties.Settings.Default["StnQbInvTemplateName"].ToString();
-				}
-				else {
-					_template = null;
-				}
-				return _template;
-			}
+        var name = Properties.Settings.Default["StnQbInvTemplateName"].ToString();
+				_template = HasTemplate ? name : null;
+        return _template;
+      }
 		}
 
 		#endregion Properties
@@ -80,17 +90,21 @@ namespace WPFDesktopUI.ViewModels {
 		#region Methods
 
 		public async Task BtnQbImport() {
+			Console.WriteLine(QuickBooksSidePaneViewModel.HeaderDateTextBox);
 			try {
 				SessionBegin = true;
 				ConsoleMessage = "Importing, please stand by...";
 
-				bool hasTemplate = HasTemplate;
-				string template = Template;
-				string qbFilePath = Properties.Settings.Default["StnQbFilePath"].ToString();
+				var hasTemplate = HasTemplate;
+				var template = Template;
 
-				// We currently are testing on: "NEXIM's Invoice with credits &"
+        var header = new NxInvoiceHeaderModel {TemplateRefFullName = template};
+
+        var qbFilePath = Properties.Settings.Default["StnQbFilePath"].ToString();
+
 				await Task.Run(() => {
-					QbImportController.Import(qbFilePath, template);
+					var qbImport = new NxQbImportController(qbFilePath, header);
+          qbImport.Import();
 				});
 
 				ConsoleMessage = "Import has successfully completed";
