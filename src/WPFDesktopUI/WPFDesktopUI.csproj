@@ -117,10 +117,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\css\Style.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\DumpView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
