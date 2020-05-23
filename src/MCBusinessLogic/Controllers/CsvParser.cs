@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace MCBusinessLogic.Controllers {
   public class CsvParser {
     public static List<CsvModel> ParseFromFile(string path, string delim) {
-      using (TextFieldParser csvParser = new TextFieldParser(path)) {
+      using (var csvParser = new TextFieldParser(path)) {
         csvParser.CommentTokens = new string[] { "#" };
         csvParser.SetDelimiters(new string[] { delim });
         csvParser.HasFieldsEnclosedInQuotes = true;

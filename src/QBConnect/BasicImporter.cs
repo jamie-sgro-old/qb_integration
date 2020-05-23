@@ -59,7 +59,7 @@ namespace QBConnect {
         
         #endregion Main Process
 
-        IMsgSetResponse responseMsgSet = sessionManager.DoRequests(requestMsgSet);
+        var responseMsgSet = sessionManager.DoRequests(requestMsgSet);
 
         // Temp
         // Console.WriteLine(responseMsgSet.ToXMLString());
