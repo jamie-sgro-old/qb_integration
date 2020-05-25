@@ -84,6 +84,16 @@ namespace WPFDesktopUI.ViewModels {
       }
 		}
 
+		private string _qbFilePath;
+
+		public string QbFilePath {
+      get {
+				_qbFilePath = Properties.Settings.Default["StnQbFilePath"].ToString();
+				return _qbFilePath;
+      }
+		}
+
+
 		#endregion Properties
 
 
@@ -100,7 +110,7 @@ namespace WPFDesktopUI.ViewModels {
 
         var header = new NxInvoiceHeaderModel {TemplateRefFullName = template};
 
-        var qbFilePath = Properties.Settings.Default["StnQbFilePath"].ToString();
+        var qbFilePath = QbFilePath;
 
 				await Task.Run(() => {
 					var qbImport = new NxQbImportController(qbFilePath, header);
