@@ -1,59 +1,37 @@
-﻿using MCBusinessLogic.DataAccess;
+﻿using System.Collections.Generic;
+using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.Models;
 using QBConnect;
 using QBConnect.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MCBusinessLogic.Controllers {
-  public class QbImportController {
-    public static void Import(string qbFilePath, string template) {
-      SqliteDataAccess.LoadData<CustomerModel>("SELECT * FROM customer", null);
-      // new DynamicParameters()
-
-      // Temp hardcoded data
-      QbStaffModel staff = new QbStaffModel {
-        Item = "CLASS - DSW1",
-        Quantity = 8,
-        StaffName = "Jamie Sgro",
-        TimeInOut = "03:00 PM - 11:00 PM",
-        ServiceDate = new DateTime(2020, 04, 04),
-        ItemRef = "CLASS - DSW1"
-      };
-
-      QbInvoiceModel invoiceTemplate = new QbInvoiceModel {
-        ClassRefFullName = "Barrie Area:Barrie Corporate",
-        CustomerRefFullName = "CLASS",
-        TemplateRefFullName = template
-      };
-
-      // Modify the model to match QB types
-      InvoiceLineItemModel lineItem = MapLineItem(staff);
-      InvoiceHeaderModel header = MapHeader(invoiceTemplate);
-
-      BasicImporter.Import(qbFilePath, header, lineItem);
+  public abstract class QbImportController : IQbImportController {
+    public string QbFilePath { get; set; }
+    public DefaultInvoiceHeaderModel PreHeader { get; set; }
+    public abstract List<QbStaffModel> PreLineItems { get; set; }
+    public void Import() {
+      var header = MapHeader(PreHeader);
+      var sqlLineItems = MapLineItems(PreLineItems);
+      BasicImporter.Import(QbFilePath, header, sqlLineItems);
     }
-
-    private static InvoiceLineItemModel MapLineItem(QbStaffModel staff) {
-      // TODO: Verify this column (Other1) corresponds with the "TIME IN - TIME OUT" column in QB
-      // TODO: Verify this column (Other2) corresponds with the "STAFF NAME" column in QB
-      return _ = new InvoiceLineItemModel {
-        ItemRef = staff.Item,
-        Quantity = staff.Quantity,
-        Other1 = staff.TimeInOut,
-        Other2 = staff.StaffName,
-        ServiceDate = staff.ServiceDate
-      };
+    public List<InvoiceLineItemModel> MapLineItems(List<QbStaffModel> lineItems) {
+      var sqlLineItems = new List<InvoiceLineItemModel>();
+      foreach (var line in lineItems) {
+        sqlLineItems.Add(new InvoiceLineItemModel() {
+          ItemRef = line.Item,
+          Quantity = line.Quantity,
+          Other1 = line.TimeInOut,
+          Other2 = line.StaffName,
+          ServiceDate = line.ServiceDate
+        });
+      }
+      return sqlLineItems;
     }
-
-    private static InvoiceHeaderModel MapHeader(QbInvoiceModel invoiceTemplate) {
+    public InvoiceHeaderModel MapHeader(DefaultInvoiceHeaderModel preHeader) {
       return _ = new InvoiceHeaderModel {
-        ClassRefFullName = invoiceTemplate.ClassRefFullName,
-        CustomerRefFullName = invoiceTemplate.CustomerRefFullName,
-        TemplateRefFullName = invoiceTemplate.TemplateRefFullName,
+        ClassRefFullName = preHeader.ClassRefFullName,
+        CustomerRefFullName = preHeader.CustomerRefFullName,
+        TemplateRefFullName = preHeader.TemplateRefFullName,
       };
     }
   }

@@ -43,10 +43,6 @@
                 <ContentControl x:Name="ImportViewModel" />
                 <!--<NewUserControl:ImportView/>-->
             </TabItem>
-            <TabItem Header="Customer" >
-                <ContentControl x:Name="CustomerViewModel" />
-                <!--<NewUserControl:CustomerView/>-->
-            </TabItem>
             <TabItem Header="QuickBooks" >
                 <ContentControl x:Name="QuickBooksViewModel" />
                 <!--<NewUserControl:QuickBooksView/>-->

@@ -13,12 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPFDesktopUI.Views {
+namespace WPFDesktopUI.Views.QuickBooks {
   /// <summary>
-  /// Interaction logic for CustomerView.xaml
+  /// Interaction logic for QuickBooksSidePaneView.xaml
   /// </summary>
-  public partial class CustomerView : UserControl {
-    public CustomerView() {
+  public partial class QuickBooksSidePaneView : UserControl {
+    public QuickBooksSidePaneView() {
       InitializeComponent();
     }
   }

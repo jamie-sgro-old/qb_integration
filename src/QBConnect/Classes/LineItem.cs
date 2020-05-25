@@ -12,8 +12,8 @@ namespace QBConnect.Classes {
 
     #region Constructor
 
-    public LineItem(IInvoiceAdd InvoiceAdd) {
-      this.Line = InvoiceAdd.ORInvoiceLineAddList.Append();
+    public LineItem(IInvoiceAdd invoiceAdd) {
+      this.Line = invoiceAdd.ORInvoiceLineAddList.Append();
     }
 
     #endregion Constructor
@@ -28,12 +28,8 @@ namespace QBConnect.Classes {
 
     #region Propterties
 
-    private IORInvoiceLineAdd line;
+    public IORInvoiceLineAdd Line { get; set; }
 
-    public IORInvoiceLineAdd Line {
-      get { return line; }
-      set { line = value; }
-    }
     private double? Amount {
       set {
         if (value != null) {

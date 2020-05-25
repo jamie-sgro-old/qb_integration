@@ -13,12 +13,10 @@ namespace WPFDesktopUI.ViewModels {
   public class ShellViewModel : Conductor<object> {
 
 		public ShellViewModel() {
-			this.CustomerViewModel = new CustomerViewModel();
 			this.ImportViewModel = new ImportViewModel();
 			this.QuickBooksViewModel = new QuickBooksViewModel();
 		}
 
-		public CustomerViewModel CustomerViewModel { get; }
 		public ImportViewModel ImportViewModel { get; }
 		public QuickBooksViewModel QuickBooksViewModel { get; }
 
@@ -45,24 +43,5 @@ namespace WPFDesktopUI.ViewModels {
 			//PreferencesView preferences = new PreferencesView();
 			//preferences.Show();
 		}
-
-
-
-
-
-
-
-		private string _firstName;
-		private string _lastName;
-		private BindableCollection<PersonModel> _people = new BindableCollection<PersonModel>();
-		private PersonModel _seletedPerson;
-
-		public void LoadPageOne() {
-			ActivateItem(new SecondChildViewModel());
-		}
-
-		public void LoadCustomerViewModel() {
-			ActivateItem(new CustomerViewModel());
-		}
-	}
+  }
 }

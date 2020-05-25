@@ -12,12 +12,12 @@ namespace MCBusinessLogic.Controllers {
     private string _filter;
 
     public string FileName {
-      get { return _fileName; }
+      get => _fileName;
       set { _fileName = value; }
     }
 
     public string Filter {
-      get { return _filter; }
+      get => _filter;
       set { _filter = value; }
     }
 
@@ -27,10 +27,7 @@ namespace MCBusinessLogic.Controllers {
       fso.Filter = _filter;
       fso.ShowDialog();
       _fileName = fso.FileName;
-      if (_fileName == "") {
-        return false;
-      }
-      return true; ;
+      return _fileName != "";
     }
   }
 }

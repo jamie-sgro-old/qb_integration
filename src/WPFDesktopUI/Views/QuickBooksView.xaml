@@ -15,48 +15,88 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*" MinWidth="100"/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" MinWidth="100"/>
             </Grid.ColumnDefinitions>
 
             <!-- Row 0 -->
+            <!-- Row 1 -->
+            <!-- Row 2 -->
+            <!-- Row 3 -->
+            <!-- Row 4 -->
+            <!-- Row 5 -->
+            <!-- Row 6 -->
+            <!-- Row 7 -->
+            <!-- Row 8 -->
+            <!-- Row 9 -->
+            <!-- Row 10 -->
             <Button x:Name="BtnQbImport" 
-                    Grid.Row="0"
+                    Grid.Row="10"
                     Grid.Column="0"
                     >
                 Import to QB
             </Button>
             <Grid Name="QbProgressBarIsVisible"
-                  Grid.Row="0"
+                  Grid.Row="10"
                   Grid.Column="1">
                 <ProgressBar x:Name="QbProgressBar" 
-                         Grid.Row="0"
-                         Grid.Column="1"
-                         Minimum="0"
-                         Maximum="100"
-                         IsIndeterminate="True"
-                         Margin="10,0"
+                             Grid.Row="10"
+                             Grid.Column="1"
+                             Minimum="0"
+                             Maximum="100"
+                             IsIndeterminate="True"
+                             Margin="10,0"
+                             
                          >
                 </ProgressBar>
             </Grid>
 
-            <!-- Row 1 -->
+            <!-- Row 11 -->
+
             <TextBlock Text="{Binding Path=ConsoleMessage, Mode=OneWay}"
-                       Grid.Row="1" 
+                       Grid.Row="11" 
                        Grid.Column="1"
                        HorizontalAlignment="Stretch"
                        TextWrapping="Wrap"
                        Foreground="Red">
             </TextBlock>
 
-            <!-- Row 2 -->
-
-
-
-            <!-- Row 3 -->
+            <!-- Row 12 -->
+            <!-- Row 13 -->
+            
+            <!-- Right Panel -->
+            <GridSplitter Grid.Column="2" 
+                          Grid.RowSpan="2147483647" 
+                          Width="5" Opacity="0"
+                          BorderBrush="Gray" 
+                          HorizontalAlignment="Stretch" 
+                          VerticalAlignment="Stretch"/>
+            
+            
+            <ContentControl x:Name="QuickBooksSidePaneViewModel"
+                            Grid.RowSpan="2147483647"
+                            Grid.Column="3"
+                            />
  
         </Grid>
     </Border>

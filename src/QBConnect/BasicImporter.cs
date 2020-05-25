@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace QBConnect {
   public class BasicImporter {
 
-    public static void Import(string _qbwFilePath, InvoiceHeaderModel header, InvoiceLineItemModel lineItem) {
+    public static void Import(string _qbwFilePath, InvoiceHeaderModel header, List<InvoiceLineItemModel> lineItems) {
 
       // null TEMPLATE throws error
       bool isNullTemplate = header.TemplateRefFullName == null && header.TemplateRefListID == null;
@@ -54,12 +54,12 @@ namespace QBConnect {
             message: "Could not find '" + GetUserTemplateName(header) + "' in QuickBooks template list");
         }
 
-        BuildInvoiceAddRq(requestMsgSet, header, lineItem);
+        BuildInvoiceAddRq(requestMsgSet, header, lineItems);
         // BuildCustomerQuery(requestMsgSet);
         
         #endregion Main Process
 
-        IMsgSetResponse responseMsgSet = sessionManager.DoRequests(requestMsgSet);
+        var responseMsgSet = sessionManager.DoRequests(requestMsgSet);
 
         // Temp
         // Console.WriteLine(responseMsgSet.ToXMLString());
@@ -83,7 +83,7 @@ namespace QBConnect {
       }
     }
 
-    static void BuildInvoiceAddRq(IMsgSetRequest requestMsgSet, InvoiceHeaderModel header, InvoiceLineItemModel lineItem) {
+    static void BuildInvoiceAddRq(IMsgSetRequest requestMsgSet, InvoiceHeaderModel header, List<InvoiceLineItemModel> lineItems) {
       // Init invoice variable
       IInvoiceAdd Header = requestMsgSet.AppendInvoiceAddRq();
 
@@ -193,10 +193,10 @@ namespace QBConnect {
 
 
       // Create variable for adding new lines to the invoice
-      IInvoiceLineAppender newLine = new Classes.LineItem(Header);
-      newLine.AddLine(lineItem);
+      foreach (InvoiceLineItemModel line in lineItems) {
+        new Classes.LineItem(Header).AddLine(line);
+      }
 
-      new Classes.LineItem(Header).AddLine(lineItem);
 
       //IORInvoiceLineAdd LineItem = Header.ORInvoiceLineAddList.Append();
 

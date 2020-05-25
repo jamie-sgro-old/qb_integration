@@ -74,18 +74,14 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Models\PersonModel.cs" />
-    <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\ImportViewModel.cs" />
     <Compile Include="ViewModels\PreferencesViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesCsvImportViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesGeneralViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesQuickBooksViewModel.cs" />
     <Compile Include="ViewModels\QuickBooksViewModel.cs" />
-    <Compile Include="ViewModels\SecondChildViewModel.cs" />
+    <Compile Include="ViewModels\QuickBooks\QuickBooksSidePaneViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
-    <Compile Include="Views\CustomerView.xaml.cs">
-      <DependentUpon>CustomerView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\DumpView.xaml.cs">
       <DependentUpon>DumpView.xaml</DependentUpon>
     </Compile>
@@ -107,6 +103,9 @@
     <Compile Include="Views\QuickBooksView.xaml.cs">
       <DependentUpon>QuickBooksView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\QuickBooks\QuickBooksSidePaneView.xaml.cs">
+      <DependentUpon>QuickBooksSidePaneView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
@@ -117,14 +116,6 @@
     <Page Include="Style.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\css\Style.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\CustomerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DumpView.xaml">
       <SubType>Designer</SubType>
@@ -151,6 +142,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\QuickBooksView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\QuickBooks\QuickBooksSidePaneView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -204,9 +199,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Views\Images\icon-sangwa.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Images\icon-sangwa.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets')" />

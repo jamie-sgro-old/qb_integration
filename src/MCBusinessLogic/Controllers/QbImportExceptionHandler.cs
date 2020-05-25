@@ -43,24 +43,35 @@ namespace MCBusinessLogic.Controllers {
 				return QbNoStart(e.Message);
 			}
 
-			string pemErr = GetPemSrcErrMsg();
-			bool isPermissionErr = e.Message.Substring(0, pemErr.Count()) == pemErr;
+			bool isPermissionErr = e.Message.StartsWith(GetPemSrcErrMsg());
 			if (isPermissionErr) {
 				return GetPermissionError(e.Message);
 			}
+
+			bool isDiffCompanyFileErr = e.Message.StartsWith(GetDiffCompanySrcErrMsg());
+			if (isDiffCompanyFileErr) {
+				return GetDiffCompanyError(e.Message);
+			}
+
 			return null;
 		}
 
 		private static string GetPermissionError(string errMsg) {
 			return errMsg;
 		}
-
+		private static string GetDiffCompanyError(string errMsg) {
+			return errMsg;
+		}
 		private static string GetPemSrcErrMsg() {
 			return "This application is unable to log into this QuickBooks company" +
 					" data file automatically. The QuickBooks administrator must grant permission" +
 					" for an automatic login through the Integrated Application preferences.";
 		}
-
+		private static string GetDiffCompanySrcErrMsg() {
+			return "A QuickBooks company data file is already open" +
+				" and it is different from the one requested or there" +
+				" are multiple company files open.";
+		}
 		private static string GetTemplateNull() {
 			return "Could not complete import. No QuickBooks invoice template has been specified.\n" +
 						 "To resolve this issue:\n" +
@@ -72,7 +83,6 @@ namespace MCBusinessLogic.Controllers {
 										" name you wish to use on import\n" +
 								"\t6. Click Close";
 		}
-
 		private static string GetTemplateWrong() {
 			return "Could not complete import. Could not find template name in QuickBooks template list.\n" +
 						 "To resolve this issue:\n" +
@@ -84,7 +94,6 @@ namespace MCBusinessLogic.Controllers {
 				 						" name you wish to use on import\n" +
 								"\t6. Click Close";
 		}
-
 		private static string QbNoStart(string errMsg) {
 			return errMsg + " This could be an issue with your .QBW file.\n" +
 						 "To resolve this issue:\n" +
