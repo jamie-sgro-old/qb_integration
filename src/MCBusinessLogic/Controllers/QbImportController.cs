@@ -28,11 +28,17 @@ namespace MCBusinessLogic.Controllers {
       return sqlLineItems;
     }
     public InvoiceHeaderModel MapHeader(DefaultInvoiceHeaderModel preHeader) {
-      return _ = new InvoiceHeaderModel {
+      // todo: add unit test for when a new param is missing. i.e. mapping missed
+
+      var newMap = new InvoiceHeaderModel {
         ClassRefFullName = preHeader.ClassRefFullName,
         CustomerRefFullName = preHeader.CustomerRefFullName,
         TemplateRefFullName = preHeader.TemplateRefFullName,
+        TxnDate = preHeader.TxnDate,
+        Other = preHeader.Other,
       };
+
+      return newMap;
     }
   }
 }

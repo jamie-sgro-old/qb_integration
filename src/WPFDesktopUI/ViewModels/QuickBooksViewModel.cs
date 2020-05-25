@@ -101,36 +101,38 @@ namespace WPFDesktopUI.ViewModels {
 
 		public async Task BtnQbImport() {
 			Console.WriteLine(QuickBooksSidePaneViewModel.HeaderDateTextBox);
-			try {
-				SessionBegin = true;
-				ConsoleMessage = "Importing, please stand by...";
+      try {
+        SessionBegin = true;
+        ConsoleMessage = "Importing, please stand by...";
 
-				var hasTemplate = HasTemplate;
-				var template = Template;
+        var hasTemplate = HasTemplate;
+        var template = Template;
 
-        var header = new NxInvoiceHeaderModel {TemplateRefFullName = template};
+        var header = new NxInvoiceHeaderModel {
+          TemplateRefFullName = template, 
+          TxnDate = QuickBooksSidePaneViewModel.HeaderDateTextBox,
+					Other = QuickBooksSidePaneViewModel.HeaderOtherTextBox,
+				};
 
         var qbFilePath = QbFilePath;
 
-				await Task.Run(() => {
-					var qbImport = new NxQbImportController(qbFilePath, header);
+        await Task.Run(() => {
+          var qbImport = new NxQbImportController(qbFilePath, header);
           qbImport.Import();
-				});
+        });
 
-				ConsoleMessage = "Import has successfully completed";
-			}
-			catch (ArgumentNullException e) {
-				ConsoleMessage = ErrHandler.HandleArgumentNullException(e) ?? ErrHandler.GetDefaultError(e);
-				return;
+        ConsoleMessage = "Import has successfully completed";
+      }
+      catch (ArgumentNullException e) {
+        ConsoleMessage = ErrHandler.HandleArgumentNullException(e) ?? ErrHandler.GetDefaultError(e);
+      } catch (ArgumentOutOfRangeException e) {
+        ConsoleMessage = ErrHandler.HandleArgumentOutOfRangeException(e) ?? ErrHandler.GetDefaultError(e);
 			} catch (ArgumentException e) {
 				ConsoleMessage = ErrHandler.HandleArgumentException(e) ?? ErrHandler.GetDefaultError(e);
-				return;
 			} catch (System.Runtime.InteropServices.COMException e) {
 				ConsoleMessage = ErrHandler.HandleCOMException(e) ?? ErrHandler.GetDefaultError(e);
-				return;
 			} catch (Exception e) {
 				ConsoleMessage = ErrHandler.GetDefaultError(e);
-				return;
 			} finally {
 				SessionBegin = false;
 			}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,20 @@ namespace MCBusinessLogic.Controllers {
 			if (e.ParamName == "TemplateRefListID" || e.ParamName == "TemplateRefFullName") {
 				return GetTemplateNull();
 			}
+			return null;
+		}
+
+    public static string HandleArgumentOutOfRangeException(ArgumentOutOfRangeException e) {
+      if (e.ParamName == "lineItems") {
+        return GetLineItemsOutOfRange(e.Message);
+      }
+			// Internal system error, let it bubble up
+      /*if (e.ParamName == "responseList") {
+        throw new ArgumentOutOfRangeException(
+          message: "More than one QuickBooks request was "+
+                   "provided when only one was expected.",
+					innerException: e);
+      }*/
 			return null;
 		}
 
@@ -55,8 +70,7 @@ namespace MCBusinessLogic.Controllers {
 
 			return null;
 		}
-
-		private static string GetPermissionError(string errMsg) {
+    private static string GetPermissionError(string errMsg) {
 			return errMsg;
 		}
 		private static string GetDiffCompanyError(string errMsg) {
@@ -83,7 +97,10 @@ namespace MCBusinessLogic.Controllers {
 										" name you wish to use on import\n" +
 								"\t6. Click Close";
 		}
-		private static string GetTemplateWrong() {
+    private static string GetLineItemsOutOfRange(string errMsg) {
+      return errMsg;
+    }
+    private static string GetTemplateWrong() {
 			return "Could not complete import. Could not find template name in QuickBooks template list.\n" +
 						 "To resolve this issue:\n" +
 							 "\t1. Click on the Settings Menu\n" +

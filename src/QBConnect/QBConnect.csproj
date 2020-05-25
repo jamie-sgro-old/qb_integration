@@ -42,8 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicImporter.cs" />
+    <Compile Include="Classes\CustomerQuery.cs" />
     <Compile Include="Classes\Interfaces\IInvoiceLineAppender.cs" />
+    <Compile Include="Classes\Interfaces\IQuery.cs" />
+    <Compile Include="Classes\ItemQuery.cs" />
     <Compile Include="Classes\LineItem.cs" />
+    <Compile Include="Classes\Query.cs" />
+    <Compile Include="Models\Response.cs" />
+    <Compile Include="Classes\TemplateQuery.cs" />
     <Compile Include="Models\InvoiceHeaderModel.cs" />
     <Compile Include="Models\InvoiceLineItemModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

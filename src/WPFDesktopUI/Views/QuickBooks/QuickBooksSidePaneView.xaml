@@ -63,7 +63,7 @@
                         Grid.Row="11"
                         Grid.Column="1"
                         Style="{StaticResource QbSidePaneValue}"
-                        >
+            >
             </DatePicker>
 
 
