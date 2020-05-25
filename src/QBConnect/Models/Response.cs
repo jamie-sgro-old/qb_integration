@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using QBFC13Lib;
 
-namespace QBConnect.Classes {
+namespace QBConnect.Models {
   internal class Response {
     internal Response(IResponseList responseList) {
       // Get data from first response from DoRequest
@@ -13,7 +13,7 @@ namespace QBConnect.Classes {
       Payload = responseList.GetAt(0);
     }
 
-    public IResponse Payload { get; set; }
+    internal IResponse Payload { get; set; }
 
     internal bool IsValid() {
       // Check status code, 0=ok, >0 is warning

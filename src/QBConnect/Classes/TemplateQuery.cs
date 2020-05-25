@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using QBConnect.Classes.Interfaces;
+using QBConnect.Models;
 using QBFC13Lib;
 
 namespace QBConnect.Classes {
