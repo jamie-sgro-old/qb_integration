@@ -6,44 +6,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QBConnect.Classes;
 
 namespace QBConnect {
   public class BasicImporter {
 
-    public static void Import(string _qbwFilePath, InvoiceHeaderModel header, List<InvoiceLineItemModel> lineItems) {
+    public static void Import(string qbwFilePath, InvoiceHeaderModel header, List<InvoiceLineItemModel> lineItems) {
 
-      // null TEMPLATE throws error
-      bool isNullTemplate = header.TemplateRefFullName == null && header.TemplateRefListID == null;
-
-      if (isNullTemplate) {
-        string paramName = nameof(header.TemplateRefFullName);
-
-        // Default to ID if both templates are null
-        if (header.TemplateRefListID == null) {
-          paramName = nameof(header.TemplateRefListID);
-        }
-
-        throw new ArgumentNullException(paramName: paramName,
-          message: "No QuickBooks invoice template has been specified.");
-      }
+      // Fail fast: Template can't be null
+      GetUserTemplateName(header);
 
       QBSessionManager sessionManager = null;
-      bool _sessionBegun = false;
-      bool _connectionOpen = false;
+      bool sessionBegun = false;
+      bool connectionOpen = false;
 
       try {
-        // Create the session Manager object
+        // sessionManager is the connection between code and QB
         sessionManager = new QBSessionManager();
 
         // Create the message set request object to hold our request
         IMsgSetRequest requestMsgSet = sessionManager.CreateMsgSetRequest("US", 13, 0);
         requestMsgSet.Attributes.OnError = ENRqOnError.roeContinue;
 
-        //Connect to QuickBooks and begin a session
-        sessionManager.OpenConnection2("", "Sangwa Solutions Customer Export", ENConnectionType.ctLocalQBD);
-        _connectionOpen = true;
-        sessionManager.BeginSession(_qbwFilePath, ENOpenMode.omDontCare);
-        _sessionBegun = true;
+        sessionManager.OpenConnection2("", "Sangwa Solutions QuickBooks Importer", ENConnectionType.ctLocalQBD);
+        connectionOpen = true;
+        sessionManager.BeginSession(qbwFilePath, ENOpenMode.omDontCare);
+        sessionBegun = true;
 
         #region Main Process
 
@@ -64,7 +52,6 @@ namespace QBConnect {
         // Temp
         // Console.WriteLine(responseMsgSet.ToXMLString());
 
-        //End the session and close the connection to QuickBooks
         sessionManager.EndSession();
         sessionManager.CloseConnection();
       } catch (Exception e) {
@@ -74,10 +61,10 @@ namespace QBConnect {
         Console.WriteLine(e.Message);
         throw;
       } finally {
-        if (_sessionBegun) {
+        if (sessionBegun) {
           sessionManager.EndSession();
         }
-        if (_connectionOpen) {
+        if (connectionOpen) {
           sessionManager.CloseConnection();
         }
       }
@@ -217,10 +204,19 @@ namespace QBConnect {
     }
 
     private static bool IsValidTemplate(IMsgSetRequest requestMsgSet, QBSessionManager sessionManager, string userTemplateName) {
-      List<string> templateNamesList = GetTemplateList(requestMsgSet, sessionManager);
+      var templateQuery = new TemplateQuery(requestMsgSet, sessionManager);
+      List<string> templateNamesList = templateQuery.GetList();
       return templateNamesList.Contains(userTemplateName);
     }
 
+    /// <summary>
+    /// Decide which of the two possible template variables should be used
+    /// in future processes. Priority goes to IDs over strings if both are
+    /// provided
+    /// </summary>
+    /// <param name="header">Data model containing both TemplateRefListID &
+    /// TemplateRefFullName</param>
+    /// <returns>Template ID if possible, else Template fullname, else exception</returns>
     private static string GetUserTemplateName(InvoiceHeaderModel header) {
       if (header.TemplateRefListID != null) {
         return header.TemplateRefListID;
@@ -228,65 +224,8 @@ namespace QBConnect {
       if (header.TemplateRefFullName != null) {
         return header.TemplateRefFullName;
       }
-      throw new ArgumentNullException(paramName: nameof(header.TemplateRefFullName),
+      throw new ArgumentNullException(paramName: nameof(header.TemplateRefListID),
         message: "No QuickBooks invoice template has been specified.");
-    }
-
-    private static List<string> GetTemplateList(IMsgSetRequest requestMsgSet, QBSessionManager sessionManager) {
-      
-      // Generate request for a template query
-      // to be executed when .DoRequests() is run
-      ITemplateQuery templateQueryRq = requestMsgSet.AppendTemplateQueryRq();
-      templateQueryRq.metaData.SetValue(ENmetaData.mdMetaDataAndResponseData);
-
-      IMsgSetResponse responseMsgSet = sessionManager.DoRequests(requestMsgSet);
-      if (responseMsgSet == null) new List<string>();
-
-      IResponseList responseList = responseMsgSet.ResponseList;
-      if (responseList == null) new List<string>();
-
-      // get data from first response from AppendTemplateQueryRq request
-      IResponse response = responseList.GetAt(0);
-
-      #region Verify
-
-      //check the status code of the response, 0=ok, >0 is warning
-      if (response.StatusCode < 0) new List<string>();
-
-      //the request-specific response is in the details, make sure we have some
-      if (response.Detail == null) new List<string>();
-
-      //make sure the response is the type we're expecting
-      ENResponseType responseType = (ENResponseType)response.Type.GetValue();
-      if (responseType != ENResponseType.rtTemplateQueryRs) new List<string>();
-      
-      #endregion
-
-      //upcast to more specific type here, this is safe because we checked with response. Type check above
-      ITemplateRetList templateRetList = (ITemplateRetList)response.Detail;
-
-
-      return GetTemplateNames(templateRetList);
-    }
-
-    /// <summary>
-    /// From a template return list, compile and return a list of all template names
-    /// </summary>
-    /// <param name="templateRetList">A template return list</param>
-    /// <returns>Empty list of strings if null, else a list of template names</returns>
-    private static List<string> GetTemplateNames(ITemplateRetList templateRetList) {
-      if (templateRetList == null) return new List<string>();
-
-      List<string> names = new List<string>();
-
-      for (int i = 0; i < templateRetList.Count; i++) {
-        ITemplateRet template = templateRetList.GetAt(i);
-        string name = (string)template.Name.GetValue();
-
-        names.Add(name);
-      }
-
-      return names;
     }
   }
 }
