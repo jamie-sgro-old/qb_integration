@@ -9,7 +9,17 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
   public class QuickBooksSidePaneViewModel : Screen {
 		private string _otherHeaderTextBlock;
 		private bool _hasHeaderOther;
+		private string _headerOtherTextBox;
 		private DateTime _headerDateTextBox = DateTime.Now;
+
+
+		public string HeaderOtherTextBox {
+			get => _headerOtherTextBox;
+      set {
+        _headerOtherTextBox = value;
+        NotifyOfPropertyChange(() => HeaderOtherTextBox);
+			}
+		}
 
 		public DateTime HeaderDateTextBox {
 			get => _headerDateTextBox;
@@ -18,6 +28,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 				NotifyOfPropertyChange(() => HeaderDateTextBox);
 			}
 		}
+
 
 		public bool HasHeaderOther {
 			get {

@@ -108,7 +108,11 @@ namespace WPFDesktopUI.ViewModels {
         var hasTemplate = HasTemplate;
         var template = Template;
 
-        var header = new NxInvoiceHeaderModel {TemplateRefFullName = template};
+        var header = new NxInvoiceHeaderModel {
+          TemplateRefFullName = template, 
+          TxnDate = QuickBooksSidePaneViewModel.HeaderDateTextBox,
+					Other = QuickBooksSidePaneViewModel.HeaderOtherTextBox,
+				};
 
         var qbFilePath = QbFilePath;
 

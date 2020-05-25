@@ -19,12 +19,13 @@ namespace MCBusinessLogic.Controllers {
       if (e.ParamName == "lineItems") {
         return GetLineItemsOutOfRange(e.Message);
       }
-      if (e.ParamName == "responseList") {
+			// Internal system error, let it bubble up
+      /*if (e.ParamName == "responseList") {
         throw new ArgumentOutOfRangeException(
           message: "More than one QuickBooks request was "+
                    "provided when only one was expected.",
 					innerException: e);
-      }
+      }*/
 			return null;
 		}
 

@@ -18,6 +18,10 @@ namespace QBConnect.Classes {
       var itemQueryRq = MsgSetRequest.AppendItemQueryRq();
     }
 
+    /* Code Snippet:
+    var itemQuery = new ItemQuery(requestMsgSet, sessionManager);
+    itemQuery.GetList<IORItemRetList>();
+    */
     protected override List<string> CompileList<T>(T retList) {
       var itemRetList = (IORItemRetList)retList;
       if (itemRetList == null) return new List<string>();

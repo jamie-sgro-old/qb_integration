@@ -43,9 +43,6 @@ namespace QBConnect {
 
         #region Main Process
 
-        var itemQuery = new ItemQuery(requestMsgSet, sessionManager);
-        itemQuery.GetList<IORItemRetList>();
-
         bool isValidTemplate = IsValidTemplate(requestMsgSet, sessionManager, GetUserTemplateName(header));
         
         if (!isValidTemplate) {
@@ -88,7 +85,7 @@ namespace QBConnect {
 
       #region Header
 
-      // Accounts Recievable Ref
+      // Accounts Receivable Ref
       if (header.ARAccountRefFullName != null) {
         Header.ARAccountRef.FullName.SetValue(header.ARAccountRefFullName); 
       }
@@ -122,6 +119,12 @@ namespace QBConnect {
 
       if (header.CustomerRefListID != null) {
         Header.CustomerRef.ListID.SetValue(header.CustomerRefListID); 
+      }
+
+      // Transaction Date
+      if (header.TxnDate != null) {
+        DateTime txnDate = Convert.ToDateTime(header.TxnDate);
+        Header.TxnDate.SetValue(txnDate);
       }
 
       // Due Date
@@ -180,6 +183,11 @@ namespace QBConnect {
 
       if (header.TermsRefListID != null) {
         Header.TermsRef.ListID.SetValue(header.TermsRefListID); 
+      }
+
+      // Header Other
+      if (header.Other != null) {
+        Header.Other.SetValue(header.Other);
       }
 
 

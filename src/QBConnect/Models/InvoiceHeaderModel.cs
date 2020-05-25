@@ -94,7 +94,6 @@ namespace QBConnect.Models {
     /// </summary>
     public string CustomerMsgRefFullName { get; set; }
 
-
     /// <summary>
     /// A standard message such as “Thank you for your business,” or “Please 
     /// sign and return this estimate to indicate your approval.” A customer
@@ -227,6 +226,33 @@ namespace QBConnect.Models {
     /// aggregate includes both FullName and ListID, FullName will be ignored.
     /// </summary>
     public string TermsRefListID { get; set; }
+
+    /// <summary>
+    /// The date of the invoice. If you leave TxnDate out of an InvoiceAdd message,
+    /// QuickBooks might prefill it with the date of the invoice that was most recently saved.
+    /// </summary>
+    public DateTime? TxnDate { get; set; }
+
+    /// <summary>
+    /// Other, Other1, and Other2 are standard QuickBooks custom fields available to
+    /// transactions. The Other field is a transaction-level field, like the FOB field,
+    /// PO Number field, and so forth. This field appears only once for the transaction:
+    /// you can write to it and modify it. The Other1 and Other2 fields exist at the
+    /// line item level; each line item has them, and you can write or modify the value
+    /// in each line. These custom fields are available for immediate use: you don’t
+    /// need to enable these in the transaction template to be able to access them via
+    /// SDK. (However, those Other, Other1, Other2 fields and their values are viewable
+    /// and printable in QuickBooks only if the transaction template has these enabled!)
+    /// Note: you cannot use DataExtDef to define Other, Other1, Other2 for the
+    /// transaction. There is no need to in any case. Those are automatically available.
+    /// Notice that the Other, Other1, and Other2 names are the real SDK names for
+    /// those custom fields: that is, their DataExtName value will always be Other,
+    /// Other1, or Other2. Even if the user has re-labelled those custom fields to
+    /// something else, such as “Barracks Number”, or “Max Headroom”, or even “Pleni
+    /// Potentiary”. This re-labelling has no effect on the SDK. You’ll always write
+    /// to them or modify them as Other, Other1, or Other2.
+    /// </summary>
+    public string Other { get; set; }
 
   }
 }
