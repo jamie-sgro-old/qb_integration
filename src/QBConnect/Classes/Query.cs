@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
+using QBConnect.Classes.Interfaces;
 using QBConnect.Models;
 using QBFC13Lib;
 
 namespace QBConnect.Classes {
-  internal abstract class Query {
+  internal abstract class Query : IQuery {
 
     #region Properties
 
     private IResponseList _responseList;
 
-    internal IMsgSetRequest MsgSetRequest { get; set; }
-    internal QBSessionManager QbSessionManager { get; set; }
-    internal IResponseList ResponseList {
+    public IMsgSetRequest MsgSetRequest { get; set; }
+    public QBSessionManager QbSessionManager { get; set; }
+    private IResponseList ResponseList {
       get {
         var responseMsgSet = QbSessionManager.DoRequests(MsgSetRequest);
         _responseList = responseMsgSet?.ResponseList;
@@ -19,7 +20,7 @@ namespace QBConnect.Classes {
       }
       set => _responseList = value;
     }
-    internal abstract dynamic Type { get;  }
+    protected abstract dynamic Type { get;  }
 
     #endregion Properties
 
@@ -31,7 +32,7 @@ namespace QBConnect.Classes {
     /// Generate request for a template query
     /// to be executed when .DoRequests() is run
     /// </summary>
-    internal abstract void SpecifyQuery();
+    protected abstract void SpecifyQuery();
 
     public List<string> GetList<T>() {
       SpecifyQuery();
@@ -50,7 +51,7 @@ namespace QBConnect.Classes {
     /// </summary>
     /// <param name="retList">A return list of type generic</param>
     /// <returns>Empty list of strings if null, else a list of desired names</returns>
-    internal abstract List<string> CompileList<T>(T retList);
+    protected abstract List<string> CompileList<T>(T retList);
 
     #endregion Functions
   }

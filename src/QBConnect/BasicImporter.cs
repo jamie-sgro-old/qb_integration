@@ -43,6 +43,9 @@ namespace QBConnect {
 
         #region Main Process
 
+        var itemQuery = new ItemQuery(requestMsgSet, sessionManager);
+        itemQuery.GetList<IORItemRetList>();
+
         bool isValidTemplate = IsValidTemplate(requestMsgSet, sessionManager, GetUserTemplateName(header));
         
         if (!isValidTemplate) {

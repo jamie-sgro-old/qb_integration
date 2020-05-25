@@ -8,16 +8,14 @@ namespace QBConnect.Classes {
       QbSessionManager = qbSessionManager;
     }
 
-    internal override dynamic Type { get; } = ENResponseType.rtTemplateQueryRs;
-
-
-    internal override void SpecifyQuery() {
+    protected override dynamic Type { get; } = ENResponseType.rtTemplateQueryRs;
+    protected override void SpecifyQuery() {
       var templateQuery = MsgSetRequest.AppendTemplateQueryRq();
       templateQuery.metaData.SetValue(ENmetaData.mdMetaDataAndResponseData);
     }
 
 
-    internal override List<string> CompileList<T>(T retList) {
+    protected override List<string> CompileList<T>(T retList) {
       var templateRetList = (ITemplateRetList)retList;
       if (templateRetList == null) return new List<string>();
 

@@ -44,6 +44,7 @@
     <Compile Include="BasicImporter.cs" />
     <Compile Include="Classes\Interfaces\IInvoiceLineAppender.cs" />
     <Compile Include="Classes\Interfaces\IQuery.cs" />
+    <Compile Include="Classes\ItemQuery.cs" />
     <Compile Include="Classes\LineItem.cs" />
     <Compile Include="Classes\Query.cs" />
     <Compile Include="Models\Response.cs" />
