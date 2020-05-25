@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using QBFC13Lib;
 
 namespace QBConnect.Classes.Interfaces {
@@ -10,8 +6,10 @@ namespace QBConnect.Classes.Interfaces {
     IMsgSetRequest MsgSetRequest { get; set; }
     QBSessionManager QbSessionManager { get; set; }
     IResponseList ResponseList { get; set; }
-    void SpecifyQuery();
+    dynamic Type { get;  }
 
+    void SpecifyQuery();
     List<string> GetList();
+    List<string> CompileList();
   }
 }

@@ -16,6 +16,14 @@ namespace QBConnect {
       // Fail fast: Template can't be null
       GetUserTemplateName(header);
 
+      // Fail fast: LineItems need some data
+      if (lineItems.Count < 1) {
+        throw new ArgumentOutOfRangeException(
+          paramName: nameof(lineItems),
+          message: "No Invoice lineItems were supplied. " +
+                   "The Importer was expecting at least 1.");
+      }
+
       QBSessionManager sessionManager = null;
       bool sessionBegun = false;
       bool connectionOpen = false;
@@ -205,7 +213,7 @@ namespace QBConnect {
 
     private static bool IsValidTemplate(IMsgSetRequest requestMsgSet, QBSessionManager sessionManager, string userTemplateName) {
       var templateQuery = new TemplateQuery(requestMsgSet, sessionManager);
-      List<string> templateNamesList = templateQuery.GetList();
+      List<string> templateNamesList = templateQuery.GetList<ITemplateRetList>();
       return templateNamesList.Contains(userTemplateName);
     }
 
