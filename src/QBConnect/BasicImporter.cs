@@ -51,14 +51,10 @@ namespace QBConnect {
         }
 
         BuildInvoiceAddRq(requestMsgSet, header, lineItems);
-        // BuildCustomerQuery(requestMsgSet);
         
         #endregion Main Process
 
         var responseMsgSet = sessionManager.DoRequests(requestMsgSet);
-
-        // Temp
-        // Console.WriteLine(responseMsgSet.ToXMLString());
 
         sessionManager.EndSession();
         sessionManager.CloseConnection();
@@ -216,12 +212,6 @@ namespace QBConnect {
       #endregion LineItems
     }
   
-    static void BuildCustomerQuery(IMsgSetRequest requestMsgSet) {
-      ICustomerQuery CustomerQueryRq = requestMsgSet.AppendCustomerQueryRq();
-      CustomerQueryRq.ORCustomerListQuery.CustomerListFilter.TotalBalanceFilter.Operator.SetValue(ENOperator.oGreaterThanEqual);
-      CustomerQueryRq.ORCustomerListQuery.CustomerListFilter.TotalBalanceFilter.Amount.SetValue(0);
-    }
-
     private static bool IsValidTemplate(IMsgSetRequest requestMsgSet, QBSessionManager sessionManager, string userTemplateName) {
       var templateQuery = new TemplateQuery(requestMsgSet, sessionManager);
       List<string> templateNamesList = templateQuery.GetList<ITemplateRetList>();
