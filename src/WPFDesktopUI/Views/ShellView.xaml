@@ -1,0 +1,56 @@
+﻿<Window x:Class="WPFDesktopUI.Views.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFDesktopUI.Views"
+        xmlns:NewUserControl="clr-namespace:WPFDesktopUI.Views"
+        mc:Ignorable="d"
+        Icon="Images/icon-sangwa.ico"
+        Title="Invoice Importer by Sangwa" Height="600" Width="1000">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Restore"
+                          x:Name="MenuItemRestore"/>
+                <MenuItem Header="_Minimize"
+                          x:Name="MenuItemMinimize"/>
+                <MenuItem Header="_Maximize"
+                          x:Name="MenuItemMaximize" >
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="_Close"
+                          x:Name="MenuItemClose"
+                          InputGestureText="Alt+F4" 
+                          FontWeight="Bold" />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Command="Cut" />
+                <MenuItem Command="Copy" />
+                <MenuItem Command="Paste" />
+            </MenuItem>
+            <MenuItem Header="_Tools">
+                <MenuItem Header="_Manage users" />
+                <MenuItem Header="_Show groups" IsCheckable="True" IsChecked="True" />
+            </MenuItem>
+            <MenuItem Header="_Settings">
+                <MenuItem Header="_Preferences..."
+                          x:Name="MenuItemPreferences"/>
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About Invoice Importer"
+                          x:Name="MenuItemAbout"/>
+            </MenuItem>
+        </Menu>
+        <TabControl DockPanel.Dock="Top">
+            <TabItem Header="Import">
+                <ContentControl x:Name="ImportViewModel" />
+                <!--<NewUserControl:ImportView/>-->
+            </TabItem>
+            <TabItem Header="QuickBooks" >
+                <ContentControl x:Name="QuickBooksViewModel" />
+                <!--<NewUserControl:QuickBooksView/>-->
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

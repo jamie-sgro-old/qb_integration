@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="WPFDesktopUI.Views.Preferences.PreferencesCsvImportView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFDesktopUI.Views.Preferences"
+             mc:Ignorable="d" 
+             Background="White"
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- ROW 0 -->
+        
+        <TextBlock Text="Csv Import"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   Style="{StaticResource Pref1}"
+                   FontWeight="Bold" />
+
+        <!-- ROW 1 -->
+
+        <StackPanel  Orientation="Vertical"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    >
+            <Separator Grid.ColumnSpan="2"/>
+            <TextBlock Text="Value Separation" 
+                       Style="{StaticResource Pref1}" />
+        </StackPanel >
+
+
+        
+        <!-- ROW 2 -->
+        <RadioButton x:Name="CommaSeparation"
+                     IsChecked="{Binding Path=CommaSeparationIsChecked, Mode=OneWay}"
+                     Style="{StaticResource Radio1}"
+                     GroupName="Value Separation"
+                     Content="Comma Separation"
+                     Grid.Row="2"
+                     Grid.Column="0">
+        </RadioButton>
+        
+        <!-- ROW 3 -->
+        <RadioButton x:Name="TabSeparation" 
+                     IsChecked="{Binding Path=TabSeparationIsChecked, Mode=OneWay}"
+                     Style="{StaticResource Radio1}"
+                     GroupName="Value Separation"
+                     Content="Tab Separation"
+                     Grid.Row="3"
+                     Grid.Column="0">
+        </RadioButton>
+        
+        <!-- ROW 4 -->
+        <RadioButton x:Name="CustomSeparation"
+                     IsChecked="{Binding Path=CustomSeparationIsChecked, Mode=OneWay}"
+                     Style="{StaticResource Radio1}"
+                     GroupName="Value Separation"
+                     Content="Custom Separation"
+                     Grid.Row="4"
+                     Grid.Column="0">
+        </RadioButton>
+
+        <!-- ROW 5 -->
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Margin="10,0">
+            <TextBlock Style="{StaticResource Pref2}">
+                Specify Custom Separation: 
+            </TextBlock>
+            <TextBox x:Name="CustomSeparationTextBox" Text="{Binding Source={StaticResource Settings}, Path=Default.StnCsvSeparation}"
+                     IsEnabled="{Binding IsChecked, ElementName=CustomSeparation, Mode=OneWay}"
+                     MinWidth="50" Height="18" VerticalAlignment="Bottom"
+                     />
+        </StackPanel>
+
+        <!-- ROW 6 -->
+        <StackPanel  Orientation="Vertical"
+                    Grid.Row="6"
+                    Grid.ColumnSpan="2"
+                    >
+            <Separator Grid.ColumnSpan="2"/>
+            <TextBlock Text="Next Setting" 
+                       Style="{StaticResource Pref1}" />
+        </StackPanel >
+
+    </Grid>
+</UserControl>

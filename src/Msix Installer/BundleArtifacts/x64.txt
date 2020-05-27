@@ -1,0 +1,6 @@
+MainPackage=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Msix Installer\bin\x64\Release\Importer Tool Installer_0.2.3.0_x64.msix
+SymbolPackage=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Msix Installer\obj\x64\Release\Symbols\Importer Tool Installer_0.2.3.0_x64.appxsym
+ResourcePack=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Msix Installer\bin\x64\Release\Importer Tool Installer_0.2.3.0_scale-100.msix
+ResourcePack=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Msix Installer\bin\x64\Release\Importer Tool Installer_0.2.3.0_scale-125.msix
+ResourcePack=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Msix Installer\bin\x64\Release\Importer Tool Installer_0.2.3.0_scale-150.msix
+ResourcePack=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Msix Installer\bin\x64\Release\Importer Tool Installer_0.2.3.0_scale-400.msix

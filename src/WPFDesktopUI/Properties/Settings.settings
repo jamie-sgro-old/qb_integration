@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WPFDesktopUI.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="StnCsvSeparation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">,</Value>
+    </Setting>
+    <Setting Name="StnQbInvTemplateName" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="StnQbInvHasTemplate" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="StnQbFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="StnQbInvHasHeaderOther" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="StnQbInvHeaderOtherName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Other</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
