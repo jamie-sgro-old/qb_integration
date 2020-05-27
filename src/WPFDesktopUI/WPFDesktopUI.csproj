@@ -121,6 +121,7 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Models\PersonModel.cs" />
+    <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\ImportViewModel.cs" />
     <Compile Include="ViewModels\PreferencesViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesCsvImportViewModel.cs" />
@@ -129,6 +130,9 @@
     <Compile Include="ViewModels\QuickBooksViewModel.cs" />
     <Compile Include="ViewModels\QuickBooks\QuickBooksSidePaneViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ImportView.xaml.cs">
       <DependentUpon>ImportView.xaml</DependentUpon>
     </Compile>
@@ -160,6 +164,10 @@
     <Page Include="Style.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ImportView.xaml">
       <SubType>Designer</SubType>

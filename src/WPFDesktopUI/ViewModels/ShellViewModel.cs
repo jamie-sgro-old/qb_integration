@@ -40,8 +40,11 @@ namespace WPFDesktopUI.ViewModels {
 			IWindowManager manager = new WindowManager();
 
 			manager.ShowWindow(new PreferencesViewModel(), null, null);
-			//PreferencesView preferences = new PreferencesView();
-			//preferences.Show();
 		}
-  }
+    public void MenuItemAbout() {
+      IWindowManager manager = new WindowManager();
+
+      manager.ShowWindow(new AboutViewModel(), null, null);
+    }
+	}
 }

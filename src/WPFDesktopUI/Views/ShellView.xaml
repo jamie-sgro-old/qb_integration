@@ -37,6 +37,10 @@
                 <MenuItem Header="_Preferences..."
                           x:Name="MenuItemPreferences"/>
             </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About Invoice Importer"
+                          x:Name="MenuItemAbout"/>
+            </MenuItem>
         </Menu>
         <TabControl DockPanel.Dock="Top">
             <TabItem Header="Import">
