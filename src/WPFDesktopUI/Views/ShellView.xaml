@@ -7,7 +7,7 @@
         xmlns:NewUserControl="clr-namespace:WPFDesktopUI.Views"
         mc:Ignorable="d"
         Icon="Images/icon-sangwa.ico"
-        Title="ShellView" Height="600" Width="1000">
+        Title="Invoice Importer by Sangwa" Height="600" Width="1000">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
@@ -46,9 +46,6 @@
             <TabItem Header="QuickBooks" >
                 <ContentControl x:Name="QuickBooksViewModel" />
                 <!--<NewUserControl:QuickBooksView/>-->
-            </TabItem>
-            <TabItem Header="Dump" >
-                <NewUserControl:DumpView/>
             </TabItem>
         </TabControl>
     </DockPanel>

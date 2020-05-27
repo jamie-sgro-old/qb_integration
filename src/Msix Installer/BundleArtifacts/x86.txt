@@ -1,0 +1,6 @@
+MainPackage=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Msix Installer\bin\x86\Release\Msix Installer_0.2.0.0_x86.msix
+SymbolPackage=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Msix Installer\obj\x86\Release\Symbols\Msix Installer_0.2.0.0_x86.appxsym
+ResourcePack=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Msix Installer\bin\x86\Release\Msix Installer_0.2.0.0_scale-100.msix
+ResourcePack=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Msix Installer\bin\x86\Release\Msix Installer_0.2.0.0_scale-125.msix
+ResourcePack=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Msix Installer\bin\x86\Release\Msix Installer_0.2.0.0_scale-150.msix
+ResourcePack=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Msix Installer\bin\x86\Release\Msix Installer_0.2.0.0_scale-400.msix
