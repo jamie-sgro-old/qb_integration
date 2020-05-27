@@ -9,7 +9,7 @@
   <Identity
     Name="b6955d56-3792-4dac-965f-25ebdb26c57c"
     Publisher="CN=Sangwa Solutions"
-    Version="0.2.32.0" />
+    Version="0.2.33.0" />
 
   <Properties>
     <DisplayName>Msix Installer</DisplayName>
