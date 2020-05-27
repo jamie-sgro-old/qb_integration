@@ -47,9 +47,6 @@
                 <ContentControl x:Name="QuickBooksViewModel" />
                 <!--<NewUserControl:QuickBooksView/>-->
             </TabItem>
-            <TabItem Header="Dump" >
-                <NewUserControl:DumpView/>
-            </TabItem>
         </TabControl>
     </DockPanel>
 </Window>
