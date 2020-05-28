@@ -27,9 +27,6 @@ namespace WPFDesktopUI.ViewModels {
 		private string _consoleMessage;
 		private bool _canBtnQbImport = true;
 		private bool _qbProgressBarIsVisible = false;
-		private bool _sessionBegin;
-		private bool _hasTemplate;
-		private string _template;
 
 		public QuickBooksSidePaneViewModel QuickBooksSidePaneViewModel { get; }
 
@@ -57,44 +54,7 @@ namespace WPFDesktopUI.ViewModels {
 			}
 		}
 
-		private bool SessionBegin {
-			get => _sessionBegin;
-      set {
-				_sessionBegin = value;
-				CanBtnQbImport = !value;
-				QbProgressBarIsVisible = value;
-				NotifyOfPropertyChange(() => SessionBegin);
-			}
-		}
-
-		private bool HasTemplate {
-			get {
-				_hasTemplate = (bool)Properties.Settings.Default["StnQbInvHasTemplate"];
-				return _hasTemplate;
-			}
-		}
-
-		private string Template {
-			get
-      {
-				// Use template if preference is check, else let DB.dll return ArgumentNullException
-        var name = Properties.Settings.Default["StnQbInvTemplateName"].ToString();
-				_template = HasTemplate ? name : null;
-        return _template;
-      }
-		}
-
-		private string _qbFilePath;
-
-		public string QbFilePath {
-      get {
-				_qbFilePath = Properties.Settings.Default["StnQbFilePath"].ToString();
-				return _qbFilePath;
-      }
-		}
-
-
-		#endregion Properties
+    #endregion Properties
 
 
 		#region Methods
@@ -102,11 +62,9 @@ namespace WPFDesktopUI.ViewModels {
 		public async Task BtnQbImport() {
 			Console.WriteLine(QuickBooksSidePaneViewModel.HeaderDateTextBox);
       try {
-        SessionBegin = true;
-        ConsoleMessage = "Importing, please stand by...";
+        SessionStart();
 
-        var hasTemplate = HasTemplate;
-        var template = Template;
+        var template = GetTemplate();
 
         var header = new NxInvoiceHeaderModel {
           TemplateRefFullName = template, 
@@ -114,14 +72,13 @@ namespace WPFDesktopUI.ViewModels {
 					Other = QuickBooksSidePaneViewModel.HeaderOtherTextBox,
 				};
 
-        var qbFilePath = QbFilePath;
+        var qbFilePath = GetQbFilePath();
 
         await Task.Run(() => {
           var qbImport = new NxQbImportController(qbFilePath, header);
           qbImport.Import();
         });
 
-        ConsoleMessage = "Import has successfully completed";
       }
       catch (ArgumentNullException e) {
         ConsoleMessage = ErrHandler.HandleArgumentNullException(e) ?? ErrHandler.GetDefaultError(e);
@@ -134,9 +91,34 @@ namespace WPFDesktopUI.ViewModels {
 			} catch (Exception e) {
 				ConsoleMessage = ErrHandler.GetDefaultError(e);
 			} finally {
-				SessionBegin = false;
+        SessionEnd();
 			}
 		}
+
+    private static string GetTemplate() {
+      var hasTemplate = (bool)Properties.Settings.Default["StnQbInvHasTemplate"];
+
+      // Use template if preference is checked, else let DB.dll return ArgumentNullException
+      var name = Properties.Settings.Default["StnQbInvTemplateName"].ToString();
+      var template = hasTemplate ? name : null;
+      return template;
+    }
+
+		private static string GetQbFilePath() {
+      return Properties.Settings.Default["StnQbFilePath"].ToString();
+    }
+
+    private void SessionStart() {
+      CanBtnQbImport = false;
+      QbProgressBarIsVisible = true;
+      ConsoleMessage = "Importing, please stand by...";
+    }
+
+    private void SessionEnd() {
+      CanBtnQbImport = true;
+      QbProgressBarIsVisible = false;
+      ConsoleMessage = "Import has successfully completed";
+    }
 
 		#endregion Methods
 	}
