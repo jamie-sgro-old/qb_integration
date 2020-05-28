@@ -12,7 +12,8 @@ namespace MCBusinessLogic.Controllers {
     public void Import() {
       var header = MapHeader(PreHeader);
       var sqlLineItems = MapLineItems(PreLineItems);
-      BasicImporter.Import(QbFilePath, header, sqlLineItems);
+      var invoiceImporter = new InvoiceImporter(QbFilePath);
+      invoiceImporter.Import(header, sqlLineItems);
     }
     public List<InvoiceLineItemModel> MapLineItems(List<QbStaffModel> lineItems) {
       var sqlLineItems = new List<InvoiceLineItemModel>();

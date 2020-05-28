@@ -83,8 +83,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicImporter.cs" />
-    <Compile Include="Classes\CustomerQuery.cs" />
+    <Compile Include="Classes\HeaderItem.cs" />
+    <Compile Include="InvoiceImporter.cs" />
     <Compile Include="Classes\Interfaces\IInvoiceLineAppender.cs" />
     <Compile Include="Classes\Interfaces\IQuery.cs" />
     <Compile Include="Classes\ItemQuery.cs" />
