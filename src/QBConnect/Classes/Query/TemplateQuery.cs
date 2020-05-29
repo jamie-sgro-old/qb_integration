@@ -3,7 +3,7 @@ using QBFC13Lib;
 
 namespace QBConnect.Classes {
   internal sealed class TemplateQuery : Query {
-    public TemplateQuery(IMsgSetRequest msgSetRequest, QBSessionManager qbSessionManager) {
+    internal TemplateQuery(IMsgSetRequest msgSetRequest, QBSessionManager qbSessionManager) {
       MsgSetRequest = msgSetRequest;
       QbSessionManager = qbSessionManager;
     }
