@@ -11,5 +11,6 @@ namespace MCBusinessLogic.Models {
     public string StaffName { get; set; }
     public string TimeInOut { get; set; }
     public string ServiceDate { get; set; }
+    public string Rate { get; set; }
   }
 }
