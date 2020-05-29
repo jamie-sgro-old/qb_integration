@@ -9,14 +9,22 @@ namespace MCBusinessLogic.Controllers {
     public string QbFilePath { get; set; }
     public DefaultInvoiceHeaderModel PreHeader { get; set; }
     public abstract List<ClientLineItemModel> PreLineItems { get; set; }
+
+
+
     public void Import() {
       var header = MapHeader(PreHeader);
       var sqlLineItems = MapLineItems(PreLineItems);
       using (var invoiceImporter = new InvoiceImporter(QbFilePath)) {
+        header.Other = "this is the first invoice";
         invoiceImporter.Import(header, sqlLineItems);
+        header.Other = "this is the second invoice";
         invoiceImporter.Import(header, sqlLineItems);
       }
     }
+
+
+
     public List<InvoiceLineItemModel> MapLineItems(List<ClientLineItemModel> lineItems) {
       var sqlLineItems = new List<InvoiceLineItemModel>();
       foreach (var line in lineItems) {
@@ -31,6 +39,9 @@ namespace MCBusinessLogic.Controllers {
       }
       return sqlLineItems;
     }
+
+
+
     public InvoiceHeaderModel MapHeader(DefaultInvoiceHeaderModel preHeader) {
       // todo: add unit test for when a new param is missing. i.e. mapping missed
 

@@ -8,6 +8,10 @@ using QBFC13Lib;
 
 namespace QBConnect.Classes {
   internal class ClientSessionManager : IClientSessionManager {
+    public ClientSessionManager() {
+      _qbSessionManagerImplementation = new QBSessionManager();
+    }
+
     private QBSessionManager _qbSessionManagerImplementation;
     public bool ConnectionOpen { get; set; } = false;
     public bool SessionBegun { get; set; } = false;

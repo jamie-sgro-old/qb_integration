@@ -3,23 +3,14 @@ using QBConnect.Models;
 using QBFC13Lib;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using QBConnect.Classes;
 
 namespace QBConnect {
   public class InvoiceImporter : IDisposable {
     public InvoiceImporter(string qbwFilePath) {
-      SessionManager = null;
-
       // sessionManager is the connection between code and QB
       SessionManager = new ClientSessionManager();
-
-      // Create the message set request object to hold our request
-      RequestMsgSet = SessionManager.CreateMsgSetRequest("US", 13, 0);
-      RequestMsgSet.Attributes.OnError = ENRqOnError.roeContinue;
-
+      
       SessionManager.OpenConnection2("", "Sangwa Solutions QuickBooks Importer", ENConnectionType.ctLocalQBD);
       SessionManager.BeginSession(qbwFilePath, ENOpenMode.omDontCare);
     }
@@ -27,19 +18,17 @@ namespace QBConnect {
 
 
     private IClientSessionManager SessionManager { get; }
-    private IMsgSetRequest RequestMsgSet { get; }
 
 
 
     public void Import(InvoiceHeaderModel headerData, List<InvoiceLineItemModel> lineItems) {
 
+      #region Fail Fast
+
       if (!SessionManager.ConnectionOpen) throw new ArgumentException("Connection is not open");
       if (!SessionManager.SessionBegun) throw new ArgumentException("Session has not begun");
 
-      // Fail fast: Template can't be null
-      var userTemplateName = GetUserTemplateName(headerData);
-
-      // Fail fast: LineItems need some data
+      // LineItems need some data
       if (lineItems.Count < 1) {
         throw new ArgumentOutOfRangeException(
           paramName: nameof(lineItems),
@@ -47,17 +36,25 @@ namespace QBConnect {
                    "The Importer was expecting at least 1.");
       }
 
-      
+      // Template can't be null
+      var userTemplateName = GetUserTemplateName(headerData);
+
+      // Template string can't be missing from QB template list
       bool isValidTemplate = IsValidTemplate(userTemplateName);
-      
       if (!isValidTemplate) {
         throw new ArgumentException(paramName: nameof(headerData.TemplateRefFullName),
           message: "Could not find '" + userTemplateName + "' in QuickBooks template list");
       }
 
-      BuildRequest(RequestMsgSet, headerData, lineItems);
+      #endregion Fail Fast
+
+      // Create the message set request object to hold our request
+      IMsgSetRequest msgSetRequest = SessionManager.CreateMsgSetRequest("US", 13, 0);
+      msgSetRequest.Attributes.OnError = ENRqOnError.roeContinue;
+
+      BuildRequest(msgSetRequest, headerData, lineItems);
       
-      var responseMsgSet = SessionManager.DoRequests(RequestMsgSet);
+      var responseMsgSet = SessionManager.DoRequests(msgSetRequest);
     }
 
 
@@ -70,7 +67,7 @@ namespace QBConnect {
 
       // Create variable for adding new lines to the invoice
       foreach (InvoiceLineItemModel line in lineItems) {
-        new Classes.LineItem(header).AddLine(line);
+        new LineItem(header).AddLine(line);
       }
 
       // Add SubTotal line item
@@ -78,9 +75,16 @@ namespace QBConnect {
 
       subTotal.InvoiceLineAdd.ItemRef.FullName.SetValue("Sub- Totals");
     }
+
+
   
+    /// <summary>
+    /// Check if template name provided is included in the list of QB template names
+    /// </summary>
+    /// <param name="userTemplateName">The name of the template to be used</param>
+    /// <returns></returns>
     private bool IsValidTemplate(string userTemplateName) {
-      var templateQuery = new TemplateQuery(RequestMsgSet, SessionManager);
+      var templateQuery = new TemplateQuery(SessionManager);
       List<string> templateNamesList = templateQuery.GetList<ITemplateRetList>();
       return templateNamesList.Contains(userTemplateName);
     }

@@ -6,8 +6,6 @@ namespace QBConnect.Classes {
     public TemplateQuery(QBSessionManager qbSessionManager) {
       QbSessionManager = qbSessionManager;
       MsgSetRequest = GetMsgSetRequest();
-      /*_msgSetRequest = QbSessionManager.CreateMsgSetRequest("US", 13, 0);
-      _msgSetRequest.Attributes.OnError = ENRqOnError.roeContinue;*/
     }
 
 
