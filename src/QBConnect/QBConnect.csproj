@@ -83,7 +83,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\ClientSessionManager.cs" />
     <Compile Include="Classes\HeaderItem.cs" />
+    <Compile Include="Classes\Interfaces\IClientSessionManager.cs" />
     <Compile Include="InvoiceImporter.cs" />
     <Compile Include="Classes\Interfaces\IInvoiceLineAppender.cs" />
     <Compile Include="Classes\Interfaces\IQuery.cs" />

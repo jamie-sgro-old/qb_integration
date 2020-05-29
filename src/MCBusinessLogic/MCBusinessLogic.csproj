@@ -104,7 +104,7 @@
     <Compile Include="Models\CsvModel.cs" />
     <Compile Include="Models\DefaultInvoiceHeaderModel.cs" />
     <Compile Include="Models\NxInvoiceHeaderModel.cs" />
-    <Compile Include="Models\QbStaffModel.cs" />
+    <Compile Include="Models\ClientLineItemModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
