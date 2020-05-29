@@ -5,25 +5,28 @@ using QBConnect;
 using QBConnect.Models;
 
 namespace MCBusinessLogic.Controllers {
-  public abstract class QbImportController : IQbImportController {
+  internal abstract class QbImportController : IQbImportController {
     public string QbFilePath { get; set; }
     public DefaultInvoiceHeaderModel PreHeader { get; set; }
-    public abstract List<QbStaffModel> PreLineItems { get; set; }
+    public abstract List<ClientLineItemModel> PreLineItems { get; set; }
     public void Import() {
       var header = MapHeader(PreHeader);
       var sqlLineItems = MapLineItems(PreLineItems);
-      var invoiceImporter = new InvoiceImporter(QbFilePath);
-      invoiceImporter.Import(header, sqlLineItems);
+      using (var invoiceImporter = new InvoiceImporter(QbFilePath)) {
+        invoiceImporter.Import(header, sqlLineItems);
+        invoiceImporter.Import(header, sqlLineItems);
+      }
     }
-    public List<InvoiceLineItemModel> MapLineItems(List<QbStaffModel> lineItems) {
+    public List<InvoiceLineItemModel> MapLineItems(List<ClientLineItemModel> lineItems) {
       var sqlLineItems = new List<InvoiceLineItemModel>();
       foreach (var line in lineItems) {
         sqlLineItems.Add(new InvoiceLineItemModel() {
-          ItemRef = line.Item,
+          ItemRef = line.ItemRef,
           Quantity = line.Quantity,
-          Other1 = line.TimeInOut,
-          Other2 = line.StaffName,
-          ServiceDate = line.ServiceDate
+          Other1 = line.Other1,
+          Other2 = line.Other2,
+          ServiceDate = line.ServiceDate,
+          ORRatePriceLevelRate = line.ORRatePriceLevelRate,
         });
       }
       return sqlLineItems;

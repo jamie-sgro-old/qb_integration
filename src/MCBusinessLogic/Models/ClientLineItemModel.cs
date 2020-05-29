@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MCBusinessLogic.Models {
-  public class QbStaffModel {
-    public string Item { get; set; }
+  public class ClientLineItemModel {
+    public string ItemRef { get; set; }
     public double? Quantity { get; set; }
-    public string StaffName { get; set; }
-    public string TimeInOut { get; set; }
+    public string Other1 { get; set; }
+    public string Other2 { get; set; }
     public DateTime? ServiceDate { get; set; }
+    public double? ORRatePriceLevelRate { get; set; }
   }
 }
