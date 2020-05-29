@@ -3,11 +3,12 @@ using QBFC13Lib;
 
 namespace QBConnect.Classes {
   internal sealed class ItemQuery : Query {
-    public ItemQuery(IMsgSetRequest msgSetRequest, QBSessionManager qbSessionManager) {
-      MsgSetRequest = msgSetRequest;
+    public ItemQuery(QBSessionManager qbSessionManager) {
       QbSessionManager = qbSessionManager;
+      MsgSetRequest = GetMsgSetRequest();
     }
 
+    protected override IMsgSetRequest MsgSetRequest { get; }
     protected override dynamic Type { get; } = ENResponseType.rtItemQueryRs;
     protected override void SpecifyQuery() {
       // Query all without any limitations

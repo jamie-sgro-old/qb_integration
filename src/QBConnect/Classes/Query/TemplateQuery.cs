@@ -3,11 +3,15 @@ using QBFC13Lib;
 
 namespace QBConnect.Classes {
   internal sealed class TemplateQuery : Query {
-    public TemplateQuery(IMsgSetRequest msgSetRequest, QBSessionManager qbSessionManager) {
-      MsgSetRequest = msgSetRequest;
+    public TemplateQuery(QBSessionManager qbSessionManager) {
       QbSessionManager = qbSessionManager;
+      MsgSetRequest = GetMsgSetRequest();
+      /*_msgSetRequest = QbSessionManager.CreateMsgSetRequest("US", 13, 0);
+      _msgSetRequest.Attributes.OnError = ENRqOnError.roeContinue;*/
     }
 
+
+    protected override IMsgSetRequest MsgSetRequest { get; }
     protected override dynamic Type { get; } = ENResponseType.rtTemplateQueryRs;
     protected override void SpecifyQuery() {
       var templateQuery = MsgSetRequest.AppendTemplateQueryRq();

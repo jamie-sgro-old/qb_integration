@@ -8,7 +8,7 @@ namespace QBConnect.Classes {
 
     #region Properties
 
-    public IMsgSetRequest MsgSetRequest { get; set; }
+    protected abstract IMsgSetRequest MsgSetRequest { get; }
     public QBSessionManager QbSessionManager { get; set; }
     protected abstract dynamic Type { get;  }
 
@@ -39,6 +39,12 @@ namespace QBConnect.Classes {
     private IResponseList GetResponseList() {
       var responseMsgSet = QbSessionManager.DoRequests(MsgSetRequest);
       return responseMsgSet?.ResponseList;
+    }
+
+    protected IMsgSetRequest GetMsgSetRequest() {
+      var msgSetRequest = QbSessionManager.CreateMsgSetRequest("US", 13, 0);
+      msgSetRequest.Attributes.OnError = ENRqOnError.roeContinue;
+      return msgSetRequest;
     }
 
     /// <summary>
