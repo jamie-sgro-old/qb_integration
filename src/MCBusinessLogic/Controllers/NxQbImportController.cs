@@ -4,8 +4,8 @@ using System;
 using System.Collections.Generic;
 
 namespace MCBusinessLogic.Controllers {
-  internal class NxQbImportController : QbImportController {
-    internal NxQbImportController(string qbFilePath, DefaultInvoiceHeaderModel preHeader) {
+  public class NxQbImportController : QbImportController {
+    public NxQbImportController(string qbFilePath, DefaultInvoiceHeaderModel preHeader) {
       QbFilePath = qbFilePath;
       PreHeader = preHeader;
       var csvData = SqliteDataAccess.LoadData<CsvModel>("SELECT * FROM csv_data", null);

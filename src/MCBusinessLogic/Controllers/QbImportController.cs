@@ -5,7 +5,7 @@ using QBConnect;
 using QBConnect.Models;
 
 namespace MCBusinessLogic.Controllers {
-  internal abstract class QbImportController : IQbImportController {
+  public abstract class QbImportController : IQbImportController {
     public string QbFilePath { get; set; }
     public DefaultInvoiceHeaderModel PreHeader { get; set; }
     public abstract List<ClientLineItemModel> PreLineItems { get; set; }
