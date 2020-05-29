@@ -8,18 +8,8 @@ namespace QBConnect.Classes {
 
     #region Properties
 
-    private IResponseList _responseList;
-
     public IMsgSetRequest MsgSetRequest { get; set; }
     public QBSessionManager QbSessionManager { get; set; }
-    private IResponseList ResponseList {
-      get {
-        var responseMsgSet = QbSessionManager.DoRequests(MsgSetRequest);
-        _responseList = responseMsgSet?.ResponseList;
-        return _responseList;
-      }
-      set => _responseList = value;
-    }
     protected abstract dynamic Type { get;  }
 
     #endregion Properties
@@ -36,7 +26,7 @@ namespace QBConnect.Classes {
 
     public List<string> GetList<T>() {
       SpecifyQuery();
-      var responseList = ResponseList;
+      var responseList = GetResponseList();
       var response = new Response(responseList);
       if (!response.IsValid(Type)) return new List<string>();
 
@@ -44,6 +34,11 @@ namespace QBConnect.Classes {
       var retList = (T)response.Payload.Detail;
 
       return CompileList(retList);
+    }
+
+    private IResponseList GetResponseList() {
+      var responseMsgSet = QbSessionManager.DoRequests(MsgSetRequest);
+      return responseMsgSet?.ResponseList;
     }
 
     /// <summary>
