@@ -3,6 +3,7 @@ using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,8 +15,25 @@ namespace MCBusinessLogic.Controllers {
         csvParser.SetDelimiters(new string[] { delim });
         csvParser.HasFieldsEnclosedInQuotes = true;
 
-        // Skip the row with the column names
-        csvParser.ReadLine();
+        // Map variable header strings to a set of variable names needed for the Model
+        var indexOf = new Dictionary<string, int>();
+        string[] headers = csvParser.ReadFields();
+        if (headers == null) return null;
+
+
+        // loop through all names in the model and match them to headers
+        var properties = typeof(CsvModel).GetProperties();
+        foreach (var property in properties) {
+          var name = property.Name;
+
+          for (int i = 0; i < headers.Length; i++) {
+            if (name != headers[i]) continue;
+            indexOf.Add(name, i);
+            break;
+          }
+        }
+
+
 
         var csvData = new List<CsvModel>();
 
@@ -23,11 +41,12 @@ namespace MCBusinessLogic.Controllers {
           // Read current line fields, pointer moves to the next line.
           string[] fields = csvParser.ReadFields();
           csvData.Add(new CsvModel() {
-            Item = fields[0],
-            Quantity = fields[1],
-            StaffName = fields[2],
-            TimeInOut = fields[3],
-            ServiceDate = fields[4]
+            Item = fields[indexOf["Item"]],
+            Quantity = fields[indexOf["Quantity"]],
+            StaffName = fields[indexOf["StaffName"]],
+            TimeInOut = fields[indexOf["TimeInOut"]],
+            ServiceDate = fields[indexOf["ServiceDate"]],
+            Rate = fields[indexOf["Rate"]],
           });
         }
         return csvData;
