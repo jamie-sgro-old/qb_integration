@@ -9,46 +9,40 @@ using System.Threading.Tasks;
 using QBConnect.Classes;
 
 namespace QBConnect {
-  public class InvoiceImporter {
+  public class InvoiceImporter : IDisposable {
     public InvoiceImporter(string qbwFilePath) {
       SessionManager = null;
-      SessionBegun = false;
-      ConnectionOpen = false;
 
       try {
         // sessionManager is the connection between code and QB
-        SessionManager = new QBSessionManager();
+        SessionManager = new ClientSessionManager();
 
         // Create the message set request object to hold our request
         RequestMsgSet = SessionManager.CreateMsgSetRequest("US", 13, 0);
         RequestMsgSet.Attributes.OnError = ENRqOnError.roeContinue;
 
         SessionManager.OpenConnection2("", "Sangwa Solutions QuickBooks Importer", ENConnectionType.ctLocalQBD);
-        ConnectionOpen = true;
         SessionManager.BeginSession(qbwFilePath, ENOpenMode.omDontCare);
-        SessionBegun = true;
       }
       catch (Exception e) {
         Console.WriteLine(e.GetType());
         Console.WriteLine(e.Message);
-        EndAndCloseConnection();
+        Dispose();
         throw;
       }
     }
 
 
 
-    private QBSessionManager SessionManager { get; }
-    private bool ConnectionOpen { get; set; }
-    private bool SessionBegun { get; set; }
+    private IClientSessionManager SessionManager { get; }
     private IMsgSetRequest RequestMsgSet { get; }
 
 
 
     public void Import(InvoiceHeaderModel headerData, List<InvoiceLineItemModel> lineItems) {
 
-      if (!ConnectionOpen) throw new ArgumentException("Connection is not open");
-      if (!SessionBegun) throw new ArgumentException("Session has not begun");
+      if (!SessionManager.ConnectionOpen) throw new ArgumentException("Connection is not open");
+      if (!SessionManager.SessionBegun) throw new ArgumentException("Session has not begun");
 
       // Fail fast: Template can't be null
       var userTemplateName = GetUserTemplateName(headerData);
@@ -78,22 +72,8 @@ namespace QBConnect {
       } catch (Exception e) {
         Console.WriteLine(e.GetType());
         Console.WriteLine(e.Message);
+        Dispose();
         throw;
-      } finally {
-        EndAndCloseConnection();
-      }
-    }
-
-
-
-    private void EndAndCloseConnection() {
-      if (SessionBegun) {
-        SessionManager.EndSession();
-        SessionBegun = false;
-      }
-      if (ConnectionOpen) {
-        SessionManager.CloseConnection();
-        ConnectionOpen = false;
       }
     }
 
@@ -143,6 +123,28 @@ namespace QBConnect {
 
       throw new ArgumentNullException(paramName: nameof(headerData.TemplateRefListID),
         message: "No QuickBooks invoice template has been specified.");
+    }
+
+    public void Dispose(bool canAlsoFreeManagedObjects) {
+      // Free all unmanaged resources here:
+      // pass
+
+      if (!canAlsoFreeManagedObjects) return;
+      if (SessionManager.SessionBegun) {
+        SessionManager.EndSession();
+      }
+      if (SessionManager.ConnectionOpen) {
+        SessionManager.CloseConnection();
+      }
+    }
+
+    public void Dispose() {
+      Dispose(true);
+    }
+
+    // C# syntax for C++ override of 'Finalize' in IDisposable
+    ~InvoiceImporter() {
+      Dispose(false);
     }
   }
 }
