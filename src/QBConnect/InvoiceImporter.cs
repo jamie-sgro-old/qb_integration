@@ -13,23 +13,15 @@ namespace QBConnect {
     public InvoiceImporter(string qbwFilePath) {
       SessionManager = null;
 
-      try {
-        // sessionManager is the connection between code and QB
-        SessionManager = new ClientSessionManager();
+      // sessionManager is the connection between code and QB
+      SessionManager = new ClientSessionManager();
 
-        // Create the message set request object to hold our request
-        RequestMsgSet = SessionManager.CreateMsgSetRequest("US", 13, 0);
-        RequestMsgSet.Attributes.OnError = ENRqOnError.roeContinue;
+      // Create the message set request object to hold our request
+      RequestMsgSet = SessionManager.CreateMsgSetRequest("US", 13, 0);
+      RequestMsgSet.Attributes.OnError = ENRqOnError.roeContinue;
 
-        SessionManager.OpenConnection2("", "Sangwa Solutions QuickBooks Importer", ENConnectionType.ctLocalQBD);
-        SessionManager.BeginSession(qbwFilePath, ENOpenMode.omDontCare);
-      }
-      catch (Exception e) {
-        Console.WriteLine(e.GetType());
-        Console.WriteLine(e.Message);
-        Dispose();
-        throw;
-      }
+      SessionManager.OpenConnection2("", "Sangwa Solutions QuickBooks Importer", ENConnectionType.ctLocalQBD);
+      SessionManager.BeginSession(qbwFilePath, ENOpenMode.omDontCare);
     }
 
 
@@ -55,26 +47,17 @@ namespace QBConnect {
                    "The Importer was expecting at least 1.");
       }
 
-
-      try {
-
-        bool isValidTemplate = IsValidTemplate(userTemplateName);
-        
-        if (!isValidTemplate) {
-          throw new ArgumentException(paramName: nameof(headerData.TemplateRefFullName),
-            message: "Could not find '" + userTemplateName + "' in QuickBooks template list");
-        }
-
-        BuildRequest(RequestMsgSet, headerData, lineItems);
-        
-        var responseMsgSet = SessionManager.DoRequests(RequestMsgSet);
-
-      } catch (Exception e) {
-        Console.WriteLine(e.GetType());
-        Console.WriteLine(e.Message);
-        Dispose();
-        throw;
+      
+      bool isValidTemplate = IsValidTemplate(userTemplateName);
+      
+      if (!isValidTemplate) {
+        throw new ArgumentException(paramName: nameof(headerData.TemplateRefFullName),
+          message: "Could not find '" + userTemplateName + "' in QuickBooks template list");
       }
+
+      BuildRequest(RequestMsgSet, headerData, lineItems);
+      
+      var responseMsgSet = SessionManager.DoRequests(RequestMsgSet);
     }
 
 
