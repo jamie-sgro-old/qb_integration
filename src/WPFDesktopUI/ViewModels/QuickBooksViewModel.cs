@@ -60,14 +60,11 @@ namespace WPFDesktopUI.ViewModels {
 		#region Methods
 
 		public async Task BtnQbImport() {
-			Console.WriteLine(QuickBooksSidePaneViewModel.HeaderDateTextBox);
       try {
-        SessionStart();
-
-        var template = GetTemplate();
+				SessionStart();
 
         var header = new NxInvoiceHeaderModel {
-          TemplateRefFullName = template, 
+          TemplateRefFullName = GetTemplate(), 
           TxnDate = QuickBooksSidePaneViewModel.HeaderDateTextBox,
 					Other = QuickBooksSidePaneViewModel.HeaderOtherTextBox,
 				};
@@ -79,8 +76,9 @@ namespace WPFDesktopUI.ViewModels {
           qbImport.Import();
         });
 
-      }
-      catch (ArgumentNullException e) {
+        ConsoleMessage = "Import has successfully completed";
+			}
+			catch (ArgumentNullException e) {
         ConsoleMessage = ErrHandler.HandleArgumentNullException(e) ?? ErrHandler.GetDefaultError(e);
       } catch (ArgumentOutOfRangeException e) {
         ConsoleMessage = ErrHandler.HandleArgumentOutOfRangeException(e) ?? ErrHandler.GetDefaultError(e);
@@ -117,7 +115,6 @@ namespace WPFDesktopUI.ViewModels {
     private void SessionEnd() {
       CanBtnQbImport = true;
       QbProgressBarIsVisible = false;
-      ConsoleMessage = "Import has successfully completed";
     }
 
 		#endregion Methods
