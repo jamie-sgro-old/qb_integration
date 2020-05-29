@@ -62,7 +62,7 @@
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundlePlatforms>x86</AppxBundlePlatforms>
-    <AppInstallerUri>D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\installer</AppInstallerUri>
+    <AppInstallerUri>https://project-epsilon.azurewebsites.net</AppInstallerUri>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxPackageDir>D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\installer</AppxPackageDir>
   </PropertyGroup>
