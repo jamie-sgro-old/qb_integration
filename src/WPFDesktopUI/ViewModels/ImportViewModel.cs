@@ -45,10 +45,10 @@ namespace WPFDesktopUI.ViewModels {
         CsvData = CsvParser.ParseFromFile(fileName, sep);
       });
 
-      //temp import to sql
+      // Import to SQLite
       SqliteDataAccess.SaveData<CsvModel>(@"INSERT INTO csv_data
-        (Item, Quantity, StaffName, TimeInOut, ServiceDate)
-        VALUES(@Item, @Quantity, @StaffName, @TimeInOut, @ServiceDate);", CsvData);
+        (Item, Quantity, StaffName, TimeInOut, ServiceDate, Rate)
+        VALUES(@Item, @Quantity, @StaffName, @TimeInOut, @ServiceDate, @Rate);", CsvData);
     }
 
     #endregion Methods
