@@ -43,12 +43,16 @@ namespace WPFDesktopUI.ViewModels {
 
       await Task.Run(() => {
         CsvData = CsvParser.ParseFromFile(fileName, sep);
+        // Copy variable for QBVM to use
+        QuickBooksViewModel.CsvData = CsvData;
       });
 
+      /*
       // Import to SQLite
       SqliteDataAccess.SaveData<CsvModel>(@"INSERT INTO csv_data
         (Item, Quantity, StaffName, TimeInOut, ServiceDate, Rate)
         VALUES(@Item, @Quantity, @StaffName, @TimeInOut, @ServiceDate, @Rate);", CsvData);
+      */
     }
 
     #endregion Methods

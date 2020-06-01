@@ -5,10 +5,10 @@ using System.Collections.Generic;
 
 namespace MCBusinessLogic.Controllers {
   public class NxQbImportController : QbImportController {
-    public NxQbImportController(string qbFilePath, DefaultInvoiceHeaderModel preHeader) {
+    public NxQbImportController(string qbFilePath, DefaultInvoiceHeaderModel preHeader, List<CsvModel> csvData) {
       QbFilePath = qbFilePath;
       PreHeader = preHeader;
-      var csvData = SqliteDataAccess.LoadData<CsvModel>("SELECT * FROM csv_data", null);
+      //var csvData = SqliteDataAccess.LoadData<CsvModel>("SELECT * FROM csv_data", null);
       PreLineItems = MapCsvDataToLineItems(csvData);
     }
     public sealed override List<ClientLineItemModel> PreLineItems { get; set; }
