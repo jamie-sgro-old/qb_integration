@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,10 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     private bool _canTemplateRefFullName = false;
     private string _selectedTemplateRefFullName;
     private bool _canQbExport = true;
+    private bool _qbProgressBarIsVisible = false;
+    private string _btnNotification = "Please select 'Query QuickBooks' before custom lists can be generated";
+    private List<string> _itemRef;
+    private string _selectedItemRef;
 
     public string Other {
 			get => _headerOtherTextBox;
@@ -71,15 +76,12 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       }
     }
 
-
-
     public bool HasHeaderOther {
 			get {
         _hasHeaderOther = stn.QbInvHasHeaderOther();
         return _hasHeaderOther;
 			}
 		}
-
 
 		public string HeaderOtherTextBlock {
 			get {
@@ -89,7 +91,6 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       }
 		}
 
-
     public bool CanQbExport {
       get { return _canQbExport; }
       set {
@@ -98,7 +99,6 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       }
     }
 
-    private bool _qbProgressBarIsVisible = false;
 
     public bool QbProgressBarIsVisible {
       get => _qbProgressBarIsVisible;
@@ -108,8 +108,6 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       }
     }
 
-    private string _btnNotification = "Please select 'Query QuickBooks' before custom lists can be generated";
-
     public string BtnNotification {
       get => _btnNotification;
       set {
@@ -118,12 +116,33 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       }
     }
 
+    public List<string> ItemRef {
+      get => _itemRef;
+      set {
+        _itemRef = value;
+        NotifyOfPropertyChange(() => ItemRef);
+      }
+    }
+
+    public string SelectedItemRef {
+      get { return _selectedItemRef; }
+      set {
+        _selectedItemRef = value;
+        NotifyOfPropertyChange(() => SelectedItemRef);
+      }
+    }
+
+
+
+
+
 
 
     public async void QbExport() {
       SessionStart();
       var qbFilePath = stn.QbFilePath();
       TemplateRefFullName = await InitTemplateRefFullName(qbFilePath);
+      ItemRef = GetCsvHeaders();
       SessionEnd();
     }
 
@@ -151,6 +170,17 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       });
       templates.Insert(0, "");
       return templates;
+    }
+
+    private static List<string> GetCsvHeaders() {
+      var csvData = ImportViewModel.CsvData;
+      if (csvData == null) return null;
+
+      string[] columnHeaders = csvData?.Columns.Cast<DataColumn>()
+        .Select(x => x.ColumnName)
+        .ToArray();
+
+      return columnHeaders?.ToList();
     }
   }
 }

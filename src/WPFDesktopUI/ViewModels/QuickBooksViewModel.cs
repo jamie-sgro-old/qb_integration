@@ -4,6 +4,7 @@ using ErrHandler = MCBusinessLogic.Controllers.QbImportExceptionHandler;
 using stn = WPFDesktopUI.Controllers.SettingsController;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,6 @@ namespace WPFDesktopUI.ViewModels {
 
 		#region Properties
 
-    public static List<CsvModel> CsvData { get; set; }
 
 		private string _consoleMessage;
 		private bool _canBtnQbImport = true;
@@ -76,14 +76,20 @@ namespace WPFDesktopUI.ViewModels {
 					Other = QuickBooksSidePaneViewModel.Other,
 				};
 
-        if (CsvData == null) {
-          throw new ArgumentNullException(paramName: nameof(CsvData),
+        var csvData = ImportViewModel.CsvData;
+        if (csvData == null) {
+          throw new ArgumentNullException(paramName: nameof(csvData),
             message: "No Invoice lineItems were supplied. " +
                      "The Importer was expecting at least 1.");
         }
 
+        var csvModel = MapDataTableToCsvModel(csvData);
+
+
+
+
         await Task.Run(() => {
-          var qbImport = new NxQbImportController(qbFilePath, header, CsvData);
+          var qbImport = new NxQbImportController(qbFilePath, header, csvModel);
           qbImport.Import();
         });
 
@@ -102,6 +108,20 @@ namespace WPFDesktopUI.ViewModels {
         SessionEnd();
 			}
 		}
+
+    private List<CsvModel> MapDataTableToCsvModel(DataTable dt) {
+      var convertedList = (from rw in dt.AsEnumerable()
+        select new CsvModel() {
+          Item = Convert.ToString(rw[QuickBooksSidePaneViewModel.SelectedItemRef]),
+          Quantity = Convert.ToString(rw["Quantity"]),
+          StaffName = Convert.ToString(rw["StaffName"]),
+          TimeInOut = Convert.ToString(rw["TimeInOut"]),
+          ServiceDate = Convert.ToString(rw["ServiceDate"]),
+          Rate = Convert.ToString(rw["Rate"]),
+        });
+
+      return convertedList.ToList();
+    }
 
     private static string GetTemplate() {
       var hasTemplate = stn.QbInvHasTemplate();
