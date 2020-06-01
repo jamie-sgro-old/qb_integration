@@ -40,7 +40,7 @@ namespace QBConnect {
       var userTemplateName = GetUserTemplateName(headerData);
 
       // Template string can't be missing from QB template list
-      bool isValidTemplate = IsValidTemplate(userTemplateName);
+      bool isValidTemplate = GetTemplateNamesList().Contains(userTemplateName);
       if (!isValidTemplate) {
         throw new ArgumentException(paramName: nameof(headerData.TemplateRefFullName),
           message: "Could not find '" + userTemplateName + "' in QuickBooks template list");
@@ -83,10 +83,10 @@ namespace QBConnect {
     /// </summary>
     /// <param name="userTemplateName">The name of the template to be used</param>
     /// <returns></returns>
-    private bool IsValidTemplate(string userTemplateName) {
+    public List<string> GetTemplateNamesList() {
       var templateQuery = new TemplateQuery(SessionManager);
       List<string> templateNamesList = templateQuery.GetList<ITemplateRetList>();
-      return templateNamesList.Contains(userTemplateName);
+      return templateNamesList;
     }
 
 
