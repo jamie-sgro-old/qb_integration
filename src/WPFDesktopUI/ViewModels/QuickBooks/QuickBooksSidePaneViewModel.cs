@@ -108,6 +108,17 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       }
     }
 
+    private string _btnNotification = "Please select 'Query QuickBooks' before custom lists can be generated";
+
+    public string BtnNotification {
+      get => _btnNotification;
+      set {
+        _btnNotification = value;
+        NotifyOfPropertyChange(() => BtnNotification);
+      }
+    }
+
+
 
     public async void QbExport() {
       SessionStart();
@@ -125,6 +136,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       CanTemplateRefFullName = true;
       CanQbExport = true;
       QbProgressBarIsVisible = false;
+      BtnNotification = "";
     }
 
     /// <summary>

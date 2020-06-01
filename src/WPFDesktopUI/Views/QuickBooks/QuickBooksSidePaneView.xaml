@@ -116,12 +116,12 @@
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="1"
+                <TextBlock x:Name="BtnNotification" 
+                           Grid.Row="1"
                            Grid.Column="0"
                            Grid.ColumnSpan="2"
                            TextAlignment="Center"
                            TextWrapping="Wrap">
-                    Please select 'Query QuickBooks' before custom lists can be generated
                 </TextBlock>
 
                 <Grid Name="QbProgressBarIsVisible"
