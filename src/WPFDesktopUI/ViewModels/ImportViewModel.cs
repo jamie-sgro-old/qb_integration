@@ -4,6 +4,7 @@ using MCBusinessLogic.DataAccess;
 using MCBusinessLogic.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace WPFDesktopUI.ViewModels {
     #region Properties
 
     private string _csvFilePath;
-    private List<CsvModel> _csvData = new List<CsvModel>();
+    private DataView _csvDataView;
 
     public string CsvFilePath {
       get => _csvFilePath;
@@ -24,13 +25,15 @@ namespace WPFDesktopUI.ViewModels {
       }
     }
 
-    public List<CsvModel> CsvData {
-      get => _csvData;
+    public DataView CsvDataView {
+      get => _csvDataView;
       set {
-        _csvData = value;
-        NotifyOfPropertyChange(() => CsvData);
+        _csvDataView = value;
+        NotifyOfPropertyChange(() => CsvDataView);
       }
     }
+
+    public static DataTable CsvData { get; set; }
 
     #endregion Properties
 
@@ -43,9 +46,10 @@ namespace WPFDesktopUI.ViewModels {
 
       await Task.Run(() => {
         CsvData = CsvParser.ParseFromFile(fileName, sep);
-        // Copy variable for QBVM to use
-        QuickBooksViewModel.CsvData = CsvData;
+        CsvDataView = CsvData.DefaultView;
       });
+
+
 
       /*
       // Import to SQLite
@@ -54,6 +58,8 @@ namespace WPFDesktopUI.ViewModels {
         VALUES(@Item, @Quantity, @StaffName, @TimeInOut, @ServiceDate, @Rate);", CsvData);
       */
     }
+
+
 
     #endregion Methods
   }
