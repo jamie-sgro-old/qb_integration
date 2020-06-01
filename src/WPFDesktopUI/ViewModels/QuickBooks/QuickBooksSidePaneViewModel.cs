@@ -42,6 +42,16 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 			}
 		}
 
+    private bool _canTemplateRefFullName = false;
+
+    public bool CanTemplateRefFullName {
+      get => _canTemplateRefFullName;
+      set {
+        _canTemplateRefFullName = value;
+        NotifyOfPropertyChange(() => CanTemplateRefFullName);
+      }
+    }
+
     public List<string> TemplateRefFullName {
       get => _templateRefFullName;
       set {
@@ -89,9 +99,12 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     /// </summary>
     /// <param name="qbFilePath">The full path for the QuickBooks file</param>
     /// <returns></returns>
-    private static async Task<List<string>> InitTemplateRefFullName(string qbFilePath) {
+    private async Task<List<string>> InitTemplateRefFullName(string qbFilePath) {
       var qbExportController = new QbExportController(qbFilePath);
-      var templates = await Task.Run(() => qbExportController.GetTemplateNamesList());
+      var templates = await Task.Run(() => {
+        return qbExportController.GetTemplateNamesList();
+      });
+      CanTemplateRefFullName = true;
       templates.Insert(0, "");
       return templates;
     }

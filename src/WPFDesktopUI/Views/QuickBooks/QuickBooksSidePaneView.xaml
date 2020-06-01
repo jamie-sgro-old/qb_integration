@@ -94,9 +94,10 @@
                           Grid.Column="1"
                           Style="{StaticResource QbSidePaneValue}"
                           ToolTipService.ShowOnDisabled = "True"
+                          IsEnabled="{Binding CanTemplateRefFullName}"
                 >
                     <ComboBox.ToolTip>
-                        <TextBlock>Please select 'Query QuickBooks' before a custom list can be generated</TextBlock>
+                        <TextBlock>Please select 'Query QuickBooks' before custom lists can be generated</TextBlock>
                     </ComboBox.ToolTip>
                 </ComboBox>
 
@@ -108,14 +109,23 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
 
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="2"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap">
+                    Please select 'Query QuickBooks' before custom lists can be generated
+                </TextBlock>
+
                 <Button x:Name="QbImport"
-                        Grid.Row="1"
+                        Grid.Row="2"
                         Grid.Column="1" 
                         Style="{StaticResource ButtonClose}"
                         >
