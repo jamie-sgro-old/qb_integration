@@ -101,9 +101,30 @@
                     </ComboBox.ToolTip>
                 </ComboBox>
 
+                <!-- Row 14 -->
 
+                <TextBlock Text="ITEM"
+                           Grid.Row="14"
+                           Grid.Column="0"
+                           Style="{StaticResource QbSidePaneKey}" 
+                >
+                </TextBlock>
+                <ComboBox x:Name="ItemRef"
+                          Grid.Row="14"
+                          Grid.Column="1"
+                          Style="{StaticResource QbSidePaneValue}"
+                          ToolTipService.ShowOnDisabled = "True"
+                          IsEnabled="{Binding CanItemRef}"
+                >
+                    <ComboBox.ToolTip>
+                        <TextBlock>Please import a .csv file in the 'Import' tab before custom lists can be generated</TextBlock>
+                    </ComboBox.ToolTip>
+                </ComboBox>
             </Grid>
 
+
+
+            <!-- DOCKPANEL BOTTOM -->
 
             <Grid DockPanel.Dock="Bottom">
                 <Grid.RowDefinitions>
