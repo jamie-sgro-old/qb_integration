@@ -65,7 +65,7 @@
             </ContentControl>-->
 
             <!-- Row 4 -->
-            <DataGrid x:Name="CsvData"
+            <DataGrid x:Name="CsvDataView"
                       Grid.Row="4"
                       Grid.Column="0"
                       Grid.ColumnSpan="3"
