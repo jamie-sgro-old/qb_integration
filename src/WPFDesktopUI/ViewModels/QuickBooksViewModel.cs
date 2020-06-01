@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using WPFDesktopUI.ViewModels.QuickBooks;
 using MCBusinessLogic.Models;
+using WPFDesktopUI.Controllers;
 
 namespace WPFDesktopUI.ViewModels {
   public class QuickBooksViewModel : Conductor<object> {
@@ -65,12 +66,13 @@ namespace WPFDesktopUI.ViewModels {
       try {
 				SessionStart();
 
-        var qbFilePath = GetQbFilePath();
+        var qbFilePath = SettingsController.GetQbFilePath();
 
         var header = new NxInvoiceHeaderModel {
-          TemplateRefFullName = GetTemplate(), 
-          TxnDate = QuickBooksSidePaneViewModel.HeaderDateTextBox,
-					Other = QuickBooksSidePaneViewModel.HeaderOtherTextBox,
+          ClassRefFullName = QuickBooksSidePaneViewModel.ClassRefFullName, // "Barrie Area:Barrie Corporate"
+          TemplateRefFullName = QuickBooksSidePaneViewModel.SelectedTemplateRefFullName, 
+          TxnDate = QuickBooksSidePaneViewModel.TxnDate,
+					Other = QuickBooksSidePaneViewModel.Other,
 				};
 
         if (CsvData == null) {
@@ -107,10 +109,6 @@ namespace WPFDesktopUI.ViewModels {
       var name = Properties.Settings.Default["StnQbInvTemplateName"].ToString();
       var template = hasTemplate ? name : null;
       return template;
-    }
-
-		private static string GetQbFilePath() {
-      return Properties.Settings.Default["StnQbFilePath"].ToString();
     }
 
     private void SessionStart() {

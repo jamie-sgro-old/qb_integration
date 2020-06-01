@@ -43,7 +43,7 @@
                     Style="{StaticResource QbSidePaneKey}"
                        >
             </TextBlock>
-            <TextBox x:Name="HeaderOtherTextBox"
+            <TextBox x:Name="Other"
                         Grid.Row="10"
                         Grid.Column="1"
                         Style="{StaticResource QbSidePaneValue}"
@@ -52,19 +52,48 @@
 
             <!-- Row 11 -->
 
-            <TextBlock x:Name="HeaderDateTextBlock"
-                    Grid.Row="11"
-                    Grid.Column="0"
-                    Style="{StaticResource QbSidePaneKey}"
-                    >
-                DATE
+            <TextBlock Text="DATE"
+                       Grid.Row="11"
+                       Grid.Column="0"
+                       Style="{StaticResource QbSidePaneKey}" 
+                       >
             </TextBlock>
-            <DatePicker x:Name="HeaderDateTextBox"
+            <DatePicker x:Name="TxnDate"
                         Grid.Row="11"
                         Grid.Column="1"
                         Style="{StaticResource QbSidePaneValue}"
-            >
+                        >
             </DatePicker>
+
+            <!-- Row 12 -->
+
+            <TextBlock Text="CLASS"
+                       Grid.Row="12"
+                       Grid.Column="0"
+                       Style="{StaticResource QbSidePaneKey}" 
+            >
+            </TextBlock>
+            <TextBox x:Name="ClassRefFullName"
+                     Grid.Row="12"
+                     Grid.Column="1"
+                     Style="{StaticResource QbSidePaneValue}"
+            >
+            </TextBox>
+
+            <!-- Row 13 -->
+
+            <TextBlock Text="TEMPLATE"
+                       Grid.Row="13"
+                       Grid.Column="0"
+                       Style="{StaticResource QbSidePaneKey}" 
+            >
+            </TextBlock>
+            <ComboBox x:Name="TemplateRefFullName"
+                      Grid.Row="13"
+                      Grid.Column="1"
+                      Style="{StaticResource QbSidePaneValue}"
+            >
+            </ComboBox>
 
 
         </Grid>
