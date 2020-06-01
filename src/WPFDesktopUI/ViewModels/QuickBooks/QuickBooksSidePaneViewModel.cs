@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using MCBusinessLogic.Controllers;
-using WPFDesktopUI.Controllers;
+using stn = WPFDesktopUI.Controllers.SettingsController;
 
 namespace WPFDesktopUI.ViewModels.QuickBooks {
   public class QuickBooksSidePaneViewModel : Screen {
@@ -16,6 +16,9 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 		private DateTime _headerDateTextBox = DateTime.Now;
     private string _classRefFullName;
     private List<string> _templateRefFullName = new List<string> {""};
+    private bool _canTemplateRefFullName = false;
+    private string _selectedTemplateRefFullName;
+    private bool _canQbExport = true;
 
     public string Other {
 			get => _headerOtherTextBox;
@@ -42,7 +45,6 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 			}
 		}
 
-    private bool _canTemplateRefFullName = false;
 
     public bool CanTemplateRefFullName {
       get => _canTemplateRefFullName;
@@ -60,7 +62,6 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       }
     }
 
-    private string _selectedTemplateRefFullName;
 
     public string SelectedTemplateRefFullName {
       get => _selectedTemplateRefFullName;
@@ -74,24 +75,56 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 
     public bool HasHeaderOther {
 			get {
-				_hasHeaderOther = (bool)Properties.Settings.Default["StnQbInvHasHeaderOther"];
-				return _hasHeaderOther;
+        _hasHeaderOther = stn.QbInvHasHeaderOther();
+        return _hasHeaderOther;
 			}
 		}
 
 
 		public string HeaderOtherTextBlock {
-			get
-      {
-        var name = Properties.Settings.Default["StnQbInvHeaderOtherName"].ToString();
-				_otherHeaderTextBlock = HasHeaderOther ? name : "OTHER";
+			get {
+        var name = stn.QbInvHeaderOtherName();
+        _otherHeaderTextBlock = HasHeaderOther ? name : "OTHER";
         return _otherHeaderTextBlock;
       }
 		}
 
-    public async void QbImport() {
-      var qbFilePath = SettingsController.GetQbFilePath();
+
+    public bool CanQbExport {
+      get { return _canQbExport; }
+      set {
+        _canQbExport = value;
+        NotifyOfPropertyChange(() => CanQbExport);
+      }
+    }
+
+    private bool _qbProgressBarIsVisible = false;
+
+    public bool QbProgressBarIsVisible {
+      get => _qbProgressBarIsVisible;
+      set {
+        _qbProgressBarIsVisible = value;
+        NotifyOfPropertyChange(() => QbProgressBarIsVisible);
+      }
+    }
+
+
+    public async void QbExport() {
+      SessionStart();
+      var qbFilePath = stn.QbFilePath();
       TemplateRefFullName = await InitTemplateRefFullName(qbFilePath);
+      SessionEnd();
+    }
+
+    private void SessionStart() {
+      CanQbExport = false;
+      QbProgressBarIsVisible = true;
+    }
+
+    private void SessionEnd() {
+      CanTemplateRefFullName = true;
+      CanQbExport = true;
+      QbProgressBarIsVisible = false;
     }
 
     /// <summary>
@@ -99,12 +132,11 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     /// </summary>
     /// <param name="qbFilePath">The full path for the QuickBooks file</param>
     /// <returns></returns>
-    private async Task<List<string>> InitTemplateRefFullName(string qbFilePath) {
+    private static async Task<List<string>> InitTemplateRefFullName(string qbFilePath) {
       var qbExportController = new QbExportController(qbFilePath);
       var templates = await Task.Run(() => {
         return qbExportController.GetTemplateNamesList();
       });
-      CanTemplateRefFullName = true;
       templates.Insert(0, "");
       return templates;
     }

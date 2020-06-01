@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using MCBusinessLogic.Controllers;
 using ErrHandler = MCBusinessLogic.Controllers.QbImportExceptionHandler;
+using stn = WPFDesktopUI.Controllers.SettingsController;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,7 +67,7 @@ namespace WPFDesktopUI.ViewModels {
       try {
 				SessionStart();
 
-        var qbFilePath = SettingsController.GetQbFilePath();
+        var qbFilePath = stn.QbFilePath();
 
         var header = new NxInvoiceHeaderModel {
           ClassRefFullName = QuickBooksSidePaneViewModel.ClassRefFullName, // "Barrie Area:Barrie Corporate"
@@ -103,7 +104,7 @@ namespace WPFDesktopUI.ViewModels {
 		}
 
     private static string GetTemplate() {
-      var hasTemplate = (bool)Properties.Settings.Default["StnQbInvHasTemplate"];
+      var hasTemplate = stn.QbInvHasTemplate();
 
       // Use template if preference is checked, else let DB.dll return ArgumentNullException
       var name = Properties.Settings.Default["StnQbInvTemplateName"].ToString();

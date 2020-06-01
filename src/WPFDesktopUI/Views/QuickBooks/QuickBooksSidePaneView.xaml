@@ -124,7 +124,20 @@
                     Please select 'Query QuickBooks' before custom lists can be generated
                 </TextBlock>
 
-                <Button x:Name="QbImport"
+                <Grid Name="QbProgressBarIsVisible"
+                      Grid.Row="2"
+                      Grid.Column="0">
+                    <ProgressBar x:Name="QbProgressBar" 
+                                 Minimum="0"
+                                 Maximum="100"
+                                 IsIndeterminate="True"
+                                 Margin="10,10"
+                             
+                    >
+                    </ProgressBar>
+                </Grid>
+
+                <Button x:Name="QbExport"
                         Grid.Row="2"
                         Grid.Column="1" 
                         Style="{StaticResource ButtonClose}"
