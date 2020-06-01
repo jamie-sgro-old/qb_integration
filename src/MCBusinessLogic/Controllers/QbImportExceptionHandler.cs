@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 
 namespace MCBusinessLogic.Controllers {
   public static class QbImportExceptionHandler {
-
-		public static string HandleArgumentNullException(ArgumentNullException e) {
+    public static string Handle(ArgumentNullException e) {
 			if (e.ParamName == "TemplateRefListID" || e.ParamName == "TemplateRefFullName") {
 				return GetTemplateNull();
 			}
 			return null;
 		}
 
-    public static string HandleArgumentOutOfRangeException(ArgumentOutOfRangeException e) {
+    public static string Handle(ArgumentOutOfRangeException e) {
       if (e.ParamName == "lineItems") {
         return GetLineItemsOutOfRange(e.Message);
       }
@@ -29,14 +28,14 @@ namespace MCBusinessLogic.Controllers {
 			return null;
 		}
 
-		public static string HandleArgumentException(ArgumentException e) {
+		public static string Handle(ArgumentException e) {
 			if (e.ParamName == "TemplateRefFullName") {
 				return GetTemplateWrong();
 			}
 			return "An unhandled ArgumentNullException was caught by modelview";
 		}
 
-		public static string HandleCOMException(System.Runtime.InteropServices.COMException e) {
+		public static string Handle(COMException e) {
 			if (e.Source == "QBXMLRP2.RequestProcessor.2") {
 				if (e.TargetSite.DeclaringType.FullName == "QBFC13Lib.IQBSessionManager") {
 					if (e.TargetSite.Name.ToString() == "BeginSession") {

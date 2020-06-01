@@ -24,6 +24,8 @@ namespace WPFDesktopUI.ViewModels {
 
 		#region Properties
 
+    public static List<CsvModel> CsvData { get; set; }
+
 		private string _consoleMessage;
 		private bool _canBtnQbImport = true;
 		private bool _qbProgressBarIsVisible = false;
@@ -63,31 +65,36 @@ namespace WPFDesktopUI.ViewModels {
       try {
 				SessionStart();
 
+        var qbFilePath = GetQbFilePath();
+
         var header = new NxInvoiceHeaderModel {
           TemplateRefFullName = GetTemplate(), 
           TxnDate = QuickBooksSidePaneViewModel.HeaderDateTextBox,
 					Other = QuickBooksSidePaneViewModel.HeaderOtherTextBox,
 				};
 
-        var qbFilePath = GetQbFilePath();
+        if (CsvData == null) {
+          throw new ArgumentNullException(paramName: nameof(CsvData),
+            message: "No Invoice lineItems were supplied. " +
+                     "The Importer was expecting at least 1.");
+        }
 
         await Task.Run(() => {
-          var qbImport = new NxQbImportController(qbFilePath, header);
+          var qbImport = new NxQbImportController(qbFilePath, header, CsvData);
           qbImport.Import();
         });
 
         ConsoleMessage = "Import has successfully completed";
-			}
-			catch (ArgumentNullException e) {
-        ConsoleMessage = ErrHandler.HandleArgumentNullException(e) ?? ErrHandler.GetDefaultError(e);
+			} catch (ArgumentNullException e) {
+        ConsoleMessage = ErrHandler.Handle(e) ?? ErrHandler.GetDefaultError(e);
       } catch (ArgumentOutOfRangeException e) {
-        ConsoleMessage = ErrHandler.HandleArgumentOutOfRangeException(e) ?? ErrHandler.GetDefaultError(e);
-			} catch (ArgumentException e) {
-				ConsoleMessage = ErrHandler.HandleArgumentException(e) ?? ErrHandler.GetDefaultError(e);
-			} catch (System.Runtime.InteropServices.COMException e) {
-				ConsoleMessage = ErrHandler.HandleCOMException(e) ?? ErrHandler.GetDefaultError(e);
-			} catch (Exception e) {
-				ConsoleMessage = ErrHandler.GetDefaultError(e);
+        ConsoleMessage = ErrHandler.Handle(e) ?? ErrHandler.GetDefaultError(e);
+      } catch (ArgumentException e) {
+        ConsoleMessage = ErrHandler.Handle(e) ?? ErrHandler.GetDefaultError(e);
+      } catch (System.Runtime.InteropServices.COMException e) {
+        ConsoleMessage = ErrHandler.Handle(e) ?? ErrHandler.GetDefaultError(e);
+      } catch (Exception e) {
+        ConsoleMessage = ErrHandler.GetDefaultError(e);
 			} finally {
         SessionEnd();
 			}
