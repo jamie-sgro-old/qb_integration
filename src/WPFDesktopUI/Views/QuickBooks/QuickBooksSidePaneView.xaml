@@ -8,94 +8,120 @@
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="400">
     <Border BorderBrush="Gray" BorderThickness="1">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-                
+        <DockPanel>
+            <Grid DockPanel.Dock="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                    
 
-            <!-- Row 10 -->
+                <!-- Row 10 -->
 
-            <TextBlock x:Name="HeaderOtherTextBlock"
-                    Grid.Row="10"
-                    Grid.Column="0"
-                    Style="{StaticResource QbSidePaneKey}"
-                       >
-            </TextBlock>
-            <TextBox x:Name="Other"
+                <TextBlock x:Name="HeaderOtherTextBlock"
                         Grid.Row="10"
-                        Grid.Column="1"
-                        Style="{StaticResource QbSidePaneValue}"
+                        Grid.Column="0"
+                        Style="{StaticResource QbSidePaneKey}"
+                           >
+                </TextBlock>
+                <TextBox x:Name="Other"
+                            Grid.Row="10"
+                            Grid.Column="1"
+                            Style="{StaticResource QbSidePaneValue}"
+                            >
+                </TextBox>
+
+                <!-- Row 11 -->
+
+                <TextBlock Text="DATE"
+                           Grid.Row="11"
+                           Grid.Column="0"
+                           Style="{StaticResource QbSidePaneKey}" 
+                           >
+                </TextBlock>
+                <DatePicker x:Name="TxnDate"
+                            Grid.Row="11"
+                            Grid.Column="1"
+                            Style="{StaticResource QbSidePaneValue}"
+                            >
+                </DatePicker>
+
+                <!-- Row 12 -->
+
+                <TextBlock Text="CLASS"
+                           Grid.Row="12"
+                           Grid.Column="0"
+                           Style="{StaticResource QbSidePaneKey}" 
+                >
+                </TextBlock>
+                <TextBox x:Name="ClassRefFullName"
+                         Grid.Row="12"
+                         Grid.Column="1"
+                         Style="{StaticResource QbSidePaneValue}"
+                >
+                </TextBox>
+
+                <!-- Row 13 -->
+
+                <TextBlock Text="TEMPLATE"
+                           Grid.Row="13"
+                           Grid.Column="0"
+                           Style="{StaticResource QbSidePaneKey}" 
+                >
+                </TextBlock>
+                <ComboBox x:Name="TemplateRefFullName"
+                          Grid.Row="13"
+                          Grid.Column="1"
+                          Style="{StaticResource QbSidePaneValue}"
+                          ToolTipService.ShowOnDisabled = "True"
+                >
+                    <ComboBox.ToolTip>
+                        <TextBlock>Please select 'Query QuickBooks' before a custom list can be generated</TextBlock>
+                    </ComboBox.ToolTip>
+                </ComboBox>
+
+
+            </Grid>
+
+
+            <Grid DockPanel.Dock="Bottom">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="QbImport"
+                        Grid.Row="1"
+                        Grid.Column="1" 
+                        Style="{StaticResource ButtonClose}"
                         >
-            </TextBox>
-
-            <!-- Row 11 -->
-
-            <TextBlock Text="DATE"
-                       Grid.Row="11"
-                       Grid.Column="0"
-                       Style="{StaticResource QbSidePaneKey}" 
-                       >
-            </TextBlock>
-            <DatePicker x:Name="TxnDate"
-                        Grid.Row="11"
-                        Grid.Column="1"
-                        Style="{StaticResource QbSidePaneValue}"
-                        >
-            </DatePicker>
-
-            <!-- Row 12 -->
-
-            <TextBlock Text="CLASS"
-                       Grid.Row="12"
-                       Grid.Column="0"
-                       Style="{StaticResource QbSidePaneKey}" 
-            >
-            </TextBlock>
-            <TextBox x:Name="ClassRefFullName"
-                     Grid.Row="12"
-                     Grid.Column="1"
-                     Style="{StaticResource QbSidePaneValue}"
-            >
-            </TextBox>
-
-            <!-- Row 13 -->
-
-            <TextBlock Text="TEMPLATE"
-                       Grid.Row="13"
-                       Grid.Column="0"
-                       Style="{StaticResource QbSidePaneKey}" 
-            >
-            </TextBlock>
-            <ComboBox x:Name="TemplateRefFullName"
-                      Grid.Row="13"
-                      Grid.Column="1"
-                      Style="{StaticResource QbSidePaneValue}"
-            >
-            </ComboBox>
-
-
-        </Grid>
+                    Query QuickBooks
+                </Button>
+            </Grid>
+        </DockPanel>
     </Border>
 </UserControl>

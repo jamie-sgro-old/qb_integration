@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using MCBusinessLogic.Controllers;
 using WPFDesktopUI.Controllers;
 
@@ -14,16 +15,17 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 		private string _headerOtherTextBox;
 		private DateTime _headerDateTextBox = DateTime.Now;
     private string _classRefFullName;
-    private List<string> _templateRefFullName = InitTemplateRefFullName(SettingsController.GetQbFilePath());
+    private List<string> _templateRefFullName = new List<string> {""};
 
-	  public string Other {
+    public string Other {
 			get => _headerOtherTextBox;
       set {
         _headerOtherTextBox = value;
         NotifyOfPropertyChange(() => Other);
 			}
 		}
-
+    
+    
 		public DateTime TxnDate {
 			get => _headerDateTextBox;
       set {
@@ -51,7 +53,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     private string _selectedTemplateRefFullName;
 
     public string SelectedTemplateRefFullName {
-      get { return _selectedTemplateRefFullName; }
+      get => _selectedTemplateRefFullName;
       set {
         _selectedTemplateRefFullName = value;
         NotifyOfPropertyChange(() => SelectedTemplateRefFullName);
@@ -77,16 +79,21 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       }
 		}
 
+    public async void QbImport() {
+      var qbFilePath = SettingsController.GetQbFilePath();
+      TemplateRefFullName = await InitTemplateRefFullName(qbFilePath);
+    }
+
     /// <summary>
     /// Returns a list of templates used in QuickBooks based on their name
     /// </summary>
     /// <param name="qbFilePath">The full path for the QuickBooks file</param>
     /// <returns></returns>
-    private static List<string> InitTemplateRefFullName(string qbFilePath) {
+    private static async Task<List<string>> InitTemplateRefFullName(string qbFilePath) {
       var qbExportController = new QbExportController(qbFilePath);
-      return qbExportController.GetTemplateNamesList();
+      var templates = await Task.Run(() => qbExportController.GetTemplateNamesList());
+      templates.Insert(0, "");
+      return templates;
     }
-
-
   }
 }
