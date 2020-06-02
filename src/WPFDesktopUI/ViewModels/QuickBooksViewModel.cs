@@ -62,6 +62,10 @@ namespace WPFDesktopUI.ViewModels {
 
     #region Methods
 
+    public void OnSelected() {
+      QuickBooksSidePaneViewModel.OnSelected();
+    }
+
     public async Task BtnQbImport() {
       try {
 				SessionStart();

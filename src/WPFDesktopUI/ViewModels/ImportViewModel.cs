@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace WPFDesktopUI.ViewModels {
   public class ImportViewModel : Screen {
-
+   
     #region Properties
 
     private string _csvFilePath;
@@ -39,6 +39,9 @@ namespace WPFDesktopUI.ViewModels {
 
     #region Methods
 
+    public void OnSelected() {
+    }
+
     public async Task BtnOpenCsvFile() {
       var fileName = FileSystemHelper.GetFilePath("CSV (Comma delimited) |*.csv");
       CsvFilePath = fileName;
@@ -46,6 +49,7 @@ namespace WPFDesktopUI.ViewModels {
 
       await Task.Run(() => {
         CsvData = CsvParser.ParseFromFile(fileName, sep);
+        // Match data structure to the UI view (this let's the user see the data)
         CsvDataView = CsvData.DefaultView;
       });
 

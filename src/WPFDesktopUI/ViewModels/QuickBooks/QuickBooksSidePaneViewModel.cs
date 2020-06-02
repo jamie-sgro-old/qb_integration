@@ -24,6 +24,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     private string _btnNotification = "Please select 'Query QuickBooks' before custom lists can be generated";
     private List<string> _itemRef;
     private string _selectedItemRef;
+    private bool _canItemRef;
 
     public string Other {
 			get => _headerOtherTextBox;
@@ -108,6 +109,15 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       }
     }
 
+    public bool CanItemRef {
+      get => _canItemRef;
+      set {
+        _canItemRef = value;
+        NotifyOfPropertyChange(() => CanItemRef);
+      }
+    }
+
+
     public List<string> ItemRef {
       get => _itemRef;
       set {
@@ -137,14 +147,18 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 
 
 
-
+    public void OnSelected() {
+      var csvData = ImportViewModel.CsvData;
+      if (csvData == null) return;
+      ItemRef = GetCsvHeaders(csvData);
+      CanItemRef = true;
+    }
 
     public async void QbExport() {
       SessionStart();
       var qbFilePath = stn.QbFilePath();
       try {
         TemplateRefFullName = await InitTemplateRefFullName(qbFilePath);
-        ItemRef = GetCsvHeaders();
         SessionEnd();
       } catch (Exception e) {
         ConsoleMessage = QbImportExceptionHandler.DelegateHandle(e);
@@ -178,11 +192,8 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       return templates;
     }
 
-    private static List<string> GetCsvHeaders() {
-      var csvData = ImportViewModel.CsvData;
-      if (csvData == null) return null;
-
-      string[] columnHeaders = csvData?.Columns.Cast<DataColumn>()
+    private static List<string> GetCsvHeaders(DataTable dt) {
+      string[] columnHeaders = dt?.Columns.Cast<DataColumn>()
         .Select(x => x.ColumnName)
         .ToArray();
 

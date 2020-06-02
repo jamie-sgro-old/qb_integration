@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using WPFDesktopUI.Models;
 
 namespace WPFDesktopUI.ViewModels {
@@ -20,7 +21,25 @@ namespace WPFDesktopUI.ViewModels {
 		public ImportViewModel ImportViewModel { get; }
 		public QuickBooksViewModel QuickBooksViewModel { get; }
 
-		public void MenuItemClose() {
+    public bool TabImportIsSelected { get; set; } = true;
+    public bool TabQuickBooksIsSelected { get; set; } = false;
+
+		/// <summary>
+		/// Event triggers when a tab is selected in the ShellView
+		/// </summary>
+    public void TabChange() {
+      if (TabImportIsSelected) {
+        ImportViewModel.OnSelected();
+				return;
+      }
+
+      if (TabQuickBooksIsSelected) {
+        QuickBooksViewModel.OnSelected();
+				return;
+      }
+    }
+
+    public void MenuItemClose() {
 			Application.Current.Shutdown();
 		}
 
