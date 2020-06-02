@@ -146,11 +146,13 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 
 
 
-    public void OnSelected() {
-      var csvData = ImportViewModel.CsvData;
-      if (csvData == null) return;
-      ItemRef = GetCsvHeaders(csvData);
-      CanItemRef = true;
+    public async void OnSelected() {
+      await Task.Run(() => {
+        var csvData = ImportViewModel.CsvData;
+        if (csvData == null) return;
+        ItemRef = GetCsvHeaders(csvData);
+        CanItemRef = true;
+      });
     }
 
     public async void QbExport() {
