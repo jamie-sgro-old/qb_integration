@@ -1,16 +1,11 @@
 ﻿using Caliburn.Micro;
 using MCBusinessLogic.Controllers;
-using MCBusinessLogic.DataAccess;
-using MCBusinessLogic.Models;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
-  public class ImportViewModel : Screen {
+  public class ImportViewModel : Screen, IMainTab {
    
     #region Properties
 

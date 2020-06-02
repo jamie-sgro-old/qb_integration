@@ -3,14 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using MCBusinessLogic.Controllers;
+using WPFDesktopUI.ViewModels.Interfaces;
 using stn = WPFDesktopUI.Controllers.SettingsController;
 
 namespace WPFDesktopUI.ViewModels.QuickBooks {
-  public class QuickBooksSidePaneViewModel : Screen {
+  public class QuickBooksSidePaneViewModel : Screen, IMainTab {
 		private string _otherHeaderTextBlock;
 		private bool _hasHeaderOther;
 		private string _headerOtherTextBox;

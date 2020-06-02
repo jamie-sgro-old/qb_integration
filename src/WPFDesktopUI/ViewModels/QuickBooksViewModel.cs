@@ -6,15 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using WPFDesktopUI.ViewModels.QuickBooks;
 using MCBusinessLogic.Models;
-using WPFDesktopUI.Controllers;
+using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
-  public class QuickBooksViewModel : Conductor<object> {
+  public class QuickBooksViewModel : Conductor<object>, IMainTab {
 
 		#region Constructor
 
