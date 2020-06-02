@@ -7,14 +7,32 @@ using System.Threading.Tasks;
 
 namespace MCBusinessLogic.Controllers {
   public static class QbImportExceptionHandler {
-    public static string Handle(ArgumentNullException e) {
+
+    public static string DelegateHandle(Exception e) {
+      switch (e) {
+        case ArgumentNullException eNull:
+          return Handle(eNull) ?? GetDefaultError(eNull);
+        case ArgumentOutOfRangeException eRange:
+          return Handle(eRange) ?? GetDefaultError(eRange);
+        case ArgumentException eArg:
+          return Handle(eArg) ?? GetDefaultError(eArg);
+        case COMException eCom:
+          return Handle(eCom) ?? GetDefaultError(eCom);
+        default:
+          return GetDefaultError(e);
+      }
+    }
+
+
+
+		private static string Handle(ArgumentNullException e) {
 			if (e.ParamName == "TemplateRefListID" || e.ParamName == "TemplateRefFullName") {
 				return GetTemplateNull();
 			}
 			return null;
 		}
 
-    public static string Handle(ArgumentOutOfRangeException e) {
+    private static string Handle(ArgumentOutOfRangeException e) {
       if (e.ParamName == "lineItems") {
         return GetLineItemsOutOfRange(e.Message);
       }
@@ -28,14 +46,14 @@ namespace MCBusinessLogic.Controllers {
 			return null;
 		}
 
-		public static string Handle(ArgumentException e) {
+    private static string Handle(ArgumentException e) {
 			if (e.ParamName == "TemplateRefFullName") {
 				return GetTemplateWrong();
 			}
 			return "An unhandled ArgumentNullException was caught by modelview";
 		}
 
-		public static string Handle(COMException e) {
+    private static string Handle(COMException e) {
 			if (e.Source == "QBXMLRP2.RequestProcessor.2") {
 				if (e.TargetSite.DeclaringType.FullName == "QBFC13Lib.IQBSessionManager") {
 					if (e.TargetSite.Name.ToString() == "BeginSession") {
@@ -46,7 +64,7 @@ namespace MCBusinessLogic.Controllers {
 			return null;
 		}
 
-		public static string GetDefaultError(Exception e) {
+    private static string GetDefaultError(Exception e) {
 			Console.WriteLine(e.GetType());
 			Console.WriteLine(e.StackTrace);
 			return e.Message;

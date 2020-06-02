@@ -20,13 +20,12 @@ namespace WPFDesktopUI.ViewModels {
 
 		public QuickBooksViewModel() {
 			QuickBooksSidePaneViewModel = new QuickBooksSidePaneViewModel();
-		}
+    }
 
 		#endregion Constructor
 
 
 		#region Properties
-
 
 		private string _consoleMessage;
 		private bool _canBtnQbImport = true;
@@ -34,7 +33,7 @@ namespace WPFDesktopUI.ViewModels {
 
 		public QuickBooksSidePaneViewModel QuickBooksSidePaneViewModel { get; }
 
-		public string ConsoleMessage {
+    public string ConsoleMessage {
 			get => _consoleMessage;
       set {
 				_consoleMessage = value;
@@ -42,7 +41,7 @@ namespace WPFDesktopUI.ViewModels {
 			}
 		}
 
-		public bool CanBtnQbImport {
+    public bool CanBtnQbImport {
 			get => _canBtnQbImport;
       set { 
 				_canBtnQbImport = value;
@@ -61,9 +60,9 @@ namespace WPFDesktopUI.ViewModels {
     #endregion Properties
 
 
-		#region Methods
+    #region Methods
 
-		public async Task BtnQbImport() {
+    public async Task BtnQbImport() {
       try {
 				SessionStart();
 
@@ -85,25 +84,14 @@ namespace WPFDesktopUI.ViewModels {
 
         var csvModel = MapDataTableToCsvModel(csvData);
 
-
-
-
         await Task.Run(() => {
           var qbImport = new NxQbImportController(qbFilePath, header, csvModel);
           qbImport.Import();
         });
 
         ConsoleMessage = "Import has successfully completed";
-			} catch (ArgumentNullException e) {
-        ConsoleMessage = ErrHandler.Handle(e) ?? ErrHandler.GetDefaultError(e);
-      } catch (ArgumentOutOfRangeException e) {
-        ConsoleMessage = ErrHandler.Handle(e) ?? ErrHandler.GetDefaultError(e);
-      } catch (ArgumentException e) {
-        ConsoleMessage = ErrHandler.Handle(e) ?? ErrHandler.GetDefaultError(e);
-      } catch (System.Runtime.InteropServices.COMException e) {
-        ConsoleMessage = ErrHandler.Handle(e) ?? ErrHandler.GetDefaultError(e);
       } catch (Exception e) {
-        ConsoleMessage = ErrHandler.GetDefaultError(e);
+        ConsoleMessage = ErrHandler.DelegateHandle(e);
 			} finally {
         SessionEnd();
 			}

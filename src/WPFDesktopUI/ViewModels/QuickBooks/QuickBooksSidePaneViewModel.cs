@@ -108,14 +108,6 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       }
     }
 
-    public string BtnNotification {
-      get => _btnNotification;
-      set {
-        _btnNotification = value;
-        NotifyOfPropertyChange(() => BtnNotification);
-      }
-    }
-
     public List<string> ItemRef {
       get => _itemRef;
       set {
@@ -132,6 +124,15 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       }
     }
 
+    private string _consoleMessage;
+
+    public string ConsoleMessage {
+      get => _consoleMessage;
+      set {
+        _consoleMessage = value;
+        NotifyOfPropertyChange(() => ConsoleMessage);
+      }
+    }
 
 
 
@@ -141,9 +142,16 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     public async void QbExport() {
       SessionStart();
       var qbFilePath = stn.QbFilePath();
-      TemplateRefFullName = await InitTemplateRefFullName(qbFilePath);
-      ItemRef = GetCsvHeaders();
-      SessionEnd();
+      try {
+        TemplateRefFullName = await InitTemplateRefFullName(qbFilePath);
+        ItemRef = GetCsvHeaders();
+        SessionEnd();
+      } catch (Exception e) {
+        ConsoleMessage = QbImportExceptionHandler.DelegateHandle(e);
+      } finally {
+        CanQbExport = true;
+        QbProgressBarIsVisible = false;
+      }
     }
 
     private void SessionStart() {
@@ -153,9 +161,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 
     private void SessionEnd() {
       CanTemplateRefFullName = true;
-      CanQbExport = true;
-      QbProgressBarIsVisible = false;
-      BtnNotification = "";
+      ConsoleMessage = "Query successfully completed";
     }
 
     /// <summary>
