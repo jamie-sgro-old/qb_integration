@@ -137,7 +137,7 @@
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock x:Name="BtnNotification" 
+                <TextBlock x:Name="ConsoleMessage" 
                            Grid.Row="1"
                            Grid.Column="0"
                            Grid.ColumnSpan="2"
