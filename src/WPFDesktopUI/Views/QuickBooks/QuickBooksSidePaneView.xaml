@@ -9,124 +9,173 @@
              d:DesignHeight="500" d:DesignWidth="400">
     <Border BorderBrush="Gray" BorderThickness="1">
         <DockPanel>
-            <Grid DockPanel.Dock="Top">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                    
+            <Grid Grid.IsSharedSizeScope="True" DockPanel.Dock="Top" MinHeight="100">
 
-                <!-- Row 10 -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
 
-                <TextBlock x:Name="HeaderOtherTextBlock"
-                        Grid.Row="10"
-                        Grid.Column="0"
-                        Style="{StaticResource QbSidePaneKey}"
-                           >
-                </TextBlock>
-                <TextBox x:Name="Other"
-                            Grid.Row="10"
-                            Grid.Column="1"
-                            Style="{StaticResource QbSidePaneValue}"
-                            >
-                </TextBox>
+                    <StackPanel Orientation="Vertical"
+                                VerticalAlignment="Stretch"
+                                CanVerticallyScroll="True" >
 
-                <!-- Row 11 -->
+                        <!-- ROW 0 -->
 
-                <TextBlock Text="DATE"
-                           Grid.Row="11"
-                           Grid.Column="0"
-                           Style="{StaticResource QbSidePaneKey}" 
-                           >
-                </TextBlock>
-                <DatePicker x:Name="TxnDate"
-                            Grid.Row="11"
-                            Grid.Column="1"
-                            Style="{StaticResource QbSidePaneValue}"
-                            >
-                </DatePicker>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition SharedSizeGroup="FirstRow"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition SharedSizeGroup="FirstColumn" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
 
-                <!-- Row 12 -->
+                            <!-- CONTENT -->
 
-                <TextBlock Text="CLASS"
-                           Grid.Row="12"
-                           Grid.Column="0"
-                           Style="{StaticResource QbSidePaneKey}" 
-                >
-                </TextBlock>
-                <TextBox x:Name="ClassRefFullName"
-                         Grid.Row="12"
-                         Grid.Column="1"
-                         Style="{StaticResource QbSidePaneValue}"
-                >
-                </TextBox>
+                            <TextBlock x:Name="HeaderOtherTextBlock"
+                                       Grid.Column="0"
+                                       Style="{StaticResource QbSidePaneKey}" >
+                            </TextBlock>
+                            <TextBox x:Name="Other"
+                                     Grid.Column="1"
+                                     
+                                     Style="{StaticResource QbSidePaneValue}" >
+                            </TextBox>
 
-                <!-- Row 13 -->
+                        </Grid>
 
-                <TextBlock Text="TEMPLATE"
-                           Grid.Row="13"
-                           Grid.Column="0"
-                           Style="{StaticResource QbSidePaneKey}" 
-                >
-                </TextBlock>
-                <ComboBox x:Name="TemplateRefFullName"
-                          Grid.Row="13"
-                          Grid.Column="1"
-                          Style="{StaticResource QbSidePaneValue}"
-                          ToolTipService.ShowOnDisabled = "True"
-                          IsEnabled="{Binding CanTemplateRefFullName}"
-                >
-                    <ComboBox.ToolTip>
-                        <TextBlock>Please select 'Query QuickBooks' before custom lists can be generated</TextBlock>
-                    </ComboBox.ToolTip>
-                </ComboBox>
+                        <!-- ROW 1 -->
 
-                <!-- Row 14 -->
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition SharedSizeGroup="FirstRow"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition SharedSizeGroup="FirstColumn"  />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- CONTENT -->
 
-                <TextBlock Text="ITEM"
-                           Grid.Row="14"
-                           Grid.Column="0"
-                           Style="{StaticResource QbSidePaneKey}" 
-                >
-                </TextBlock>
-                <ComboBox x:Name="ItemRef"
-                          Grid.Row="14"
-                          Grid.Column="1"
-                          Style="{StaticResource QbSidePaneValue}"
-                          ToolTipService.ShowOnDisabled = "True"
-                          IsEnabled="{Binding CanItemRef}"
-                >
-                    <ComboBox.ToolTip>
-                        <TextBlock>Please import a .csv file in the 'Import' tab before custom lists can be generated</TextBlock>
-                    </ComboBox.ToolTip>
-                </ComboBox>
+                            <TextBlock Text="DATE"
+                                       Grid.Column="0"
+                                       Style="{StaticResource QbSidePaneKey}" >
+                            </TextBlock>
+                            <DatePicker x:Name="TxnDate"
+                                        Grid.Column="1"
+                                        Style="{StaticResource QbSidePaneValue}" >
+                            </DatePicker>
+                        </Grid>
+
+
+                        <!-- ROW 2 -->
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition SharedSizeGroup="FirstRow"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition SharedSizeGroup="FirstColumn"  />
+                                <ColumnDefinition   />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- CONTENT -->
+
+                            <TextBlock Text="CLASS"
+                                       Grid.Column="0"
+                                       Style="{StaticResource QbSidePaneKey}" >
+                            </TextBlock>
+                            <TextBox x:Name="ClassRefFullName"
+                                     Grid.Column="1"
+                                     Style="{StaticResource QbSidePaneValue}" >
+                            </TextBox>
+                        </Grid>
+
+
+                        <!-- ROW 3 -->
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition SharedSizeGroup="FirstRow"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition SharedSizeGroup="FirstColumn"  />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- CONTENT -->
+                            <TextBlock Text="TEMPLATE"
+                                       Grid.Column="0"
+                                       Style="{StaticResource QbSidePaneKey}" >
+                            </TextBlock>
+                            <ComboBox x:Name="TemplateRefFullName"
+                                      Grid.Column="1"
+                                      Style="{StaticResource QbSidePaneValue}"
+                                      ToolTipService.ShowOnDisabled = "True"
+                                      IsEnabled="{Binding CanTemplateRefFullName}" >
+                                <ComboBox.ToolTip>
+                                    <TextBlock>Please select 'Query QuickBooks' before custom lists can be generated</TextBlock>
+                                </ComboBox.ToolTip>
+                            </ComboBox>
+                        </Grid>
+
+                        <!-- ROW 4 -->
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition SharedSizeGroup="FirstRow"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition SharedSizeGroup="FirstColumn"  />
+                                <ColumnDefinition   />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- CONTENT -->
+
+                            <TextBlock Text="ITEM"
+                                       Grid.Column="0"
+                                       Style="{StaticResource QbSidePaneKey}" >
+                            </TextBlock>
+                            <ComboBox x:Name="ItemRef"
+                                      Grid.Column="1"
+                                      Style="{StaticResource QbSidePaneValue}"
+                                      ToolTipService.ShowOnDisabled = "True"
+                                      IsEnabled="{Binding CanItemRef}" >
+                                <ComboBox.ToolTip>
+                                    <TextBlock>Please import a .csv file in the 'Import' tab before custom lists can be generated</TextBlock>
+                                </ComboBox.ToolTip>
+                            </ComboBox>
+                        </Grid>
+
+                        <!-- ROW 5 -->
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition SharedSizeGroup="FirstRow"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition SharedSizeGroup="FirstColumn"  />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- CONTENT -->
+
+                            <TextBlock Grid.Column="0" HorizontalAlignment="Left">
+                                New Item
+                            </TextBlock>
+                            <TextBox Grid.Column="1">
+                                New Item
+                            </TextBox>
+                        </Grid>
+
+                    </StackPanel>
+                </ScrollViewer>
+
             </Grid>
 
 
 
             <!-- DOCKPANEL BOTTOM -->
 
-            <Grid DockPanel.Dock="Bottom">
+            <Grid DockPanel.Dock="Bottom" MinHeight="100">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="auto" />
