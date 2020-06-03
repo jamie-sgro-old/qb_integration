@@ -131,6 +131,16 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       }
     }
 
+    //TODO: 
+    // CustomerRefFullName
+    // BillAddressAddr1
+    // ShipAddressAddr1
+    // add qty to onclick
+    // also add check for name change from preferences for things like "OTHER"
+    // Other1 (same as above)
+    // Other2 (same as above)
+    // Desc
+    // make sure all mapable columns convert "" into null
 
 
   }
