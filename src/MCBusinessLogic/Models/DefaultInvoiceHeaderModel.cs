@@ -19,5 +19,20 @@ namespace MCBusinessLogic.Models {
       TxnDate = null;
       Other = null;
     }
+
+    public void ConvertEmptyToNull() {
+      if (CustomerRefFullName == "") {
+        CustomerRefFullName = null;
+      }
+      if (ClassRefFullName == "") {
+        ClassRefFullName = null;
+      }
+      if (TemplateRefFullName == "") {
+        TemplateRefFullName = null;
+      }
+      if (Other == "") {
+        Other = null;
+      }
+    }
   }
 }

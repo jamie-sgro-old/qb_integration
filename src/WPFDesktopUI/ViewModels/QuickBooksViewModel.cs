@@ -75,15 +75,18 @@ namespace WPFDesktopUI.ViewModels {
             message: "No CUSTOMER:JOB name was supplied. " +
                      "The Importer was expecting at least 1.");
         }
-
-        var header = new NxInvoiceHeaderModel {
+        
+        var header = new DefaultInvoiceHeaderModel {
           CustomerRefFullName = QuickBooksSidePaneViewModel.CustomerRefFullName, // "CLASS"
           ClassRefFullName = QuickBooksSidePaneViewModel.ClassRefFullName, // "Barrie Area:Barrie Corporate"
           TemplateRefFullName = QuickBooksSidePaneViewModel.SelectedTemplateRefFullName, 
           TxnDate = QuickBooksSidePaneViewModel.TxnDate,
 					Other = QuickBooksSidePaneViewModel.Other,
 				};
-        
+
+        header.ConvertEmptyToNull();
+
+
         var csvModel = MapDataTableToCsvModel(ImportViewModel.CsvData);
 
         await Task.Run(() => {
@@ -114,8 +117,7 @@ namespace WPFDesktopUI.ViewModels {
 
       if (string.IsNullOrEmpty(QuickBooksSidePaneViewModel.SelectedItemRef)) {
         throw new ArgumentNullException(paramName: nameof(QuickBooksSidePaneViewModel.SelectedItemRef),
-          message: "No parameter specified for 'ITEM'. " +
-                   "The Importer was expecting at least 1.");
+          message: "No parameter specified for 'ITEM'.");
       }
       var convertedList = (from rw in dt.AsEnumerable()
         select new CsvModel() {
