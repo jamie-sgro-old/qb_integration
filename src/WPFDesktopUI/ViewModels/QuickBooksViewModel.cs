@@ -70,12 +70,6 @@ namespace WPFDesktopUI.ViewModels {
 
         var qbFilePath = stn.QbFilePath();
 
-        if (string.IsNullOrEmpty(QuickBooksSidePaneViewModel.CustomerRefFullName)) {
-          throw new ArgumentNullException(paramName: nameof(QuickBooksSidePaneViewModel.CustomerRefFullName),
-            message: "No CUSTOMER:JOB name was supplied. " +
-                     "The Importer was expecting at least 1.");
-        }
-        
         var header = new DefaultInvoiceHeaderModel {
           CustomerRefFullName = QuickBooksSidePaneViewModel.CustomerRefFullName, // "CLASS"
           ClassRefFullName = QuickBooksSidePaneViewModel.ClassRefFullName, // "Barrie Area:Barrie Corporate"
@@ -103,6 +97,7 @@ namespace WPFDesktopUI.ViewModels {
 		}
 
     private List<CsvModel> MapDataTableToCsvModel(DataTable dt) {
+      // Throw if datatable is empty
       if (dt == null) {
         throw new ArgumentNullException(paramName: nameof(dt),
           message: "No Invoice lineItems were supplied. " +
@@ -115,19 +110,27 @@ namespace WPFDesktopUI.ViewModels {
                    "The Importer was expecting at least 1.");
       }
 
+      // Throw if mandatory field isn't accounted for
       if (string.IsNullOrEmpty(QuickBooksSidePaneViewModel.SelectedItemRef)) {
         throw new ArgumentNullException(paramName: nameof(QuickBooksSidePaneViewModel.SelectedItemRef),
           message: "No parameter specified for 'ITEM'.");
       }
-      var convertedList = (from rw in dt.AsEnumerable()
+
+      var item = QuickBooksSidePaneViewModel.SelectedItemRef;
+      var quantity = QuickBooksSidePaneViewModel.SelectedQuantity;
+      var rate = QuickBooksSidePaneViewModel.SelectedRate;
+
+      // Todo: Make this less computationally expensive
+      var convertedList = (from row in dt.AsEnumerable()
         select new CsvModel() {
-          Item = Convert.ToString(rw[QuickBooksSidePaneViewModel.SelectedItemRef]),
-          Quantity = Convert.ToString(rw["Quantity"]),
-          StaffName = Convert.ToString(rw["StaffName"]),
-          TimeInOut = Convert.ToString(rw["TimeInOut"]),
-          ServiceDate = Convert.ToString(rw["ServiceDate"]),
-          Rate = Convert.ToString(rw["Rate"]),
+          Item = string.IsNullOrEmpty(item) ? null : Convert.ToString(row[item]),
+          Quantity = string.IsNullOrEmpty(quantity) ? null : Convert.ToString(row[quantity]),
+          StaffName = Convert.ToString(row["StaffName"]),
+          TimeInOut = Convert.ToString(row["TimeInOut"]),
+          ServiceDate = Convert.ToString(row["ServiceDate"]),
+          Rate = string.IsNullOrEmpty(rate) ? null : Convert.ToString(row[rate]),
         });
+      var a = convertedList.ToList();
 
       return convertedList.ToList();
     }

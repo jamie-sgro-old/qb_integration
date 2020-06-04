@@ -96,12 +96,12 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       }
     }
 
-    private bool _canItemRef;
-    public bool CanItemRef {
-      get => _canItemRef;
+    private bool _canCsvHeader;
+    public bool CanCsvHeader {
+      get => _canCsvHeader;
       set {
-        _canItemRef = value;
-        NotifyOfPropertyChange(() => CanItemRef);
+        _canCsvHeader = value;
+        NotifyOfPropertyChange(() => CanCsvHeader);
       }
     }
 
@@ -122,6 +122,47 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
         NotifyOfPropertyChange(() => SelectedItemRef);
       }
     }
+
+    private List<string> _quantity;
+
+    public List<string> Quantity {
+      get => _quantity;
+      set {
+        _quantity = value;
+        NotifyOfPropertyChange(() => Quantity);
+      }
+    }
+
+    private string _selectedQuantity;
+
+    public string SelectedQuantity {
+      get => _selectedQuantity;
+      set {
+        _selectedQuantity = value;
+        NotifyOfPropertyChange(() => SelectedQuantity);
+      }
+    }
+
+    private List<string> _rate;
+
+    public List<string> Rate {
+      get => _rate;
+      set {
+        _rate = value;
+        NotifyOfPropertyChange(() => Rate);
+      }
+    }
+
+    private string _selectedRate;
+
+    public string SelectedRate {
+      get => _selectedRate;
+      set {
+        _selectedRate = value;
+        NotifyOfPropertyChange(() => SelectedRate);
+      }
+    }
+
 
     private string _consoleMessage = "Please select 'Query QuickBooks' before custom lists can be generated";
     public string ConsoleMessage {
@@ -146,13 +187,11 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     //TODO: 
     // BillAddressAddr1
     // ShipAddressAddr1
-    // add qty to onclick
     // also add check for name change from preferences for things like "OTHER"
     // Other1 (same as above)
     // Other2 (same as above)
     // Desc
     // make sure all mapable columns convert "" into null
-    // Rate
 
 
   }

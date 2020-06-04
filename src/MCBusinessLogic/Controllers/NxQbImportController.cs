@@ -16,17 +16,28 @@ namespace MCBusinessLogic.Controllers {
     public List<ClientLineItemModel> MapCsvDataToLineItems(List<CsvModel> lineItems) {
       var sqlLineItems = new List<ClientLineItemModel>();
       foreach (var line in lineItems) {
+
         sqlLineItems.Add(new ClientLineItemModel() {
           ItemRef = line.Item,
-          Quantity = Convert.ToDouble(line.Quantity),
+          Quantity = GetNullableDouble(line.Quantity),
           Other1 = line.TimeInOut,
           Other2 = line.StaffName,
           ServiceDate = Convert.ToDateTime(line.ServiceDate),
-          ORRatePriceLevelRate = Convert.ToDouble(line.Rate)
+          ORRatePriceLevelRate = GetNullableDouble(line.Rate)
         });
       }
       return sqlLineItems;
     }
 
+    /// <summary>
+    /// If a string is null return null rather than 0
+    /// Conceptually equivalent to Convert.ToDouble?() instead of Convert.ToDouble()
+    /// </summary>
+    /// <param name="strNum">A string parseable as a number</param>
+    /// <returns>A double, or null if input was null</returns>
+    private static double? GetNullableDouble (string strNum) {
+      if (strNum == null) return null;
+      return Convert.ToDouble(strNum);
+    }
   }
 }

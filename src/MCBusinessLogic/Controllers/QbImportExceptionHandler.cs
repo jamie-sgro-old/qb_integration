@@ -50,8 +50,8 @@ namespace MCBusinessLogic.Controllers {
 			if (e.ParamName == "TemplateRefFullName") {
 				return GetTemplateWrong();
 			}
-			return "An unhandled ArgumentNullException was caught by modelview";
-		}
+      return null;
+    }
 
     private static string Handle(COMException e) {
 			if (e.Source == "QBXMLRP2.RequestProcessor.2") {

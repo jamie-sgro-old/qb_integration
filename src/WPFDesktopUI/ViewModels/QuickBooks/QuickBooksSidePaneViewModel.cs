@@ -17,8 +17,11 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 
         var csvData = ImportViewModel.CsvData;
         if (csvData == null) return;
-        ItemRef = GetCsvHeaders(csvData);
-        CanItemRef = true;
+        var csvHeaders = GetCsvHeaders(csvData);
+        ItemRef = csvHeaders;
+        Quantity = csvHeaders;
+        Rate = csvHeaders;
+        CanCsvHeader = true;
       });
     }
 
@@ -63,6 +66,8 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       var templates = await Task.Run(() => {
         return qbExportController.GetTemplateNamesList();
       });
+
+      // Add blank to start
       templates.Insert(0, "");
       return templates;
     }
@@ -72,7 +77,14 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
         .Select(x => x.ColumnName)
         .ToArray();
 
-      return columnHeaders?.ToList();
+      // Convert string[] to List<string>
+      List<string> finalList = columnHeaders?.ToList();
+
+      if (finalList == null) return new List<string>();
+
+      // Add blank to start
+      finalList.Insert(0, "");
+      return finalList;
     }
   }
 }
