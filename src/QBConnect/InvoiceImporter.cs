@@ -55,6 +55,9 @@ namespace QBConnect {
       BuildRequest(msgSetRequest, headerData, lineItems);
       
       var responseMsgSet = SessionManager.DoRequests(msgSetRequest);
+      if (responseMsgSet.ResponseList.GetAt(0).StatusMessage != "Status OK") {
+        throw new Exception(responseMsgSet.ResponseList.GetAt(0).StatusMessage);
+      }
     }
 
 
