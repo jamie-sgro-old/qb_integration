@@ -8,7 +8,6 @@ namespace MCBusinessLogic.Models {
   public class NxInvoiceHeaderModel : DefaultInvoiceHeaderModel {
     public NxInvoiceHeaderModel() {
       ClassRefFullName = "Barrie Area:Barrie Corporate";
-      CustomerRefFullName = "CLASS";
       TemplateRefFullName = "NEXIM's Invoice with credits &";
     }
   }

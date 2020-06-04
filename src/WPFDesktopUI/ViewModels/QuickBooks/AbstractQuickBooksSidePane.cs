@@ -131,8 +131,18 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       }
     }
 
+    private string _customerRefFullName;
+
+    public string CustomerRefFullName {
+      get => _customerRefFullName;
+      set {
+        _customerRefFullName = value;
+        NotifyOfPropertyChange(() => CustomerRefFullName);
+      }
+    }
+
+
     //TODO: 
-    // CustomerRefFullName
     // BillAddressAddr1
     // ShipAddressAddr1
     // add qty to onclick

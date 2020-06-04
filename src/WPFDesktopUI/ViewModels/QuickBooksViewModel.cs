@@ -70,21 +70,21 @@ namespace WPFDesktopUI.ViewModels {
 
         var qbFilePath = stn.QbFilePath();
 
+        if (string.IsNullOrEmpty(QuickBooksSidePaneViewModel.CustomerRefFullName)) {
+          throw new ArgumentNullException(paramName: nameof(QuickBooksSidePaneViewModel.CustomerRefFullName),
+            message: "No CUSTOMER:JOB name was supplied. " +
+                     "The Importer was expecting at least 1.");
+        }
+
         var header = new NxInvoiceHeaderModel {
+          CustomerRefFullName = QuickBooksSidePaneViewModel.CustomerRefFullName, // "CLASS"
           ClassRefFullName = QuickBooksSidePaneViewModel.ClassRefFullName, // "Barrie Area:Barrie Corporate"
           TemplateRefFullName = QuickBooksSidePaneViewModel.SelectedTemplateRefFullName, 
           TxnDate = QuickBooksSidePaneViewModel.TxnDate,
 					Other = QuickBooksSidePaneViewModel.Other,
 				};
-
-        var csvData = ImportViewModel.CsvData;
-        if (csvData == null) {
-          throw new ArgumentNullException(paramName: nameof(csvData),
-            message: "No Invoice lineItems were supplied. " +
-                     "The Importer was expecting at least 1.");
-        }
-
-        var csvModel = MapDataTableToCsvModel(csvData);
+        
+        var csvModel = MapDataTableToCsvModel(ImportViewModel.CsvData);
 
         await Task.Run(() => {
           var qbImport = new NxQbImportController(qbFilePath, header, csvModel);
@@ -100,6 +100,23 @@ namespace WPFDesktopUI.ViewModels {
 		}
 
     private List<CsvModel> MapDataTableToCsvModel(DataTable dt) {
+      if (dt == null) {
+        throw new ArgumentNullException(paramName: nameof(dt),
+          message: "No Invoice lineItems were supplied. " +
+                   "The Importer was expecting at least 1.");
+      }
+
+      if (dt.Rows.Count <= 0) {
+        throw new ArgumentNullException(paramName: nameof(dt),
+          message: "No Invoice lineItems were supplied. " +
+                   "The Importer was expecting at least 1.");
+      }
+
+      if (string.IsNullOrEmpty(QuickBooksSidePaneViewModel.SelectedItemRef)) {
+        throw new ArgumentNullException(paramName: nameof(QuickBooksSidePaneViewModel.SelectedItemRef),
+          message: "No parameter specified for 'ITEM'. " +
+                   "The Importer was expecting at least 1.");
+      }
       var convertedList = (from rw in dt.AsEnumerable()
         select new CsvModel() {
           Item = Convert.ToString(rw[QuickBooksSidePaneViewModel.SelectedItemRef]),
