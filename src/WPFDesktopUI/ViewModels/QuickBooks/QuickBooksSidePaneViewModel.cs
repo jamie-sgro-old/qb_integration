@@ -13,6 +13,8 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 
     public async void OnSelected() {
       await Task.Run(() => {
+        HeaderOtherTextBlock = stn.QbInvHeaderOtherName();
+
         var csvData = ImportViewModel.CsvData;
         if (csvData == null) return;
         ItemRef = GetCsvHeaders(csvData);

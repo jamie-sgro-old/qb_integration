@@ -70,10 +70,11 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 
     private string _headerOtherTextBlock;
     public string HeaderOtherTextBlock {
-      get {
-        var name = stn.QbInvHeaderOtherName();
+      get => _headerOtherTextBlock;
+      set {
+        var name = value;
         _headerOtherTextBlock = HasHeaderOther ? name : "OTHER";
-        return _headerOtherTextBlock;
+        NotifyOfPropertyChange(() => HeaderOtherTextBlock);
       }
     }
 
@@ -151,6 +152,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     // Other2 (same as above)
     // Desc
     // make sure all mapable columns convert "" into null
+    // Rate
 
 
   }

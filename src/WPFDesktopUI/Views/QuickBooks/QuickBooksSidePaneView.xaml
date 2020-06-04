@@ -188,7 +188,7 @@
 
                         </Grid>
 
-                        <!-- NEW ROW -->
+                        <!-- NEW ROW --><!--
 
                         <Grid>
                             <Grid.RowDefinitions>
@@ -199,7 +199,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
-                            <!-- BILL TO -->
+                            --><!-- BILL TO --><!--
 
                             <TextBlock Text="BILL TO: Address 1"
                                        Grid.Column="0"
@@ -211,7 +211,7 @@
                             </TextBox>
                         </Grid>
 
-                        <!-- NEW ROW -->
+                        --><!-- NEW ROW --><!--
 
                         <Grid>
                             <Grid.RowDefinitions>
@@ -222,7 +222,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
-                            <!-- SHIP TO -->
+                            --><!-- SHIP TO --><!--
 
                             <TextBlock Text="SHIP TO: Address 1"
                                        Grid.Column="0"
@@ -232,7 +232,7 @@
                                      Grid.Column="1"
                                      Style="{StaticResource QbSidePaneValue}" >
                             </TextBox>
-                        </Grid>
+                        </Grid>-->
 
                         <!-- NEW ROW -->
 
@@ -262,7 +262,7 @@
                             </ComboBox>
                         </Grid>
 
-                        <!-- NEW ROW -->
+                        <!-- NEW ROW --><!--
 
                         <Grid>
                             <Grid.RowDefinitions>
@@ -273,7 +273,7 @@
                                 <ColumnDefinition   />
                             </Grid.ColumnDefinitions>
 
-                            <!-- QTY -->
+                            --><!-- QTY --><!--
 
                             <TextBlock Text="QUANTITY"
                                        Grid.Column="0"
@@ -290,7 +290,7 @@
                             </ComboBox>
                         </Grid>
 
-                        <!-- NEW ROW -->
+                        --><!-- NEW ROW --><!--
 
                         <Grid>
                             <Grid.RowDefinitions>
@@ -301,7 +301,7 @@
                                 <ColumnDefinition   />
                             </Grid.ColumnDefinitions>
 
-                            <!-- DESC -->
+                            --><!-- DESC --><!--
 
                             <TextBlock Text="DESCRIPTION"
                                        Grid.Column="0"
@@ -318,7 +318,7 @@
                             </ComboBox>
                         </Grid>
 
-                        <!-- NEW ROW -->
+                        --><!-- NEW ROW --><!--
 
                         <Grid>
                             <Grid.RowDefinitions>
@@ -329,7 +329,7 @@
                                 <ColumnDefinition   />
                             </Grid.ColumnDefinitions>
 
-                            <!-- OTHER1 -->
+                            --><!-- OTHER1 --><!--
 
                             <TextBlock Text="OTHER1"
                                        Grid.Column="0"
@@ -346,7 +346,7 @@
                             </ComboBox>
                         </Grid>
 
-                        <!-- NEW ROW -->
+                        --><!-- NEW ROW --><!--
 
                         <Grid>
                             <Grid.RowDefinitions>
@@ -357,7 +357,7 @@
                                 <ColumnDefinition   />
                             </Grid.ColumnDefinitions>
 
-                            <!-- OTHER1 -->
+                            --><!-- OTHER1 --><!--
 
                             <TextBlock Text="OTHER2"
                                        Grid.Column="0"
@@ -373,7 +373,35 @@
                                 </ComboBox.ToolTip>
                             </ComboBox>
                         </Grid>
-                        
+
+                        --><!-- NEW ROW --><!--
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition SharedSizeGroup="FirstRow"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition SharedSizeGroup="FirstColumn"  />
+                                <ColumnDefinition   />
+                            </Grid.ColumnDefinitions>
+
+                            --><!-- RATE --><!--
+
+                            <TextBlock Text="RATE"
+                                       Grid.Column="0"
+                                       Style="{StaticResource QbSidePaneKey}" >
+                            </TextBlock>
+                            <ComboBox x:Name="Rate"
+                                      Grid.Column="1"
+                                      Style="{StaticResource QbSidePaneValue}"
+                                      ToolTipService.ShowOnDisabled = "True"
+                                      IsEnabled="{Binding CanItemRef}" >
+                                <ComboBox.ToolTip>
+                                    <TextBlock>Please import a .csv file in the 'Import' tab before custom lists can be generated</TextBlock>
+                                </ComboBox.ToolTip>
+                            </ComboBox>
+                        </Grid>-->
+
                     </StackPanel>
                 </ScrollViewer>
 
