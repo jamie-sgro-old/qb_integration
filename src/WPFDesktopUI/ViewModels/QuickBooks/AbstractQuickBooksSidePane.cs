@@ -18,11 +18,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     private string _headerOtherTextBlock;
     public string HeaderOtherTextBlock {
       get => _headerOtherTextBlock;
-      set {
-        var name = value;
-        _headerOtherTextBlock = stn.QbInvHasHeaderOther() ? name : "OTHER";
-        NotifyOfPropertyChange(() => HeaderOtherTextBlock);
-      }
+      set => _headerOtherTextBlock = stn.QbInvHasHeaderOther() ? value : "OTHER";
     }
 
     public bool CanQbExport { get; set; } = true;
