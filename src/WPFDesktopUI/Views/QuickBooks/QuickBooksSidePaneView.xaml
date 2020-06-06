@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFDesktopUI.Views.QuickBooks"
+             xmlns:vm="clr-namespace:WPFDesktopUI.ViewModels.QuickBooks"
              Background="White"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="400">
@@ -82,7 +83,7 @@
                                        Grid.Column="0"
                                        Style="{StaticResource QbSidePaneKey}" >
                             </TextBlock>
-                            <TextBox x:Name="CustomerRefFullName"
+                            <TextBox x:Name="QbspModel_CustomerRefFullName_Payload"
                                      Grid.Column="1"
                                      Style="{StaticResource QbSidePaneValue}" >
                             </TextBox>
@@ -251,7 +252,7 @@
                                        Grid.Column="0"
                                        Style="{StaticResource QbSidePaneKey}" >
                             </TextBlock>
-                            <ComboBox x:Name="ItemRef"
+                            <ComboBox x:Name="QbspModel_ItemRef_Payload"
                                       Grid.Column="1"
                                       Style="{StaticResource QbSidePaneValue}"
                                       ToolTipService.ShowOnDisabled = "True"
@@ -279,7 +280,7 @@
                                        Grid.Column="0"
                                        Style="{StaticResource QbSidePaneKey}" >
                             </TextBlock>
-                            <ComboBox x:Name="Quantity"
+                            <ComboBox x:Name="QbspModel_Quantity_Payload"
                                       Grid.Column="1"
                                       Style="{StaticResource QbSidePaneValue}"
                                       ToolTipService.ShowOnDisabled = "True"
@@ -391,7 +392,7 @@
                                        Grid.Column="0"
                                        Style="{StaticResource QbSidePaneKey}" >
                             </TextBlock>
-                            <ComboBox x:Name="Rate"
+                            <ComboBox x:Name="QbspModel_Rate_Payload"
                                       Grid.Column="1"
                                       Style="{StaticResource QbSidePaneValue}"
                                       ToolTipService.ShowOnDisabled = "True"
@@ -401,6 +402,7 @@
                                 </ComboBox.ToolTip>
                             </ComboBox>
                         </Grid>
+
 
                     </StackPanel>
                 </ScrollViewer>

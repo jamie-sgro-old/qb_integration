@@ -70,8 +70,11 @@ namespace WPFDesktopUI.ViewModels {
 
         var qbFilePath = stn.QbFilePath();
 
+        var a = QuickBooksSidePaneViewModel.QbspModel.CustomerRefFullName.Payload;
+
         var header = new DefaultInvoiceHeaderModel {
-          CustomerRefFullName = QuickBooksSidePaneViewModel.CustomerRefFullName, // "CLASS"
+          //CustomerRefFullName = QuickBooksSidePaneViewModel.CustomerRefFullName, // "CLASS"
+          CustomerRefFullName = QuickBooksSidePaneViewModel.QbspModel.CustomerRefFullName.Payload, // "CLASS"
           ClassRefFullName = QuickBooksSidePaneViewModel.ClassRefFullName, // "Barrie Area:Barrie Corporate"
           TemplateRefFullName = QuickBooksSidePaneViewModel.SelectedTemplateRefFullName, 
           TxnDate = QuickBooksSidePaneViewModel.TxnDate,

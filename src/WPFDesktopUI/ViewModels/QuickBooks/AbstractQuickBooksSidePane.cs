@@ -5,8 +5,8 @@ using Caliburn.Micro;
 using stn = WPFDesktopUI.Controllers.SettingsController;
 
 namespace WPFDesktopUI.ViewModels.QuickBooks {
+
   public abstract class AbstractQuickBooksSidePane : Screen {
-    public event PropertyChangedEventHandler PropertyChanged;
 
     public string Other { get; set; }
     public DateTime TxnDate { get; set; } = DateTime.Now;
@@ -24,11 +24,8 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     public bool CanQbExport { get; set; } = true;
     public bool QbProgressBarIsVisible { get; set; } = false;
     public bool CanCsvHeader { get; set; }
-    public List<string> ItemRef { get; set; }
     public string SelectedItemRef { get; set; }
-    public List<string> Quantity { get; set; }
     public string SelectedQuantity { get; set; }
-    public List<string> Rate { get; set; }
 
     public string SelectedRate { get; set; }
     public string ConsoleMessage { get; set; }  = "Please select 'Query QuickBooks' before custom lists can be generated";

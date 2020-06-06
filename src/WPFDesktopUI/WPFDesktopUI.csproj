@@ -126,6 +126,9 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Models\PersonModel.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\QbAttribute.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQbAttribute.cs" />
+    <Compile Include="Models\SidePaneModels\QuickBooksSidePaneModel.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\ImportViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IMainTab.cs" />

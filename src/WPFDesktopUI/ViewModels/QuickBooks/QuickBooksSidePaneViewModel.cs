@@ -3,13 +3,24 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using MCBusinessLogic.Controllers;
+using WPFDesktopUI.Models;
+using WPFDesktopUI.Models.SidePaneModels.Attributes;
 using WPFDesktopUI.ViewModels.Interfaces;
 using stn = WPFDesktopUI.Controllers.SettingsController;
 
 namespace WPFDesktopUI.ViewModels.QuickBooks {
   public class QuickBooksSidePaneViewModel : AbstractQuickBooksSidePane, IMainTab {
+    public QuickBooksSidePaneViewModel() {
+      QbspModel = new QuickBooksSidePaneModel();
+    }
+
+    public QuickBooksSidePaneModel QbspModel { get; set; }
+
+
+
 
     public async void OnSelected() {
       await Task.Run(() => {
@@ -18,9 +29,15 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
         var csvData = ImportViewModel.CsvData;
         if (csvData == null) return;
         var csvHeaders = GetCsvHeaders(csvData);
-        ItemRef = csvHeaders;
-        Quantity = csvHeaders;
-        Rate = csvHeaders;
+
+        // Loop through all QbAttributes in QbspModel
+        foreach (var attribute in QbspModel.GetQbAttributes()) {
+          if (attribute.HasHeaderDropDown) {
+            attribute.Payload = csvHeaders;
+          }
+        }
+
+
         CanCsvHeader = true;
       });
     }
