@@ -39,7 +39,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     // Other1 (same as above)
     // Other2 (same as above)
     // Desc
-    // make sure all mapable columns convert "" into null
+    // make sure all mappable columns convert "" into null
 
 
   }
