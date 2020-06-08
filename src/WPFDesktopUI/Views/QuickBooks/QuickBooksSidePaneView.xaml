@@ -404,10 +404,23 @@
                         </Grid>
 
 
+                        <ItemsControl x:Name="QbspModel_Companies">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding Key}" />
+                                        <TextBlock Text="{Binding Value.Name}" />
+                                        <ComboBox ItemsSource="{Binding Value.Combo}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+
                     </StackPanel>
                 </ScrollViewer>
-
             </Grid>
+
 
         </DockPanel>
     </Border>
