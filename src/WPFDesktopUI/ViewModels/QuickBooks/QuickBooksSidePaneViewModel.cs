@@ -1,24 +1,30 @@
-﻿using Caliburn.Micro;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using MCBusinessLogic.Controllers;
 using WPFDesktopUI.Models;
-using WPFDesktopUI.Models.SidePaneModels.Attributes;
 using WPFDesktopUI.ViewModels.Interfaces;
 using stn = WPFDesktopUI.Controllers.SettingsController;
 
 namespace WPFDesktopUI.ViewModels.QuickBooks {
   public class QuickBooksSidePaneViewModel : AbstractQuickBooksSidePane, IMainTab {
     public QuickBooksSidePaneViewModel() {
-      QbspModel = new QuickBooksSidePaneModel();
+      QbspModel = Factory.CreateQuickBooksSidePaneModel();
+
+      QbspModel.AttrAdd("TemplateRefFullName", "TEMPLATE");
+      QbspModel.Attr["TemplateRefFullName"].IsMandatory = true;
+
+      QbspModel.AttrAdd("ItemRef", "ITEM");
+      QbspModel.Attr["ItemRef"].IsMandatory = true;
+
+      QbspModel.AttrAdd("Rate", "RATE");
+
+      QbspModel.AttrAdd("Quantity", "QUANTITY");
     }
 
-    public QuickBooksSidePaneModel QbspModel { get; set; }
-
+    public IQuickBooksSidePaneModel QbspModel { get; set; }
 
 
 
@@ -30,15 +36,11 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
         if (csvData == null) return;
         var csvHeaders = GetCsvHeaders(csvData);
 
-        // Loop through all QbAttributes in QbspModel
-        foreach (var attribute in QbspModel.GetQbAttributes()) {
-          if (attribute.HasHeaderDropDown) {
-            attribute.Payload = csvHeaders;
-          }
+        // Loop through all QbAttribute ComboBoxes in QbspModel
+        foreach (var attribute in QbspModel.Attr) {
+          QbspModel.Attr[attribute.Key].ComboBox.ItemsSource = csvHeaders;
+          QbspModel.Attr[attribute.Key].ComboBox.IsEnabled = true;
         }
-
-
-        CanCsvHeader = true;
       });
     }
 

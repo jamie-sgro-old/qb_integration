@@ -1,29 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Caliburn.Micro;
+﻿using System.ComponentModel;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 
 namespace WPFDesktopUI.Models.SidePaneModels.Attributes {
-  public class QbAttribute<T> : INotifyPropertyChanged {
-    public QbAttribute(bool isMandatory, bool hasHeaderDropDown, T payload) {
-      Payload = payload;
-      IsMandatory = isMandatory;
-      HasHeaderDropDown = hasHeaderDropDown;
-    }
-
-    public QbAttribute(bool isMandatory, bool hasHeaderDropDown) {
-      IsMandatory = isMandatory;
-      HasHeaderDropDown = hasHeaderDropDown;
-    }
-
-    public T Payload { get; set; }
-
-    public bool IsMandatory { get; }
-    public bool HasHeaderDropDown { get; }
+  public class QbAttribute : IQbAttribute, INotifyPropertyChanged {
+    public string Name { get; set; }
+    public string Payload { get; set; } = null;
+    public bool IsMandatory { get; set; } = false;
+    public IQbComboBox ComboBox { get; set; }
 
     public event PropertyChangedEventHandler PropertyChanged;
   }

@@ -70,11 +70,9 @@ namespace WPFDesktopUI.ViewModels {
 
         var qbFilePath = stn.QbFilePath();
 
-        var a = QuickBooksSidePaneViewModel.QbspModel.CustomerRefFullName.Payload;
-
         var header = new DefaultInvoiceHeaderModel {
-          //CustomerRefFullName = QuickBooksSidePaneViewModel.CustomerRefFullName, // "CLASS"
-          CustomerRefFullName = QuickBooksSidePaneViewModel.QbspModel.CustomerRefFullName.Payload, // "CLASS"
+          CustomerRefFullName = QuickBooksSidePaneViewModel.CustomerRefFullName, // "CLASS"
+          //CustomerRefFullName = QuickBooksSidePaneViewModel.QbspModel.CustomerRefFullName.Payload, // "CLASS"
           ClassRefFullName = QuickBooksSidePaneViewModel.ClassRefFullName, // "Barrie Area:Barrie Corporate"
           TemplateRefFullName = QuickBooksSidePaneViewModel.SelectedTemplateRefFullName, 
           TxnDate = QuickBooksSidePaneViewModel.TxnDate,
@@ -114,14 +112,17 @@ namespace WPFDesktopUI.ViewModels {
       }
 
       // Throw if mandatory field isn't accounted for
-      if (string.IsNullOrEmpty(QuickBooksSidePaneViewModel.SelectedItemRef)) {
-        throw new ArgumentNullException(paramName: nameof(QuickBooksSidePaneViewModel.SelectedItemRef),
-          message: "No parameter specified for 'ITEM'.");
+      foreach (var attribute in QuickBooksSidePaneViewModel.QbspModel.Attr) {
+        if (attribute.Value.IsMandatory == false) continue;
+        if (string.IsNullOrEmpty(attribute.Value.Payload)) {
+          throw new ArgumentNullException(paramName: attribute.Value.Name,
+            message: "No parameter specified for '" + attribute.Value.Name + "'.");
+        }
       }
 
-      var item = QuickBooksSidePaneViewModel.SelectedItemRef;
-      var quantity = QuickBooksSidePaneViewModel.SelectedQuantity;
-      var rate = QuickBooksSidePaneViewModel.SelectedRate;
+      var item = QuickBooksSidePaneViewModel.QbspModel.Attr["ItemRef"].ComboBox.SelectedItem;
+      var quantity = QuickBooksSidePaneViewModel.QbspModel.Attr["Quantity"].ComboBox.SelectedItem;
+      var rate = QuickBooksSidePaneViewModel.QbspModel.Attr["Rate"].ComboBox.SelectedItem;
 
       // Todo: Make this less computationally expensive
       var convertedList = (from row in dt.AsEnumerable()

@@ -404,14 +404,49 @@
                         </Grid>
 
 
-                        <ItemsControl x:Name="QbspModel_Companies">
+                        <ItemsControl x:Name="QbspModel_Attr">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="{Binding Key}" />
-                                        <TextBlock Text="{Binding Value.Name}" />
-                                        <ComboBox ItemsSource="{Binding Value.Combo}" />
-                                    </StackPanel>
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                                        <StackPanel Orientation="Vertical"
+                                                    VerticalAlignment="Stretch"
+                                                    CanVerticallyScroll="True" >
+
+
+
+
+
+
+
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition SharedSizeGroup="FirstRow"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition SharedSizeGroup="FirstColumn"  />
+                                                    <ColumnDefinition   />
+                                                </Grid.ColumnDefinitions>
+
+                                                <!-- <TextBlock Text="{Binding Key}" /> -->
+                                                <TextBlock Text="{Binding Value.Name}"
+                                                           Grid.Column="0"
+                                                           Style="{StaticResource QbSidePaneKey}" >
+                                                </TextBlock>
+                                                <ComboBox ItemsSource="{Binding Value.ComboBox.ItemsSource}"
+                                                          SelectedItem="{Binding Value.ComboBox.SelectedItem}"
+                                                          Grid.Column="1"
+                                                          Style="{StaticResource QbSidePaneValue}"
+                                                          ToolTipService.ShowOnDisabled = "True"
+                                                          IsEnabled="{Binding Value.ComboBox.IsEnabled, Mode=TwoWay}" >
+                                                    <ComboBox.ToolTip>
+                                                        <TextBlock>Please import a .csv file in the 'Import' tab before custom lists can be generated</TextBlock>
+                                                    </ComboBox.ToolTip>
+                                                </ComboBox>
+                                            </Grid>
+
+
+                                        </StackPanel>
+                                    </ScrollViewer>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

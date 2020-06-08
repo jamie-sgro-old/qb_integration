@@ -23,7 +23,6 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 
     public bool CanQbExport { get; set; } = true;
     public bool QbProgressBarIsVisible { get; set; } = false;
-    public bool CanCsvHeader { get; set; }
     public string SelectedItemRef { get; set; }
     public string SelectedQuantity { get; set; }
 
