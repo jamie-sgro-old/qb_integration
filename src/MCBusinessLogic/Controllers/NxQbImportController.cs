@@ -26,6 +26,8 @@ namespace MCBusinessLogic.Controllers {
           ORRatePriceLevelRate = GetNullableDouble(line.Rate)
         });
       }
+
+      var a = sqlLineItems;
       return sqlLineItems;
     }
 

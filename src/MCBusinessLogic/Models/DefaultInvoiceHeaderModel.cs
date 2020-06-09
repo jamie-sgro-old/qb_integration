@@ -19,25 +19,5 @@ namespace MCBusinessLogic.Models {
       TxnDate = null;
       Other = null;
     }
-
-    public void ConvertEmptyToNull() {
-      // Customer is a mandatory field
-      if (CustomerRefFullName == "") {
-        if (string.IsNullOrEmpty(CustomerRefFullName)) {
-          throw new ArgumentNullException(paramName: nameof(CustomerRefFullName),
-            message: "No CUSTOMER:JOB name was supplied. " +
-                     "The Importer was expecting at least 1.");
-        }
-      }
-      if (ClassRefFullName == "") {
-        ClassRefFullName = null;
-      }
-      if (TemplateRefFullName == "") {
-        TemplateRefFullName = null;
-      }
-      if (Other == "") {
-        Other = null;
-      }
-    }
   }
 }

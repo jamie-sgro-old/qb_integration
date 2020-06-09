@@ -21,6 +21,9 @@ namespace WPFDesktopUI.ViewModels {
     public static IQbDateTimeAttribute CreateQbDateTimeAttribute() {
       return new QbDateTimeAttribute();
     }
+    public static IQbAttribute CreateQbNullAttribute() {
+      return new QbNullAttribute();
+    }
 
     public static IQbComboBox CreateQbComboBox() {
       return new QbComboBox();

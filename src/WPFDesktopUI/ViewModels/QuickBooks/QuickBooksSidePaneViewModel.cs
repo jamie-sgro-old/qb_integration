@@ -16,8 +16,16 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "CustomerRefFullName", "CUSTOMER:JOB");
       QbspModel.Attr["CustomerRefFullName"].IsMandatory = true;
 
-      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "TemplateRefFullName", "TEMPLATE");
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "ClassRefFullName", "CLASS");
+
+      QbspModel.AttrAdd(Factory.CreateQbNullAttribute(), "TemplateRefFullName", "TEMPLATE");
       QbspModel.Attr["TemplateRefFullName"].IsMandatory = true;
+      QbspModel.Attr["TemplateRefFullName"].ComboBox.RequiresCsv = false;
+
+      QbspModel.AttrAdd(Factory.CreateQbDateTimeAttribute(), "TxnDate", "DATE");
+
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(),
+        "Other", stn.QbInvHasHeaderOther() ? stn.QbInvHeaderOtherName() : "OTHER");
 
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "ItemRef", "ITEM");
       QbspModel.Attr["ItemRef"].IsMandatory = true;
@@ -26,7 +34,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "Quantity", "QUANTITY");
 
-      QbspModel.AttrAdd(Factory.CreateQbDateTimeAttribute(), "Date", "DATE");
+      QbspModel.AttrAdd(Factory.CreateQbDateTimeAttribute(), "ServiceDate", "SERVICE DATE");
     }
 
     public IQuickBooksSidePaneModel QbspModel { get; set; }
@@ -35,7 +43,8 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 
     public async void OnSelected() {
       await Task.Run(() => {
-        HeaderOtherTextBlock = stn.QbInvHeaderOtherName();
+        QbspModel.Attr["Other"].Name = stn.QbInvHasHeaderOther() ? stn.QbInvHeaderOtherName() : "OTHER";
+
 
         var csvData = ImportViewModel.CsvData;
         if (csvData == null) return;
@@ -43,6 +52,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 
         // Loop through all QbAttribute ComboBoxes in QbspModel
         foreach (var attribute in QbspModel.Attr) {
+          if (!QbspModel.Attr[attribute.Key].ComboBox.RequiresCsv) continue;
           QbspModel.Attr[attribute.Key].ComboBox.ItemsSource = csvHeaders;
           QbspModel.Attr[attribute.Key].ComboBox.IsEnabled = true;
         }
@@ -60,7 +70,8 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       SessionStart();
       var qbFilePath = stn.QbFilePath();
       try {
-        TemplateRefFullName = await InitTemplateRefFullName(qbFilePath);
+        var templateList = await InitTemplateRefFullName(qbFilePath);
+        QbspModel.Attr["TemplateRefFullName"].ComboBox.ItemsSource = templateList;
         SessionEnd();
       } catch (Exception e) {
         ConsoleMessage = QbImportExceptionHandler.DelegateHandle(e);
@@ -76,7 +87,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     }
 
     private void SessionEnd() {
-      CanTemplateRefFullName = true;
+      QbspModel.Attr["TemplateRefFullName"].ComboBox.IsEnabled = true;
       ConsoleMessage = "Query successfully completed";
     }
 

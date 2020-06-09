@@ -133,6 +133,7 @@
     <Compile Include="Models\SidePaneModels\Attributes\Interfaces\Payloads\IStringPayload.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\QbAbstractAttribute.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\QbDateTimeAttribute.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\QbNullAttribute.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\QbStringAttribute.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQbAttribute.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\QbComboBox.cs" />

@@ -72,17 +72,17 @@ namespace WPFDesktopUI.ViewModels {
 
         var qbFilePath = stn.QbFilePath();
 
+        var attr = QuickBooksSidePaneViewModel.QbspModel.Attr;
+
         var header = new DefaultInvoiceHeaderModel {
-          CustomerRefFullName = QuickBooksSidePaneViewModel.CustomerRefFullName, // "CLASS"
-          //CustomerRefFullName = QuickBooksSidePaneViewModel.QbspModel.CustomerRefFullName.Payload, // "CLASS"
-          ClassRefFullName = QuickBooksSidePaneViewModel.ClassRefFullName, // "Barrie Area:Barrie Corporate"
-          TemplateRefFullName = QuickBooksSidePaneViewModel.SelectedTemplateRefFullName, 
-          TxnDate = QuickBooksSidePaneViewModel.TxnDate,
-					Other = QuickBooksSidePaneViewModel.Other,
+          CustomerRefFullName = attr["CustomerRefFullName"].Payload, // "CLASS"
+          ClassRefFullName = attr["ClassRefFullName"].Payload, // "Barrie Area:Barrie Corporate"
+          TemplateRefFullName = attr["TemplateRefFullName"].ComboBox.SelectedItem,
+          TxnDate = Convert.ToDateTime(attr["TxnDate"].Payload),
+					Other = attr["Other"].Payload,
 				};
 
-        header.ConvertEmptyToNull();
-
+        //var header = MapDataTableToHeaderModel(ImportViewModel.CsvData);
 
         var csvModel = MapDataTableToCsvModel(ImportViewModel.CsvData);
 
@@ -98,6 +98,10 @@ namespace WPFDesktopUI.ViewModels {
         SessionEnd();
 			}
 		}
+
+    private DefaultInvoiceHeaderModel MapDataTableToHeaderModel(DataTable dt) {
+      throw new NotImplementedException();
+    }
 
     private List<CsvModel> MapDataTableToCsvModel(DataTable dt) {
       // Throw if datatable is empty
@@ -117,8 +121,10 @@ namespace WPFDesktopUI.ViewModels {
       foreach (var attribute in QuickBooksSidePaneViewModel.QbspModel.Attr) {
         if (attribute.Value.IsMandatory == false) continue;
         if (string.IsNullOrEmpty(attribute.Value.ComboBox.SelectedItem)) {
-          throw new ArgumentNullException(paramName: attribute.Value.Name,
-            message: "No parameter specified for '" + attribute.Value.Name + "'.");
+          if (string.IsNullOrEmpty(attribute.Value.Payload)) {
+            throw new ArgumentNullException(paramName: attribute.Value.Name,
+              message: "No parameter specified for '" + attribute.Value.Name + "'.");
+          }
         }
       }
 
@@ -131,12 +137,12 @@ namespace WPFDesktopUI.ViewModels {
       var convertedList = (from row in dt.AsEnumerable()
         select new CsvModel() {
           //Item = string.IsNullOrEmpty(itemSelected) ? null : Convert.ToString(row[itemSelected]),
-          Item = GetRow(row, "Item"),
-          Quantity = string.IsNullOrEmpty(quantitySelected) ? null : Convert.ToString(row[quantitySelected]),
+          Item = GetRow(row, "ItemRef"),
+          Quantity = GetRow(row, "Quantity"),
           StaffName = Convert.ToString(row["StaffName"]),
           TimeInOut = Convert.ToString(row["TimeInOut"]),
-          ServiceDate = Convert.ToString(row["ServiceDate"]),
-          Rate = string.IsNullOrEmpty(rateSelected) ? null : Convert.ToString(row[rateSelected]),
+          ServiceDate = GetRow(row, "ServiceDate"),
+          Rate = GetRow(row, "Rate"),
         });
 
       return convertedList.ToList();
@@ -158,20 +164,10 @@ namespace WPFDesktopUI.ViewModels {
         return Convert.ToString(row[colName]);
       }
 
-      string payload = null;
-
-      if (attr is IQbStringAttribute) {
-        var castAttr = (IQbStringAttribute) attr;
-        payload = castAttr.Payload;
-      }
-
-      if (attr is IQbDateTimeAttribute) {
-        var castAttr = (IQbDateTimeAttribute)attr;
-        payload = Convert.ToString(castAttr.Payload);
-      }
+      var payload = attr.Payload;
 
       if (!string.IsNullOrEmpty(payload)) {
-        return payload;
+        return Convert.ToString(payload);
       }
 
       return null;

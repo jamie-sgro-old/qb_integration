@@ -8,28 +8,9 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 
   public abstract class AbstractQuickBooksSidePane : Screen {
 
-    public string Other { get; set; }
-    public DateTime TxnDate { get; set; } = DateTime.Now;
-    public string ClassRefFullName { get; set; }
-    public bool CanTemplateRefFullName { get; set; } = false;
-    public List<string> TemplateRefFullName { get; set; } = new List<string> { "" };
-    public string SelectedTemplateRefFullName { get; set; }
-
-    private string _headerOtherTextBlock;
-    public string HeaderOtherTextBlock {
-      get => _headerOtherTextBlock;
-      set => _headerOtherTextBlock = stn.QbInvHasHeaderOther() ? value : "OTHER";
-    }
-
     public bool CanQbExport { get; set; } = true;
     public bool QbProgressBarIsVisible { get; set; } = false;
-    public string SelectedItemRef { get; set; }
-    public string SelectedQuantity { get; set; }
-
-    public string SelectedRate { get; set; }
     public string ConsoleMessage { get; set; }  = "Please select 'Query QuickBooks' before custom lists can be generated";
-    public string CustomerRefFullName { get; set; }
-
 
     //TODO: 
     // BillAddressAddr1

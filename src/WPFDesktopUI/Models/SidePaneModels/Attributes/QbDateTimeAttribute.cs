@@ -3,7 +3,9 @@ using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 
 namespace WPFDesktopUI.Models.SidePaneModels.Attributes {
   public class QbDateTimeAttribute : QbAbstractAttribute, IQbDateTimeAttribute {
-    public DateTime? Payload { get; set; } = null;
+    public QbDateTimeAttribute() {
+      Payload = DateTime.Now.ToString();
+    }
     public bool HasDateTimePayload { get; } = true;
   }
 }

@@ -62,421 +62,63 @@
             <!-- DOCKPANEL TOP-->
 
             <Grid Grid.IsSharedSizeScope="True" DockPanel.Dock="Top" MinHeight="100" >
-
-                <ScrollViewer VerticalScrollBarVisibility="Auto" >
-
-                    <StackPanel Orientation="Vertical"
-                                VerticalAlignment="Stretch"
-                                CanVerticallyScroll="True" >
-
-                        <!-- NEW ROW -->
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition SharedSizeGroup="FirstRow"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition SharedSizeGroup="FirstColumn" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-
-                            <!-- CUSTOMER:JOB -->
-
-                            <TextBlock Text="CUSTOMER:JOB"
-                                       Grid.Column="0"
-                                       Style="{StaticResource QbSidePaneKey}" >
-                            </TextBlock>
-                            <TextBox x:Name="QbspModel_CustomerRefFullName_Payload"
-                                     Grid.Column="1"
-                                     Style="{StaticResource QbSidePaneValue}" >
-                            </TextBox>
-
-                        </Grid>
-
-                        <!-- NEW ROW -->
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition SharedSizeGroup="FirstRow"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition SharedSizeGroup="FirstColumn"  />
-                                <ColumnDefinition   />
-                            </Grid.ColumnDefinitions>
-
-                            <!-- CLASS -->
-
-                            <TextBlock Text="CLASS"
-                                       Grid.Column="0"
-                                       Style="{StaticResource QbSidePaneKey}" >
-                            </TextBlock>
-                            <TextBox x:Name="ClassRefFullName"
-                                     Grid.Column="1"
-                                     Style="{StaticResource QbSidePaneValue}" >
-                            </TextBox>
-                        </Grid>
-
-                        <!-- NEW ROW -->
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition SharedSizeGroup="FirstRow"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition SharedSizeGroup="FirstColumn"  />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-
-                            <!-- TEMPLATE -->
-
-                            <TextBlock Text="TEMPLATE"
-                                       Grid.Column="0"
-                                       Style="{StaticResource QbSidePaneKey}" >
-                            </TextBlock>
-                            <ComboBox x:Name="TemplateRefFullName"
-                                      Grid.Column="1"
-                                      Style="{StaticResource QbSidePaneValue}"
-                                      ToolTipService.ShowOnDisabled = "True"
-                                      IsEnabled="{Binding CanTemplateRefFullName}" >
-                                <ComboBox.ToolTip>
-                                    <TextBlock>Please select 'Query QuickBooks' before custom lists can be generated</TextBlock>
-                                </ComboBox.ToolTip>
-                            </ComboBox>
-                        </Grid>
-
-                        <!-- NEW ROW -->
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition SharedSizeGroup="FirstRow"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition SharedSizeGroup="FirstColumn"  />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            
-                            <!-- DATE -->
-
-                            <TextBlock Text="DATE"
-                                       Grid.Column="0"
-                                       Style="{StaticResource QbSidePaneKey}" >
-                            </TextBlock>
-                            <DatePicker x:Name="TxnDate"
-                                        Grid.Column="1"
-                                        Style="{StaticResource QbSidePaneValue}" >
-                            </DatePicker>
-                        </Grid>
-
-                        <!-- NEW ROW -->
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition SharedSizeGroup="FirstRow"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition SharedSizeGroup="FirstColumn" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-
-                            <!-- OTHER -->
-
-                            <TextBlock x:Name="HeaderOtherTextBlock"
-                                       Grid.Column="0"
-                                       Style="{StaticResource QbSidePaneKey}" >
-                            </TextBlock>
-                            <TextBox x:Name="Other"
-                                     Grid.Column="1"
-                                     
-                                     Style="{StaticResource QbSidePaneValue}" >
-                            </TextBox>
-
-                        </Grid>
-
-                        <!-- NEW ROW --><!--
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition SharedSizeGroup="FirstRow"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition SharedSizeGroup="FirstColumn"  />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-
-                            --><!-- BILL TO --><!--
-
-                            <TextBlock Text="BILL TO: Address 1"
-                                       Grid.Column="0"
-                                       Style="{StaticResource QbSidePaneKey}" >
-                            </TextBlock>
-                            <TextBox x:Name="BillAddressAddr1"
-                                     Grid.Column="1"
-                                     Style="{StaticResource QbSidePaneValue}" >
-                            </TextBox>
-                        </Grid>
-
-                        --><!-- NEW ROW --><!--
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition SharedSizeGroup="FirstRow"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition SharedSizeGroup="FirstColumn"  />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-
-                            --><!-- SHIP TO --><!--
-
-                            <TextBlock Text="SHIP TO: Address 1"
-                                       Grid.Column="0"
-                                       Style="{StaticResource QbSidePaneKey}" >
-                            </TextBlock>
-                            <TextBox x:Name="ShipAddressAddr1"
-                                     Grid.Column="1"
-                                     Style="{StaticResource QbSidePaneValue}" >
-                            </TextBox>
-                        </Grid>-->
-
-                        <!-- NEW ROW -->
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition SharedSizeGroup="FirstRow"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition SharedSizeGroup="FirstColumn"  />
-                                <ColumnDefinition   />
-                            </Grid.ColumnDefinitions>
-
-                            <!-- ITEM -->
-
-                            <TextBlock Text="ITEM"
-                                       Grid.Column="0"
-                                       Style="{StaticResource QbSidePaneKey}" >
-                            </TextBlock>
-                            <ComboBox x:Name="QbspModel_ItemRef_Payload"
-                                      Grid.Column="1"
-                                      Style="{StaticResource QbSidePaneValue}"
-                                      ToolTipService.ShowOnDisabled = "True"
-                                      IsEnabled="{Binding CanCsvHeader}" >
-                                <ComboBox.ToolTip>
-                                    <TextBlock>Please import a .csv file in the 'Import' tab before custom lists can be generated</TextBlock>
-                                </ComboBox.ToolTip>
-                            </ComboBox>
-                        </Grid>
-
-                         <!-- NEW ROW --> 
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition SharedSizeGroup="FirstRow"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition SharedSizeGroup="FirstColumn"  />
-                                <ColumnDefinition   />
-                            </Grid.ColumnDefinitions>
-
-                             <!-- QTY --> 
-
-                            <TextBlock Text="QUANTITY"
-                                       Grid.Column="0"
-                                       Style="{StaticResource QbSidePaneKey}" >
-                            </TextBlock>
-                            <ComboBox x:Name="QbspModel_Quantity_Payload"
-                                      Grid.Column="1"
-                                      Style="{StaticResource QbSidePaneValue}"
-                                      ToolTipService.ShowOnDisabled = "True"
-                                      IsEnabled="{Binding CanCsvHeader}" >
-                                <ComboBox.ToolTip>
-                                    <TextBlock>Please import a .csv file in the 'Import' tab before custom lists can be generated</TextBlock>
-                                </ComboBox.ToolTip>
-                            </ComboBox>
-                        </Grid>
-
-                        <!-- NEW ROW --><!--
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition SharedSizeGroup="FirstRow"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition SharedSizeGroup="FirstColumn"  />
-                                <ColumnDefinition   />
-                            </Grid.ColumnDefinitions>
-
-                            --><!-- DESC --><!--
-
-                            <TextBlock Text="DESCRIPTION"
-                                       Grid.Column="0"
-                                       Style="{StaticResource QbSidePaneKey}" >
-                            </TextBlock>
-                            <ComboBox x:Name="Desc"
-                                      Grid.Column="1"
-                                      Style="{StaticResource QbSidePaneValue}"
-                                      ToolTipService.ShowOnDisabled = "True"
-                                      IsEnabled="{Binding CanCsvHeader}" >
-                                <ComboBox.ToolTip>
-                                    <TextBlock>Please import a .csv file in the 'Import' tab before custom lists can be generated</TextBlock>
-                                </ComboBox.ToolTip>
-                            </ComboBox>
-                        </Grid>
-
-                        --><!-- NEW ROW --><!--
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition SharedSizeGroup="FirstRow"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition SharedSizeGroup="FirstColumn"  />
-                                <ColumnDefinition   />
-                            </Grid.ColumnDefinitions>
-
-                            --><!-- OTHER1 --><!--
-
-                            <TextBlock Text="OTHER1"
-                                       Grid.Column="0"
-                                       Style="{StaticResource QbSidePaneKey}" >
-                            </TextBlock>
-                            <ComboBox x:Name="Other1"
-                                      Grid.Column="1"
-                                      Style="{StaticResource QbSidePaneValue}"
-                                      ToolTipService.ShowOnDisabled = "True"
-                                      IsEnabled="{Binding CanCsvHeader}" >
-                                <ComboBox.ToolTip>
-                                    <TextBlock>Please import a .csv file in the 'Import' tab before custom lists can be generated</TextBlock>
-                                </ComboBox.ToolTip>
-                            </ComboBox>
-                        </Grid>
-
-                        --><!-- NEW ROW --><!--
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition SharedSizeGroup="FirstRow"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition SharedSizeGroup="FirstColumn"  />
-                                <ColumnDefinition   />
-                            </Grid.ColumnDefinitions>
-
-                            --><!-- OTHER1 --><!--
-
-                            <TextBlock Text="OTHER2"
-                                       Grid.Column="0"
-                                       Style="{StaticResource QbSidePaneKey}" >
-                            </TextBlock>
-                            <ComboBox x:Name="Other2"
-                                      Grid.Column="1"
-                                      Style="{StaticResource QbSidePaneValue}"
-                                      ToolTipService.ShowOnDisabled = "True"
-                                      IsEnabled="{Binding CanCsvHeader}" >
-                                <ComboBox.ToolTip>
-                                    <TextBlock>Please import a .csv file in the 'Import' tab before custom lists can be generated</TextBlock>
-                                </ComboBox.ToolTip>
-                            </ComboBox>
-                        </Grid> -->
-
-                        <!-- NEW ROW -->
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition SharedSizeGroup="FirstRow"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition SharedSizeGroup="FirstColumn"  />
-                                <ColumnDefinition SharedSizeGroup="SecondColumn"  />
-                                <ColumnDefinition   />
-                            </Grid.ColumnDefinitions>
-
-                            <!-- RATE -->
-
-                            <TextBlock Text="RATE"
-                                       Grid.Column="0"
-                                       Style="{StaticResource QbSidePaneKey}" >
-                            </TextBlock>
-                            <ComboBox x:Name="QbspModel_Rate_Payload"
-                                      Grid.Column="1"
-                                      Style="{StaticResource QbSidePaneValue}"
-                                      ToolTipService.ShowOnDisabled = "True"
-                                      IsEnabled="{Binding CanCsvHeader}" >
-                                <ComboBox.ToolTip>
-                                    <TextBlock>Please import a .csv file in the 'Import' tab before custom lists can be generated</TextBlock>
-                                </ComboBox.ToolTip>
-                            </ComboBox>
-                        </Grid>
-
-
-
-
-
-
-
-
-
-
-
-                        <ItemsControl x:Name="QbspModel_Attr">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <ScrollViewer VerticalScrollBarVisibility="Auto" >
-                                        <StackPanel Orientation="Vertical"
-                                                    VerticalAlignment="Stretch"
-                                                    CanVerticallyScroll="True" >
-
-
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition SharedSizeGroup="FirstRow"/>
-                                                </Grid.RowDefinitions>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition SharedSizeGroup="FirstColumn"  />
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-
-                                                <!-- <TextBlock Text="{Binding Key}" /> -->
-                                                <TextBlock Text="{Binding Value.Name}"
-                                                           Grid.Column="0"
-                                                           Style="{StaticResource QbSidePaneKey}" >
-                                                </TextBlock>
-                                                <ComboBox ItemsSource="{Binding Value.ComboBox.ItemsSource}"
-                                                          SelectedItem="{Binding Value.ComboBox.SelectedItem}"
-                                                          Grid.Column="1"
-                                                          Style="{StaticResource QbSidePaneValue}"
-                                                          ToolTipService.ShowOnDisabled = "True"
-                                                          IsEnabled="{Binding Value.ComboBox.IsEnabled}" >
-                                                    <ComboBox.ToolTip>
-                                                        <TextBlock>Please import a .csv file in the 'Import' tab before custom lists can be generated</TextBlock>
-                                                    </ComboBox.ToolTip>
-                                                </ComboBox>
-
-                                                <!-- COLUMN 2 -->
-                                                <TextBox Text="{Binding Value.Payload}"
-                                                         Grid.Column="2"
-                                                         IsEnabled="{Binding Value.ComboBox.IsBlank}"
-                                                         Visibility="{Binding Value.HasStringPayload, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
-                                                         Style="{StaticResource QbSidePaneValue}" >
-                                                </TextBox>
-                                                <DatePicker Text="{Binding Value.Payload}"
-                                                            Grid.Column="2"
-                                                            IsEnabled="{Binding Value.ComboBox.IsBlank}"
-                                                            Visibility="{Binding Value.HasDateTimePayload, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
-                                                            Style="{StaticResource QbSidePaneValue}" >
-                                                </DatePicker>
-                                            </Grid>
-
-
-                                        </StackPanel>
-                                    </ScrollViewer>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-
-
-                    </StackPanel>
-                </ScrollViewer>
+                <ItemsControl x:Name="QbspModel_Attr">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                                <StackPanel Orientation="Vertical"
+                                            VerticalAlignment="Stretch"
+                                            CanVerticallyScroll="True" >
+
+
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition SharedSizeGroup="FirstRow"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition SharedSizeGroup="FirstColumn"  />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- <TextBlock Text="{Binding Key}" /> -->
+                                        <TextBlock Text="{Binding Value.Name}"
+                                                   Grid.Column="0"
+                                                   Style="{StaticResource QbSidePaneKey}" >
+                                        </TextBlock>
+                                        <ComboBox ItemsSource="{Binding Value.ComboBox.ItemsSource}"
+                                                  SelectedItem="{Binding Value.ComboBox.SelectedItem}"
+                                                  Grid.Column="1"
+                                                  Style="{StaticResource QbSidePaneValue}"
+                                                  ToolTipService.ShowOnDisabled = "True"
+                                                  IsEnabled="{Binding Value.ComboBox.IsEnabled}" >
+                                            <ComboBox.ToolTip>
+                                                <TextBlock>Please import a .csv file in the 'Import' tab before custom lists can be generated</TextBlock>
+                                            </ComboBox.ToolTip>
+                                        </ComboBox>
+
+                                        <!-- COLUMN 2 -->
+                                        <TextBox Text="{Binding Value.Payload}"
+                                                 Grid.Column="2"
+                                                 IsEnabled="{Binding Value.ComboBox.IsBlank}"
+                                                 Visibility="{Binding Value.HasStringPayload, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
+                                                 Style="{StaticResource QbSidePaneValue}" >
+                                        </TextBox>
+                                        <DatePicker Text="{Binding Value.Payload}"
+                                                    Grid.Column="2"
+                                                    IsEnabled="{Binding Value.ComboBox.IsBlank}"
+                                                    Visibility="{Binding Value.HasDateTimePayload, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
+                                                    Style="{StaticResource QbSidePaneValue}" >
+                                        </DatePicker>
+                                    </Grid>
+
+
+                                </StackPanel>
+                            </ScrollViewer>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </Grid>
 
 

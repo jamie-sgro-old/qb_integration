@@ -7,7 +7,7 @@ namespace WPFDesktopUI.Models.SidePaneModels.Attributes {
 
     public List<string> ItemsSource { get; set; } = new List<string>();
     public string SelectedItem { get; set; } = "";
-
+    public bool RequiresCsv { get; set; } = true;
     public bool IsEnabled { get; set; } = false;
 
     private bool _isBlank;
@@ -18,7 +18,6 @@ namespace WPFDesktopUI.Models.SidePaneModels.Attributes {
       }
       set => _isBlank = value;
     }
-
 
     public event PropertyChangedEventHandler PropertyChanged;
   }
