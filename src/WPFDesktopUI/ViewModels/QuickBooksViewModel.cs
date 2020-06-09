@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WPFDesktopUI.ViewModels.QuickBooks;
 using MCBusinessLogic.Models;
+using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
@@ -114,7 +115,7 @@ namespace WPFDesktopUI.ViewModels {
       // Throw if mandatory field isn't accounted for
       foreach (var attribute in QuickBooksSidePaneViewModel.QbspModel.Attr) {
         if (attribute.Value.IsMandatory == false) continue;
-        if (string.IsNullOrEmpty(attribute.Value.Payload)) {
+        if (string.IsNullOrEmpty(attribute.Value.ComboBox.SelectedItem)) {
           throw new ArgumentNullException(paramName: attribute.Value.Name,
             message: "No parameter specified for '" + attribute.Value.Name + "'.");
         }

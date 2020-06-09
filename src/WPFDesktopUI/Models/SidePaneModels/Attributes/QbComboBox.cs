@@ -5,9 +5,20 @@ using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 namespace WPFDesktopUI.Models.SidePaneModels.Attributes {
   public class QbComboBox : IQbComboBox, INotifyPropertyChanged {
 
-    public List<string> ItemsSource { get; set; } = new List<string> {"a", "b", "c"};
+    public List<string> ItemsSource { get; set; } = new List<string>();
+    public string SelectedItem { get; set; } = "";
+
     public bool IsEnabled { get; set; } = false;
-    public string SelectedItem { get; set; } = "selected item";
+
+    private bool _isBlank;
+    public bool IsBlank {
+      get {
+        _isBlank = string.IsNullOrEmpty(SelectedItem);
+        return _isBlank;
+      }
+      set => _isBlank = value;
+    }
+
 
     public event PropertyChangedEventHandler PropertyChanged;
   }

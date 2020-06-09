@@ -11,11 +11,15 @@ namespace WPFDesktopUI.ViewModels {
   public static class Factory {
 
     public static IQuickBooksSidePaneModel CreateQuickBooksSidePaneModel() {
-      return new QuickBooksSidePaneModel(CreateQbAttribute, CreateQbComboBox);
+      return new QuickBooksSidePaneModel(CreateQbComboBox);
     }
 
-    public static IQbAttribute CreateQbAttribute() {
-      return new QbAttribute();
+    public static IQbStringAttribute CreateQbStringAttribute() {
+      return new QbStringAttribute();
+    }
+
+    public static IQbDateTimeAttribute CreateQbDateTimeAttribute() {
+      return new QbDateTimeAttribute();
     }
 
     public static IQbComboBox CreateQbComboBox() {

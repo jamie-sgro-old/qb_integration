@@ -34,6 +34,5 @@
     <Style x:Key="QbSidePaneValue" TargetType="{x:Type Control}">
         <Setter Property="Padding" Value="5,0"/>
         <Setter Property="MinWidth" Value="40"/>
-        <Setter Property="Grid.ColumnSpan" Value="2147483647"/>
     </Style>
 </ResourceDictionary>

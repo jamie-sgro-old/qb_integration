@@ -8,6 +8,9 @@
              Background="White"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="400">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
     <Border BorderBrush="Gray" BorderThickness="1">
         <DockPanel>
 
@@ -383,6 +386,7 @@
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition SharedSizeGroup="FirstColumn"  />
+                                <ColumnDefinition SharedSizeGroup="SecondColumn"  />
                                 <ColumnDefinition   />
                             </Grid.ColumnDefinitions>
 
@@ -404,6 +408,15 @@
                         </Grid>
 
 
+
+
+
+
+
+
+
+
+
                         <ItemsControl x:Name="QbspModel_Attr">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -413,18 +426,14 @@
                                                     CanVerticallyScroll="True" >
 
 
-
-
-
-
-
                                             <Grid>
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition SharedSizeGroup="FirstRow"/>
                                                 </Grid.RowDefinitions>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition SharedSizeGroup="FirstColumn"  />
-                                                    <ColumnDefinition   />
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
                                                 </Grid.ColumnDefinitions>
 
                                                 <!-- <TextBlock Text="{Binding Key}" /> -->
@@ -437,11 +446,25 @@
                                                           Grid.Column="1"
                                                           Style="{StaticResource QbSidePaneValue}"
                                                           ToolTipService.ShowOnDisabled = "True"
-                                                          IsEnabled="{Binding Value.ComboBox.IsEnabled, Mode=TwoWay}" >
+                                                          IsEnabled="{Binding Value.ComboBox.IsEnabled}" >
                                                     <ComboBox.ToolTip>
                                                         <TextBlock>Please import a .csv file in the 'Import' tab before custom lists can be generated</TextBlock>
                                                     </ComboBox.ToolTip>
                                                 </ComboBox>
+
+                                                <!-- COLUMN 2 -->
+                                                <TextBox Text="{Binding Value.Payload}"
+                                                         Grid.Column="2"
+                                                         IsEnabled="{Binding Value.ComboBox.IsBlank}"
+                                                         Visibility="{Binding Value.HasStringPayload, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
+                                                         Style="{StaticResource QbSidePaneValue}" >
+                                                </TextBox>
+                                                <DatePicker Text="{Binding Value.Payload}"
+                                                            Grid.Column="2"
+                                                            IsEnabled="{Binding Value.ComboBox.IsBlank}"
+                                                            Visibility="{Binding Value.HasDateTimePayload, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
+                                                            Style="{StaticResource QbSidePaneValue}" >
+                                                </DatePicker>
                                             </Grid>
 
 

@@ -13,15 +13,20 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     public QuickBooksSidePaneViewModel() {
       QbspModel = Factory.CreateQuickBooksSidePaneModel();
 
-      QbspModel.AttrAdd("TemplateRefFullName", "TEMPLATE");
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "CustomerRefFullName", "CUSTOMER:JOB");
+      QbspModel.Attr["CustomerRefFullName"].IsMandatory = true;
+
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "TemplateRefFullName", "TEMPLATE");
       QbspModel.Attr["TemplateRefFullName"].IsMandatory = true;
 
-      QbspModel.AttrAdd("ItemRef", "ITEM");
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "ItemRef", "ITEM");
       QbspModel.Attr["ItemRef"].IsMandatory = true;
 
-      QbspModel.AttrAdd("Rate", "RATE");
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "Rate", "RATE");
 
-      QbspModel.AttrAdd("Quantity", "QUANTITY");
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "Quantity", "QUANTITY");
+
+      QbspModel.AttrAdd(Factory.CreateQbDateTimeAttribute(), "Date", "DATE");
     }
 
     public IQuickBooksSidePaneModel QbspModel { get; set; }
