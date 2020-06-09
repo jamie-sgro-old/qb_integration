@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using WPFDesktopUI.ViewModels.QuickBooks;
 using MCBusinessLogic.Models;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
@@ -121,23 +122,59 @@ namespace WPFDesktopUI.ViewModels {
         }
       }
 
-      var item = QuickBooksSidePaneViewModel.QbspModel.Attr["ItemRef"].ComboBox.SelectedItem;
-      var quantity = QuickBooksSidePaneViewModel.QbspModel.Attr["Quantity"].ComboBox.SelectedItem;
-      var rate = QuickBooksSidePaneViewModel.QbspModel.Attr["Rate"].ComboBox.SelectedItem;
+      var itemSelected = QuickBooksSidePaneViewModel.QbspModel.Attr["ItemRef"].ComboBox.SelectedItem;
+      //var itemPayload = QuickBooksSidePaneViewModel.QbspModel.Attr["ItemRef"].Payload;
+      var quantitySelected = QuickBooksSidePaneViewModel.QbspModel.Attr["Quantity"].ComboBox.SelectedItem;
+      var rateSelected = QuickBooksSidePaneViewModel.QbspModel.Attr["Rate"].ComboBox.SelectedItem;
 
       // Todo: Make this less computationally expensive
       var convertedList = (from row in dt.AsEnumerable()
         select new CsvModel() {
-          Item = string.IsNullOrEmpty(item) ? null : Convert.ToString(row[item]),
-          Quantity = string.IsNullOrEmpty(quantity) ? null : Convert.ToString(row[quantity]),
+          //Item = string.IsNullOrEmpty(itemSelected) ? null : Convert.ToString(row[itemSelected]),
+          Item = GetRow(row, "Item"),
+          Quantity = string.IsNullOrEmpty(quantitySelected) ? null : Convert.ToString(row[quantitySelected]),
           StaffName = Convert.ToString(row["StaffName"]),
           TimeInOut = Convert.ToString(row["TimeInOut"]),
           ServiceDate = Convert.ToString(row["ServiceDate"]),
-          Rate = string.IsNullOrEmpty(rate) ? null : Convert.ToString(row[rate]),
+          Rate = string.IsNullOrEmpty(rateSelected) ? null : Convert.ToString(row[rateSelected]),
         });
-      var a = convertedList.ToList();
 
       return convertedList.ToList();
+    }
+
+    /// <summary>
+    /// If a column name was specified, return that cell data from that row and column.
+    /// Else if the static/constant payload from the textbox exists, use that as a constant.
+    /// Else return null.
+    /// </summary>
+    /// <param name="row">A row from a DataTable</param>
+    /// <param name="key">The dictionary Key for a QbAttribute</param>
+    /// <returns>String for the data in a cell/a constant value</returns>
+    private string GetRow(DataRow row, string key) {
+      var attr = QuickBooksSidePaneViewModel.QbspModel.Attr[key];
+      var colName = attr.ComboBox.SelectedItem;
+
+      if (!string.IsNullOrEmpty(colName)) {
+        return Convert.ToString(row[colName]);
+      }
+
+      string payload = null;
+
+      if (attr is IQbStringAttribute) {
+        var castAttr = (IQbStringAttribute) attr;
+        payload = castAttr.Payload;
+      }
+
+      if (attr is IQbDateTimeAttribute) {
+        var castAttr = (IQbDateTimeAttribute)attr;
+        payload = Convert.ToString(castAttr.Payload);
+      }
+
+      if (!string.IsNullOrEmpty(payload)) {
+        return payload;
+      }
+
+      return null;
     }
 
     private static string GetTemplate() {
