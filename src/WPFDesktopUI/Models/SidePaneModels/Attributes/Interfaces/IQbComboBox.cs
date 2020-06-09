@@ -5,5 +5,7 @@ namespace WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces {
     List<string> ItemsSource { get; set; }
     bool IsEnabled { get; set; }
     string SelectedItem { get; set; }
+
+
   }
 }
