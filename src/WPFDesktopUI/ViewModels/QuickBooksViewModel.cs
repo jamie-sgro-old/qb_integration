@@ -4,6 +4,7 @@ using ErrHandler = MCBusinessLogic.Controllers.QbImportExceptionHandler;
 using stn = WPFDesktopUI.Controllers.SettingsController;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -15,7 +16,7 @@ using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
-  public class QuickBooksViewModel : Conductor<object>, IMainTab {
+  public class QuickBooksViewModel : Conductor<object>, IMainTab, INotifyPropertyChanged {
 
 		#region Constructor
 
@@ -28,40 +29,17 @@ namespace WPFDesktopUI.ViewModels {
 
 		#region Properties
 
-		private string _consoleMessage;
-		private bool _canBtnQbImport = true;
-		private bool _qbProgressBarIsVisible = false;
-
-		public QuickBooksSidePaneViewModel QuickBooksSidePaneViewModel { get; }
-
-    public string ConsoleMessage {
-			get => _consoleMessage;
-      set {
-				_consoleMessage = value;
-				NotifyOfPropertyChange(() => ConsoleMessage);
-			}
-		}
-
-    public bool CanBtnQbImport {
-			get => _canBtnQbImport;
-      set { 
-				_canBtnQbImport = value;
-				NotifyOfPropertyChange(() => CanBtnQbImport);
-			}
-		}
-
-		public bool QbProgressBarIsVisible {
-			get => _qbProgressBarIsVisible;
-      set {
-				_qbProgressBarIsVisible = value;
-				NotifyOfPropertyChange(() => QbProgressBarIsVisible);
-			}
-		}
+    public QuickBooksSidePaneViewModel QuickBooksSidePaneViewModel { get; }
+    public string ConsoleMessage { get; set; }
+    public bool CanBtnQbImport { get; set; } = true;
+    public bool QbProgressBarIsVisible { get; set; } = false;
 
     #endregion Properties
 
 
     #region Methods
+
+    public event PropertyChangedEventHandler PropertyChanged;
 
     public void OnSelected() {
       QuickBooksSidePaneViewModel.OnSelected();
