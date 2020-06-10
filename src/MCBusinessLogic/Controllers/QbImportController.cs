@@ -7,8 +7,8 @@ using QBConnect.Models;
 namespace MCBusinessLogic.Controllers {
   public abstract class QbImportController : IQbImportController {
     public string QbFilePath { get; set; }
-    public DefaultInvoiceHeaderModel PreHeader { get; set; }
-    public abstract List<ClientLineItemModel> PreLineItems { get; set; }
+    public ClientInvoiceHeaderModel PreHeader { get; set; }
+    public abstract List<ClientInvoiceLineItemModel> PreLineItems { get; set; }
 
 
 
@@ -25,7 +25,7 @@ namespace MCBusinessLogic.Controllers {
 
 
 
-    public List<InvoiceLineItemModel> MapLineItems(List<ClientLineItemModel> lineItems) {
+    public List<InvoiceLineItemModel> MapLineItems(List<ClientInvoiceLineItemModel> lineItems) {
       var sqlLineItems = new List<InvoiceLineItemModel>();
       foreach (var line in lineItems) {
         sqlLineItems.Add(new InvoiceLineItemModel() {
@@ -42,7 +42,7 @@ namespace MCBusinessLogic.Controllers {
 
 
 
-    public InvoiceHeaderModel MapHeader(DefaultInvoiceHeaderModel preHeader) {
+    public InvoiceHeaderModel MapHeader(ClientInvoiceHeaderModel preHeader) {
       // todo: add unit test for when a new param is missing. i.e. mapping missed
 
       var newMap = new InvoiceHeaderModel {

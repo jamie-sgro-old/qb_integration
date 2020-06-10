@@ -104,8 +104,8 @@
     <Compile Include="Controllers\QbExportController.cs" />
     <Compile Include="DataAccess\SqliteDataAccess.cs" />
     <Compile Include="Models\CsvModel.cs" />
-    <Compile Include="Models\DefaultInvoiceHeaderModel.cs" />
-    <Compile Include="Models\ClientLineItemModel.cs" />
+    <Compile Include="Models\ClientInvoiceHeaderModel.cs" />
+    <Compile Include="Models\ClientInvoiceLineItemModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

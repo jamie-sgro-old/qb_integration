@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MCBusinessLogic.Models {
-  public class ClientLineItemModel {
+  public class ClientInvoiceLineItemModel {
     public string ItemRef { get; set; }
     public double? Quantity { get; set; }
     public string Other1 { get; set; }

@@ -5,25 +5,24 @@ using System.Collections.Generic;
 
 namespace MCBusinessLogic.Controllers {
   public class NxQbImportController : QbImportController {
-    public NxQbImportController(string qbFilePath, DefaultInvoiceHeaderModel preHeader, List<CsvModel> csvData) {
+    public NxQbImportController(string qbFilePath, ClientInvoiceHeaderModel preHeader, List<CsvModel> csvData) {
       QbFilePath = qbFilePath;
       PreHeader = preHeader;
-      //var csvData = SqliteDataAccess.LoadData<CsvModel>("SELECT * FROM csv_data", null);
       PreLineItems = MapCsvDataToLineItems(csvData);
     }
-    public sealed override List<ClientLineItemModel> PreLineItems { get; set; }
+    public sealed override List<ClientInvoiceLineItemModel> PreLineItems { get; set; }
 
-    public List<ClientLineItemModel> MapCsvDataToLineItems(List<CsvModel> lineItems) {
-      var sqlLineItems = new List<ClientLineItemModel>();
+    public List<ClientInvoiceLineItemModel> MapCsvDataToLineItems(List<CsvModel> lineItems) {
+      var sqlLineItems = new List<ClientInvoiceLineItemModel>();
       foreach (var line in lineItems) {
 
-        sqlLineItems.Add(new ClientLineItemModel() {
+        sqlLineItems.Add(new ClientInvoiceLineItemModel() {
           ItemRef = line.ItemRef,
           Quantity = GetNullableDouble(line.Quantity),
           Other1 = line.Other1,
           Other2 = line.Other2,
           ServiceDate = Convert.ToDateTime(line.ServiceDate),
-          ORRatePriceLevelRate = GetNullableDouble(line.Rate)
+          ORRatePriceLevelRate = GetNullableDouble(line.ORRatePriceLevelRate)
         });
       }
 

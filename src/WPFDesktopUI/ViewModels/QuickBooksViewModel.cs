@@ -75,7 +75,7 @@ namespace WPFDesktopUI.ViewModels {
 
         var attr = QuickBooksSidePaneViewModel.QbspModel.Attr;
 
-        var header = new DefaultInvoiceHeaderModel {
+        var header = new ClientInvoiceHeaderModel {
           CustomerRefFullName = attr["CustomerRefFullName"].Payload, // "CLASS"
           ClassRefFullName = attr["ClassRefFullName"].Payload, // "Barrie Area:Barrie Corporate"
           TemplateRefFullName = attr["TemplateRefFullName"].ComboBox.SelectedItem,
@@ -100,7 +100,7 @@ namespace WPFDesktopUI.ViewModels {
 			}
 		}
 
-    private DefaultInvoiceHeaderModel MapDataTableToHeaderModel(DataTable dt) {
+    private ClientInvoiceHeaderModel MapDataTableToHeaderModel(DataTable dt) {
       throw new NotImplementedException();
     }
 
@@ -121,10 +121,12 @@ namespace WPFDesktopUI.ViewModels {
       // Throw if mandatory field isn't accounted for
       foreach (var attribute in QuickBooksSidePaneViewModel.QbspModel.Attr) {
         if (attribute.Value.IsMandatory == false) continue;
-        if (!string.IsNullOrEmpty(attribute.Value.ComboBox.SelectedItem)) continue;
-        if (!string.IsNullOrEmpty(attribute.Value.Payload)) continue;
-        throw new ArgumentNullException(paramName: attribute.Value.Name,
-          message: "No parameter specified for '" + attribute.Value.Name + "'.");
+        var noDropDownSelected = string.IsNullOrEmpty(attribute.Value.ComboBox.SelectedItem);
+        var noTextInTextBox = string.IsNullOrEmpty(attribute.Value.Payload);
+        if (noDropDownSelected && noTextInTextBox) {
+          throw new ArgumentNullException(paramName: attribute.Value.Name,
+            message: "No parameter specified for '" + attribute.Value.Name + "'.");
+        }
       }
 
       // Dynamically set props in model using reflection (slow)
@@ -167,15 +169,6 @@ namespace WPFDesktopUI.ViewModels {
       }
 
       return null;
-    }
-
-    private static string GetTemplate() {
-      var hasTemplate = stn.QbInvHasTemplate();
-
-      // Use template if preference is checked, else let DB.dll return ArgumentNullException
-      var name = Properties.Settings.Default["StnQbInvTemplateName"].ToString();
-      var template = hasTemplate ? name : null;
-      return template;
     }
 
     private void SessionStart() {
