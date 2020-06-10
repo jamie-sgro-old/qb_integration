@@ -37,6 +37,12 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "Quantity", "QUANTITY");
 
       QbspModel.AttrAdd(Factory.CreateQbDateTimeAttribute(), "ServiceDate", "SERVICE DATE");
+
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "Other1", "TIME IN OUT");
+
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "Other2", "STAFF NAME");
+
+
     }
 
     public IQuickBooksSidePaneModel QbspModel { get; set; }

@@ -125,7 +125,6 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
-    <Compile Include="Models\PersonModel.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\Interfaces\Payloads\IDateTimePayload.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQbComboBox.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQbDateTimeAttribute.cs" />

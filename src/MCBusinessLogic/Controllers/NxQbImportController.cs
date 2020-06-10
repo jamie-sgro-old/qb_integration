@@ -18,10 +18,10 @@ namespace MCBusinessLogic.Controllers {
       foreach (var line in lineItems) {
 
         sqlLineItems.Add(new ClientLineItemModel() {
-          ItemRef = line.Item,
+          ItemRef = line.ItemRef,
           Quantity = GetNullableDouble(line.Quantity),
-          Other1 = line.TimeInOut,
-          Other2 = line.StaffName,
+          Other1 = line.Other1,
+          Other2 = line.Other2,
           ServiceDate = Convert.ToDateTime(line.ServiceDate),
           ORRatePriceLevelRate = GetNullableDouble(line.Rate)
         });

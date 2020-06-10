@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using WPFDesktopUI.ViewModels.QuickBooks;
@@ -120,38 +121,33 @@ namespace WPFDesktopUI.ViewModels {
       // Throw if mandatory field isn't accounted for
       foreach (var attribute in QuickBooksSidePaneViewModel.QbspModel.Attr) {
         if (attribute.Value.IsMandatory == false) continue;
-        if (string.IsNullOrEmpty(attribute.Value.ComboBox.SelectedItem)) {
-          if (string.IsNullOrEmpty(attribute.Value.Payload)) {
-            throw new ArgumentNullException(paramName: attribute.Value.Name,
-              message: "No parameter specified for '" + attribute.Value.Name + "'.");
-          }
-        }
+        if (!string.IsNullOrEmpty(attribute.Value.ComboBox.SelectedItem)) continue;
+        if (!string.IsNullOrEmpty(attribute.Value.Payload)) continue;
+        throw new ArgumentNullException(paramName: attribute.Value.Name,
+          message: "No parameter specified for '" + attribute.Value.Name + "'.");
       }
 
-      var itemSelected = QuickBooksSidePaneViewModel.QbspModel.Attr["ItemRef"].ComboBox.SelectedItem;
-      //var itemPayload = QuickBooksSidePaneViewModel.QbspModel.Attr["ItemRef"].Payload;
-      var quantitySelected = QuickBooksSidePaneViewModel.QbspModel.Attr["Quantity"].ComboBox.SelectedItem;
-      var rateSelected = QuickBooksSidePaneViewModel.QbspModel.Attr["Rate"].ComboBox.SelectedItem;
+      // Dynamically set props in model using reflection (slow)
+      var convertedList = new List<CsvModel>();
+      foreach (var row in dt.AsEnumerable()) {
+        // Construct row data to dynamically populate
+        var csvModel = new CsvModel();
+        foreach (var prop in csvModel.GetType().GetProperties()) {
+          var propStr = prop.Name;
+          csvModel.GetType().GetProperty(propStr).SetValue(csvModel, GetRow(row, propStr));
+        }
 
-      // Todo: Make this less computationally expensive
-      var convertedList = (from row in dt.AsEnumerable()
-        select new CsvModel() {
-          //Item = string.IsNullOrEmpty(itemSelected) ? null : Convert.ToString(row[itemSelected]),
-          Item = GetRow(row, "ItemRef"),
-          Quantity = GetRow(row, "Quantity"),
-          StaffName = Convert.ToString(row["StaffName"]),
-          TimeInOut = Convert.ToString(row["TimeInOut"]),
-          ServiceDate = GetRow(row, "ServiceDate"),
-          Rate = GetRow(row, "Rate"),
-        });
+        // Write new row to master List<Model>
+        convertedList.Add(csvModel);
+      }
 
+      
       return convertedList.ToList();
     }
 
     /// <summary>
-    /// If a column name was specified, return that cell data from that row and column.
-    /// Else if the static/constant payload from the textbox exists, use that as a constant.
-    /// Else return null.
+    /// Decide whether to use data from the sidepane dropdown or textbox, default to
+    /// selected combobox item if possible.
     /// </summary>
     /// <param name="row">A row from a DataTable</param>
     /// <param name="key">The dictionary Key for a QbAttribute</param>

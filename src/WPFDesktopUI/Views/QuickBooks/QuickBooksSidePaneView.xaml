@@ -93,8 +93,7 @@
                                                   ToolTipService.ShowOnDisabled = "True"
                                                   IsEnabled="{Binding Value.ComboBox.IsEnabled}" >
                                             <ComboBox.ToolTip>
-                                                <TextBlock Text="{Binding Value.ToolTip}">
-                                                </TextBlock>
+                                                <TextBlock Text="{Binding Value.ToolTip}" />
                                             </ComboBox.ToolTip>
                                         </ComboBox>
 
