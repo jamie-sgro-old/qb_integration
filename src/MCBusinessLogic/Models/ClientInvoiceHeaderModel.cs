@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MCBusinessLogic.Models {
   // Include all the attributes you want included in the UI
-  public class ClientInvoiceHeaderModel {
+  public class ClientInvoiceHeaderModel : IClientInvoiceHeaderModel {
     public string ClassRefFullName { get; set; }
     public string CustomerRefFullName { get; set; }
     public string TemplateRefFullName { get; set; }

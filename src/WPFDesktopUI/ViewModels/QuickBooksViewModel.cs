@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using WPFDesktopUI.ViewModels.QuickBooks;
 using MCBusinessLogic.Models;
+using WPFDesktopUI.Models;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
@@ -49,10 +50,16 @@ namespace WPFDesktopUI.ViewModels {
       try {
 				SessionStart();
 
-        var qbFilePath = stn.QbFilePath();
-
         var attr = QuickBooksSidePaneViewModel.QbspModel.Attr;
+        IQuickBooksModel qbModel = Factory.CreateQuickBooksModel(attr);
 
+        var dt = ImportViewModel.CsvData;
+
+        await Task.Run(() => {
+          qbModel.BtnQbImport(stn.QbFilePath(), dt, Factory.CreateClientInvoiceHeaderModel);
+        });
+
+        // Below is deprecated
         var header = new ClientInvoiceHeaderModel {
           CustomerRefFullName = attr["CustomerRefFullName"].Payload, // "CLASS"
           ClassRefFullName = attr["ClassRefFullName"].Payload, // "Barrie Area:Barrie Corporate"
@@ -61,12 +68,13 @@ namespace WPFDesktopUI.ViewModels {
 					Other = attr["Other"].Payload,
 				};
 
-        //var header = MapDataTableToHeaderModel(ImportViewModel.CsvData);
 
-        var csvModel = MapDataTableToCsvModel(ImportViewModel.CsvData);
+        //var header = MapDataTableToHeaderModel(dt);
+
+        var csvModel = MapDataTableToCsvModel(dt);
 
         await Task.Run(() => {
-          var qbImport = new NxQbImportController(qbFilePath, header, csvModel);
+          var qbImport = new NxQbImportController(stn.QbFilePath(), header, csvModel);
           qbImport.Import();
         });
 
@@ -91,9 +99,9 @@ namespace WPFDesktopUI.ViewModels {
       }
 
       if (dt.Rows.Count <= 0) {
-        throw new ArgumentNullException(paramName: nameof(dt),
-          message: "No Invoice lineItems were supplied. " +
-                   "The Importer was expecting at least 1.");
+        throw new IndexOutOfRangeException(
+          "No Invoice lineItems were supplied. "+
+          "The Importer was expecting at least 1.");
       }
 
       // Throw if mandatory field isn't accounted for

@@ -106,6 +106,8 @@
     <Compile Include="Models\CsvModel.cs" />
     <Compile Include="Models\ClientInvoiceHeaderModel.cs" />
     <Compile Include="Models\ClientInvoiceLineItemModel.cs" />
+    <Compile Include="Models\Interfaces\IClientInvoiceLineItemModel.cs" />
+    <Compile Include="Models\Interfaces\IClientInvoiceHeaderModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

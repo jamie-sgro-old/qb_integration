@@ -3,14 +3,14 @@ using MCBusinessLogic.Models;
 using QBConnect.Models;
 
 namespace MCBusinessLogic.Controllers.Interfaces {
-  internal interface IQbImportController
+  public interface IQbImportController
   {
     void Import();
-    List<InvoiceLineItemModel> MapLineItems(List<ClientInvoiceLineItemModel> lineItems);
-    InvoiceHeaderModel MapHeader(ClientInvoiceHeaderModel preHeader);
+    List<InvoiceLineItemModel> MapLineItems(List<IClientInvoiceLineItemModel> lineItems);
+    InvoiceHeaderModel MapHeader(IClientInvoiceHeaderModel preHeader);
 
     string QbFilePath { get; set; }
-    ClientInvoiceHeaderModel PreHeader { get; set; }
-    List<ClientInvoiceLineItemModel> PreLineItems { get; set; }
+    IClientInvoiceHeaderModel PreHeader { get; set; }
+    List<IClientInvoiceLineItemModel> PreLineItems { get; set; }
   }
 }
