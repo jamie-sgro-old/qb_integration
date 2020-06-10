@@ -4,5 +4,6 @@
     string Payload { get; set; }
     bool IsMandatory { get; set; }
     IQbComboBox ComboBox { get; set; }
+    string ToolTip { get; set; }
   }
 }

@@ -21,6 +21,8 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       QbspModel.AttrAdd(Factory.CreateQbNullAttribute(), "TemplateRefFullName", "TEMPLATE");
       QbspModel.Attr["TemplateRefFullName"].IsMandatory = true;
       QbspModel.Attr["TemplateRefFullName"].ComboBox.RequiresCsv = false;
+      QbspModel.Attr["TemplateRefFullName"].ToolTip = "Please select 'Query QuickBooks' before"+
+                                                      " custom lists can be generated";
 
       QbspModel.AttrAdd(Factory.CreateQbDateTimeAttribute(), "TxnDate", "DATE");
 
