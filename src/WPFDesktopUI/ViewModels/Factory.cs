@@ -33,6 +33,10 @@ namespace WPFDesktopUI.ViewModels {
       return new ClientInvoiceHeaderModel();
     }
 
+    public static ICsvModel CreateCsvModel() {
+      return new CsvModel();
+    }
+
     #endregion Invoice Models
 
 
@@ -45,6 +49,11 @@ namespace WPFDesktopUI.ViewModels {
     public static IQbDateTimeAttribute CreateQbDateTimeAttribute() {
       return new QbDateTimeAttribute();
     }
+
+    public static IQbStringAttribute CreateQbDoubleAttribute() {
+      return new QbDoubleAttribute();
+    }
+
     public static IQbAttribute CreateQbNullAttribute() {
       return new QbNullAttribute();
     }
@@ -57,7 +66,7 @@ namespace WPFDesktopUI.ViewModels {
 
     #region Controllers
 
-    public static IQbImportController CreateQbImportController(string qbFilePath, IClientInvoiceHeaderModel preHeader, List<CsvModel> csvData) {
+    public static IQbImportController CreateQbImportController(string qbFilePath, IClientInvoiceHeaderModel preHeader, List<ICsvModel> csvData) {
       return new NxQbImportController(qbFilePath, preHeader, csvData);
     }
 

@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MCBusinessLogic.Models {
-  // A string-only version of both ClientInvoiceLineItemModel & ClientInvoiceHeaderModel
-  public class CsvModel {
+  public class CsvModel : ICsvModel {
 
     #region Header
 
@@ -22,8 +21,8 @@ namespace MCBusinessLogic.Models {
     #region Line
 
     public string ItemRef { get; set; }
-    public string ORRatePriceLevelRate { get; set; }
-    public string Quantity { get; set; }
+    public double? ORRatePriceLevelRate { get; set; }
+    public double? Quantity { get; set; }
     public DateTime? ServiceDate { get; set; }
     public string Other1 { get; set; }
     public string Other2 { get; set; }
