@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 
 namespace WPFDesktopUI.Models.SidePaneModels.Attributes {
-  public class QbDateTimeAttribute : QbAbstractAttribute, IQbDateTimeAttribute {
-    public QbDateTimeAttribute() {
-      Payload = DateTime.Now.ToString();
-    }
-    public bool HasDateTimePayload { get; } = true;
+  class QbDoubleAttribute : QbAbstractAttribute, IQbStringAttribute {
+    public bool HasStringPayload { get; } = true;
 
     /// <summary>
     /// Decide whether to use data from the sidepane dropdown or textbox, default to
@@ -21,12 +22,12 @@ namespace WPFDesktopUI.Models.SidePaneModels.Attributes {
 
       if (!string.IsNullOrEmpty(colName)) {
         // TODO: Add error checking here:
-        return Convert.ToDateTime(row[colName]);
+        return Convert.ToDouble(row[colName]);
       }
 
       if (!string.IsNullOrEmpty(Payload)) {
         // TODO: Add error checking here:
-        return Convert.ToDateTime(Payload);
+        return Convert.ToDouble(Payload);
       }
 
       return null;

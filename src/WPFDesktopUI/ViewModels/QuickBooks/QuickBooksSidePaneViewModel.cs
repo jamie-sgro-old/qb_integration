@@ -32,9 +32,9 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "ItemRef", "ITEM");
       QbspModel.Attr["ItemRef"].IsMandatory = true;
 
-      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "ORRatePriceLevelRate", "RATE");
+      QbspModel.AttrAdd(Factory.CreateQbDoubleAttribute(), "ORRatePriceLevelRate", "RATE");
 
-      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "Quantity", "QUANTITY");
+      QbspModel.AttrAdd(Factory.CreateQbDoubleAttribute(), "Quantity", "QUANTITY");
 
       QbspModel.AttrAdd(Factory.CreateQbDateTimeAttribute(), "ServiceDate", "SERVICE DATE");
 

@@ -8,9 +8,7 @@ namespace MCBusinessLogic.Controllers {
   public abstract class QbImportController : IQbImportController {
     public string QbFilePath { get; set; }
     public IClientInvoiceHeaderModel PreHeader { get; set; }
-    public abstract List<IClientInvoiceLineItemModel> PreLineItems { get; set; }
-
-
+    public List<IClientInvoiceLineItemModel> PreLineItems { get; set; }
 
     public void Import() {
       var header = MapHeader(PreHeader);

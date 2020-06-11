@@ -56,7 +56,7 @@ namespace WPFDesktopUI.Models {
       }
     }
 
-    private List<CsvModel> MapDataTableToModel(DataTable dt) {
+    private List<ICsvModel> MapDataTableToModel(DataTable dt) {
       // Throw if mandatory field isn't accounted for
       foreach (var attribute in _attr) {
         if (attribute.Value.IsMandatory == false) continue;
@@ -69,10 +69,10 @@ namespace WPFDesktopUI.Models {
       }
 
       // Dynamically set props in model using reflection (slow)
-      var convertedList = new List<CsvModel>();
+      var convertedList = new List<ICsvModel>();
       foreach (var row in dt.AsEnumerable()) {
         // Construct row data to dynamically populate
-        var csvModel = new CsvModel();
+        var csvModel = Factory.CreateCsvModel();
         foreach (var prop in csvModel.GetType().GetProperties()) {
           var propStr = prop.Name;
           csvModel.GetType().GetProperty(propStr).SetValue(csvModel, _attr[propStr].GetRow(row));
