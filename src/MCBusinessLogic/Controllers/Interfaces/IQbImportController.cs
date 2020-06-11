@@ -5,12 +5,11 @@ using QBConnect.Models;
 namespace MCBusinessLogic.Controllers.Interfaces {
   public interface IQbImportController
   {
-    void Import();
-    List<IInvoiceLineItemModel> MapLineItems(List<IClientInvoiceLineItemModel> lineItems);
-    IInvoiceHeaderModel MapHeader(IClientInvoiceHeaderModel preHeader);
-
     string QbFilePath { get; set; }
     IClientInvoiceHeaderModel PreHeader { get; set; }
-    List<IClientInvoiceLineItemModel> PreLineItems { get; set; }
+
+    IInvoiceHeaderModel MapHeader(IClientInvoiceHeaderModel preHeader);
+    List<IInvoiceLineItemModel> MapLineItems(List<ICsvModel> lineItems);
+    void Import(List<ICsvModel> csvModels);
   }
 }

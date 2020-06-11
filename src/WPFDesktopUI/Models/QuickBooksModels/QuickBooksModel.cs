@@ -32,12 +32,12 @@ namespace WPFDesktopUI.Models {
 
       //var header = MapDataTableToHeaderModel(dt);
 
-      var csvModel = MapDataTableToModel(dt);
+      var csvModels = MapDataTableToModel(dt);
 
       await Task.Run(() => {
         // TODO: Remove coupling to Factory
-        var qbImportController = Factory.CreateQbImportController(qbFilePath, header, csvModel);
-        qbImportController.Import();
+        var qbImportController = Factory.CreateQbImportController(qbFilePath, header);
+        qbImportController.Import(csvModels);
       });
     }
 

@@ -5,14 +5,20 @@ using QBConnect;
 using QBConnect.Models;
 
 namespace MCBusinessLogic.Controllers {
-  public abstract class QbImportController : IQbImportController {
+  public class QbImportController : IQbImportController {
+    public QbImportController(string qbFilePath, IClientInvoiceHeaderModel preHeader) {
+      QbFilePath = qbFilePath;
+      PreHeader = preHeader;
+    }
+
     public string QbFilePath { get; set; }
     public IClientInvoiceHeaderModel PreHeader { get; set; }
-    public List<IClientInvoiceLineItemModel> PreLineItems { get; set; }
 
-    public void Import() {
+
+
+    public void Import(List<ICsvModel> csvModel) {
       var header = MapHeader(PreHeader);
-      var sqlLineItems = MapLineItems(PreLineItems);
+      var sqlLineItems = MapLineItems(csvModel);
       using (var invoiceImporter = new InvoiceImporter(QbFilePath)) {
         header.Other = "this is the first invoice";
         invoiceImporter.Import(header, sqlLineItems);
@@ -23,10 +29,10 @@ namespace MCBusinessLogic.Controllers {
 
 
 
-    public List<IInvoiceLineItemModel> MapLineItems(List<IClientInvoiceLineItemModel> lineItems) {
+    public List<IInvoiceLineItemModel> MapLineItems(List<ICsvModel> lineItems) {
       var sqlLineItems = new List<IInvoiceLineItemModel>();
-      // TODO: remove tight coupling
       foreach (var line in lineItems) {
+        // TODO: remove tight coupling
         sqlLineItems.Add(new InvoiceLineItemModel() {
           ItemRef = line.ItemRef,
           Quantity = line.Quantity,

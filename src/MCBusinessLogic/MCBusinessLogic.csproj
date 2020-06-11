@@ -98,7 +98,6 @@
     <Compile Include="Controllers\Interfaces\IFileSystemHandler.cs" />
     <Compile Include="Controllers\Interfaces\IQbExportController.cs" />
     <Compile Include="Controllers\Interfaces\IQbImportController.cs" />
-    <Compile Include="Controllers\NxQbImportController.cs" />
     <Compile Include="Controllers\QbImportController.cs" />
     <Compile Include="Controllers\QbImportExceptionHandler.cs" />
     <Compile Include="Controllers\QbExportController.cs" />

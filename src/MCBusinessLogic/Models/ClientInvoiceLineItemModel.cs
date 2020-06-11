@@ -5,6 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MCBusinessLogic.Models {
+  /// <summary>
+  /// Include all the attributes you want included in the UI
+  /// Is thus a partial implementation of QbConnect's IInvoiceLineItemModel
+  /// </summary>
   public class ClientInvoiceLineItemModel : IClientInvoiceLineItemModel {
     public string ItemRef { get; set; }
     public double? Quantity { get; set; }

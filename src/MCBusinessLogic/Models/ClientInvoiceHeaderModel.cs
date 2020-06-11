@@ -5,7 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MCBusinessLogic.Models {
-  // Include all the attributes you want included in the UI
+  /// <summary>
+  /// Include all the attributes you want included in the UI
+  /// Is thus a partial implementation of QbConnect's IInvoiceHeaderModel
+  /// </summary>
   public class ClientInvoiceHeaderModel : IClientInvoiceHeaderModel {
     public string ClassRefFullName { get; set; }
     public string CustomerRefFullName { get; set; }

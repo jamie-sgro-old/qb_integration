@@ -66,8 +66,8 @@ namespace WPFDesktopUI.ViewModels {
 
     #region Controllers
 
-    public static IQbImportController CreateQbImportController(string qbFilePath, IClientInvoiceHeaderModel preHeader, List<ICsvModel> csvData) {
-      return new NxQbImportController(qbFilePath, preHeader, csvData);
+    public static IQbImportController CreateQbImportController(string qbFilePath, IClientInvoiceHeaderModel preHeader) {
+      return new QbImportController(qbFilePath, preHeader);
     }
 
     #endregion Controllers
