@@ -8,13 +8,13 @@ using MCBusinessLogic.Controllers;
 using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.Models;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
+using WPFDesktopUI.ViewModels;
 
 namespace WPFDesktopUI.Models {
   public class QuickBooksModel : IQuickBooksModel
   {
     public QuickBooksModel(Dictionary<string, IQbAttribute> attr) {
       _attr = attr;
-      //_clientInvoiceHeaderModel = c;
     }
 
     private Dictionary<string, IQbAttribute> _attr { get; }
@@ -35,8 +35,8 @@ namespace WPFDesktopUI.Models {
       var csvModel = MapDataTableToModel(dt);
 
       await Task.Run(() => {
-        // TODO: Remove tight coupling
-        var qbImportController = new NxQbImportController(qbFilePath, header, csvModel);
+        // TODO: Remove coupling to Factory
+        var qbImportController = Factory.CreateQbImportController(qbFilePath, header, csvModel);
         qbImportController.Import();
       });
     }
@@ -75,7 +75,7 @@ namespace WPFDesktopUI.Models {
         var csvModel = new CsvModel();
         foreach (var prop in csvModel.GetType().GetProperties()) {
           var propStr = prop.Name;
-          csvModel.GetType().GetProperty(propStr).SetValue(csvModel, GetRow(row, propStr));
+          csvModel.GetType().GetProperty(propStr).SetValue(csvModel, _attr[propStr].GetRow(row));
         }
 
         // Write new row to master List<Model>
@@ -83,30 +83,6 @@ namespace WPFDesktopUI.Models {
       }
 
       return convertedList.ToList();
-    }
-
-    /// <summary>
-    /// Decide whether to use data from the sidepane dropdown or textbox, default to
-    /// selected combobox item if possible.
-    /// </summary>
-    /// <param name="row">A row from a DataTable</param>
-    /// <param name="key">The dictionary Key for a QbAttribute</param>
-    /// <returns>String for the data in a cell/a constant value</returns>
-    private string GetRow(DataRow row, string key) {
-      var attrKey = _attr[key];
-      var colName = attrKey.ComboBox.SelectedItem;
-
-      if (!string.IsNullOrEmpty(colName)) {
-        return Convert.ToString(row[colName]);
-      }
-
-      var payload = attrKey.Payload;
-
-      if (!string.IsNullOrEmpty(payload)) {
-        return Convert.ToString(payload);
-      }
-
-      return null;
     }
   }
 }
