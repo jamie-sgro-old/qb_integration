@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\CsvParser.cs" />
+    <Compile Include="Controllers\McFactory.cs" />
     <Compile Include="Controllers\FileSystemHandler.cs" />
     <Compile Include="Controllers\FileSystemHelper.cs" />
     <Compile Include="Controllers\Interfaces\IFileSystemHandler.cs" />

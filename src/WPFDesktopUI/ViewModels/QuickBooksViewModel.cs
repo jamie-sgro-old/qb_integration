@@ -56,7 +56,7 @@ namespace WPFDesktopUI.ViewModels {
         var dt = ImportViewModel.CsvData;
         var qbFilePath = stn.QbFilePath();
         await Task.Run(() => {
-          return qbModel.QbImport(qbFilePath, dt, Factory.CreateClientInvoiceHeaderModel);
+          return qbModel.QbImport(dt);
         });
 
         ConsoleMessage = "Import has successfully completed";

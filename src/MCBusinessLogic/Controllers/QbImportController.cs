@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
 using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.Models;
-using QBConnect;
 using QBConnect.Models;
 
 namespace MCBusinessLogic.Controllers {
   public class QbImportController : IQbImportController {
-    public QbImportController(string qbFilePath, IClientInvoiceHeaderModel preHeader) {
+    public QbImportController(string qbFilePath) {
       QbFilePath = qbFilePath;
-      PreHeader = preHeader;
     }
 
     public string QbFilePath { get; set; }
@@ -16,10 +14,10 @@ namespace MCBusinessLogic.Controllers {
 
 
 
-    public void Import(List<ICsvModel> csvModel) {
-      var header = MapHeader(PreHeader);
+    public void Import(IClientInvoiceHeaderModel preHeader, List<ICsvModel> csvModel) {
+      var header = MapHeader(preHeader);
       var sqlLineItems = MapLineItems(csvModel);
-      using (var invoiceImporter = new InvoiceImporter(QbFilePath)) {
+      using (var invoiceImporter = McFactory.CreateInvoiceImporter(QbFilePath)) {
         header.Other = "this is the first invoice";
         invoiceImporter.Import(header, sqlLineItems);
         header.Other = "this is the second invoice";
@@ -29,36 +27,35 @@ namespace MCBusinessLogic.Controllers {
 
 
 
-    public List<IInvoiceLineItemModel> MapLineItems(List<ICsvModel> lineItems) {
-      var sqlLineItems = new List<IInvoiceLineItemModel>();
-      foreach (var line in lineItems) {
-        // TODO: remove tight coupling
-        sqlLineItems.Add(new InvoiceLineItemModel() {
-          ItemRef = line.ItemRef,
-          Quantity = line.Quantity,
-          Other1 = line.Other1,
-          Other2 = line.Other2,
-          ServiceDate = line.ServiceDate,
-          ORRatePriceLevelRate = line.ORRatePriceLevelRate,
-        });
-      }
-      return sqlLineItems;
+    public IInvoiceHeaderModel MapHeader(IClientInvoiceHeaderModel preHeader) {
+      var headerModel = McFactory.CreateInvoiceHeaderModel();
+
+      headerModel.ClassRefFullName = preHeader.ClassRefFullName;
+      headerModel.CustomerRefFullName = preHeader.CustomerRefFullName;
+      headerModel.TemplateRefFullName = preHeader.TemplateRefFullName;
+      headerModel.TxnDate = preHeader.TxnDate;
+      headerModel.Other = preHeader.Other;
+
+      return headerModel;
     }
 
 
 
-    public IInvoiceHeaderModel MapHeader(IClientInvoiceHeaderModel preHeader) {
-      // todo: add unit test for when a new param is missing. i.e. mapping missed
+    public List<IInvoiceLineItemModel> MapLineItems(List<ICsvModel> lineItems) {
+      var sqlLineItems = new List<IInvoiceLineItemModel>();
+      foreach (var line in lineItems) {
+        var lineModel = McFactory.CreateInvoiceLineItemModel();
 
-      var newMap = new InvoiceHeaderModel {
-        ClassRefFullName = preHeader.ClassRefFullName,
-        CustomerRefFullName = preHeader.CustomerRefFullName,
-        TemplateRefFullName = preHeader.TemplateRefFullName,
-        TxnDate = preHeader.TxnDate,
-        Other = preHeader.Other,
-      };
+        lineModel.ItemRef = line.ItemRef;
+        lineModel.Quantity = line.Quantity;
+        lineModel.Other1 = line.Other1;
+        lineModel.Other2 = line.Other2;
+        lineModel.ServiceDate = line.ServiceDate;
+        lineModel.ORRatePriceLevelRate = line.ORRatePriceLevelRate;
 
-      return newMap;
+        sqlLineItems.Add(lineModel);
+      }
+      return sqlLineItems;
     }
   }
 }

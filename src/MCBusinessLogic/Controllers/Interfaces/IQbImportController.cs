@@ -10,6 +10,6 @@ namespace MCBusinessLogic.Controllers.Interfaces {
 
     IInvoiceHeaderModel MapHeader(IClientInvoiceHeaderModel preHeader);
     List<IInvoiceLineItemModel> MapLineItems(List<ICsvModel> lineItems);
-    void Import(List<ICsvModel> csvModels);
+    void Import(IClientInvoiceHeaderModel preHeader, List<ICsvModel> csvModels);
   }
 }

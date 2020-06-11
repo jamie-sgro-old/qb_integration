@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MCBusinessLogic.Controllers;
 using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.Models;
+using WPFDesktopUI.Controllers;
 using WPFDesktopUI.Models;
 using WPFDesktopUI.Models.SidePaneModels.Attributes;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
@@ -17,7 +18,7 @@ namespace WPFDesktopUI.ViewModels {
     #region Screen Models
 
     public static IQuickBooksModel CreateQuickBooksModel(Dictionary<string, IQbAttribute> attr) {
-      return new QuickBooksModel(attr);
+      return new QuickBooksModel(attr, CreateClientInvoiceHeaderModel, CreateQbImportController());
     }
 
     public static IQuickBooksSidePaneModel CreateQuickBooksSidePaneModel() {
@@ -66,8 +67,8 @@ namespace WPFDesktopUI.ViewModels {
 
     #region Controllers
 
-    public static IQbImportController CreateQbImportController(string qbFilePath, IClientInvoiceHeaderModel preHeader) {
-      return new QbImportController(qbFilePath, preHeader);
+    public static IQbImportController CreateQbImportController() {
+      return new QbImportController(SettingsController.QbFilePath());
     }
 
     #endregion Controllers

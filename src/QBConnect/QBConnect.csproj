@@ -86,6 +86,7 @@
     <Compile Include="Classes\ClientSessionManager.cs" />
     <Compile Include="Classes\HeaderItem.cs" />
     <Compile Include="Classes\Interfaces\IClientSessionManager.cs" />
+    <Compile Include="IInvoiceImporter.cs" />
     <Compile Include="InvoiceImporter.cs" />
     <Compile Include="Classes\Interfaces\IInvoiceLineAppender.cs" />
     <Compile Include="Classes\Query\Interfaces\IQuery.cs" />

@@ -4,7 +4,6 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MCBusinessLogic.Controllers;
 using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.Models;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
@@ -13,16 +12,20 @@ using WPFDesktopUI.ViewModels;
 namespace WPFDesktopUI.Models {
   public class QuickBooksModel : IQuickBooksModel
   {
-    public QuickBooksModel(Dictionary<string, IQbAttribute> attr) {
+    public QuickBooksModel(Dictionary<string, IQbAttribute> attr, Func<IClientInvoiceHeaderModel> clientInvoiceHeaderModel, IQbImportController qbImportController) {
       _attr = attr;
+      _clientInvoiceHeaderModel = clientInvoiceHeaderModel;
+      _qbImportController = qbImportController;
     }
 
     private Dictionary<string, IQbAttribute> _attr { get; }
+    private Func<IClientInvoiceHeaderModel> _clientInvoiceHeaderModel { get; }
+    private IQbImportController _qbImportController { get; }
 
-    public async Task QbImport(string qbFilePath, DataTable dt, Func<IClientInvoiceHeaderModel> clientInvoiceHeaderModel) {
+    public async Task QbImport(DataTable dt) {
       ValidateDt(dt);
 
-      var header = clientInvoiceHeaderModel();
+      var header = _clientInvoiceHeaderModel();
 
       header.CustomerRefFullName = _attr["CustomerRefFullName"].Payload;
       header.ClassRefFullName = _attr["ClassRefFullName"].Payload;
@@ -35,9 +38,8 @@ namespace WPFDesktopUI.Models {
       var csvModels = MapDataTableToModel(dt);
 
       await Task.Run(() => {
-        // TODO: Remove coupling to Factory
-        var qbImportController = Factory.CreateQbImportController(qbFilePath, header);
-        qbImportController.Import(csvModels);
+        var qbImportController = _qbImportController;
+        qbImportController.Import(header, csvModels);
       });
     }
 

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using QBConnect.Classes;
 
 namespace QBConnect {
-  public class InvoiceImporter : IDisposable {
+  public class InvoiceImporter : IInvoiceImporter {
     public InvoiceImporter(string qbwFilePath) {
       // sessionManager is the connection between code and QB
       SessionManager = new ClientSessionManager();
