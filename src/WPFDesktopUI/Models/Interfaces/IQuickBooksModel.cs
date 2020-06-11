@@ -5,6 +5,6 @@ using MCBusinessLogic.Models;
 
 namespace WPFDesktopUI.Models {
   public interface IQuickBooksModel {
-    Task BtnQbImport(string s, DataTable dt, Func<IClientInvoiceHeaderModel> c);
+    Task QbImport(string s, DataTable dt, Func<IClientInvoiceHeaderModel> c);
   }
 }

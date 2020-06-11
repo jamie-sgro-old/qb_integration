@@ -19,19 +19,8 @@ namespace WPFDesktopUI.Models {
 
     private Dictionary<string, IQbAttribute> _attr { get; }
 
-    public async Task BtnQbImport(string qbFilePath, DataTable dt, Func<IClientInvoiceHeaderModel> clientInvoiceHeaderModel) {
-      // Throw if datatable is empty
-      if (dt == null) {
-        throw new ArgumentNullException(paramName: nameof(dt),
-          message: "No Invoice lineItems were supplied. " +
-                   "The Importer was expecting at least 1.");
-      }
-
-      if (dt.Rows.Count <= 0) {
-        throw new IndexOutOfRangeException(
-          "No Invoice lineItems were supplied. " +
-          "The Importer was expecting at least 1.");
-      }
+    public async Task QbImport(string qbFilePath, DataTable dt, Func<IClientInvoiceHeaderModel> clientInvoiceHeaderModel) {
+      ValidateDt(dt);
 
       var header = clientInvoiceHeaderModel();
 
@@ -47,11 +36,24 @@ namespace WPFDesktopUI.Models {
 
       await Task.Run(() => {
         // TODO: Remove tight coupling
-        var qbImport = new NxQbImportController(qbFilePath, header, csvModel);
-        qbImport.Import();
+        var qbImportController = new NxQbImportController(qbFilePath, header, csvModel);
+        qbImportController.Import();
       });
+    }
 
-      throw new NotImplementedException("not implemented");
+    private static void ValidateDt(DataTable dt) {
+      // Throw if datatable is empty
+      if (dt == null) {
+        throw new ArgumentNullException(paramName: nameof(dt),
+          message: "No Invoice lineItems were supplied. " +
+                   "The Importer was expecting at least 1.");
+      }
+
+      if (dt.Rows.Count <= 0) {
+        throw new IndexOutOfRangeException(
+          "No Invoice lineItems were supplied. " +
+          "The Importer was expecting at least 1.");
+      }
     }
 
     private List<CsvModel> MapDataTableToModel(DataTable dt) {
@@ -79,7 +81,6 @@ namespace WPFDesktopUI.Models {
         // Write new row to master List<Model>
         convertedList.Add(csvModel);
       }
-
 
       return convertedList.ToList();
     }
