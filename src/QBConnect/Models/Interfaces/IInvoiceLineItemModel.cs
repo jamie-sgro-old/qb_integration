@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QBConnect.Models {
-  public class InvoiceLineItemModel : IInvoiceLineItemModel {
-
+  public interface IInvoiceLineItemModel {
     /// <summary>
     /// A monetary amount.
     /// </summary>
-    public double? Amount { get; set; }
+    double? Amount { get; set; }
 
     /// <summary>
     /// Classes can be used to separate transactions into 
@@ -29,15 +24,16 @@ namespace QBConnect.Models {
     /// for the line item, you can clear it in the line item by
     /// simply not specifying it in the line item.
     /// </summary>
-    public string ClassRef { get; set; }
+    string ClassRef { get; set; }
 
     /// <summary>
     /// A descriptive text field.
     /// </summary>
-    public string Desc { get; set; }
-    public string InventorySiteLocationRef { get; set; }
-    public string InventorySiteRef { get; set; }
-    public bool? IsTaxable { get; set; }
+    string Desc { get; set; }
+
+    string InventorySiteLocationRef { get; set; }
+    string InventorySiteRef { get; set; }
+    bool? IsTaxable { get; set; }
 
     /// <summary>
     /// Depending on the request containing it, ItemRef can refer to 
@@ -57,9 +53,10 @@ namespace QBConnect.Models {
     /// sales-tax items. Note: In a request, if an ItemRef aggregate 
     /// includes both FullName and ListID, FullName will be ignored.
     /// </summary>
-    public string ItemRef { get; set; }
-    public string LinkToTxnTxnID { get; set; }
-    public string LinkToTxnTxnLineID { get; set; }
+    string ItemRef { get; set; }
+
+    string LinkToTxnTxnID { get; set; }
+    string LinkToTxnTxnLineID { get; set; }
 
     /// <summary>
     /// If you specify both Rate and Amount in a request, 
@@ -69,12 +66,12 @@ namespace QBConnect.Models {
     /// use them to calculate Rate. (Rate, Amount, and 
     /// Quantity cannot be cleared.)
     /// </summary>
-    public double? ORRatePriceLevelRate { get; set; }
+    double? ORRatePriceLevelRate { get; set; }
 
     /// <summary>
     /// Indicates the price of something as a percent.
     /// </summary>
-    public double? ORRatePriceLevelRatePercent { get; set; }
+    double? ORRatePriceLevelRatePercent { get; set; }
 
     /// <summary>
     /// You can use price levels to specify custom pricing for 
@@ -91,7 +88,7 @@ namespace QBConnect.Models {
     /// level that was used. The response simply lists the 
     /// Rate for the item, which was set using the price level.
     /// </summary>
-    public string ORRatePriceLevelPriceLevelRef { get; set; }
+    string ORRatePriceLevelPriceLevelRef { get; set; }
 
     /// <summary>
     /// Other, Other1, and Other2 are standard QuickBooks custom
@@ -118,8 +115,9 @@ namespace QBConnect.Models {
     /// re-labelling has no effect on the SDK. You’ll always write to
     /// them or modify them as Other, Other1, or Other2.
     /// </summary>
-    public string Other1 { get; set; }
-    public string Other2 { get; set; }
+    string Other1 { get; set; }
+
+    string Other2 { get; set; }
 
     /// <summary>
     /// Refers to a QuickBooks account. If you are using QB Online 
@@ -127,7 +125,7 @@ namespace QBConnect.Models {
     /// here. If an OverrideItemAccountRef aggregate includes both 
     /// FullName and ListID, FullName will be ignored.
     /// </summary>
-    public string OverrideItemAccountRef { get; set; }
+    string OverrideItemAccountRef { get; set; }
 
     /// <summary>
     /// QuantityFor transactions: If an item line add on a transaction
@@ -140,7 +138,7 @@ namespace QBConnect.Models {
     /// For Item requests: Quantity indicates how many of this item 
     /// there are.
     /// </summary>
-    public double? Quantity { get; set; }
+    double? Quantity { get; set; }
 
     /// <summary>
     /// Each item on a sales form is assigned a sales-tax code that
@@ -163,14 +161,15 @@ namespace QBConnect.Models {
     /// if it is a taxable item and if sales tax is set up within 
     /// QuickBooks.
     /// </summary>
-    public string SalesTaxCodeRef { get; set; }
+    string SalesTaxCodeRef { get; set; }
 
     /// <summary>
     /// Indicates the date on which the QuickBooks user performs the
     /// service for the customer.
     /// </summary>
-    public DateTime? ServiceDate { get; set; }
-    public double? TaxAmount { get; set; }
+    DateTime? ServiceDate { get; set; }
+
+    double? TaxAmount { get; set; }
 
     /// <summary>
     /// In a transaction line item, the name of the unit of measure 
@@ -178,7 +177,6 @@ namespace QBConnect.Models {
     /// file is enabled only for single unit of measure per item, this
     /// must be the base unit!
     /// </summary>
-    public string UnitOfMeasure { get; set; }
-
+    string UnitOfMeasure { get; set; }
   }
 }

@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QBConnect.Models {
-  public class InvoiceHeaderModel : IInvoiceHeaderModel {
-
+  public interface IInvoiceHeaderModel {
     /// <summary>
     /// Refers to an accounts receivable account in the QuickBooks
     /// file. (The AccountType of this account will be 
@@ -24,7 +19,7 @@ namespace QBConnect.Models {
     /// for example Jones:Kitchen:Cabinets. FullName values are not case
     /// -sensitive.
     /// </summary>
-    public string ARAccountRefFullName { get; set; }
+    string ARAccountRefFullName { get; set; }
 
     /// <summary>
     /// Refers to an accounts receivable account in the QuickBooks
@@ -48,7 +43,7 @@ namespace QBConnect.Models {
     /// are both name lists). But a customer could have the same ListID 
     /// as a non-inventory item.
     /// </summary>
-    public string ARAccountRefListID { get; set; }
+    string ARAccountRefListID { get; set; }
 
     /// <summary>
     /// Classes can be used to separate transactions into meaningful 
@@ -65,7 +60,7 @@ namespace QBConnect.Models {
     /// ClassRef for the line item, you can clear it in the line item
     /// by simply not specifying it in the line item.
     /// </summary>
-    public string ClassRefFullName { get; set; }
+    string ClassRefFullName { get; set; }
 
     /// <summary>
     /// Classes can be used to separate transactions into meaningful 
@@ -82,7 +77,7 @@ namespace QBConnect.Models {
     /// ClassRef for the line item, you can clear it in the line item
     /// by simply not specifying it in the line item.
     /// </summary>
-    public string ClassRefListID { get; set; }
+    string ClassRefListID { get; set; }
 
     /// <summary>
     /// A standard message such as “Thank you for your business,” or “Please 
@@ -92,7 +87,7 @@ namespace QBConnect.Models {
     /// a request, if a CustomerMsgRef aggregate includes both FullName and 
     /// ListID, FullName will be ignored.
     /// </summary>
-    public string CustomerMsgRefFullName { get; set; }
+    string CustomerMsgRefFullName { get; set; }
 
     /// <summary>
     /// A standard message such as “Thank you for your business,” or “Please 
@@ -102,7 +97,7 @@ namespace QBConnect.Models {
     /// a request, if a CustomerMsgRef aggregate includes both FullName and 
     /// ListID, FullName will be ignored.
     /// </summary>
-    public string CustomerMsgRefListID { get; set; }
+    string CustomerMsgRefListID { get; set; }
 
     /// <summary>
     /// The customer list includes information about the QuickBooks user’s 
@@ -119,7 +114,7 @@ namespace QBConnect.Models {
     /// to a vendor (not to a customer). If AccountRef refers to any other 
     /// type of account, the CustomerRef must refer to a customer.
     /// </summary>
-    public string CustomerRefFullName { get; set; }
+    string CustomerRefFullName { get; set; }
 
     /// <summary>
     /// The customer list includes information about the QuickBooks user’s 
@@ -136,7 +131,7 @@ namespace QBConnect.Models {
     /// to a vendor (not to a customer). If AccountRef refers to any other 
     /// type of account, the CustomerRef must refer to a customer.
     /// </summary>
-    public string CustomerRefListID { get; set; }
+    string CustomerRefListID { get; set; }
 
     /// <summary>
     /// Refers to the sales-tax code for sales related to this customer. (That
@@ -145,7 +140,7 @@ namespace QBConnect.Models {
     /// request, if a CustomerSalesTaxCodeRef aggregate includes both FullName 
     /// and ListID, FullName will be ignored.
     /// </summary>
-    public string CustomerSalesTaxCodeRefFullName { get; set; }
+    string CustomerSalesTaxCodeRefFullName { get; set; }
 
     /// <summary>
     /// Refers to the sales-tax code for sales related to this customer. (That
@@ -154,23 +149,23 @@ namespace QBConnect.Models {
     /// request, if a CustomerSalesTaxCodeRef aggregate includes both FullName 
     /// and ListID, FullName will be ignored.
     /// </summary>
-    public string CustomerSalesTaxCodeRefListID { get; set; }
+    string CustomerSalesTaxCodeRefListID { get; set; }
 
     /// <summary>
     /// If DueDate is not included in an InvoiceAdd request, QuickBooks might 
     /// determine the due date according to the terms set for this customer.
     /// </summary>
-    public DateTime? DueDate { get; set; }
+    DateTime? DueDate { get; set; }
 
     /// <summary>
     /// Purchase order number.
     /// </summary>
-    public string PONumber { get; set; }
+    string PONumber { get; set; }
 
     /// <summary>
     /// For future use with international versions of QuickBooks.
     /// </summary>
-    public bool? IsTaxIncluded { get; set; }
+    bool? IsTaxIncluded { get; set; }
 
     /// <summary>
     /// If this is set to true, at runtime the customer referenced in this 
@@ -185,7 +180,7 @@ namespace QBConnect.Models {
     /// the transaction later. It simply results in the transaction NOT being
     /// placed in the list of transactions to be emailed.
     /// </summary>
-    public bool? IsToBeEmailed { get; set; }
+    bool? IsToBeEmailed { get; set; }
 
     /// <summary>
     /// If IsToBePrinted is set to true, this transaction is on a list of forms
@@ -197,41 +192,41 @@ namespace QBConnect.Models {
     /// later. It simply results in the transaction NOT being placed in the list
     /// of transactions to be printed.
     /// </summary>
-    public bool? IsToBePrinted { get; set; }
+    bool? IsToBePrinted { get; set; }
 
     /// <summary>
     /// QuickBooks templates specify how to print certain transactions. A 
     /// template query returns the names of all templates that have been defined
     /// in QuickBooks. A TemplateRef element refers to one of these templates.
     /// </summary>
-    public string TemplateRefFullName { get; set; }
+    string TemplateRefFullName { get; set; }
 
     /// <summary>
     /// QuickBooks templates specify how to print certain transactions. A 
     /// template query returns the names of all templates that have been defined
     /// in QuickBooks. A TemplateRef element refers to one of these templates.
     /// </summary>
-    public string TemplateRefListID { get; set; }
+    string TemplateRefListID { get; set; }
 
     /// <summary>
     /// Refers to the payment terms associated with this entity. (This will be
     /// an item on the DateDrivenTerms or StandardTerms list.) If a TermsRef 
     /// aggregate includes both FullName and ListID, FullName will be ignored.
     /// </summary>
-    public string TermsRefFullName { get; set; }
+    string TermsRefFullName { get; set; }
 
     /// <summary>
     /// Refers to the payment terms associated with this entity. (This will be
     /// an item on the DateDrivenTerms or StandardTerms list.) If a TermsRef 
     /// aggregate includes both FullName and ListID, FullName will be ignored.
     /// </summary>
-    public string TermsRefListID { get; set; }
+    string TermsRefListID { get; set; }
 
     /// <summary>
     /// The date of the invoice. If you leave TxnDate out of an InvoiceAdd message,
     /// QuickBooks might prefill it with the date of the invoice that was most recently saved.
     /// </summary>
-    public DateTime? TxnDate { get; set; }
+    DateTime? TxnDate { get; set; }
 
     /// <summary>
     /// Other, Other1, and Other2 are standard QuickBooks custom fields available to
@@ -252,7 +247,6 @@ namespace QBConnect.Models {
     /// Potentiary”. This re-labelling has no effect on the SDK. You’ll always write
     /// to them or modify them as Other, Other1, or Other2.
     /// </summary>
-    public string Other { get; set; }
-
+    string Other { get; set; }
   }
 }

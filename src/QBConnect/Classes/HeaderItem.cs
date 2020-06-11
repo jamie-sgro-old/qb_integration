@@ -8,7 +8,7 @@ using QBFC13Lib;
 
 namespace QBConnect.Classes {
   internal static class HeaderItem {
-    internal static void SetHeader(IInvoiceAdd Header, InvoiceHeaderModel headerData) {
+    internal static void SetHeader(IInvoiceAdd Header, IInvoiceHeaderModel headerData) {
       // Accounts Receivable Ref
       if (headerData.ARAccountRefFullName != null) {
         Header.ARAccountRef.FullName.SetValue(headerData.ARAccountRefFullName);

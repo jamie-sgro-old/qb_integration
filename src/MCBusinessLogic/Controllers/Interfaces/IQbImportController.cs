@@ -6,8 +6,8 @@ namespace MCBusinessLogic.Controllers.Interfaces {
   public interface IQbImportController
   {
     void Import();
-    List<InvoiceLineItemModel> MapLineItems(List<IClientInvoiceLineItemModel> lineItems);
-    InvoiceHeaderModel MapHeader(IClientInvoiceHeaderModel preHeader);
+    List<IInvoiceLineItemModel> MapLineItems(List<IClientInvoiceLineItemModel> lineItems);
+    IInvoiceHeaderModel MapHeader(IClientInvoiceHeaderModel preHeader);
 
     string QbFilePath { get; set; }
     IClientInvoiceHeaderModel PreHeader { get; set; }

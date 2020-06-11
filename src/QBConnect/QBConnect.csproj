@@ -92,6 +92,8 @@
     <Compile Include="Classes\Query\ItemQuery.cs" />
     <Compile Include="Classes\LineItem.cs" />
     <Compile Include="Classes\Query\Abstract\Query.cs" />
+    <Compile Include="Models\Interfaces\IInvoiceHeaderModel.cs" />
+    <Compile Include="Models\Interfaces\IInvoiceLineItemModel.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Classes\Query\TemplateQuery.cs" />
     <Compile Include="Models\InvoiceHeaderModel.cs" />

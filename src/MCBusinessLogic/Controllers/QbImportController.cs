@@ -25,8 +25,9 @@ namespace MCBusinessLogic.Controllers {
 
 
 
-    public List<InvoiceLineItemModel> MapLineItems(List<IClientInvoiceLineItemModel> lineItems) {
-      var sqlLineItems = new List<InvoiceLineItemModel>();
+    public List<IInvoiceLineItemModel> MapLineItems(List<IClientInvoiceLineItemModel> lineItems) {
+      var sqlLineItems = new List<IInvoiceLineItemModel>();
+      // TODO: remove tight coupling
       foreach (var line in lineItems) {
         sqlLineItems.Add(new InvoiceLineItemModel() {
           ItemRef = line.ItemRef,
@@ -42,7 +43,7 @@ namespace MCBusinessLogic.Controllers {
 
 
 
-    public InvoiceHeaderModel MapHeader(IClientInvoiceHeaderModel preHeader) {
+    public IInvoiceHeaderModel MapHeader(IClientInvoiceHeaderModel preHeader) {
       // todo: add unit test for when a new param is missing. i.e. mapping missed
 
       var newMap = new InvoiceHeaderModel {

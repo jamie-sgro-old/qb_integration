@@ -19,7 +19,7 @@ namespace WPFDesktopUI.Models {
 
     private Dictionary<string, IQbAttribute> _attr { get; }
 
-    public async Task<string> BtnQbImport(string qbFilePath, DataTable dt, Func<IClientInvoiceHeaderModel> clientInvoiceHeaderModel) {
+    public async Task BtnQbImport(string qbFilePath, DataTable dt, Func<IClientInvoiceHeaderModel> clientInvoiceHeaderModel) {
       // Throw if datatable is empty
       if (dt == null) {
         throw new ArgumentNullException(paramName: nameof(dt),
@@ -51,7 +51,7 @@ namespace WPFDesktopUI.Models {
         qbImport.Import();
       });
 
-      throw new NotImplementedException();
+      throw new NotImplementedException("not implemented");
     }
 
     private List<CsvModel> MapDataTableToModel(DataTable dt) {

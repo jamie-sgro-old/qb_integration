@@ -178,7 +178,7 @@ namespace QBConnect.Classes {
 
     #region Methods
 
-    public void AddLine(InvoiceLineItemModel lineItem) {
+    public void AddLine(IInvoiceLineItemModel lineItem) {
       Amount =                        lineItem.Amount;
       ClassRef =                      lineItem.ClassRef;
       Desc =                          lineItem.Desc;

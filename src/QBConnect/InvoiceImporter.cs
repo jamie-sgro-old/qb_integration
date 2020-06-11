@@ -21,7 +21,7 @@ namespace QBConnect {
 
 
 
-    public void Import(InvoiceHeaderModel headerData, List<InvoiceLineItemModel> lineItems) {
+    public void Import(IInvoiceHeaderModel headerData, List<IInvoiceLineItemModel> lineItems) {
 
       #region Fail Fast
 
@@ -62,14 +62,14 @@ namespace QBConnect {
 
 
 
-    private static void BuildRequest(IMsgSetRequest requestMsgSet, InvoiceHeaderModel headerData, List<InvoiceLineItemModel> lineItems) {
+    private static void BuildRequest(IMsgSetRequest requestMsgSet, IInvoiceHeaderModel headerData, List<IInvoiceLineItemModel> lineItems) {
       // Init invoice variable
       IInvoiceAdd header = requestMsgSet.AppendInvoiceAddRq();
 
       HeaderItem.SetHeader(header, headerData);
 
       // Create variable for adding new lines to the invoice
-      foreach (InvoiceLineItemModel line in lineItems) {
+      foreach (IInvoiceLineItemModel line in lineItems) {
         new LineItem(header).AddLine(line);
       }
 
@@ -102,7 +102,7 @@ namespace QBConnect {
     /// <param name="headerData">Data model containing both TemplateRefListID &
     /// TemplateRefFullName</param>
     /// <returns>Template ID if possible, else Template fullname, else exception</returns>
-    private static string GetUserTemplateName(InvoiceHeaderModel headerData) {
+    private static string GetUserTemplateName(IInvoiceHeaderModel headerData) {
       if (headerData.TemplateRefListID != null) {
         return headerData.TemplateRefListID;
       }
