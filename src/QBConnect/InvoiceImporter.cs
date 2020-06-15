@@ -20,6 +20,9 @@ namespace QBConnect {
 
     private IClientSessionManager SessionManager { get; }
 
+    // After a req is processed with DoRequest(), append it's TxnId to this list
+    // Necessary for rollbacks
+    private List<string> _finishedTxnIds { get; set; } = new List<string>();
 
 
     public void Import(IInvoiceHeaderModel headerData, List<IInvoiceLineItemModel> lineItems) {
@@ -53,17 +56,61 @@ namespace QBConnect {
       IMsgSetRequest msgSetRequest = SessionManager.CreateMsgSetRequest("US", 13, 0);
       msgSetRequest.Attributes.OnError = ENRqOnError.roeContinue;
 
-      BuildRequest(msgSetRequest, headerData, lineItems);
-      var responseMsgSet = SessionManager.DoRequests(msgSetRequest);
 
-      if (responseMsgSet.ResponseList.GetAt(0).StatusMessage != "Status OK") {
-        throw new Exception(responseMsgSet.ResponseList.GetAt(0).StatusMessage);
+      BuildRequest(msgSetRequest, headerData, lineItems);
+
+      // CRITICAL: Only do one BuildRequest() and DoRequests() per method-call since 
+      // it's vital we cast and retrieve the right TxnId in case of a roll-back
+      if (msgSetRequest.RequestList.Count > 1) {
+        throw new ArgumentOutOfRangeException(
+          paramName: nameof(msgSetRequest.RequestList),
+          message: msgSetRequest.RequestList.Count + " elements found is responseList. " +
+                   "The Response Model was expecting 1.");
       }
+
+      // Needs to be a req type where the response can later upcast to acquire the TxnID
+      // i.e. an IInvoiceAdd request converts into an IInvoiceRet response
+      var reqType = msgSetRequest.RequestList.GetAt(0).Detail;
+      if (!(reqType is IInvoiceAdd)) {
+        throw new ArgumentException(
+          message: "Message request is not of type 'IInvoiceAdd'",
+          paramName: nameof(reqType));
+      }
+
+
+      // Do Request
+      var responseMsgSet = SessionManager.DoRequests(msgSetRequest);
+      
+
+      // Check all response statuses for potential error (should only have count == 1)
+      for (int i = 0; i < responseMsgSet.ResponseList.Count; i++) {
+        if (responseMsgSet.ResponseList.GetAt(i).StatusMessage != "Status OK") {
+          // Rollback
+          var rollback = Factory.CreateRollback(SessionManager);
+          rollback.Invoice(_finishedTxnIds);
+          throw new Exception(responseMsgSet.ResponseList.GetAt(i).StatusMessage);
+        }
+      }
+
+      // Get TxnId (asserting only 1 req)
+      var singleResponse = new Response(responseMsgSet?.ResponseList);
+      if (!singleResponse.IsValid(ENResponseType.rtInvoiceAddRs)) {
+        throw new ArgumentException(
+          message: "Message response is not of type 'rtInvoiceAddRs'. " +
+                   "Invoices may have been produced that could not be deleted. " +
+                   "Please ensure all recently created invoices in QuickBooks " +
+                   "are correct. If this problem persists, notify your system administrator.",
+          paramName: nameof(singleResponse));
+      }
+
+      // Cast is type-safe from IsValid check above
+      IInvoiceRet invoiceRet = (IInvoiceRet)singleResponse.Payload.Detail;
+      _finishedTxnIds.Add(invoiceRet.TxnID.GetValue());
     }
 
 
 
-    private static void BuildRequest(IMsgSetRequest requestMsgSet, IInvoiceHeaderModel headerData, List<IInvoiceLineItemModel> lineItems) {
+    private void BuildRequest(IMsgSetRequest requestMsgSet, IInvoiceHeaderModel headerData, List<IInvoiceLineItemModel> lineItems) {
       // Init invoice variable
       IInvoiceAdd header = requestMsgSet.AppendInvoiceAddRq();
 
@@ -81,7 +128,7 @@ namespace QBConnect {
     }
 
 
-  
+
     /// <summary>
     /// Check if template name provided is included in the list of QB template names
     /// </summary>
