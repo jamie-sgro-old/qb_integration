@@ -88,7 +88,9 @@
     <Compile Include="Classes\HeaderItem.cs" />
     <Compile Include="Classes\Interfaces\IClientSessionManager.cs" />
     <Compile Include="Classes\Query\InvoiceQuery.cs" />
+    <Compile Include="Classes\Rollback\AbstractRollback.cs" />
     <Compile Include="Classes\Rollback\Interfaces\IRollback.cs" />
+    <Compile Include="Classes\Rollback\QbDelete.cs" />
     <Compile Include="Classes\Rollback\QbVoid.cs" />
     <Compile Include="IInvoiceImporter.cs" />
     <Compile Include="InvoiceImporter.cs" />
