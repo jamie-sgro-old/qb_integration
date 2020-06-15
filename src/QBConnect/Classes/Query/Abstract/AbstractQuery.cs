@@ -4,7 +4,7 @@ using QBConnect.Models;
 using QBFC13Lib;
 
 namespace QBConnect.Classes {
-  internal abstract class Query : IQuery {
+  internal abstract class AbstractQuery : IQuery {
 
     #region Properties
 

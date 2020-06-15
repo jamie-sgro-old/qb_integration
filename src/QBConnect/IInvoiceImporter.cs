@@ -13,6 +13,8 @@ namespace QBConnect {
     /// <returns></returns>
     List<string> GetTemplateNamesList();
 
+    List<string> GetInvoiceIdList();
+
     void Dispose();
   }
 }

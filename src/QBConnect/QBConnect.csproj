@@ -86,13 +86,14 @@
     <Compile Include="Classes\ClientSessionManager.cs" />
     <Compile Include="Classes\HeaderItem.cs" />
     <Compile Include="Classes\Interfaces\IClientSessionManager.cs" />
+    <Compile Include="Classes\Query\InvoiceQuery.cs" />
     <Compile Include="IInvoiceImporter.cs" />
     <Compile Include="InvoiceImporter.cs" />
     <Compile Include="Classes\Interfaces\IInvoiceLineAppender.cs" />
     <Compile Include="Classes\Query\Interfaces\IQuery.cs" />
     <Compile Include="Classes\Query\ItemQuery.cs" />
     <Compile Include="Classes\LineItem.cs" />
-    <Compile Include="Classes\Query\Abstract\Query.cs" />
+    <Compile Include="Classes\Query\Abstract\AbstractQuery.cs" />
     <Compile Include="Models\Interfaces\IInvoiceHeaderModel.cs" />
     <Compile Include="Models\Interfaces\IInvoiceLineItemModel.cs" />
     <Compile Include="Models\Response.cs" />

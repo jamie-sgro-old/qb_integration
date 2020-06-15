@@ -4,6 +4,7 @@ using QBFC13Lib;
 using System;
 using System.Collections.Generic;
 using QBConnect.Classes;
+using QBConnect.Classes.Query;
 
 namespace QBConnect {
   public class InvoiceImporter : IInvoiceImporter {
@@ -53,8 +54,8 @@ namespace QBConnect {
       msgSetRequest.Attributes.OnError = ENRqOnError.roeContinue;
 
       BuildRequest(msgSetRequest, headerData, lineItems);
-      
       var responseMsgSet = SessionManager.DoRequests(msgSetRequest);
+
       if (responseMsgSet.ResponseList.GetAt(0).StatusMessage != "Status OK") {
         throw new Exception(responseMsgSet.ResponseList.GetAt(0).StatusMessage);
       }
@@ -89,6 +90,13 @@ namespace QBConnect {
     public List<string> GetTemplateNamesList() {
       var templateQuery = new TemplateQuery(SessionManager);
       List<string> templateNamesList = templateQuery.GetList<ITemplateRetList>();
+      return templateNamesList;
+    }
+
+
+    public List<string> GetInvoiceIdList() {
+      var invoiceQuery = new InvoiceQuery(SessionManager);
+      List<string> templateNamesList = invoiceQuery.GetList<IInvoiceRetList>();
       return templateNamesList;
     }
 
