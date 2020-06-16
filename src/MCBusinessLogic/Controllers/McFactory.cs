@@ -23,5 +23,9 @@ namespace MCBusinessLogic.Controllers {
     public static IInvoiceImporter CreateInvoiceImporter(string path) {
       return new InvoiceImporter(path);
     }
+
+    public static IFileSystemHandler CreateFileSystemHandler() {
+      return new FileSystemHandler();
+    }
   }
 }

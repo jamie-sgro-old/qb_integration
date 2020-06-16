@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 namespace MCBusinessLogic.Controllers {
   public static class FileSystemHelper {
     public static string GetFilePath(string filter) {
-      IFileSystemHandler fso = new FileSystemHandler {
-        Filter = filter
-      };
+      var fso = McFactory.CreateFileSystemHandler();
+      fso.Filter = filter;
       fso.SelectFile();
       return fso.FileName;
     }
