@@ -8,6 +8,7 @@ using MCBusinessLogic.Controllers;
 using WPFDesktopUI.Models;
 using WPFDesktopUI.ViewModels.Interfaces;
 using stn = WPFDesktopUI.Controllers.SettingsController;
+using ErrHandler = WPFDesktopUI.Controllers.QbImportExceptionHandler;
 
 namespace WPFDesktopUI.ViewModels.QuickBooks {
   public class QuickBooksSidePaneViewModel : Screen, IMainTab, IQuickBooksSidePaneViewModel {
@@ -76,7 +77,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
         QbspModel.Attr["TemplateRefFullName"].ComboBox.ItemsSource = templateList;
         SessionEnd();
       } catch (Exception e) {
-        ConsoleMessage = QbImportExceptionHandler.DelegateHandle(e);
+        ConsoleMessage = ErrHandler.DelegateHandle(e);
       } finally {
         CanQbExport = true;
         QbProgressBarIsVisible = false;

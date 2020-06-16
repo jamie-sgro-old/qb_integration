@@ -1,6 +1,5 @@
 ﻿using Caliburn.Micro;
-using ErrHandler = MCBusinessLogic.Controllers.QbImportExceptionHandler;
-using stn = WPFDesktopUI.Controllers.SettingsController;
+using ErrHandler = WPFDesktopUI.Controllers.QbImportExceptionHandler;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;

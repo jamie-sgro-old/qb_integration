@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MCBusinessLogic.Controllers {
+namespace WPFDesktopUI.Controllers {
   public static class QbImportExceptionHandler {
 
     public static string DelegateHandle(Exception e) {

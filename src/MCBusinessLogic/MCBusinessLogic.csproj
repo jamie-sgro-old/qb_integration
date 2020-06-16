@@ -100,7 +100,6 @@
     <Compile Include="Controllers\Interfaces\IQbExportController.cs" />
     <Compile Include="Controllers\Interfaces\IQbImportController.cs" />
     <Compile Include="Controllers\QbImportController.cs" />
-    <Compile Include="Controllers\QbImportExceptionHandler.cs" />
     <Compile Include="Controllers\QbExportController.cs" />
     <Compile Include="DataAccess\SqliteDataAccess.cs" />
     <Compile Include="Models\CsvModel.cs" />
