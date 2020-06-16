@@ -6,5 +6,6 @@ namespace WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces {
     bool IsEnabled { get; set; }
     string SelectedItem { get; set; }
     bool RequiresCsv { get; set; }
+    bool IsBlank { get; }
   }
 }

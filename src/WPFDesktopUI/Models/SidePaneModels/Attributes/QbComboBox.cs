@@ -16,7 +16,6 @@ namespace WPFDesktopUI.Models.SidePaneModels.Attributes {
         _isBlank = string.IsNullOrEmpty(SelectedItem);
         return _isBlank;
       }
-      set => _isBlank = value;
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
