@@ -88,6 +88,10 @@ namespace WPFDesktopUI.ViewModels {
       return new QbImportController(SettingsController.QbFilePath());
     }
 
+    public static IQbExportController CreateQbExportController() {
+      return new QbExportController(SettingsController.QbFilePath());
+    }
+
     #endregion Controllers
   }
 }

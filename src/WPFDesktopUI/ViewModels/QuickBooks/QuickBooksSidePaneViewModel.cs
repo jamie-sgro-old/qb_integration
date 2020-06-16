@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using MCBusinessLogic.Controllers;
+using MCBusinessLogic.Controllers.Interfaces;
 using WPFDesktopUI.Models;
 using WPFDesktopUI.ViewModels.Interfaces;
 using stn = WPFDesktopUI.Controllers.SettingsController;
@@ -71,9 +72,8 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 
     public async void QbExport() {
       SessionStart();
-      var qbFilePath = stn.QbFilePath();
       try {
-        var templateList = await InitTemplateRefFullName(qbFilePath);
+        var templateList = await InitTemplateRefFullName();
         QbspModel.Attr["TemplateRefFullName"].ComboBox.ItemsSource = templateList;
         SessionEnd();
       } catch (Exception e) {
@@ -99,8 +99,8 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     /// </summary>
     /// <param name="qbFilePath">The full path for the QuickBooks file</param>
     /// <returns></returns>
-    private static async Task<List<string>> InitTemplateRefFullName(string qbFilePath) {
-      var qbExportController = new QbExportController(qbFilePath);
+    private static async Task<List<string>> InitTemplateRefFullName() {
+      IQbExportController qbExportController = Factory.CreateQbExportController();
       var templates = await Task.Run(() => {
         return qbExportController.GetTemplateNamesList();
       });
