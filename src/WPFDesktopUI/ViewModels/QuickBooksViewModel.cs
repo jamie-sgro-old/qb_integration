@@ -1,19 +1,11 @@
 ﻿using Caliburn.Micro;
-using MCBusinessLogic.Controllers;
 using ErrHandler = MCBusinessLogic.Controllers.QbImportExceptionHandler;
 using stn = WPFDesktopUI.Controllers.SettingsController;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using WPFDesktopUI.ViewModels.QuickBooks;
-using MCBusinessLogic.Models;
 using WPFDesktopUI.Models;
-using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
@@ -22,7 +14,7 @@ namespace WPFDesktopUI.ViewModels {
 		#region Constructor
 
 		public QuickBooksViewModel() {
-			QuickBooksSidePaneViewModel = new QuickBooksSidePaneViewModel();
+			QuickBooksSidePaneViewModel = Factory.CreateQuickBooksSidePaneViewModel();
     }
 
 		#endregion Constructor
@@ -30,7 +22,7 @@ namespace WPFDesktopUI.ViewModels {
 
 		#region Properties
 
-    public QuickBooksSidePaneViewModel QuickBooksSidePaneViewModel { get; }
+    public IQuickBooksSidePaneViewModel QuickBooksSidePaneViewModel { get; }
     public string ConsoleMessage { get; set; }
     public bool CanBtnQbImport { get; set; } = true;
     public bool QbProgressBarIsVisible { get; set; } = false;

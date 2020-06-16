@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Caliburn.Micro;
 using MCBusinessLogic.Controllers;
 using WPFDesktopUI.Models;
 using WPFDesktopUI.ViewModels.Interfaces;
 using stn = WPFDesktopUI.Controllers.SettingsController;
 
 namespace WPFDesktopUI.ViewModels.QuickBooks {
-  public class QuickBooksSidePaneViewModel : AbstractQuickBooksSidePane, IMainTab {
+  public class QuickBooksSidePaneViewModel : Screen, IMainTab, IQuickBooksSidePaneViewModel {
     public QuickBooksSidePaneViewModel() {
       QbspModel = Factory.CreateQuickBooksSidePaneModel();
 
@@ -41,12 +42,12 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "Other1", "TIME IN OUT");
 
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "Other2", "STAFF NAME");
-
-
     }
 
     public IQuickBooksSidePaneModel QbspModel { get; set; }
-
+    public bool CanQbExport { get; set; } = true;
+    public bool QbProgressBarIsVisible { get; set; } = false;
+    public string ConsoleMessage { get; set; } = "Please select 'Query QuickBooks' before custom lists can be generated";
 
 
     public async void OnSelected() {
@@ -67,13 +68,6 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       });
     }
 
-    /// <summary>
-    /// Executed when 'Query QuickBooks' button is pressed
-    /// Connect to QB and get all data needed to populate smart dropdowns
-    /// i.e. to decide which template to use, the user should decide from a list
-    /// of actual templates used in QB, thus the combobox needs a list of
-    /// template strings
-    /// </summary>
     public async void QbExport() {
       SessionStart();
       var qbFilePath = stn.QbFilePath();

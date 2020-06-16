@@ -11,9 +11,18 @@ using WPFDesktopUI.Controllers;
 using WPFDesktopUI.Models;
 using WPFDesktopUI.Models.SidePaneModels.Attributes;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
+using WPFDesktopUI.ViewModels.QuickBooks;
 
 namespace WPFDesktopUI.ViewModels {
   public static class Factory {
+
+    #region View Models
+
+    public static IQuickBooksSidePaneViewModel CreateQuickBooksSidePaneViewModel() {
+      return new QuickBooksSidePaneViewModel();
+    }
+
+    #endregion View Models
 
     #region Screen Models
 
