@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using MCBusinessLogic.Controllers.Interfaces;
-using QBConnect;
 
 namespace MCBusinessLogic.Controllers {
   public class QbExportController : IQbExportController {
@@ -15,7 +10,7 @@ namespace MCBusinessLogic.Controllers {
     public string QbFilePath { get; set; }
 
     public List<string> GetTemplateNamesList() {
-      using (var invoiceImporter = new InvoiceImporter(QbFilePath)) {
+      using (var invoiceImporter = McFactory.CreateInvoiceImporter(QbFilePath)) {
         return invoiceImporter.GetTemplateNamesList();
       }
     }
