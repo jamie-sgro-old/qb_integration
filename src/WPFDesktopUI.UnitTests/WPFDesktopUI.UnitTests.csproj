@@ -53,7 +53,9 @@
   <ItemGroup>
     <Compile Include="Models\SidePaneModels\Attributes\QbDateTimeAttributeTests.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\QbComboBoxTests.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\QbStringAttributeTests.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\QbDoubleAttributeTests.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\QbNullAttributeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

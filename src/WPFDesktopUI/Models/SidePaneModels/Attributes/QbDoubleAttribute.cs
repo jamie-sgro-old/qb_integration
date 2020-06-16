@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 
 namespace WPFDesktopUI.Models.SidePaneModels.Attributes {
-  class QbDoubleAttribute : QbAbstractAttribute, IQbStringAttribute {
+  public class QbDoubleAttribute : QbAbstractAttribute, IQbStringAttribute {
     public bool HasStringPayload { get; } = true;
 
     /// <summary>

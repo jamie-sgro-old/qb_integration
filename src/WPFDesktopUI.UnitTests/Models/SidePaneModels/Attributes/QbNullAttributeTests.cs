@@ -6,10 +6,10 @@ using WPFDesktopUI.ViewModels;
 
 namespace WPFDesktopUI.UnitTests.Models.SidePaneModels.Attributes {
   [TestClass]
-  public class QbDoubleAttributeTests {
+  public class QbNullAttributeTests {
     [TestMethod]
     public void Name_Init_IsNull() {
-      var dtAttr = new QbDoubleAttribute();
+      var dtAttr = new QbNullAttribute();
 
       var res = dtAttr.Name;
 
@@ -18,17 +18,17 @@ namespace WPFDesktopUI.UnitTests.Models.SidePaneModels.Attributes {
 
     [TestMethod]
     public void Name_OnChange_IsString() {
-      var dtAttr = new QbDoubleAttribute();
-      dtAttr.Name = "1234";
+      var dtAttr = new QbNullAttribute();
+      dtAttr.Name = "John Smith";
 
       var res = dtAttr.Name;
 
-      Assert.AreEqual("1234", res);
+      Assert.AreEqual("John Smith", res);
     }
 
     [TestMethod]
     public void Payload_Init_IsNull() {
-      var dtAttr = new QbDoubleAttribute();
+      var dtAttr = new QbNullAttribute();
 
       var res = dtAttr.Payload;
 
@@ -37,7 +37,7 @@ namespace WPFDesktopUI.UnitTests.Models.SidePaneModels.Attributes {
 
     [TestMethod]
     public void Payload_OnChange_IsString() {
-      var dtAttr = new QbDoubleAttribute();
+      var dtAttr = new QbNullAttribute();
       dtAttr.Payload = "payload";
 
       var res = dtAttr.Payload;
@@ -47,7 +47,7 @@ namespace WPFDesktopUI.UnitTests.Models.SidePaneModels.Attributes {
 
     [TestMethod]
     public void IsMandatory_Init_False() {
-      var dtAttr = new QbDoubleAttribute();
+      var dtAttr = new QbNullAttribute();
 
       var res = dtAttr.IsMandatory;
 
@@ -56,7 +56,7 @@ namespace WPFDesktopUI.UnitTests.Models.SidePaneModels.Attributes {
 
     [TestMethod]
     public void IsMandatory_OnChange_True() {
-      var dtAttr = new QbDoubleAttribute();
+      var dtAttr = new QbNullAttribute();
       dtAttr.IsMandatory = true;
 
       var res = dtAttr.IsMandatory;
@@ -65,105 +65,96 @@ namespace WPFDesktopUI.UnitTests.Models.SidePaneModels.Attributes {
     }
 
     [TestMethod]
-    public void HasStringPayload_Init_True() {
-      var dtAttr = new QbDoubleAttribute();
-
-      var res = dtAttr.HasStringPayload;
-
-      Assert.IsTrue(res);
-    }
-
-    [TestMethod]
     public void GetRow_BothValid_DataRow() {
-      var dtAttr = new QbDoubleAttribute();
-      dtAttr.Payload = "1234";
+      var dtAttr = new QbNullAttribute();
+      dtAttr.Payload = "unused payload";
       dtAttr.ComboBox = Factory.CreateQbComboBox();
       dtAttr.ComboBox.SelectedItem = "header1";
       var dt = GetDt();
 
       var res = dtAttr.GetRow(dt.Rows[0]);
 
-      Assert.AreEqual(00, res);
+      Assert.AreEqual(dtAttr.ComboBox.SelectedItem, res);
     }
 
     [TestMethod]
-    public void GetRow_BothValidRow1_DataRow() {
-      var dtAttr = new QbDoubleAttribute();
-      dtAttr.Payload = "1234";
-      dtAttr.ComboBox = Factory.CreateQbComboBox();
-      dtAttr.ComboBox.SelectedItem = "header1";
-      var dt = GetDt();
-
-      var res = dtAttr.GetRow(dt.Rows[1]);
-
-      Assert.AreEqual(10, res);
-    }
-
-    [TestMethod]
-    public void GetRow_BothValidCol1_DataRow() {
-      var dtAttr = new QbDoubleAttribute();
-      dtAttr.Payload = "1234";
-      dtAttr.ComboBox = Factory.CreateQbComboBox();
-      dtAttr.ComboBox.SelectedItem = "header2";
-      var dt = GetDt();
-
-      var res = dtAttr.GetRow(dt.Rows[0]);
-
-      Assert.AreEqual(01, res);
-    }
-
-    [TestMethod]
-    public void GetRow_MissingPayload_DataRow() {
-      var dtAttr = new QbDoubleAttribute();
-      dtAttr.ComboBox = Factory.CreateQbComboBox();
-      dtAttr.ComboBox.SelectedItem = "header1";
-      var dt = GetDt();
-
-      var res = dtAttr.GetRow(dt.Rows[0]);
-
-      Assert.AreEqual(00, res);
-    }
-
-    [TestMethod]
-    public void GetRow_MissingPayloadRow1_DataRow() {
-      var dtAttr = new QbDoubleAttribute();
+    public void GetRow_BothValidRow1_SelectedItem() {
+      var dtAttr = new QbNullAttribute();
+      dtAttr.Payload = "unused payload";
       dtAttr.ComboBox = Factory.CreateQbComboBox();
       dtAttr.ComboBox.SelectedItem = "header1";
       var dt = GetDt();
 
       var res = dtAttr.GetRow(dt.Rows[1]);
 
-      Assert.AreEqual(10, res);
+      Assert.AreEqual(dtAttr.ComboBox.SelectedItem, res);
     }
 
     [TestMethod]
-    public void GetRow_MissingPayloadCol1_DataRow() {
-      var dtAttr = new QbDoubleAttribute();
+    public void GetRow_BothValidCol1_SelectedItem() {
+      var dtAttr = new QbNullAttribute();
+      dtAttr.Payload = "unused payload";
       dtAttr.ComboBox = Factory.CreateQbComboBox();
       dtAttr.ComboBox.SelectedItem = "header2";
       var dt = GetDt();
 
       var res = dtAttr.GetRow(dt.Rows[0]);
 
-      Assert.AreEqual(01, res);
+      Assert.AreEqual(dtAttr.ComboBox.SelectedItem, res);
     }
 
     [TestMethod]
-    public void GetRow_MissingSelectedItem_Payload() {
-      var dtAttr = new QbDoubleAttribute();
-      dtAttr.Payload = "1234";
+    public void GetRow_MissingPayload_SelectedItem() {
+      var dtAttr = new QbNullAttribute();
+      dtAttr.ComboBox = Factory.CreateQbComboBox();
+      dtAttr.ComboBox.SelectedItem = "header1";
+      var dt = GetDt();
+
+      var res = dtAttr.GetRow(dt.Rows[0]);
+
+      Assert.AreEqual(dtAttr.ComboBox.SelectedItem, res);
+    }
+
+    [TestMethod]
+    public void GetRow_MissingPayloadRow1_SelectedItem() {
+      var dtAttr = new QbNullAttribute();
+      dtAttr.ComboBox = Factory.CreateQbComboBox();
+      dtAttr.ComboBox.SelectedItem = "header1";
+      var dt = GetDt();
+
+      var res = dtAttr.GetRow(dt.Rows[1]);
+
+      Assert.AreEqual(dtAttr.ComboBox.SelectedItem, res);
+    }
+
+    [TestMethod]
+    public void GetRow_MissingPayloadCol1_SelectedItem() {
+      var dtAttr = new QbNullAttribute();
+      dtAttr.ComboBox = Factory.CreateQbComboBox();
+      dtAttr.ComboBox.SelectedItem = "header2";
+      var dt = GetDt();
+
+      var res = dtAttr.GetRow(dt.Rows[0]);
+
+      Assert.AreEqual(dtAttr.ComboBox.SelectedItem, res);
+    }
+
+    [TestMethod]
+    public void GetRow_MissingSelectedItem_Null() {
+      var dtAttr = new QbNullAttribute();
+      dtAttr.Payload = "unused payload";
       dtAttr.ComboBox = Factory.CreateQbComboBox();
       var dt = GetDt();
 
       var res = dtAttr.GetRow(dt.Rows[0]);
 
-      Assert.AreEqual(1234, res);
+      Assert.IsNull(res);
     }
 
     [TestMethod]
     [ExpectedException(typeof(NullReferenceException))]
     public void GetRow_MissingComboBox_Error() {
-      var dtAttr = new QbDoubleAttribute();
+      var dtAttr = new QbNullAttribute();
       var dt = GetDt();
       var res = dtAttr.GetRow(dt.Rows[0]); // NullReferenceException
     }
@@ -175,8 +166,8 @@ namespace WPFDesktopUI.UnitTests.Models.SidePaneModels.Attributes {
       dt.Columns.Add("header1");
       dt.Columns.Add("header2");
       dt.Columns.Add("header3");
-      dt.Rows.Add(new object[] { 00, 01, 02 });
-      dt.Rows.Add(new object[] { 10, 11, 12 });
+      dt.Rows.Add(new object[] { "0,0", "0,1", "0,2" });
+      dt.Rows.Add(new object[] { "1,0", "1,1", "1,2" });
 
       return dt;
     }

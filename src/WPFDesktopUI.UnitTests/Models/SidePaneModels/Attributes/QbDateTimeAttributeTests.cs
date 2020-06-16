@@ -166,7 +166,19 @@ namespace WPFDesktopUI.UnitTests.Models.SidePaneModels.Attributes {
     public void GetRow_MissingComboBox_Error() {
       var dtAttr = new QbDateTimeAttribute();
       var dt = GetDt();
+
       var res = dtAttr.GetRow(dt.Rows[0]); // NullReferenceException
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(FormatException))]
+    public void GetRow_BadPayload_Error() {
+      var dtAttr = new QbDateTimeAttribute();
+      dtAttr.Payload = "bad datetime string";
+      dtAttr.ComboBox = Factory.CreateQbComboBox();
+      var dt = GetDt();
+
+      var res = dtAttr.GetRow(dt.Rows[0]); // FormatException
     }
 
     private static DataTable GetDt() {
