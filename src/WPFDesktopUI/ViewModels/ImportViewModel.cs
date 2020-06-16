@@ -1,38 +1,21 @@
-﻿using Caliburn.Micro;
+﻿using System.ComponentModel;
+using Caliburn.Micro;
 using MCBusinessLogic.Controllers;
 using System.Data;
 using System.Threading.Tasks;
 using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
-  public class ImportViewModel : Screen, IMainTab {
+  public class ImportViewModel : Screen, IImportViewModel {
    
-    #region Properties
 
-    private string _csvFilePath;
-    private DataView _csvDataView;
-
-    public string CsvFilePath {
-      get => _csvFilePath;
-      set {
-        _csvFilePath = value;
-        NotifyOfPropertyChange(() => CsvFilePath);
-      }
-    }
-
-    public DataView CsvDataView {
-      get => _csvDataView;
-      set {
-        _csvDataView = value;
-        NotifyOfPropertyChange(() => CsvDataView);
-      }
-    }
-
+    public string CsvFilePath { get; set; }
+    public DataView CsvDataView { get; set; }
     public static DataTable CsvData { get; set; }
 
-    #endregion Properties
 
-    #region Methods
+
+    public event PropertyChangedEventHandler PropertyChanged;
 
     public void OnSelected() {
     }
@@ -57,9 +40,5 @@ namespace WPFDesktopUI.ViewModels {
         VALUES(@Item, @Quantity, @StaffName, @TimeInOut, @ServiceDate, @Rate);", CsvData);
       */
     }
-
-
-
-    #endregion Methods
   }
 }

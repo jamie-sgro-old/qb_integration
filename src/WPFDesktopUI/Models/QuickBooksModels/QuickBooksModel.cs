@@ -18,9 +18,13 @@ namespace WPFDesktopUI.Models {
       _qbImportController = qbImportController;
     }
 
+
+
     private Dictionary<string, IQbAttribute> _attr { get; }
     private Func<IClientInvoiceHeaderModel> _clientInvoiceHeaderModel { get; }
     private IQbImportController _qbImportController { get; }
+
+
 
     public async Task QbImport(DataTable dt) {
       ValidateDt(dt);

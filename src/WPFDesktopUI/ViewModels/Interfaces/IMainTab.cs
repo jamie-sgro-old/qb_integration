@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace WPFDesktopUI.ViewModels.Interfaces {
-  interface IMainTab {
+  public interface IMainTab {
     void OnSelected();
   }
 }

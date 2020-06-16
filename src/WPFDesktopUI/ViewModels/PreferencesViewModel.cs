@@ -49,7 +49,7 @@ namespace WPFDesktopUI.ViewModels {
     public void PreferencesList(object sender, RoutedEventArgs e) {
     }
 
-    #region McFactory
+    #region Factory
 
     public void General() {
         ActivateItem(new PreferencesGeneralViewModel());
@@ -75,7 +75,7 @@ namespace WPFDesktopUI.ViewModels {
       throw new NotImplementedException();
     }
 
-    #endregion McFactory
+    #endregion Factory
 
   }
 }

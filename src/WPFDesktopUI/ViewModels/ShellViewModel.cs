@@ -14,12 +14,12 @@ namespace WPFDesktopUI.ViewModels {
   public class ShellViewModel : Conductor<object> {
 
 		public ShellViewModel() {
-			this.ImportViewModel = new ImportViewModel();
-			this.QuickBooksViewModel = new QuickBooksViewModel();
+			ImportViewModel = Factory.CreateImportViewModel();
+			QuickBooksViewModel = Factory.CreateQuickBooksViewModel();
 		}
 
-		public ImportViewModel ImportViewModel { get; }
-		public QuickBooksViewModel QuickBooksViewModel { get; }
+		public IImportViewModel ImportViewModel { get; }
+		public IQuickBooksViewModel QuickBooksViewModel { get; }
 
     public bool TabImportIsSelected { get; set; } = true;
     public bool TabQuickBooksIsSelected { get; set; } = false;

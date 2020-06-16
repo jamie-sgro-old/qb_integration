@@ -9,28 +9,19 @@ using WPFDesktopUI.Models;
 using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
-  public class QuickBooksViewModel : Conductor<object>, IMainTab {
-
-		#region Constructor
-
+  public class QuickBooksViewModel : Conductor<object>, IQuickBooksViewModel {
 		public QuickBooksViewModel() {
 			QuickBooksSidePaneViewModel = Factory.CreateQuickBooksSidePaneViewModel();
     }
 
-		#endregion Constructor
 
-
-		#region Properties
 
     public IQuickBooksSidePaneViewModel QuickBooksSidePaneViewModel { get; }
     public string ConsoleMessage { get; set; }
     public bool CanBtnQbImport { get; set; } = true;
     public bool QbProgressBarIsVisible { get; set; } = false;
 
-    #endregion Properties
 
-
-    #region Methods
 
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -45,10 +36,8 @@ namespace WPFDesktopUI.ViewModels {
         var attr = QuickBooksSidePaneViewModel.QbspModel.Attr;
         IQuickBooksModel qbModel = Factory.CreateQuickBooksModel(attr);
 
-        var dt = ImportViewModel.CsvData;
-        var qbFilePath = stn.QbFilePath();
         await Task.Run(() => {
-          return qbModel.QbImport(dt);
+          return qbModel.QbImport(ImportViewModel.CsvData);
         });
 
         ConsoleMessage = "Import has successfully completed";
@@ -69,7 +58,5 @@ namespace WPFDesktopUI.ViewModels {
       CanBtnQbImport = true;
       QbProgressBarIsVisible = false;
     }
-
-		#endregion Methods
 	}
 }

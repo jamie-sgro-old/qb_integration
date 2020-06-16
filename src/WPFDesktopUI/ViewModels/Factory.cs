@@ -18,6 +18,14 @@ namespace WPFDesktopUI.ViewModels {
 
     #region View Models
 
+    public static IImportViewModel CreateImportViewModel() {
+      return new ImportViewModel();
+    }
+
+    public static IQuickBooksViewModel CreateQuickBooksViewModel() {
+      return new QuickBooksViewModel();
+    }
+
     public static IQuickBooksSidePaneViewModel CreateQuickBooksSidePaneViewModel() {
       return new QuickBooksSidePaneViewModel();
     }
