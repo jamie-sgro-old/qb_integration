@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MCBusinessLogic.Models;
 using QBConnect;
 using QBConnect.Models;
 
 namespace MCBusinessLogic.Controllers {
   public static class McFactory {
     #region Invoice Models
+
+    public static IClientInvoiceHeaderModel CreateClientInvoiceHeaderModel() {
+      return new ClientInvoiceHeaderModel();
+    }
 
     public static IInvoiceHeaderModel CreateInvoiceHeaderModel() {
       return new InvoiceHeaderModel();
