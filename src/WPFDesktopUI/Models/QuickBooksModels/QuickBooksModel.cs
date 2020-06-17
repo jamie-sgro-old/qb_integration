@@ -12,16 +12,14 @@ using WPFDesktopUI.ViewModels;
 namespace WPFDesktopUI.Models {
   public class QuickBooksModel : IQuickBooksModel
   {
-    public QuickBooksModel(Dictionary<string, IQbAttribute> attr, Func<IClientInvoiceHeaderModel> clientInvoiceHeaderModel, IQbImportController qbImportController) {
+    public QuickBooksModel(Dictionary<string, IQbAttribute> attr, IQbImportController qbImportController) {
       _attr = attr;
-      _clientInvoiceHeaderModel = clientInvoiceHeaderModel;
       _qbImportController = qbImportController;
     }
 
 
 
     private Dictionary<string, IQbAttribute> _attr { get; }
-    private Func<IClientInvoiceHeaderModel> _clientInvoiceHeaderModel { get; }
     private IQbImportController _qbImportController { get; }
 
 
@@ -29,21 +27,11 @@ namespace WPFDesktopUI.Models {
     public async Task QbImport(DataTable dt) {
       ValidateDt(dt);
 
-      var header = _clientInvoiceHeaderModel();
-
-      header.CustomerRefFullName = _attr["CustomerRefFullName"].Payload;
-      header.ClassRefFullName = _attr["ClassRefFullName"].Payload;
-      header.TemplateRefFullName = _attr["TemplateRefFullName"].ComboBox.SelectedItem;
-      header.TxnDate = Convert.ToDateTime(_attr["TxnDate"].Payload);
-      header.Other = _attr["Other"].Payload;
-
-      //var header = MapDataTableToHeaderModel(dt);
-
       var csvModels = MapDataTableToModel(dt);
 
       await Task.Run(() => {
         var qbImportController = _qbImportController;
-        qbImportController.Import(header, csvModels);
+        qbImportController.Import(csvModels);
       });
     }
 

@@ -35,7 +35,7 @@ namespace WPFDesktopUI.ViewModels {
     #region Screen Models
 
     public static IQuickBooksModel CreateQuickBooksModel(Dictionary<string, IQbAttribute> attr) {
-      return new QuickBooksModel(attr, CreateClientInvoiceHeaderModel, CreateQbImportController());
+      return new QuickBooksModel(attr, CreateQbImportController());
     }
 
     public static IQuickBooksSidePaneModel CreateQuickBooksSidePaneModel() {

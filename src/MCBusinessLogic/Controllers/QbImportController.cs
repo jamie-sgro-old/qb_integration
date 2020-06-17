@@ -16,12 +16,17 @@ namespace MCBusinessLogic.Controllers {
 
 
 
-    public void Import(IClientInvoiceHeaderModel preHeader, List<ICsvModel> csvModel) {
-      var header = MapHeader(preHeader);
-      
+    public void Import(List<ICsvModel> csvModels) {
+      IInvoiceHeaderModel header = null;
+
+      // Temp:
+      header.TemplateRefFullName = csvModels[0].TemplateRefFullName;
+
+      //var header = MapHeader(preHeader);
+
       using (var invoiceImporter = McFactory.CreateInvoiceImporter(QbFilePath)) {
 
-        var invoiceGroupByCx = csvModel.GroupBy(x => x.CustomerRefFullName);
+        var invoiceGroupByCx = csvModels.GroupBy(x => x.CustomerRefFullName);
         foreach (var groupCx in invoiceGroupByCx) {
           // Write Header with grouped Customer name
           header.CustomerRefFullName = groupCx.Key;
@@ -31,9 +36,17 @@ namespace MCBusinessLogic.Controllers {
             // Write Header with grouped Class name
             header.ClassRefFullName = groupClass.Key;
 
-            // Map and import to QuickBooks
-            var lineItems = MapLineItems(groupClass.ToList());
-            invoiceImporter.Import(header, lineItems);
+            var invoiceGroupByTemplate = groupClass.ToList().GroupBy(x => x.TemplateRefFullName);
+            foreach (var groupTemplate in invoiceGroupByTemplate) {
+              // Write Header with grouped Class name
+              header.TemplateRefFullName = groupTemplate.Key;
+
+              // Map and import to QuickBooks
+              var lineItems = MapLineItems(groupTemplate.ToList());
+              invoiceImporter.Import(header, lineItems);
+
+
+            }
           }
         }
       }
