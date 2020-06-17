@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.Models;
 using QBConnect.Models;
@@ -16,12 +18,24 @@ namespace MCBusinessLogic.Controllers {
 
     public void Import(IClientInvoiceHeaderModel preHeader, List<ICsvModel> csvModel) {
       var header = MapHeader(preHeader);
-      var sqlLineItems = MapLineItems(csvModel);
+      
       using (var invoiceImporter = McFactory.CreateInvoiceImporter(QbFilePath)) {
-        header.Other = "this is the first invoice";
-        invoiceImporter.Import(header, sqlLineItems);
-        header.Other = "this is the second invoice";
-        invoiceImporter.Import(header, sqlLineItems);
+
+        var invoiceGroupByCx = csvModel.GroupBy(x => x.CustomerRefFullName);
+        foreach (var groupCx in invoiceGroupByCx) {
+          // Write Header with grouped Customer name
+          header.CustomerRefFullName = groupCx.Key;
+
+          var invoiceGroupByClass = groupCx.ToList().GroupBy(x => x.ClassRefFullName);
+          foreach (var groupClass in invoiceGroupByClass) {
+            // Write Header with grouped Class name
+            header.ClassRefFullName = groupClass.Key;
+
+            // Map and import to QuickBooks
+            var lineItems = MapLineItems(groupClass.ToList());
+            invoiceImporter.Import(header, lineItems);
+          }
+        }
       }
     }
 
