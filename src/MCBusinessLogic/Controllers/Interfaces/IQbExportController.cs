@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MCBusinessLogic.Controllers.Interfaces {
-  internal interface IQbExportController {
+  public interface IQbExportController {
     string QbFilePath { get; set; }
+
+    List<string> GetTemplateNamesList();
   }
 }
