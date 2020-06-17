@@ -29,8 +29,8 @@ namespace QBConnect {
 
       #region Fail Fast
 
-      if (!SessionManager.ConnectionOpen) throw new ArgumentException("Connection is not open");
-      if (!SessionManager.SessionBegun) throw new ArgumentException("Session has not begun");
+      if (!SessionManager.ConnectionOpen) throw new ArgumentException("Could not Import. Connection is not open");
+      if (!SessionManager.SessionBegun) throw new ArgumentException("Could not Import. Session has not begun");
 
       // LineItems need some data
       if (lineItems.Count < 1) {
@@ -85,9 +85,7 @@ namespace QBConnect {
       // Check all response statuses for potential error (should only have count == 1)
       for (int i = 0; i < responseMsgSet.ResponseList.Count; i++) {
         if (responseMsgSet.ResponseList.GetAt(i).StatusMessage != "Status OK") {
-          // Rollback
-          var rollback = Factory.CreateRollback(SessionManager);
-          rollback.Invoice(_finishedTxnIds);
+          Rollback();
           throw new Exception(responseMsgSet.ResponseList.GetAt(i).StatusMessage);
         }
       }
@@ -97,7 +95,7 @@ namespace QBConnect {
       if (!singleResponse.IsValid(ENResponseType.rtInvoiceAddRs)) {
         throw new ArgumentException(
           message: "Message response is not of type 'rtInvoiceAddRs'. " +
-                   "Invoices may have been produced that could not be deleted. " +
+                   "Invoices may have been produced that could not be rolled back. " +
                    "Please ensure all recently created invoices in QuickBooks " +
                    "are correct. If this problem persists, notify your system administrator.",
           paramName: nameof(singleResponse));
@@ -125,6 +123,22 @@ namespace QBConnect {
       IORInvoiceLineAdd subTotal = header.ORInvoiceLineAddList.Append();
 
       subTotal.InvoiceLineAdd.ItemRef.FullName.SetValue("Sub- Totals");
+    }
+
+
+    public void Rollback() {
+      if (!SessionManager.ConnectionOpen) throw new ArgumentException("Could not Rollback. Connection is not open");
+      if (!SessionManager.SessionBegun) throw new ArgumentException("Could not Rollback. Session has not begun");
+
+      var rollback = Factory.CreateRollback(SessionManager);
+      var res = rollback.Invoice(_finishedTxnIds);
+
+      // clear TxnId list if they've all been processed
+      if (res.Item1) {
+        _finishedTxnIds = new List<string>();
+      } else {
+        throw new Exception(res.Item2);
+      }
     }
 
 

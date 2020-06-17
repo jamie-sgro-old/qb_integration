@@ -28,8 +28,12 @@ namespace MCBusinessLogic.Controllers {
       //var propList = new List<string> { "CustomerRefFullName", "ClassRefFullName", "TemplateRefFullName" };
 
       using (var invoiceImporter = McFactory.CreateInvoiceImporter(QbFilePath)) {
-        // TODO: add rollback if anything fails at this level as well
-        GroupFromListRecursively(invoiceImporter, header, csvModels, propList);
+        try {
+          GroupFromListRecursively(invoiceImporter, header, csvModels, propList);
+        } catch (Exception) {
+          invoiceImporter.Rollback();
+          throw;
+        }
       }
     }
 

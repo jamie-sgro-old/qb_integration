@@ -9,20 +9,21 @@ namespace QBConnect.Classes.Rollback {
 
     protected IClientSessionManager _sessionManager { get; set; }
 
-    public void Invoice(string txnId) {
+    public Tuple<bool, string> Invoice(string txnId) {
       var txnIds = new List<string> { txnId };
-      Invoice(txnIds);
+      return Invoice(txnIds);
     }
 
-    public void Invoice(List<string> txnIds) {
+    public Tuple<bool, string> Invoice(List<string> txnIds) {
       IMsgSetRequest msgSetRequest = GetMsgSetRq();
 
       //Set field value for TxnID
+      if (txnIds.Count <= 0) return new Tuple<bool, string>(true, "No invoices to rollback");
       foreach (var txnId in txnIds) {
         GetTxnRollbackRq(msgSetRequest, txnId);
       }
 
-      Commit(msgSetRequest);
+      return Commit(msgSetRequest);
     }
 
     protected abstract void GetTxnRollbackRq(IMsgSetRequest msgSetRequest, string txnId);
@@ -33,15 +34,17 @@ namespace QBConnect.Classes.Rollback {
       return req;
     }
 
-    protected void Commit(IMsgSetRequest msgSetRequest) {
+    protected Tuple<bool, string> Commit(IMsgSetRequest msgSetRequest) {
       var responseMsgSet = _sessionManager.DoRequests(msgSetRequest);
 
       // Check all response statuses for potential error
       for (var i = 0; i < responseMsgSet.ResponseList.Count; i++) {
         if (responseMsgSet.ResponseList.GetAt(i).StatusMessage != "Status OK") {
-          throw new Exception("Could not void all Invoices. " + responseMsgSet.ResponseList.GetAt(i).StatusMessage);
+          return new Tuple<bool, string>(false, "Could not void all Invoices. " + responseMsgSet.ResponseList.GetAt(i).StatusMessage);
         }
       }
+
+      return new Tuple<bool, string>(true, "Rollback successfully completed");
     }
   }
 }

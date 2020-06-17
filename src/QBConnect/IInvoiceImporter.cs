@@ -6,6 +6,8 @@ namespace QBConnect {
   public interface IInvoiceImporter : IDisposable {
     void Import(IInvoiceHeaderModel headerData, List<IInvoiceLineItemModel> lineItems);
 
+    void Rollback();
+
     /// <summary>
     /// Check if template name provided is included in the list of QB template names
     /// </summary>
