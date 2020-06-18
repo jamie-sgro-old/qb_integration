@@ -7,17 +7,21 @@ using QBConnect;
 using QBConnect.Models;
 
 namespace MCBusinessLogic.Controllers {
-  public class QbImportController : IQbImportController {
-    public QbImportController(string qbFilePath) {
+  public class QbImportController : IQbImportController 
+  {
+    public QbImportController(string qbFilePath, Func<IClientInvoiceHeaderModel> headerFunc, Func<string, IInvoiceImporter> invoiceFunc) {
       QbFilePath = qbFilePath;
+      _headerFunc = headerFunc;
+      _invoiceFunc = invoiceFunc;
     }
 
     public string QbFilePath { get; set; }
-
+    private Func<IClientInvoiceHeaderModel> _headerFunc { get; }
+    private Func<string, IInvoiceImporter> _invoiceFunc { get; }
 
 
     public void Import(List<ICsvModel> csvModels) {
-      var header = McFactory.CreateClientInvoiceHeaderModel();
+      var header = _headerFunc();
 
       // Get list of all props that need a nested GroupBy
       var propList = new List<string>();
@@ -25,7 +29,7 @@ namespace MCBusinessLogic.Controllers {
         propList.Add(prop.Name);
       }
 
-      using (var invoiceImporter = McFactory.CreateInvoiceImporter(QbFilePath)) {
+      using (var invoiceImporter = _invoiceFunc(QbFilePath)) {
         try {
           GroupFromListRecursively(invoiceImporter, header, csvModels, propList);
         } catch (Exception) {
