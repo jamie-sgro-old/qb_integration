@@ -27,7 +27,13 @@ namespace WPFDesktopUI.ViewModels {
 
       await Task.Run(() => {
         CsvData = CsvParser.ParseFromFile(fileName, sep);
-        // Match data structure to the UI view (this let's the user see the data)
+
+        // Sanitize column headers
+        foreach (DataColumn col in CsvData.Columns) {
+          col.ColumnName = col.ColumnName.Replace("[", "").Replace("]", "");
+        }
+
+        // Match data structure to the UI view (this lets the user see the data)
         CsvDataView = CsvData.DefaultView;
       });
 
