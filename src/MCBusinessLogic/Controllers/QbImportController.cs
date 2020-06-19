@@ -79,41 +79,59 @@ namespace MCBusinessLogic.Controllers {
       }
 
     }
-    
 
 
+    /// <summary>
+    /// Converts IClientInvoiceHeaderModel data into IInvoiceHeaderModel to be safe for importing to QB
+    /// Functionally equivalent to:
+    /// headerModel.property1 = preHeader.property1;
+    /// headerModel.property2 = preHeader.property2;
+    /// </summary>
+    /// <param name="preHeader">A model with shared properties between
+    /// IClientInvoiceHeaderModel and IInvoiceHeaderModel</param>
+    /// <returns></returns>
     public IInvoiceHeaderModel MapHeader(IClientInvoiceHeaderModel preHeader) {
       var headerModel = McFactory.CreateInvoiceHeaderModel();
 
-      headerModel.ClassRefFullName = preHeader.ClassRefFullName;
-      headerModel.CustomerRefFullName = preHeader.CustomerRefFullName;
-      headerModel.TemplateRefFullName = preHeader.TemplateRefFullName;
-      headerModel.TermsRefFullName = preHeader.TermsRefFullName;
-      headerModel.TxnDate = preHeader.TxnDate;
-      headerModel.BillAddress = preHeader.BillAddress;
-      headerModel.ShipAddress = preHeader.ShipAddress;
-      headerModel.Other = preHeader.Other;
+      // Reflection: i.e. headerModel.someProperty = preHeader.someProperty;
+      foreach (var prop in preHeader.GetType().GetProperties()) {
+        var propStr = prop.Name;
+        headerModel.GetType().GetProperty(propStr)
+          .SetValue(headerModel, preHeader.GetType().GetProperty(propStr).GetValue(preHeader));
+      }
 
       return headerModel;
     }
 
 
-
+    /// <summary>
+    /// Converts Lists of ICSVModels into IInvoiceLineItemModels using reflection.
+    /// Functionally equivalent to:
+    /// lineModel.property1 = line.property1;
+    /// lineModel.property2 = line.property2;
+    /// </summary>
+    /// <param name="lineItems">A list of data with shared properties between
+    /// ICSVModel and IInvoiceLineItemModel</param>
+    /// <returns></returns>
     public List<IInvoiceLineItemModel> MapLineItems(List<ICsvModel> lineItems) {
-      var sqlLineItems = new List<IInvoiceLineItemModel>();
+      var lineModelsList = new List<IInvoiceLineItemModel>();
       foreach (var line in lineItems) {
+        // Check if upcast can be done
+        if (!(line is IClientInvoiceLineItemModel)) {
+          throw new ArgumentNullException(nameof(lineItems), "Could not map line items from Csv Model.");
+        }
         var lineModel = McFactory.CreateInvoiceLineItemModel();
+        
+        // Reflection: i.e. lineModel.someProperty = line.someProperty;
+        foreach (var prop in typeof(IClientInvoiceLineItemModel).GetProperties()) {
+          var propStr = prop.Name;
+          lineModel.GetType().GetProperty(propStr)
+            .SetValue(lineModel, line.GetType().GetProperty(propStr).GetValue(line));
+        }
 
-        lineModel.ItemRef = line.ItemRef;
-        lineModel.Quantity = line.Quantity;
-        lineModel.Other1 = line.Other1;
-        lineModel.Other2 = line.Other2;
-        lineModel.ServiceDate = line.ServiceDate;
-        lineModel.ORRatePriceLevelRate = line.ORRatePriceLevelRate;
-
-        sqlLineItems.Add(lineModel);
+        lineModelsList.Add(lineModel);
       }
-      return sqlLineItems;
+      return lineModelsList;
     }
   }
 }
