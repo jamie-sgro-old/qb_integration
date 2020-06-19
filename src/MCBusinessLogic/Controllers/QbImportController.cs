@@ -93,8 +93,12 @@ namespace MCBusinessLogic.Controllers {
     public IInvoiceHeaderModel MapHeader(IClientInvoiceHeaderModel preHeader) {
       var headerModel = McFactory.CreateInvoiceHeaderModel();
 
+      if (!(preHeader is IClientInvoiceHeaderModel)) {
+        throw new ArgumentNullException(nameof(preHeader), "Could not map header items from Csv Model.");
+      }
+
       // Reflection: i.e. headerModel.someProperty = preHeader.someProperty;
-      foreach (var prop in preHeader.GetType().GetProperties()) {
+      foreach (var prop in typeof(IClientInvoiceHeaderModel).GetProperties()) {
         var propStr = prop.Name;
         headerModel.GetType().GetProperty(propStr)
           .SetValue(headerModel, preHeader.GetType().GetProperty(propStr).GetValue(preHeader));

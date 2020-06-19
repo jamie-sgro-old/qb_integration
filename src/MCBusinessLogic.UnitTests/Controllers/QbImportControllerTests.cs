@@ -484,6 +484,38 @@ namespace MCBusinessLogic.UnitTests.Controllers {
 
     #endregion Import 3
 
+
+    #region MapHeader
+
+    [TestMethod]
+    public void MapHeader_SingleData() {
+      var qbi = new QbImportController("QbFilePath", null, null);
+      var csvModel = BaseCsvModel();
+
+      var res = qbi.MapHeader(csvModel);
+
+      Assert.AreEqual("class1", res.ClassRefFullName);
+      Assert.AreEqual("cx1", res.CustomerRefFullName);
+      Assert.AreEqual("template1", res.TemplateRefFullName);
+      Assert.AreEqual(null, res.TxnDate);
+      Assert.AreEqual(null, res.TermsRefFullName);
+    }
+
+    [TestMethod]
+    public void MapHeader_ExtendedInterface_MockExtensionProps_NotIncluded() {
+      var qbi = new QbImportController("QbFilePath", null, null);
+      var csvModel = new MockInvoiceHeaderModel {
+        ClassRefFullName = "class1",
+        Mock = "mock1"
+      };
+
+      var res = qbi.MapHeader(csvModel);
+
+      Assert.AreEqual("class1", res.ClassRefFullName);
+    }
+
+    #endregion MapHeader
+
     private CsvModel BaseCsvModel() {
       return new CsvModel {
         ClassRefFullName = "class1",
@@ -493,5 +525,22 @@ namespace MCBusinessLogic.UnitTests.Controllers {
         Other1 = "other1"
       };
     }
+  }
+
+  internal class MockInvoiceHeaderModel : IMockInvoiceHeaderModel {
+    public string ClassRefFullName { get; set; }
+    public string CustomerRefFullName { get; set; }
+    public string TemplateRefFullName { get; set; }
+    public string TermsRefFullName { get; set; }
+    public DateTime? TxnDate { get; set; }
+    public string BillAddress { get; set; }
+    public string ShipAddress { get; set; }
+    public string PONumber { get; set; }
+    public string Other { get; set; }
+    public string Mock { get; set; }
+  }
+
+  internal interface IMockInvoiceHeaderModel : IClientInvoiceHeaderModel {
+    string Mock { get; set; }
   }
 }
