@@ -20,8 +20,15 @@ namespace WPFDesktopUI.Models.SidePaneModels.Attributes {
     /// <param name="key">The dictionary Key for a QbAttribute</param>
     /// <returns>String for the data in a cell/a constant value</returns>
     public override dynamic GetRow(DataRow row) {
-      if (!string.IsNullOrEmpty(ComboBox.SelectedItem)) {
-        return Convert.ToString(ComboBox.SelectedItem);
+
+      try {
+        if (!string.IsNullOrEmpty(ComboBox.SelectedItem)) {
+          return Convert.ToString(ComboBox.SelectedItem);
+        }
+      } catch (FormatException e) {
+        throw new FormatException(e.Message +
+          "\nThis error occured with the following text: '" +
+          ComboBox.SelectedItem + "'");
       }
 
       return null;

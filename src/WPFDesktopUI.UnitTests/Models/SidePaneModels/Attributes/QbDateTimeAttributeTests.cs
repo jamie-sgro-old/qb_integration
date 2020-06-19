@@ -171,7 +171,7 @@ namespace WPFDesktopUI.UnitTests.Models.SidePaneModels.Attributes {
     }
 
     [TestMethod]
-    [ExpectedException(typeof(FormatException))]
+    [ExpectedException(typeof(ArgumentException))]
     public void GetRow_BadPayload_Error() {
       var dtAttr = new QbDateTimeAttribute();
       dtAttr.Payload = "bad datetime string";

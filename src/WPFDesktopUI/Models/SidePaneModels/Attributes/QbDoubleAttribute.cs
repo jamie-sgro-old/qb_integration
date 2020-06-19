@@ -20,14 +20,18 @@ namespace WPFDesktopUI.Models.SidePaneModels.Attributes {
     public override dynamic GetRow(DataRow row) {
       var colName = ComboBox.SelectedItem;
 
-      if (!string.IsNullOrEmpty(colName)) {
-        // TODO: Add error checking here:
-        return Convert.ToDouble(row[colName]);
-      }
+      try {
+        if (!string.IsNullOrEmpty(colName)) {
+          return Convert.ToDouble(row[colName]);
+        }
 
-      if (!string.IsNullOrEmpty(Payload)) {
-        // TODO: Add error checking here:
-        return Convert.ToDouble(Payload);
+        if (!string.IsNullOrEmpty(Payload)) {
+          return Convert.ToDouble(Payload);
+        }
+      } catch (FormatException e) {
+        throw new FormatException(e.Message +
+          "\nThis error occured in Column: '" + colName +
+          "'\nWith the text: '" + row[colName] + "'");
       }
 
       return null;

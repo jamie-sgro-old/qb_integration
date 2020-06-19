@@ -26,12 +26,18 @@ namespace WPFDesktopUI.Models.SidePaneModels.Attributes {
     public virtual dynamic GetRow(DataRow row) {
       var colName = ComboBox.SelectedItem;
 
-      if (!string.IsNullOrEmpty(colName)) {
-        return Convert.ToString(row[colName]);
-      }
+      try {
+        if (!string.IsNullOrEmpty(colName)) {
+          return Convert.ToString(row[colName]);
+        }
 
-      if (!string.IsNullOrEmpty(Payload)) {
-        return Convert.ToString(Payload);
+        if (!string.IsNullOrEmpty(Payload)) {
+          return Convert.ToString(Payload);
+        }
+      } catch (FormatException e) {
+        throw new FormatException(e.Message +
+          "\nThis error occured in Column: '" + colName +
+          "'\nWith the text: '" + row[colName] + "'");
       }
 
       return null;
