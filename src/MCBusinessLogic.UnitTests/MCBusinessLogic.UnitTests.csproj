@@ -104,6 +104,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\QbImportControllerTests.cs" />
+    <Compile Include="Models\ClientInvoiceLineItemModelTests.cs" />
+    <Compile Include="Models\ClientInvoiceHeaderModelTests.cs" />
+    <Compile Include="Models\CsvModelTests.cs" />
+    <Compile Include="Models\PropStr.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
