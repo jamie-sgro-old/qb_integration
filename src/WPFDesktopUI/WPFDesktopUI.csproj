@@ -128,14 +128,17 @@
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Models\QuickBooksModels\Interfaces\IQuickBooksModel.cs" />
     <Compile Include="Models\QuickBooksModels\QuickBooksModel.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQBDropDownAttribute.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\Interfaces\Payloads\IDateTimePayload.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQbComboBox.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQbDateTimeAttribute.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQbStringAttribute.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\Interfaces\Payloads\IDropDownPayload.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\Interfaces\Payloads\IStringPayload.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\QbAbstractAttribute.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\QbDateTimeAttribute.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\QbDoubleAttribute.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\QbDropDownAttribute.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\QbNullAttribute.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\QbStringAttribute.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQbAttribute.cs" />
