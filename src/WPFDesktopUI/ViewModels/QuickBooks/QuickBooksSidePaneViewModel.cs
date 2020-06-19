@@ -36,6 +36,8 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 
       QbspModel.AttrAdd(Factory.CreateQbDropDownAttribute(), "TermsRefFullName", "TERMS");
 
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "PONumber", "P.O. NUMBER");
+
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(),
         "Other", stn.QbInvHasHeaderOther() ? stn.QbInvHeaderOtherName() : "OTHER");
 

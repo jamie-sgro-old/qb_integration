@@ -16,6 +16,7 @@ namespace MCBusinessLogic.Models {
     public DateTime? TxnDate { get; set; }
     public string BillAddress { get; set; }
     public string ShipAddress { get; set; }
+    public string PONumber { get; set; }
     public string Other { get; set; }
 
     #endregion Header

@@ -9,6 +9,7 @@ namespace MCBusinessLogic.Models {
     DateTime? TxnDate { get; set; }
     string BillAddress { get; set; }
     string ShipAddress { get; set; }
+    string PONumber { get; set; }
     string Other { get; set; }
   }
 }
