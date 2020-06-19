@@ -12,6 +12,7 @@ namespace MCBusinessLogic.Models {
     public string CustomerRefFullName { get; set; }
     public string ClassRefFullName { get; set; }
     public string TemplateRefFullName { get; set; }
+    public string TermsRefFullName { get; set; }
     public DateTime? TxnDate { get; set; }
     public string BillAddress { get; set; }
     public string ShipAddress { get; set; }
