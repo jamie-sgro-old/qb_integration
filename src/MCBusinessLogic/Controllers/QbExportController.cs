@@ -14,5 +14,11 @@ namespace MCBusinessLogic.Controllers {
         return invoiceImporter.GetTemplateNamesList();
       }
     }
+
+    public List<string> GetTermsNamesList() {
+      using (var invoiceImporter = McFactory.CreateInvoiceImporter(QbFilePath)) {
+        return invoiceImporter.GetTermsNamesList();
+      }
+    }
   }
 }

@@ -17,6 +17,8 @@ namespace QBConnect {
 
     List<string> GetInvoiceIdList();
 
+    List<string> GetTermsNamesList();
+
     void Dispose();
   }
 }

@@ -79,6 +79,10 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       try {
         var templateList = await InitTemplateRefFullName();
         QbspModel.Attr["TemplateRefFullName"].ComboBox.ItemsSource = templateList;
+
+        var termsList = await InitTermsRefFullName();
+        //QbspModel.Attr["TermsRef"].
+
         SessionEnd();
       } catch (Exception e) {
         ConsoleMessage = ErrHandler.DelegateHandle(e);
@@ -112,6 +116,22 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       // Add blank to start
       templates.Insert(0, "");
       return templates;
+    }
+
+    /// <summary>
+    /// Returns a list of terms (i.e. net 30) used in QuickBooks based on their name
+    /// </summary>
+    /// <param name="qbFilePath">The full path for the QuickBooks file</param>
+    /// <returns></returns>
+    private static async Task<List<string>> InitTermsRefFullName() {
+      IQbExportController qbExportController = Factory.CreateQbExportController();
+      var terms = await Task.Run(() => {
+        return qbExportController.GetTermsNamesList();
+      });
+
+      // Add blank to start
+      terms.Insert(0, "");
+      return terms;
     }
 
     private static List<string> GetCsvHeaders(DataTable dt) {

@@ -161,6 +161,12 @@ namespace QBConnect {
       return templateNamesList;
     }
 
+    public List<string> GetTermsNamesList() {
+      var termsQuery = new TermsQuery(SessionManager);
+      List<string> termsNamesList = termsQuery.GetList<IORTermsRetList>();
+      return termsNamesList;
+    }
+
 
 
     /// <summary>

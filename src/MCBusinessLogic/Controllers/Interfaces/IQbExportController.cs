@@ -9,5 +9,7 @@ namespace MCBusinessLogic.Controllers.Interfaces {
     string QbFilePath { get; set; }
 
     List<string> GetTemplateNamesList();
+
+    List<string> GetTermsNamesList();
   }
 }
