@@ -234,6 +234,38 @@ namespace QBConnect.Models {
     public DateTime? TxnDate { get; set; }
 
     /// <summary>
+    /// Whatever address you specify in this aggregate must not result in an address
+    /// greater than 5 lines, otherwise you’ll get a runtime error, because QuickBooks
+    /// doesn’t support addresses more than 5 lines. There are two ways to specify an
+    /// address within this aggregate: Using Addr1 through Addr3 along with the other
+    /// possible aggregate elements, such as City, State, Postalcode.Using Addr1, Addr2,
+    /// Addr3, Addr4, and Addr5 to fully specify the address. If you use this so
+    /// called “address block” approach, you cannot use any other address elements,
+    /// such as City, State, etc. (Note: this approach is not valid for
+    /// EmployeeAdd/Mod/Query) If you use the address block approach above, the lines
+    /// Addr1…Addr5 are each printed as a separate line on the transaction, and the values
+    /// are returned in the Ret object under the aggregate ShipAddressBlock or
+    /// BillAddressBlock.
+    /// </summary>
+    public string BillAddress { get; set; }
+
+    /// <summary>
+    /// Whatever address you specify in this aggregate must not result in an address
+    /// greater than 5 lines, otherwise you’ll get a runtime error, because QuickBooks
+    /// doesn’t support addresses more than 5 lines. There are two ways to specify an
+    /// address within this aggregate: Using Addr1 through Addr3 along with the other
+    /// possible aggregate elements, such as City, State, Postalcode.Using Addr1, Addr2,
+    /// Addr3, Addr4, and Addr5 to fully specify the address. If you use this so
+    /// called “address block” approach, you cannot use any other address elements,
+    /// such as City, State, etc. (Note: this approach is not valid for
+    /// EmployeeAdd/Mod/Query) If you use the address block approach above, the lines
+    /// Addr1…Addr5 are each printed as a separate line on the transaction, and the values
+    /// are returned in the Ret object under the aggregate ShipAddressBlock or
+    /// BillAddressBlock.
+    /// </summary>
+    public string ShipAddress { get; set; }
+
+    /// <summary>
     /// Other, Other1, and Other2 are standard QuickBooks custom fields available to
     /// transactions. The Other field is a transaction-level field, like the FOB field,
     /// PO Number field, and so forth. This field appears only once for the transaction:

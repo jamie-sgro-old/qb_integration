@@ -29,6 +29,10 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 
       QbspModel.AttrAdd(Factory.CreateQbDateTimeAttribute(), "TxnDate", "DATE");
 
+      QbspModel.AttrAdd(Factory.CreateQbDateTimeAttribute(), "BillAddress", "BILL ADDRESS");
+
+      QbspModel.AttrAdd(Factory.CreateQbDateTimeAttribute(), "ShipAddress", "SHIP ADDRESS");
+
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(),
         "Other", stn.QbInvHasHeaderOther() ? stn.QbInvHeaderOtherName() : "OTHER");
 
