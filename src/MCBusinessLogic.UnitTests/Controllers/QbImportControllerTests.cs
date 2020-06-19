@@ -504,9 +504,11 @@ namespace MCBusinessLogic.UnitTests.Controllers {
     [TestMethod]
     public void MapHeader_ExtendedInterface_MockExtensionProps_NotIncluded() {
       var qbi = new QbImportController("QbFilePath", null, null);
+      // Reflection off of this property instead of the interface would
+      // fail since Mock isn't a property in IInvoiceHeaderModel
       var csvModel = new MockInvoiceHeaderModel {
         ClassRefFullName = "class1",
-        Mock = "mock1"
+        Mock = "mock1" // This prop should be ignored
       };
 
       var res = qbi.MapHeader(csvModel);
@@ -515,6 +517,73 @@ namespace MCBusinessLogic.UnitTests.Controllers {
     }
 
     #endregion MapHeader
+
+
+    #region MapLineItems
+
+    [TestMethod]
+    public void MapLineItems_SingleData() {
+      var qbi = new QbImportController("QbFilePath", null, null);
+      var csvModels = new List<ICsvModel> {
+        BaseCsvModel()
+      };
+
+      var res = qbi.MapLineItems(csvModels);
+
+      Assert.IsTrue(res.Count == 1);
+      Assert.AreEqual("item1", res[0].ItemRef);
+      Assert.AreEqual("other1", res[0].Other1);
+      Assert.AreEqual(null, res[0].Quantity);
+      Assert.AreEqual(null, res[0].Amount);
+    }
+
+    [TestMethod]
+    public void MapLineItems_2SameData() {
+      var qbi = new QbImportController("QbFilePath", null, null);
+      var csvModels = new List<ICsvModel> {
+        BaseCsvModel(),
+        BaseCsvModel()
+      };
+
+      var res = qbi.MapLineItems(csvModels);
+
+      Assert.IsTrue(res.Count == 2);
+      Assert.AreEqual("item1",  res[0].ItemRef);
+      Assert.AreEqual("other1", res[0].Other1);
+      Assert.AreEqual(null,     res[0].Quantity);
+      Assert.AreEqual(null,     res[0].Amount);
+      Assert.AreEqual("item1",  res[1].ItemRef);
+      Assert.AreEqual("other1", res[1].Other1);
+      Assert.AreEqual(null,     res[1].Quantity);
+      Assert.AreEqual(null,     res[1].Amount);
+
+    }
+
+    [TestMethod]
+    public void MapLineItems_2DifferentData() {
+      var qbi = new QbImportController("QbFilePath", null, null);
+      var csvModels = new List<ICsvModel> {
+        BaseCsvModel(),
+        BaseCsvModel()
+      };
+      csvModels[1].PONumber = "po2"; // Ignored since not in IClientInvoiceLineItemModel
+      csvModels[1].Quantity = 2;
+
+      var res = qbi.MapLineItems(csvModels);
+
+      Assert.IsTrue(res.Count == 2);
+      Assert.AreEqual("item1", res[0].ItemRef);
+      Assert.AreEqual("other1", res[0].Other1);
+      Assert.AreEqual(null, res[0].Quantity);
+      Assert.AreEqual(null, res[0].Amount);
+      Assert.AreEqual("item1", res[1].ItemRef);
+      Assert.AreEqual("other1", res[1].Other1);
+      Assert.AreEqual(2, res[1].Quantity);
+      Assert.AreEqual(null, res[1].Amount);
+
+    }
+
+    #endregion MapLineItems
 
     private CsvModel BaseCsvModel() {
       return new CsvModel {
@@ -525,6 +594,11 @@ namespace MCBusinessLogic.UnitTests.Controllers {
         Other1 = "other1"
       };
     }
+  }
+
+
+  internal interface IMockInvoiceHeaderModel : IClientInvoiceHeaderModel {
+    string Mock { get; set; }
   }
 
   internal class MockInvoiceHeaderModel : IMockInvoiceHeaderModel {
@@ -540,7 +614,4 @@ namespace MCBusinessLogic.UnitTests.Controllers {
     public string Mock { get; set; }
   }
 
-  internal interface IMockInvoiceHeaderModel : IClientInvoiceHeaderModel {
-    string Mock { get; set; }
-  }
 }

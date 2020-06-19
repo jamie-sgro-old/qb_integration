@@ -120,10 +120,11 @@ namespace MCBusinessLogic.Controllers {
     public List<IInvoiceLineItemModel> MapLineItems(List<ICsvModel> lineItems) {
       var lineModelsList = new List<IInvoiceLineItemModel>();
       foreach (var line in lineItems) {
-        // Check if upcast can be done
+
         if (!(line is IClientInvoiceLineItemModel)) {
           throw new ArgumentNullException(nameof(lineItems), "Could not map line items from Csv Model.");
         }
+
         var lineModel = McFactory.CreateInvoiceLineItemModel();
         
         // Reflection: i.e. lineModel.someProperty = line.someProperty;
