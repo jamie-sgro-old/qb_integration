@@ -17,6 +17,10 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     public QuickBooksSidePaneViewModel() {
       QbspModel = Factory.CreateQuickBooksSidePaneModel();
 
+      /*** HEADER ***/
+      // Add a corresponding property to IClientInvoiceHeaderModel (and it's children)
+      // Ensure a corresponding method exists in QBConnect.Classes.HeaderItem
+
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "CustomerRefFullName", "CUSTOMER:JOB");
       QbspModel.Attr["CustomerRefFullName"].IsMandatory = true;
 
@@ -41,12 +45,18 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(),
         "Other", stn.QbInvHasHeaderOther() ? stn.QbInvHeaderOtherName() : "OTHER");
 
+      /*** LINES ***/
+      // Add a corresponding property to IClientInvoiceLineItemModel (and it's children)
+      // Ensure a corresponding method exists in QBConnect.Classes.LineItem
+
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "ItemRef", "ITEM");
       QbspModel.Attr["ItemRef"].IsMandatory = true;
 
       QbspModel.AttrAdd(Factory.CreateQbDoubleAttribute(), "ORRatePriceLevelRate", "RATE");
 
       QbspModel.AttrAdd(Factory.CreateQbDoubleAttribute(), "Quantity", "QUANTITY");
+
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "Desc", "DESCRIPTION");
 
       QbspModel.AttrAdd(Factory.CreateQbDateTimeAttribute(), "ServiceDate", "SERVICE DATE");
 

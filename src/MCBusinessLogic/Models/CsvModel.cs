@@ -27,6 +27,7 @@ namespace MCBusinessLogic.Models {
     public string ItemRef { get; set; }
     public double? ORRatePriceLevelRate { get; set; }
     public double? Quantity { get; set; }
+    public string Desc { get; set; }
     public DateTime? ServiceDate { get; set; }
     public string Other1 { get; set; }
     public string Other2 { get; set; }
