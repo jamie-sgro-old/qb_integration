@@ -89,6 +89,8 @@ namespace MCBusinessLogic.Controllers {
       headerModel.CustomerRefFullName = preHeader.CustomerRefFullName;
       headerModel.TemplateRefFullName = preHeader.TemplateRefFullName;
       headerModel.TxnDate = preHeader.TxnDate;
+      headerModel.BillAddress = preHeader.BillAddress;
+      headerModel.ShipAddress = preHeader.ShipAddress;
       headerModel.Other = preHeader.Other;
 
       return headerModel;
