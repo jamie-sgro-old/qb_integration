@@ -7,6 +7,7 @@ using Caliburn.Micro;
 using MCBusinessLogic.Controllers;
 using MCBusinessLogic.Controllers.Interfaces;
 using WPFDesktopUI.Models;
+using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 using stn = WPFDesktopUI.Controllers.SettingsController;
 using ErrHandler = WPFDesktopUI.Controllers.QbImportExceptionHandler;
@@ -32,6 +33,8 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "BillAddress", "BILL ADDRESS");
 
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "ShipAddress", "SHIP ADDRESS");
+
+      QbspModel.AttrAdd(Factory.CreateQbDropDownAttribute(), "TermsRefFullName", "TERMS");
 
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(),
         "Other", stn.QbInvHasHeaderOther() ? stn.QbInvHeaderOtherName() : "OTHER");
@@ -77,11 +80,20 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     public async void QbExport() {
       SessionStart();
       try {
+        // Update template list from QB
         var templateList = await InitTemplateRefFullName();
         QbspModel.Attr["TemplateRefFullName"].ComboBox.ItemsSource = templateList;
+        QbspModel.Attr["TemplateRefFullName"].ComboBox.IsEnabled = true;
 
+        // Update terms list from QB
         var termsList = await InitTermsRefFullName();
-        //QbspModel.Attr["TermsRef"].
+        IQBDropDownAttribute dropAttr = (QbspModel.Attr["TermsRefFullName"] as IQBDropDownAttribute);
+        if (dropAttr != null) {
+          dropAttr.DropDownComboBox.ItemsSource = termsList;
+          dropAttr.DropDownComboBox.IsEnabled = true;
+
+        }
+
 
         SessionEnd();
       } catch (Exception e) {
@@ -98,7 +110,6 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     }
 
     private void SessionEnd() {
-      QbspModel.Attr["TemplateRefFullName"].ComboBox.IsEnabled = true;
       ConsoleMessage = "Query successfully completed";
     }
 

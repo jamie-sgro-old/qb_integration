@@ -72,6 +72,10 @@ namespace WPFDesktopUI.ViewModels {
       return new QbDoubleAttribute();
     }
 
+    public static IQBDropDownAttribute CreateQbDropDownAttribute() {
+      return new QbDropDownAttribute(CreateQbComboBox);
+    }
+
     public static IQbAttribute CreateQbNullAttribute() {
       return new QbNullAttribute();
     }

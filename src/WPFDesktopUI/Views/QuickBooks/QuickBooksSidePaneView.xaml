@@ -102,14 +102,27 @@
                                                  Grid.Column="2"
                                                  IsEnabled="{Binding Value.ComboBox.IsBlank}"
                                                  Visibility="{Binding Value.HasStringPayload, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
+                                                 ToolTipService.ShowOnDisabled = "True"
                                                  Style="{StaticResource QbSidePaneValue}" >
                                         </TextBox>
                                         <DatePicker SelectedDate="{Binding Value.Payload}"
                                                     Grid.Column="2"
                                                     IsEnabled="{Binding Value.ComboBox.IsBlank}"
                                                     Visibility="{Binding Value.HasDateTimePayload, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
+                                                    ToolTipService.ShowOnDisabled = "True"
                                                     Style="{StaticResource QbSidePaneValue}" >
                                         </DatePicker>
+                                        <ComboBox ItemsSource="{Binding Value.DropDownComboBox.ItemsSource}"
+                                                  SelectedItem="{Binding Value.DropDownComboBox.SelectedItem}"
+                                                  Grid.Column="2"
+                                                  Visibility="{Binding Value.HasDropDownPayload, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
+                                                  Style="{StaticResource QbSidePaneValue}"
+                                                  ToolTipService.ShowOnDisabled = "True"
+                                                  IsEnabled="{Binding Value.DropDownComboBox.IsEnabled}" >
+                                            <ComboBox.ToolTip>
+                                                <TextBlock Text="{Binding Value.ToolTip}" />
+                                            </ComboBox.ToolTip>
+                                        </ComboBox>
                                     </Grid>
 
 
