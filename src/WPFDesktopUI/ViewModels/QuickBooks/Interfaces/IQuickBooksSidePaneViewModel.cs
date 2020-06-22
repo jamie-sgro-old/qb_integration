@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using Caliburn.Micro;
 using WPFDesktopUI.Models;
+using WPFDesktopUI.Models.SidePaneModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels.QuickBooks {

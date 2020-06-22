@@ -126,6 +126,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\QbImportExceptionHandler.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Models\CustomerModels\Interfaces\ICustomerModel.cs" />
     <Compile Include="Models\QuickBooksModels\Interfaces\IQuickBooksModel.cs" />
     <Compile Include="Models\QuickBooksModels\QuickBooksModel.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQBDropDownAttribute.cs" />
@@ -143,7 +144,7 @@
     <Compile Include="Models\SidePaneModels\Attributes\QbStringAttribute.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQbAttribute.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\QbComboBox.cs" />
-    <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQuickBooksSidePaneModel.cs" />
+    <Compile Include="Models\SidePaneModels\Interfaces\IQuickBooksSidePaneModel.cs" />
     <Compile Include="Models\SidePaneModels\QuickBooksSidePaneModel.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\Factory.cs" />

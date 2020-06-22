@@ -8,7 +8,7 @@ using MCBusinessLogic.Controllers;
 using MCBusinessLogic.Controllers.Interfaces;
 using WPFDesktopUI.Models;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
-using WPFDesktopUI.ViewModels.Interfaces;
+using WPFDesktopUI.Models.SidePaneModels.Interfaces;
 using stn = WPFDesktopUI.Controllers.SettingsController;
 using ErrHandler = WPFDesktopUI.Controllers.QbImportExceptionHandler;
 
