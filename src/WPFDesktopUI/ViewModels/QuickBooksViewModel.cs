@@ -31,15 +31,15 @@ namespace WPFDesktopUI.ViewModels {
 
     public async Task QbInteract() {
       try {
-        var cxs = CustomerViewModel.Cxs;
 				SessionStart();
 
         var attr = QuickBooksSidePaneViewModel.QbspModel.Attr;
         IQuickBooksModel qbModel = Factory.CreateQuickBooksModel(attr);
 
+        var cxs = CustomerViewModel.Cxs;
 
         await Task.Run(() => {
-          return qbModel.QbImport(ImportViewModel.CsvData, null);
+          return qbModel.QbImport(ImportViewModel.CsvData, cxs);
         });
 
         ConsoleMessage = "Import has successfully completed";

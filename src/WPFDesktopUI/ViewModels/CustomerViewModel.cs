@@ -11,7 +11,7 @@ using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
-  public class CustomerViewModel : Screen, ICustomerViewModel, INotifyPropertyChanged {
+  public class CustomerViewModel : Screen, ICustomerViewModel {
     public CustomerViewModel() {
       CustomerModel = Factory.CreateCustomerModel();
 
@@ -40,8 +40,6 @@ namespace WPFDesktopUI.ViewModels {
     public DataGrid CustomerGrid { get; set; }
     public static List<ICustomer> Cxs { get; set; }
 
-
-    public event PropertyChangedEventHandler PropertyChanged;
 
     public void OnSelected() {
     }

@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
 
 namespace WPFDesktopUI.Models.CustomerModels {
-  class Customer : ICustomer, INotifyPropertyChanged {
+  class Customer : ICustomer {
     public string Name { get; set; }
     public string PoNumber { get; set; }
     public string TermsRefFullName { get; set; }
     public bool IsBlackListed { get; set; }
 
-    public event PropertyChangedEventHandler PropertyChanged;
   }
 }

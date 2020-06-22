@@ -18,8 +18,8 @@ namespace WPFDesktopUI.Models {
       _qbImportController = qbImportController;
     }
 
-
-
+    
+    
     private Dictionary<string, IQbAttribute> _attr { get; }
     private IQbImportController _qbImportController { get; }
 
@@ -30,22 +30,11 @@ namespace WPFDesktopUI.Models {
 
       var csvModels = MapDataTableToModel(dt);
 
-
-      // Overwrite values based on Customer Rules
-      foreach (var cx in cxList) {
-        foreach(var row in csvModels) {
-          if (row.CustomerRefFullName == cx.Name) {
-            row.PONumber = cx.PoNumber;
-            row.TermsRefFullName = cx.TermsRefFullName;
-          }
-        }
-      }
-
-
+      var appliedCsvModels = ApplyCxRules(csvModels, cxList);
 
       await Task.Run(() => {
         var qbImportController = _qbImportController;
-        qbImportController.Import(csvModels);
+        qbImportController.Import(appliedCsvModels);
       });
     }
 
@@ -91,6 +80,20 @@ namespace WPFDesktopUI.Models {
       }
 
       return convertedList.ToList();
+    }
+
+    private List<ICsvModel> ApplyCxRules(List<ICsvModel> csvModels, List<ICustomer> cxList) {
+      // Overwrite values based on Customer Rules
+      foreach (var cx in cxList) {
+        foreach (var row in csvModels) {
+          if (row.CustomerRefFullName == cx.Name) {
+            row.PONumber = cx.PoNumber;
+            row.TermsRefFullName = cx.TermsRefFullName;
+          }
+        }
+      }
+
+      return csvModels;
     }
   }
 }
