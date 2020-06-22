@@ -9,6 +9,7 @@ using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.Models;
 using WPFDesktopUI.Controllers;
 using WPFDesktopUI.Models;
+using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.Models.SidePaneModels.Attributes;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
@@ -34,7 +35,7 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     public static ICustomerViewModel CreateCustomerViewModel() {
-      throw new NotImplementedException();
+      return new CustomerViewModel();
     }
 
     #endregion View Models
@@ -50,7 +51,7 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     public static ICustomerModel CreateCustomerModel() {
-      throw new NotImplementedException();
+      return new CustomerModel();
     }
 
     #endregion Screen Models

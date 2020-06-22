@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using WPFDesktopUI.Models;
+using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
   public class ShellViewModel : Conductor<object> {
@@ -16,18 +17,22 @@ namespace WPFDesktopUI.ViewModels {
 		public ShellViewModel() {
 			ImportViewModel = Factory.CreateImportViewModel();
 			QuickBooksViewModel = Factory.CreateQuickBooksViewModel();
-		}
+      CustomerViewModel = Factory.CreateCustomerViewModel();
+    }
 
 		public IImportViewModel ImportViewModel { get; }
 		public IQuickBooksViewModel QuickBooksViewModel { get; }
+		public ICustomerViewModel CustomerViewModel { get; }
 
     public bool TabImportIsSelected { get; set; } = true;
     public bool TabQuickBooksIsSelected { get; set; } = false;
 
+    public bool TabCustomerIsSelected { get; set; } = false;
+
 		/// <summary>
 		/// Event triggers when a tab is selected in the ShellView
 		/// </summary>
-    public void TabChange() {
+		public void TabChange() {
       if (TabImportIsSelected) {
         ImportViewModel.OnSelected();
 				return;
@@ -37,7 +42,12 @@ namespace WPFDesktopUI.ViewModels {
         QuickBooksViewModel.OnSelected();
 				return;
       }
-    }
+
+      if (TabCustomerIsSelected) {
+        CustomerViewModel.OnSelected();
+        return;
+      }
+		}
 
     public void MenuItemClose() {
 			Application.Current.Shutdown();

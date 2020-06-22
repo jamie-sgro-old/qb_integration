@@ -25,20 +25,18 @@ namespace WPFDesktopUI.Models {
 
 
 
-    public async Task QbImport(DataTable dt, ICustomerModel cxModel) {
+    public async Task QbImport(DataTable dt, List<ICustomer> cxList) {
       ValidateDt(dt);
 
       var csvModels = MapDataTableToModel(dt);
 
 
       // Overwrite values based on Customer Rules
-      var cxs = cxModel.Cxs;
-
-      foreach (var name in cxs) {
+      foreach (var cx in cxList) {
         foreach(var row in csvModels) {
-          if (row.CustomerRefFullName == name.Key) {
-            row.PONumber = cxs["CLASS"].PoNumber;
-            row.TermsRefFullName = cxs["CLASS"].TermsRefFullName;
+          if (row.CustomerRefFullName == cx.Name) {
+            row.PONumber = cx.PoNumber;
+            row.TermsRefFullName = cx.TermsRefFullName;
           }
         }
       }

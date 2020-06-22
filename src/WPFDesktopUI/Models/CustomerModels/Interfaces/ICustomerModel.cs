@@ -8,7 +8,6 @@ namespace WPFDesktopUI.Models.CustomerModels.Interfaces {
   public interface ICustomerModel {
 
     IDb Db { get; }
-    Dictionary<string, ICustomer> Cxs { get; set; }
 
   }
 }

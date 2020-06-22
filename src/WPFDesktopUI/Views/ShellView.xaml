@@ -55,6 +55,11 @@
                 <ContentControl x:Name="QuickBooksViewModel" />
                 <!--<NewUserControl:QuickBooksView/>-->
             </TabItem>
+            <TabItem Header="Customer"
+                     IsSelected="{Binding TabCustomerIsSelected}">
+                <ContentControl x:Name="CustomerViewModel" />
+                <!--<NewUserControl:CustomerViewModel/>-->
+            </TabItem>
         </TabControl>
     </DockPanel>
 </Window>

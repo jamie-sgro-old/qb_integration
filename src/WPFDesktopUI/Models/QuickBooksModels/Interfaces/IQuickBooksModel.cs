@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using MCBusinessLogic.Controllers.Interfaces;
@@ -7,6 +8,6 @@ using WPFDesktopUI.Models.CustomerModels.Interfaces;
 
 namespace WPFDesktopUI.Models {
   public interface IQuickBooksModel {
-    Task QbImport(DataTable dt, ICustomerModel cx);
+    Task QbImport(DataTable dt, List<ICustomer> cxList);
   }
 }
