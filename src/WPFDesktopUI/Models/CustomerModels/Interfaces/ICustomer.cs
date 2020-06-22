@@ -5,10 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace WPFDesktopUI.Models.CustomerModels.Interfaces {
-  public interface ICustomerModel {
+  public interface ICustomer {
 
-    IDb Db { get; }
-    Dictionary<string, ICustomer> Cxs { get; set; }
+    string Name { get; set; }
+
+    string PoNumber { get; set; }
+
+    string TermsRefFullName { get; set; }
 
   }
 }

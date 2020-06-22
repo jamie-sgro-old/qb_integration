@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using WPFDesktopUI.ViewModels.QuickBooks;
 using WPFDesktopUI.Models;
+using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
@@ -36,7 +37,7 @@ namespace WPFDesktopUI.ViewModels {
         IQuickBooksModel qbModel = Factory.CreateQuickBooksModel(attr);
 
         await Task.Run(() => {
-          return qbModel.QbImport(ImportViewModel.CsvData);
+          return qbModel.QbImport(ImportViewModel.CsvData, new CustomerModel());
         });
 
         ConsoleMessage = "Import has successfully completed";
