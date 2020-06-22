@@ -48,7 +48,7 @@
                     </ProgressBar>
                 </Grid>
 
-                <Button x:Name="QbExport"
+                <Button x:Name="QbInteract"
                         Grid.Row="2"
                         Grid.Column="1" 
                         Style="{StaticResource ButtonClose}"

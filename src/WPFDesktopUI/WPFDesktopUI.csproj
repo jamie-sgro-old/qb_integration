@@ -147,9 +147,11 @@
     <Compile Include="Models\SidePaneModels\QuickBooksSidePaneModel.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\Factory.cs" />
+    <Compile Include="ViewModels\Interfaces\ICustomerViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IImportViewModel.cs" />
     <Compile Include="ViewModels\ImportViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IMainTab.cs" />
+    <Compile Include="ViewModels\Interfaces\IQbInteractable.cs" />
     <Compile Include="ViewModels\Interfaces\IQuickBooksViewModel.cs" />
     <Compile Include="ViewModels\PreferencesViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesCsvImportViewModel.cs" />

@@ -7,16 +7,9 @@ using WPFDesktopUI.ViewModels.Interfaces;
 using WPFDesktopUI.ViewModels.QuickBooks;
 
 namespace WPFDesktopUI.ViewModels {
-  public interface IQuickBooksViewModel : IMainTab {
+  public interface IQuickBooksViewModel : IMainTab, IQbInteractable {
     IQuickBooksSidePaneViewModel QuickBooksSidePaneViewModel { get; }
-    string ConsoleMessage { get; set; }
-    bool CanBtnQbImport { get; set; }
-    bool QbProgressBarIsVisible { get; set; }
-
-
-
+    
     event PropertyChangedEventHandler PropertyChanged;
-    void OnSelected();
-    Task BtnQbImport();
   }
 }

@@ -17,7 +17,7 @@ namespace WPFDesktopUI.ViewModels {
 
     public IQuickBooksSidePaneViewModel QuickBooksSidePaneViewModel { get; }
     public string ConsoleMessage { get; set; }
-    public bool CanBtnQbImport { get; set; } = true;
+    public bool CanQbInteract { get; set; } = true;
     public bool QbProgressBarIsVisible { get; set; } = false;
 
 
@@ -28,7 +28,7 @@ namespace WPFDesktopUI.ViewModels {
       QuickBooksSidePaneViewModel.OnSelected();
     }
 
-    public async Task BtnQbImport() {
+    public async Task QbInteract() {
       try {
 				SessionStart();
 
@@ -48,13 +48,13 @@ namespace WPFDesktopUI.ViewModels {
 		}
 
     private void SessionStart() {
-      CanBtnQbImport = false;
+      CanQbInteract = false;
       QbProgressBarIsVisible = true;
       ConsoleMessage = "Importing, please stand by...";
     }
 
     private void SessionEnd() {
-      CanBtnQbImport = true;
+      CanQbInteract = true;
       QbProgressBarIsVisible = false;
     }
 	}

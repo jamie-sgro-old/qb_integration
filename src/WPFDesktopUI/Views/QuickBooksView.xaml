@@ -50,7 +50,7 @@
             <!-- Row 8 -->
             <!-- Row 9 -->
             <!-- Row 10 -->
-            <Button x:Name="BtnQbImport" 
+            <Button x:Name="QbInteract" 
                     Grid.Row="10"
                     Grid.Column="0"
                     >
