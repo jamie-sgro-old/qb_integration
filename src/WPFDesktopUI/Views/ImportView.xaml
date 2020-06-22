@@ -53,19 +53,9 @@
                     Grid.Column="1">
                 Import to QB
             </Button>
-            <!--<Button x:Name="LoadPageOne"
-                    Grid.Row="3"
-                    Grid.Column="2">
-                Load Page One
-            </Button>
-            <ContentControl x:Name="ActiveItem"
-                            Grid.Row="3"
-                            Grid.Column="4"
-                            Grid.ColumnSpan="2">
-            </ContentControl>-->
 
             <!-- Row 4 -->
-            <DataGrid x:Name="CsvData"
+            <DataGrid x:Name="CsvDataView"
                       Grid.Row="4"
                       Grid.Column="0"
                       Grid.ColumnSpan="3"

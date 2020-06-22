@@ -1,110 +1,51 @@
 ﻿using Caliburn.Micro;
-using MCBusinessLogic.Controllers;
-using ErrHandler = MCBusinessLogic.Controllers.QbImportExceptionHandler;
+using ErrHandler = WPFDesktopUI.Controllers.QbImportExceptionHandler;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel;
 using System.Threading.Tasks;
-using System.Windows;
 using WPFDesktopUI.ViewModels.QuickBooks;
-using MCBusinessLogic.Models;
+using WPFDesktopUI.Models;
+using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
-  public class QuickBooksViewModel : Conductor<object> {
-
-		#region Constructor
-
+  public class QuickBooksViewModel : Conductor<object>, IQuickBooksViewModel {
 		public QuickBooksViewModel() {
-			QuickBooksSidePaneViewModel = new QuickBooksSidePaneViewModel();
-		}
-
-		#endregion Constructor
+			QuickBooksSidePaneViewModel = Factory.CreateQuickBooksSidePaneViewModel();
+    }
 
 
-		#region Properties
 
-		private string _consoleMessage;
-		private bool _canBtnQbImport = true;
-		private bool _qbProgressBarIsVisible = false;
-
-		public QuickBooksSidePaneViewModel QuickBooksSidePaneViewModel { get; }
-
-		public string ConsoleMessage {
-			get => _consoleMessage;
-      set {
-				_consoleMessage = value;
-				NotifyOfPropertyChange(() => ConsoleMessage);
-			}
-		}
-
-		public bool CanBtnQbImport {
-			get => _canBtnQbImport;
-      set { 
-				_canBtnQbImport = value;
-				NotifyOfPropertyChange(() => CanBtnQbImport);
-			}
-		}
-
-		public bool QbProgressBarIsVisible {
-			get => _qbProgressBarIsVisible;
-      set {
-				_qbProgressBarIsVisible = value;
-				NotifyOfPropertyChange(() => QbProgressBarIsVisible);
-			}
-		}
-
-    #endregion Properties
+    public IQuickBooksSidePaneViewModel QuickBooksSidePaneViewModel { get; }
+    public string ConsoleMessage { get; set; }
+    public bool CanBtnQbImport { get; set; } = true;
+    public bool QbProgressBarIsVisible { get; set; } = false;
 
 
-		#region Methods
 
-		public async Task BtnQbImport() {
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    public void OnSelected() {
+      QuickBooksSidePaneViewModel.OnSelected();
+    }
+
+    public async Task BtnQbImport() {
       try {
 				SessionStart();
 
-        var header = new NxInvoiceHeaderModel {
-          TemplateRefFullName = GetTemplate(), 
-          TxnDate = QuickBooksSidePaneViewModel.HeaderDateTextBox,
-					Other = QuickBooksSidePaneViewModel.HeaderOtherTextBox,
-				};
-
-        var qbFilePath = GetQbFilePath();
+        var attr = QuickBooksSidePaneViewModel.QbspModel.Attr;
+        IQuickBooksModel qbModel = Factory.CreateQuickBooksModel(attr);
 
         await Task.Run(() => {
-          var qbImport = new NxQbImportController(qbFilePath, header);
-          qbImport.Import();
+          return qbModel.QbImport(ImportViewModel.CsvData);
         });
 
         ConsoleMessage = "Import has successfully completed";
-			}
-			catch (ArgumentNullException e) {
-        ConsoleMessage = ErrHandler.HandleArgumentNullException(e) ?? ErrHandler.GetDefaultError(e);
-      } catch (ArgumentOutOfRangeException e) {
-        ConsoleMessage = ErrHandler.HandleArgumentOutOfRangeException(e) ?? ErrHandler.GetDefaultError(e);
-			} catch (ArgumentException e) {
-				ConsoleMessage = ErrHandler.HandleArgumentException(e) ?? ErrHandler.GetDefaultError(e);
-			} catch (System.Runtime.InteropServices.COMException e) {
-				ConsoleMessage = ErrHandler.HandleCOMException(e) ?? ErrHandler.GetDefaultError(e);
-			} catch (Exception e) {
-				ConsoleMessage = ErrHandler.GetDefaultError(e);
+      } catch (Exception e) {
+        ConsoleMessage = ErrHandler.DelegateHandle(e);
 			} finally {
         SessionEnd();
 			}
 		}
-
-    private static string GetTemplate() {
-      var hasTemplate = (bool)Properties.Settings.Default["StnQbInvHasTemplate"];
-
-      // Use template if preference is checked, else let DB.dll return ArgumentNullException
-      var name = Properties.Settings.Default["StnQbInvTemplateName"].ToString();
-      var template = hasTemplate ? name : null;
-      return template;
-    }
-
-		private static string GetQbFilePath() {
-      return Properties.Settings.Default["StnQbFilePath"].ToString();
-    }
 
     private void SessionStart() {
       CanBtnQbImport = false;
@@ -116,7 +57,5 @@ namespace WPFDesktopUI.ViewModels {
       CanBtnQbImport = true;
       QbProgressBarIsVisible = false;
     }
-
-		#endregion Methods
 	}
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace QBConnect.Models {
-  public class InvoiceLineItemModel {
+  public class InvoiceLineItemModel : IInvoiceLineItemModel {
 
     /// <summary>
     /// A monetary amount.

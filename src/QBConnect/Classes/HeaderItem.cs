@@ -8,7 +8,7 @@ using QBFC13Lib;
 
 namespace QBConnect.Classes {
   internal static class HeaderItem {
-    internal static void SetHeader(IInvoiceAdd Header, InvoiceHeaderModel headerData) {
+    internal static void SetHeader(IInvoiceAdd Header, IInvoiceHeaderModel headerData) {
       // Accounts Receivable Ref
       if (headerData.ARAccountRefFullName != null) {
         Header.ARAccountRef.FullName.SetValue(headerData.ARAccountRefFullName);
@@ -48,6 +48,16 @@ namespace QBConnect.Classes {
       // Transaction Date
       if (headerData.TxnDate != null) {
         Header.TxnDate.SetValue((DateTime)headerData.TxnDate);
+      }
+
+      // Bill Address
+      if (headerData.BillAddress != null) {
+        ParseAddress(Header.BillAddress, headerData.BillAddress);
+      }
+
+      // Ship Address
+      if (headerData.ShipAddress != null) {
+        ParseAddress(Header.ShipAddress, headerData.ShipAddress);
       }
 
       // Due Date
@@ -108,6 +118,31 @@ namespace QBConnect.Classes {
       if (headerData.Other != null) {
         Header.Other.SetValue(headerData.Other);
       }
+    }
+
+    public static IAddress ParseAddress(IAddress msgSetReq, string addrs) {
+      if (addrs == null) return msgSetReq;
+      string[] addrsArr = addrs.Split(',');
+      var len = addrsArr.Length;
+      if (len > 5) throw new ArgumentOutOfRangeException("Could not parse Address. QuickBook's only allows up to five lines per address.");
+      
+      if (len >= 1) {
+        msgSetReq.Addr1.SetValue(addrsArr[0]);
+      }
+      if (len >= 2) {
+        msgSetReq.Addr2.SetValue(addrsArr[1]);
+      }
+      if (len >= 3) {
+        msgSetReq.Addr3.SetValue(addrsArr[2]);
+      }
+      if (len >= 4) {
+        msgSetReq.Addr4.SetValue(addrsArr[3]);
+      }
+      if (len >= 5) {
+        msgSetReq.Addr5.SetValue(addrsArr[4]);
+      }
+
+      return msgSetReq;
     }
   }
 }

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\PropertyChanged.Fody.3.2.8\build\PropertyChanged.Fody.props" Condition="Exists('..\packages\PropertyChanged.Fody.3.2.8\build\PropertyChanged.Fody.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -91,6 +92,9 @@
     <Reference Include="Caliburn.Micro.Platform.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
       <HintPath>..\packages\Caliburn.Micro.3.2.0\lib\net45\Caliburn.Micro.Platform.Core.dll</HintPath>
     </Reference>
+    <Reference Include="PropertyChanged, Version=3.2.8.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyChanged.Fody.3.2.8\lib\net40\PropertyChanged.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -120,14 +124,39 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Models\PersonModel.cs" />
+    <Compile Include="Controllers\QbImportExceptionHandler.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Models\QuickBooksModels\Interfaces\IQuickBooksModel.cs" />
+    <Compile Include="Models\QuickBooksModels\QuickBooksModel.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQBDropDownAttribute.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\Interfaces\Payloads\IDateTimePayload.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQbComboBox.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQbDateTimeAttribute.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQbStringAttribute.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\Interfaces\Payloads\IDropDownPayload.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\Interfaces\Payloads\IStringPayload.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\QbAbstractAttribute.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\QbDateTimeAttribute.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\QbDoubleAttribute.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\QbDropDownAttribute.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\QbNullAttribute.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\QbStringAttribute.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQbAttribute.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\QbComboBox.cs" />
+    <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQuickBooksSidePaneModel.cs" />
+    <Compile Include="Models\SidePaneModels\QuickBooksSidePaneModel.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
+    <Compile Include="ViewModels\Factory.cs" />
+    <Compile Include="ViewModels\Interfaces\IImportViewModel.cs" />
     <Compile Include="ViewModels\ImportViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IMainTab.cs" />
+    <Compile Include="ViewModels\Interfaces\IQuickBooksViewModel.cs" />
     <Compile Include="ViewModels\PreferencesViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesCsvImportViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesGeneralViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesQuickBooksViewModel.cs" />
     <Compile Include="ViewModels\QuickBooksViewModel.cs" />
+    <Compile Include="ViewModels\QuickBooks\Interfaces\IQuickBooksSidePaneViewModel.cs" />
     <Compile Include="ViewModels\QuickBooks\QuickBooksSidePaneViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
@@ -216,6 +245,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="FodyWeavers.xml" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -256,5 +286,8 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.6.1.1\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.1.1\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\PropertyChanged.Fody.3.2.8\build\PropertyChanged.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PropertyChanged.Fody.3.2.8\build\PropertyChanged.Fody.props'))" />
   </Target>
+  <Import Project="..\packages\Fody.6.1.1\build\Fody.targets" Condition="Exists('..\packages\Fody.6.1.1\build\Fody.targets')" />
 </Project>

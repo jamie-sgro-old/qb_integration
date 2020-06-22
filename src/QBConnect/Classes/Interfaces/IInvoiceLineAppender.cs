@@ -9,6 +9,6 @@ using System.Threading.Tasks;
 namespace QBConnect.Classes.Interfaces {
   internal interface IInvoiceLineAppender {
     IORInvoiceLineAdd Line { get; }
-    void AddLine(InvoiceLineItemModel lineItem);
+    void AddLine(IInvoiceLineItemModel lineItem);
   }
 }

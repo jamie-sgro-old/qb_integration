@@ -2,7 +2,7 @@
 using QBFC13Lib;
 
 namespace QBConnect.Classes {
-  internal sealed class ItemQuery : Query {
+  internal sealed class ItemQuery : AbstractQuery {
     public ItemQuery(QBSessionManager qbSessionManager) {
       QbSessionManager = qbSessionManager;
       MsgSetRequest = GetMsgSetRequest();

@@ -2,7 +2,7 @@
 using QBFC13Lib;
 
 namespace QBConnect.Classes {
-  internal sealed class TemplateQuery : Query {
+  internal sealed class TemplateQuery : AbstractQuery {
     public TemplateQuery(QBSessionManager qbSessionManager) {
       QbSessionManager = qbSessionManager;
       MsgSetRequest = GetMsgSetRequest();
