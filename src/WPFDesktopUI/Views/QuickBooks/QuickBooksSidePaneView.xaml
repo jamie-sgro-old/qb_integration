@@ -4,69 +4,136 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFDesktopUI.Views.QuickBooks"
+             xmlns:vm="clr-namespace:WPFDesktopUI.ViewModels.QuickBooks"
              Background="White"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="400">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
     <Border BorderBrush="Gray" BorderThickness="1">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-                
+        <DockPanel>
 
-            <!-- Row 10 -->
+            <!-- DOCKPANEL BOTTOM -->
 
-            <TextBlock x:Name="HeaderOtherTextBlock"
-                    Grid.Row="10"
-                    Grid.Column="0"
-                    Style="{StaticResource QbSidePaneKey}"
-                       >
-            </TextBlock>
-            <TextBox x:Name="HeaderOtherTextBox"
-                        Grid.Row="10"
-                        Grid.Column="1"
-                        Style="{StaticResource QbSidePaneValue}"
-                        >
-            </TextBox>
+            <Grid DockPanel.Dock="Bottom" MinHeight="100">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
 
-            <!-- Row 11 -->
+                <TextBlock x:Name="ConsoleMessage" 
+                           Grid.Row="1"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="2"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap">
+                </TextBlock>
 
-            <TextBlock x:Name="HeaderDateTextBlock"
-                    Grid.Row="11"
-                    Grid.Column="0"
-                    Style="{StaticResource QbSidePaneKey}"
+                <Grid Name="QbProgressBarIsVisible"
+                      Grid.Row="2"
+                      Grid.Column="0">
+                    <ProgressBar x:Name="QbProgressBar" 
+                                 Minimum="0"
+                                 Maximum="100"
+                                 IsIndeterminate="True"
+                                 Margin="10,10"
+                             
                     >
-                DATE
-            </TextBlock>
-            <DatePicker x:Name="HeaderDateTextBox"
-                        Grid.Row="11"
-                        Grid.Column="1"
-                        Style="{StaticResource QbSidePaneValue}"
-            >
-            </DatePicker>
+                    </ProgressBar>
+                </Grid>
+
+                <Button x:Name="QbExport"
+                        Grid.Row="2"
+                        Grid.Column="1" 
+                        Style="{StaticResource ButtonClose}"
+                >
+                    Query QuickBooks
+                </Button>
+            </Grid>
 
 
-        </Grid>
+
+            <!-- DOCKPANEL TOP-->
+
+            <Grid Grid.IsSharedSizeScope="True" DockPanel.Dock="Top" MinHeight="100" >
+                <ItemsControl x:Name="QbspModel_Attr">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                                <StackPanel Orientation="Vertical"
+                                            VerticalAlignment="Stretch"
+                                            CanVerticallyScroll="True" >
+
+
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition SharedSizeGroup="FirstRow"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition SharedSizeGroup="FirstColumn"  />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- <TextBlock Text="{Binding Key}" /> -->
+                                        <TextBlock Text="{Binding Value.Name}"
+                                                   Grid.Column="0"
+                                                   Style="{StaticResource QbSidePaneKey}" >
+                                        </TextBlock>
+                                        <ComboBox ItemsSource="{Binding Value.ComboBox.ItemsSource}"
+                                                  SelectedItem="{Binding Value.ComboBox.SelectedItem}"
+                                                  Grid.Column="1"
+                                                  Style="{StaticResource QbSidePaneValue}"
+                                                  ToolTipService.ShowOnDisabled = "True"
+                                                  IsEnabled="{Binding Value.ComboBox.IsEnabled}" >
+                                            <ComboBox.ToolTip>
+                                                <TextBlock Text="{Binding Value.ToolTip}" />
+                                            </ComboBox.ToolTip>
+                                        </ComboBox>
+
+                                        <!-- COLUMN 2 -->
+                                        <TextBox Text="{Binding Value.Payload}"
+                                                 Grid.Column="2"
+                                                 IsEnabled="{Binding Value.ComboBox.IsBlank}"
+                                                 Visibility="{Binding Value.HasStringPayload, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
+                                                 ToolTipService.ShowOnDisabled = "True"
+                                                 Style="{StaticResource QbSidePaneValue}" >
+                                        </TextBox>
+                                        <DatePicker SelectedDate="{Binding Value.Payload}"
+                                                    Grid.Column="2"
+                                                    IsEnabled="{Binding Value.ComboBox.IsBlank}"
+                                                    Visibility="{Binding Value.HasDateTimePayload, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
+                                                    ToolTipService.ShowOnDisabled = "True"
+                                                    Style="{StaticResource QbSidePaneValue}" >
+                                        </DatePicker>
+                                        <ComboBox ItemsSource="{Binding Value.DropDownComboBox.ItemsSource}"
+                                                  SelectedItem="{Binding Value.DropDownComboBox.SelectedItem}"
+                                                  Grid.Column="2"
+                                                  Visibility="{Binding Value.HasDropDownPayload, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
+                                                  Style="{StaticResource QbSidePaneValue}"
+                                                  ToolTipService.ShowOnDisabled = "True"
+                                                  IsEnabled="{Binding Value.DropDownComboBox.IsEnabled}" >
+                                            <ComboBox.ToolTip>
+                                                <TextBlock Text="{Binding Value.ToolTip}" />
+                                            </ComboBox.ToolTip>
+                                        </ComboBox>
+                                    </Grid>
+
+
+                                </StackPanel>
+                            </ScrollViewer>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+
+
+        </DockPanel>
     </Border>
 </UserControl>

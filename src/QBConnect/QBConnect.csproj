@@ -83,15 +83,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicImporter.cs" />
-    <Compile Include="Classes\CustomerQuery.cs" />
+    <Compile Include="Classes\ClientSessionManager.cs" />
+    <Compile Include="Classes\Factory.cs" />
+    <Compile Include="Classes\HeaderItem.cs" />
+    <Compile Include="Classes\Interfaces\IClientSessionManager.cs" />
+    <Compile Include="Classes\Query\InvoiceQuery.cs" />
+    <Compile Include="Classes\Query\TermsQuery.cs" />
+    <Compile Include="Classes\Rollback\AbstractRollback.cs" />
+    <Compile Include="Classes\Rollback\Interfaces\IRollback.cs" />
+    <Compile Include="Classes\Rollback\QbDelete.cs" />
+    <Compile Include="Classes\Rollback\QbVoid.cs" />
+    <Compile Include="IInvoiceImporter.cs" />
+    <Compile Include="InvoiceImporter.cs" />
     <Compile Include="Classes\Interfaces\IInvoiceLineAppender.cs" />
-    <Compile Include="Classes\Interfaces\IQuery.cs" />
-    <Compile Include="Classes\ItemQuery.cs" />
+    <Compile Include="Classes\Query\Interfaces\IQuery.cs" />
+    <Compile Include="Classes\Query\ItemQuery.cs" />
     <Compile Include="Classes\LineItem.cs" />
-    <Compile Include="Classes\Query.cs" />
+    <Compile Include="Classes\Query\Abstract\AbstractQuery.cs" />
+    <Compile Include="Models\Interfaces\IInvoiceHeaderModel.cs" />
+    <Compile Include="Models\Interfaces\IInvoiceLineItemModel.cs" />
     <Compile Include="Models\Response.cs" />
-    <Compile Include="Classes\TemplateQuery.cs" />
+    <Compile Include="Classes\Query\TemplateQuery.cs" />
     <Compile Include="Models\InvoiceHeaderModel.cs" />
     <Compile Include="Models\InvoiceLineItemModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFDesktopUI.Views"
         xmlns:NewUserControl="clr-namespace:WPFDesktopUI.Views"
+        xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
         Icon="Images/icon-sangwa.ico"
-        Title="Invoice Importer by Sangwa" Height="600" Width="1000">
+        Title="Invoice Importer by Sangwa" Height="600" Width="1000" MinHeight="400" MinWidth="400">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
@@ -42,12 +43,15 @@
                           x:Name="MenuItemAbout"/>
             </MenuItem>
         </Menu>
-        <TabControl DockPanel.Dock="Top">
-            <TabItem Header="Import">
+        <TabControl cal:Message.Attach="[Event SelectionChanged]=[Action TabChange];"
+                    DockPanel.Dock="Top">
+            <TabItem Header="Import"
+                     IsSelected="{Binding TabImportIsSelected}">
                 <ContentControl x:Name="ImportViewModel" />
                 <!--<NewUserControl:ImportView/>-->
             </TabItem>
-            <TabItem Header="QuickBooks" >
+            <TabItem Header="QuickBooks"
+                     IsSelected="{Binding TabQuickBooksIsSelected}">
                 <ContentControl x:Name="QuickBooksViewModel" />
                 <!--<NewUserControl:QuickBooksView/>-->
             </TabItem>

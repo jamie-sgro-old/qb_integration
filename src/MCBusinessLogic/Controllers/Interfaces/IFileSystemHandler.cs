@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MCBusinessLogic.Controllers {
-  internal interface IFileSystemHandler {
+  public interface IFileSystemHandler {
     string FileName { get; }
     string Filter { get; set; }
     bool SelectFile();

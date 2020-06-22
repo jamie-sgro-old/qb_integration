@@ -1,40 +1,24 @@
-﻿using Caliburn.Micro;
+﻿using System.ComponentModel;
+using Caliburn.Micro;
 using MCBusinessLogic.Controllers;
-using MCBusinessLogic.DataAccess;
-using MCBusinessLogic.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Data;
 using System.Threading.Tasks;
+using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
-  public class ImportViewModel : Screen {
+  public class ImportViewModel : Screen, IImportViewModel {
+   
 
-    #region Properties
+    public string CsvFilePath { get; set; }
+    public DataView CsvDataView { get; set; }
+    public static DataTable CsvData { get; set; }
 
-    private string _csvFilePath;
-    private List<CsvModel> _csvData = new List<CsvModel>();
 
-    public string CsvFilePath {
-      get => _csvFilePath;
-      set {
-        _csvFilePath = value;
-        NotifyOfPropertyChange(() => CsvFilePath);
-      }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    public void OnSelected() {
     }
-
-    public List<CsvModel> CsvData {
-      get => _csvData;
-      set {
-        _csvData = value;
-        NotifyOfPropertyChange(() => CsvData);
-      }
-    }
-
-    #endregion Properties
-
-    #region Methods
 
     public async Task BtnOpenCsvFile() {
       var fileName = FileSystemHelper.GetFilePath("CSV (Comma delimited) |*.csv");
@@ -43,14 +27,24 @@ namespace WPFDesktopUI.ViewModels {
 
       await Task.Run(() => {
         CsvData = CsvParser.ParseFromFile(fileName, sep);
+
+        // Sanitize column headers
+        foreach (DataColumn col in CsvData.Columns) {
+          col.ColumnName = col.ColumnName.Replace("[", "").Replace("]", "");
+        }
+
+        // Match data structure to the UI view (this lets the user see the data)
+        CsvDataView = CsvData.DefaultView;
       });
 
-      //temp import to sql
-      SqliteDataAccess.SaveData<CsvModel>(@"INSERT INTO csv_data
-        (Item, Quantity, StaffName, TimeInOut, ServiceDate)
-        VALUES(@Item, @Quantity, @StaffName, @TimeInOut, @ServiceDate);", CsvData);
-    }
 
-    #endregion Methods
+
+      /*
+      // Import to SQLite
+      SqliteDataAccess.SaveData<CsvModel>(@"INSERT INTO csv_data
+        (Item, Quantity, StaffName, TimeInOut, ServiceDate, Rate)
+        VALUES(@Item, @Quantity, @StaffName, @TimeInOut, @ServiceDate, @Rate);", CsvData);
+      */
+    }
   }
 }

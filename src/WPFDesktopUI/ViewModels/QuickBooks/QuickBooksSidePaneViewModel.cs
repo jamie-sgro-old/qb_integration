@@ -1,51 +1,175 @@
-﻿using Caliburn.Micro;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Caliburn.Micro;
+using MCBusinessLogic.Controllers;
+using MCBusinessLogic.Controllers.Interfaces;
+using WPFDesktopUI.Models;
+using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
+using WPFDesktopUI.ViewModels.Interfaces;
+using stn = WPFDesktopUI.Controllers.SettingsController;
+using ErrHandler = WPFDesktopUI.Controllers.QbImportExceptionHandler;
 
 namespace WPFDesktopUI.ViewModels.QuickBooks {
-  public class QuickBooksSidePaneViewModel : Screen {
-		private string _otherHeaderTextBlock;
-		private bool _hasHeaderOther;
-		private string _headerOtherTextBox;
-		private DateTime _headerDateTextBox = DateTime.Now;
+  public class QuickBooksSidePaneViewModel : Screen, IMainTab, IQuickBooksSidePaneViewModel {
+    public QuickBooksSidePaneViewModel() {
+      QbspModel = Factory.CreateQuickBooksSidePaneModel();
+
+      /*** HEADER ***/
+      // Add a corresponding property to IClientInvoiceHeaderModel (and it's children)
+      // Ensure a corresponding method exists in QBConnect.Classes.HeaderItem
+
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "CustomerRefFullName", "CUSTOMER:JOB");
+      QbspModel.Attr["CustomerRefFullName"].IsMandatory = true;
+
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "ClassRefFullName", "CLASS");
+
+      QbspModel.AttrAdd(Factory.CreateQbNullAttribute(), "TemplateRefFullName", "TEMPLATE");
+      QbspModel.Attr["TemplateRefFullName"].IsMandatory = true;
+      QbspModel.Attr["TemplateRefFullName"].ComboBox.RequiresCsv = false;
+      QbspModel.Attr["TemplateRefFullName"].ToolTip = "Please select 'Query QuickBooks' before"+
+                                                      " custom lists can be generated";
+
+      QbspModel.AttrAdd(Factory.CreateQbDateTimeAttribute(), "TxnDate", "DATE");
+
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "BillAddress", "BILL ADDRESS");
+
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "ShipAddress", "SHIP ADDRESS");
+
+      QbspModel.AttrAdd(Factory.CreateQbDropDownAttribute(), "TermsRefFullName", "TERMS");
+
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "PONumber", "P.O. NUMBER");
+
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(),
+        "Other", stn.QbInvHasHeaderOther() ? stn.QbInvHeaderOtherName() : "OTHER");
+
+      /*** LINES ***/
+      // Add a corresponding property to IClientInvoiceLineItemModel (and it's children)
+      // Ensure a corresponding method exists in QBConnect.Classes.LineItem
+
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "ItemRef", "ITEM");
+      QbspModel.Attr["ItemRef"].IsMandatory = true;
+
+      QbspModel.AttrAdd(Factory.CreateQbDoubleAttribute(), "ORRatePriceLevelRate", "RATE");
+
+      QbspModel.AttrAdd(Factory.CreateQbDoubleAttribute(), "Quantity", "QUANTITY");
+
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "Desc", "DESCRIPTION");
+
+      QbspModel.AttrAdd(Factory.CreateQbDateTimeAttribute(), "ServiceDate", "SERVICE DATE");
+
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "Other1", "TIME IN OUT");
+
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "Other2", "STAFF NAME");
+    }
+
+    public IQuickBooksSidePaneModel QbspModel { get; set; }
+    public bool CanQbExport { get; set; } = true;
+    public bool QbProgressBarIsVisible { get; set; } = false;
+    public string ConsoleMessage { get; set; } = "Please select 'Query QuickBooks' before custom lists can be generated";
 
 
-		public string HeaderOtherTextBox {
-			get => _headerOtherTextBox;
-      set {
-        _headerOtherTextBox = value;
-        NotifyOfPropertyChange(() => HeaderOtherTextBox);
-			}
-		}
-
-		public DateTime HeaderDateTextBox {
-			get => _headerDateTextBox;
-      set {
-				_headerDateTextBox = value;
-				NotifyOfPropertyChange(() => HeaderDateTextBox);
-			}
-		}
+    public async void OnSelected() {
+      await Task.Run(() => {
+        QbspModel.Attr["Other"].Name = stn.QbInvHasHeaderOther() ? stn.QbInvHeaderOtherName() : "OTHER";
 
 
-		public bool HasHeaderOther {
-			get {
-				_hasHeaderOther = (bool)Properties.Settings.Default["StnQbInvHasHeaderOther"];
-				return _hasHeaderOther;
-			}
-		}
+        var csvData = ImportViewModel.CsvData;
+        if (csvData == null) return;
+        var csvHeaders = GetCsvHeaders(csvData);
+
+        // Loop through all QbAttribute ComboBoxes in QbspModel
+        foreach (var attribute in QbspModel.Attr) {
+          if (!QbspModel.Attr[attribute.Key].ComboBox.RequiresCsv) continue;
+          QbspModel.Attr[attribute.Key].ComboBox.ItemsSource = csvHeaders;
+          QbspModel.Attr[attribute.Key].ComboBox.IsEnabled = true;
+        }
+      });
+    }
+
+    public async void QbExport() {
+      SessionStart();
+      try {
+        // Update template list from QB
+        var templateList = await InitTemplateRefFullName();
+        QbspModel.Attr["TemplateRefFullName"].ComboBox.ItemsSource = templateList;
+        QbspModel.Attr["TemplateRefFullName"].ComboBox.IsEnabled = true;
+
+        // Update terms list from QB
+        var termsList = await InitTermsRefFullName();
+        IQBDropDownAttribute dropAttr = (QbspModel.Attr["TermsRefFullName"] as IQBDropDownAttribute);
+        if (dropAttr != null) {
+          dropAttr.DropDownComboBox.ItemsSource = termsList;
+          dropAttr.DropDownComboBox.IsEnabled = true;
+
+        }
 
 
-		public string HeaderOtherTextBlock {
-			get
-      {
-        var name = Properties.Settings.Default["StnQbInvHeaderOtherName"].ToString();
-				_otherHeaderTextBlock = HasHeaderOther ? name : "OTHER";
-        return _otherHeaderTextBlock;
+        SessionEnd();
+      } catch (Exception e) {
+        ConsoleMessage = ErrHandler.DelegateHandle(e);
+      } finally {
+        CanQbExport = true;
+        QbProgressBarIsVisible = false;
       }
-		}
+    }
 
-	}
+    private void SessionStart() {
+      CanQbExport = false;
+      QbProgressBarIsVisible = true;
+    }
+
+    private void SessionEnd() {
+      ConsoleMessage = "Query successfully completed";
+    }
+
+    /// <summary>
+    /// Returns a list of templates used in QuickBooks based on their name
+    /// </summary>
+    /// <param name="qbFilePath">The full path for the QuickBooks file</param>
+    /// <returns></returns>
+    private static async Task<List<string>> InitTemplateRefFullName() {
+      IQbExportController qbExportController = Factory.CreateQbExportController();
+      var templates = await Task.Run(() => {
+        return qbExportController.GetTemplateNamesList();
+      });
+
+      // Add blank to start
+      templates.Insert(0, "");
+      return templates;
+    }
+
+    /// <summary>
+    /// Returns a list of terms (i.e. net 30) used in QuickBooks based on their name
+    /// </summary>
+    /// <param name="qbFilePath">The full path for the QuickBooks file</param>
+    /// <returns></returns>
+    private static async Task<List<string>> InitTermsRefFullName() {
+      IQbExportController qbExportController = Factory.CreateQbExportController();
+      var terms = await Task.Run(() => {
+        return qbExportController.GetTermsNamesList();
+      });
+
+      // Add blank to start
+      terms.Insert(0, "");
+      return terms;
+    }
+
+    private static List<string> GetCsvHeaders(DataTable dt) {
+      string[] columnHeaders = dt?.Columns.Cast<DataColumn>()
+        .Select(x => x.ColumnName)
+        .ToArray();
+
+      // Convert string[] to List<string>
+      List<string> finalList = columnHeaders?.ToList();
+
+      if (finalList == null) return new List<string>();
+
+      // Add blank to start
+      finalList.Insert(0, "");
+      return finalList;
+    }
+  }
 }
