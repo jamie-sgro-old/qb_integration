@@ -10,16 +10,7 @@
     <Border BorderThickness="20">
         <DockPanel>
 
-            <Grid DockPanel.Dock="Top">
-                <DataGrid x:Name="CustomerDataGrid" 
-                          cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding()]"
-                          ItemsSource="{Binding Cxs, Mode=TwoWay}"
-                          AutoGenerateColumns="True" 
-                          AlternatingRowBackground="LightGray"
-                          CanUserAddRows="False"
-                          IsReadOnly="{Binding IsReadOnly}">
-                </DataGrid>
-            </Grid>
+            <!-- DOCKPANEL BOTTOM-->
 
             <Grid DockPanel.Dock="Bottom">
 
@@ -77,6 +68,21 @@
                         Style="{StaticResource ButtonClose}">
                     Save
                 </Button>
+            </Grid>
+
+            <!-- DOCKPANEL TOP-->
+
+            <Grid DockPanel.Dock="Top">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                    <DataGrid x:Name="CustomerDataGrid" 
+                              cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding()]"
+                              ItemsSource="{Binding Cxs, Mode=TwoWay}"
+                              AutoGenerateColumns="True" 
+                              AlternatingRowBackground="LightGray"
+                              CanUserAddRows="False"
+                              IsReadOnly="{Binding IsReadOnly}">
+                    </DataGrid>
+                </ScrollViewer>
             </Grid>
         </DockPanel>
     </Border>
