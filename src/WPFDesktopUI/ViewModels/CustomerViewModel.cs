@@ -40,6 +40,7 @@ namespace WPFDesktopUI.ViewModels {
     public bool CanBtnUpdate { get; set; } = false;
     
     public void OnCellEditEnding() {
+      TabHeader = TabHeader.Replace("*", "");
       TabHeader = TabHeader + "*";
       CanBtnUpdate = true;
     }

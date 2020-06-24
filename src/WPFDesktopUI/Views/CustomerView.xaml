@@ -79,6 +79,7 @@
                               ItemsSource="{Binding Cxs, Mode=TwoWay}"
                               AutoGenerateColumns="True" 
                               AlternatingRowBackground="LightGray"
+                              CanUserDeleteRows="False"
                               CanUserAddRows="False"
                               IsReadOnly="{Binding IsReadOnly}">
                     </DataGrid>
