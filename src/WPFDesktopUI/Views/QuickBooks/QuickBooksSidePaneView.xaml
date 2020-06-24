@@ -27,13 +27,16 @@
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock x:Name="ConsoleMessage" 
-                           Grid.Row="1"
-                           Grid.Column="0"
-                           Grid.ColumnSpan="2"
-                           TextAlignment="Center"
-                           TextWrapping="Wrap">
-                </TextBlock>
+                <TextBox x:Name="ConsoleMessage" 
+                         Grid.Row="1"
+                         Grid.Column="0"
+                         Grid.ColumnSpan="2"
+                         TextAlignment="Center"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         IsReadOnly="True"
+                         TextWrapping="Wrap">
+                </TextBox>
 
                 <Grid Name="QbProgressBarIsVisible"
                       Grid.Row="2"

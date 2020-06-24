@@ -1,14 +1,5 @@
 ﻿using Caliburn.Micro;
-using MCBusinessLogic.Controllers;
-using MCBusinessLogic.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using WPFDesktopUI.Models;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 

@@ -5,9 +5,6 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using WPFDesktopUI.ViewModels.QuickBooks;
 using WPFDesktopUI.Models;
-using WPFDesktopUI.Models.CustomerModels;
-using WPFDesktopUI.Models.CustomerModels.Interfaces;
-using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
   public class QuickBooksViewModel : Conductor<object>, IQuickBooksViewModel {

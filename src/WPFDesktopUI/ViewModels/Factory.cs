@@ -9,7 +9,6 @@ using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.Models;
 using WPFDesktopUI.Controllers;
 using WPFDesktopUI.Models;
-using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.Models.SidePaneModels.Attributes;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;

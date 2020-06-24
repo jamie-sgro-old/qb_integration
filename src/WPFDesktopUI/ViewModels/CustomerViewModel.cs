@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using Caliburn.Micro;
+using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.DataAccess;
 using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
+using ErrHandler = WPFDesktopUI.Controllers.QbImportExceptionHandler;
 
 namespace WPFDesktopUI.ViewModels {
   public class CustomerViewModel : Screen, ICustomerViewModel<ICustomer> {
@@ -20,7 +17,7 @@ namespace WPFDesktopUI.ViewModels {
 
 
     public static List<Customer> Cxs { get; set; }
-    public string ConsoleMessage { get; set; }
+    public string ConsoleMessage { get; set; } = "test";
     public bool CanQbInteract { get; set; }
     public bool QbProgressBarIsVisible { get; set; }
     public string TabHeader { get; set; } = "Customer";
@@ -38,8 +35,38 @@ namespace WPFDesktopUI.ViewModels {
       CanBtnUpdate = false;
     }
 
-    public Task QbInteract() {
-      throw new NotImplementedException();
+    public async Task QbInteract() {
+      SessionStart();
+      try {
+        // Update template list from QB
+        var templateList = await InitTemplateRefFullName();
+        SessionEnd();
+      }
+      catch (Exception e) {
+        ConsoleMessage = ErrHandler.DelegateHandle(e);
+      }
+      finally {
+        CanQbInteract = true;
+        QbProgressBarIsVisible = false;
+      }
+    }
+
+    private static async Task<List<string>> InitTemplateRefFullName() {
+      IQbExportController qbExportController = Factory.CreateQbExportController();
+      var templates = await Task.Run(() => {
+        return qbExportController.GetTemplateNamesList();
+      });
+
+      return templates;
+    }
+
+    private void SessionStart() {
+      CanQbInteract = false;
+      QbProgressBarIsVisible = true;
+    }
+
+    private void SessionEnd() {
+      ConsoleMessage = "Query successfully completed";
     }
 
     public void OnSelected() {
@@ -52,7 +79,7 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     public void Update<T>(List<T> dataList) {
-      SqliteDataAccess.SaveData<T>(
+      SqliteDataAccess.SaveData(
         @"UPDATE `customer`
         SET
           PoNumber = @PoNumber,

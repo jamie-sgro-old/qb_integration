@@ -26,15 +26,54 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
+
+                <!-- ROW 0 -->
+
+                <TextBox x:Name="ConsoleMessage" 
+                         Grid.Row="1"
+                         Grid.Column="0"
+                         Grid.ColumnSpan="2"
+                         TextAlignment="Center"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         IsReadOnly="True"
+                         TextWrapping="Wrap"
+                         Margin="20">
+                </TextBox>
+
+
+                <!-- ROW 1 -->
+
+                <Grid Name="QbProgressBarIsVisible"
+                      Grid.Row="2"
+                      Grid.Column="0">
+                    <ProgressBar x:Name="QbProgressBar" 
+                                 Minimum="0"
+                                 Maximum="100"
+                                 IsIndeterminate="True"
+                                 Margin="10,10"
+                             
+                    >
+                    </ProgressBar>
+                </Grid>
+
+                <Button x:Name="QbInteract"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Style="{StaticResource ButtonClose}">
+                    Query Customer List
+                </Button>
 
                 <Button x:Name="BtnUpdate"
                         Grid.Row="2"
-                        Grid.Column="1" 
+                        Grid.Column="2" 
                         Style="{StaticResource ButtonClose}">
                     Save
                 </Button>
