@@ -1,10 +1,12 @@
-﻿using Caliburn.Micro;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Caliburn.Micro;
 using System.Windows;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
-  public class ShellViewModel : Conductor<object> {
+  public class ShellViewModel : Conductor<object>, IShellViewModel {
 
 		public ShellViewModel() {
 			ImportViewModel = Factory.CreateImportViewModel();

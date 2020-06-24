@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -7,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace WPFDesktopUI.Models.CustomerModels.Interfaces {
   public interface IDb<T> {
+    void Create<T>(List<T> dataList);
 
-    List<T> Read<T>();
+    ObservableCollection<T> Read<T>();
 
-    void Update<T>(List<T> dataList);
+    void Update<T>(ObservableCollection<T> dataList);
 
   }
 }

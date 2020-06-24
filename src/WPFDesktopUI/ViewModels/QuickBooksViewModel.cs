@@ -3,6 +3,7 @@ using ErrHandler = WPFDesktopUI.Controllers.QbImportExceptionHandler;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using WPFDesktopUI.ViewModels.QuickBooks;
 using WPFDesktopUI.Models;
 
@@ -21,7 +22,6 @@ namespace WPFDesktopUI.ViewModels {
     public string TabHeader { get; set; } = "QuickBooks";
 
 
-
     public event PropertyChangedEventHandler PropertyChanged;
 
     public void OnSelected() {
@@ -35,10 +35,10 @@ namespace WPFDesktopUI.ViewModels {
         var attr = QuickBooksSidePaneViewModel.QbspModel.Attr;
         IQuickBooksModel qbModel = Factory.CreateQuickBooksModel(attr);
 
-        var cxs = CustomerViewModel.Cxs;
+        //var cxs = CustomerViewModel.Cxs;
 
         await Task.Run(() => {
-          return qbModel.QbImport(ImportViewModel.CsvData, cxs);
+          return qbModel.QbImport(ImportViewModel.CsvData, null);
         });
 
         ConsoleMessage = "Import has successfully completed";

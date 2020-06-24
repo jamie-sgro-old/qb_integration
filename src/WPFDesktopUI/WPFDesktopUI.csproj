@@ -157,6 +157,7 @@
     <Compile Include="ViewModels\Interfaces\IMainTab.cs" />
     <Compile Include="ViewModels\Interfaces\IQbInteractable.cs" />
     <Compile Include="ViewModels\Interfaces\IQuickBooksViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IShellViewModel.cs" />
     <Compile Include="ViewModels\PreferencesViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesCsvImportViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesGeneralViewModel.cs" />

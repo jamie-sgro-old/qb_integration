@@ -11,7 +11,7 @@
         <DockPanel>
 
             <Grid DockPanel.Dock="Top">
-                <DataGrid x:Name="Cxs" 
+                <DataGrid x:Name="CustomerDataGrid" 
                           cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding()]"
                           ItemsSource="{Binding Cxs, Mode=TwoWay}"
                           AutoGenerateColumns="True" 
