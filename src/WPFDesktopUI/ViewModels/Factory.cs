@@ -34,7 +34,7 @@ namespace WPFDesktopUI.ViewModels {
       return new QuickBooksSidePaneViewModel();
     }
 
-    public static ICustomerViewModel CreateCustomerViewModel() {
+    public static ICustomerViewModel<ICustomer> CreateCustomerViewModel() {
       return new CustomerViewModel();
     }
 
@@ -48,10 +48,6 @@ namespace WPFDesktopUI.ViewModels {
 
     public static IQuickBooksSidePaneModel CreateQuickBooksSidePaneModel() {
       return new QuickBooksSidePaneModel(CreateQbComboBox);
-    }
-
-    public static ICustomerModel CreateCustomerModel() {
-      return new CustomerModel();
     }
 
     #endregion Screen Models

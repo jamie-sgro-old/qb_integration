@@ -6,7 +6,7 @@ using WPFDesktopUI.Models.SidePaneModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels.QuickBooks {
-  public interface IQuickBooksSidePaneViewModel : IMainTab, IQbInteractable {
+  public interface IQuickBooksSidePaneViewModel : ITabComponent, IQbInteractable {
     IQuickBooksSidePaneModel QbspModel { get; set; }
 
     event PropertyChangedEventHandler PropertyChanged;

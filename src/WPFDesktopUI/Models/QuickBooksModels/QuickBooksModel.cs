@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.Models;
+using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 using WPFDesktopUI.ViewModels;
@@ -25,7 +26,7 @@ namespace WPFDesktopUI.Models {
 
 
 
-    public async Task QbImport(DataTable dt, List<ICustomer> cxList) {
+    public async Task QbImport(DataTable dt, List<Customer> cxList) {
       ValidateDt(dt);
 
       var csvModels = MapDataTableToModel(dt);
@@ -82,7 +83,7 @@ namespace WPFDesktopUI.Models {
       return convertedList.ToList();
     }
 
-    private List<ICsvModel> ApplyCxRules(List<ICsvModel> csvModels, List<ICustomer> cxList) {
+    private List<ICsvModel> ApplyCxRules(List<ICsvModel> csvModels, List<Customer> cxList) {
       // Overwrite values based on Customer Rules
       foreach (var cx in cxList) {
         foreach (var row in csvModels) {

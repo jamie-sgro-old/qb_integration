@@ -70,7 +70,6 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     public bool QbProgressBarIsVisible { get; set; } = false;
     public string ConsoleMessage { get; set; } = "Please select 'Query QuickBooks' before custom lists can be generated";
 
-
     public async void OnSelected() {
       await Task.Run(() => {
         QbspModel.Attr["Other"].Name = stn.QbInvHasHeaderOther() ? stn.QbInvHeaderOtherName() : "OTHER";

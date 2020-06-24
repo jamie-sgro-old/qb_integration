@@ -6,17 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace WPFDesktopUI.Models.CustomerModels.Interfaces {
-  public interface IDb {
+  public interface IDb<T> {
 
-    DataTable Read();    
-    /*
-    // Import to SQLite
-    SqliteDataAccess.SaveData<CsvModel>(@"INSERT INTO csv_data
-      (Item, Quantity, StaffName, TimeInOut, ServiceDate, Rate)
-      VALUES(@Item, @Quantity, @StaffName, @TimeInOut, @ServiceDate, @Rate);", CsvData);
-    */
+    List<T> Read<T>();
 
-    void Update(List<string> name);
+    void Update<T>(List<T> dataList);
 
   }
 }

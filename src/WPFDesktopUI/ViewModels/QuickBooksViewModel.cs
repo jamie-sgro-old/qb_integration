@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WPFDesktopUI.ViewModels.QuickBooks;
 using WPFDesktopUI.Models;
 using WPFDesktopUI.Models.CustomerModels;
+using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
@@ -20,6 +21,7 @@ namespace WPFDesktopUI.ViewModels {
     public string ConsoleMessage { get; set; }
     public bool CanQbInteract { get; set; } = true;
     public bool QbProgressBarIsVisible { get; set; } = false;
+    public string TabHeader { get; set; } = "QuickBooks";
 
 
 

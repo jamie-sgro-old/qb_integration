@@ -73,13 +73,16 @@
 
             <!-- Row 11 -->
 
-            <TextBlock Text="{Binding Path=ConsoleMessage, Mode=OneWay}"
+            <TextBox Text="{Binding Path=ConsoleMessage, Mode=OneWay}"
                        Grid.Row="11" 
                        Grid.Column="1"
                        HorizontalAlignment="Stretch"
                        TextWrapping="Wrap"
+                       Background="Transparent"
+                       BorderThickness="0"
+                       IsReadOnly="True"
                        Foreground="Red">
-            </TextBlock>
+            </TextBox>
 
             <!-- Row 12 -->
             <!-- Row 13 -->

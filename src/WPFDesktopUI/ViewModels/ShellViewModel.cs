@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using WPFDesktopUI.Models;
+using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
@@ -22,11 +23,10 @@ namespace WPFDesktopUI.ViewModels {
 
 		public IImportViewModel ImportViewModel { get; }
 		public IQuickBooksViewModel QuickBooksViewModel { get; }
-		public ICustomerViewModel CustomerViewModel { get; }
+		public ICustomerViewModel<ICustomer> CustomerViewModel { get; }
 
-    public bool TabImportIsSelected { get; set; } = true;
+		public bool TabImportIsSelected { get; set; } = true;
     public bool TabQuickBooksIsSelected { get; set; } = false;
-
     public bool TabCustomerIsSelected { get; set; } = false;
 
 		/// <summary>

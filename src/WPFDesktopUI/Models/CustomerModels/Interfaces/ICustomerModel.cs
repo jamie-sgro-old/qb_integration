@@ -5,9 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace WPFDesktopUI.Models.CustomerModels.Interfaces {
-  public interface ICustomerModel {
-
-    IDb Db { get; }
-
+  public interface ICustomerModel<T> : IDb<T> {
+    List<ICustomer> Cxs { get; set; }
   }
 }

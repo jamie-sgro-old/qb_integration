@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace WPFDesktopUI.Models.CustomerModels.Interfaces {
   public interface ICustomer {
 
-    string Name { get; set; }
+    string Name { get; }
 
     string PoNumber { get; set; }
 

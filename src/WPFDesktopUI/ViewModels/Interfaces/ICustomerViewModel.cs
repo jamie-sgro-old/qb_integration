@@ -7,6 +7,9 @@ using System.Windows.Controls;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels.Interfaces {
-  public interface ICustomerViewModel : IMainTab, IQbInteractable {
+  public interface ICustomerViewModel<T> : IMainTab, IQbInteractable, IDb<T> {
+    bool CanBtnUpdate { get; set; }
+    void BtnUpdate();
+    void OnCellEditEnding();
   }
 }

@@ -12,6 +12,7 @@ namespace WPFDesktopUI.ViewModels {
     public string CsvFilePath { get; set; }
     public DataView CsvDataView { get; set; }
     public static DataTable CsvData { get; set; }
+    public string TabHeader { get; set; } = "Import";
 
 
 
