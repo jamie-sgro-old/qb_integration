@@ -154,6 +154,11 @@ namespace QBConnect {
       return templateNamesList;
     }
 
+    public List<string> GetItemNamesList() {
+      var itemQuery = new ItemQuery(SessionManager);
+      List<string> itemNamesList = itemQuery.GetList<IORItemRetList>();
+      return itemNamesList;
+    }
 
     public List<string> GetInvoiceIdList() {
       var invoiceQuery = new InvoiceQuery(SessionManager);

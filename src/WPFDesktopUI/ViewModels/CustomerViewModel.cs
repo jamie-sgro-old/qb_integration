@@ -18,7 +18,7 @@ namespace WPFDesktopUI.ViewModels {
 
     public static List<Customer> Cxs { get; set; }
     public string ConsoleMessage { get; set; } = "test";
-    public bool CanQbInteract { get; set; }
+    public bool CanQbInteract { get; set; } = true;
     public bool QbProgressBarIsVisible { get; set; }
     public string TabHeader { get; set; } = "Customer";
     public bool CanBtnUpdate { get; set; } = false;
@@ -38,8 +38,8 @@ namespace WPFDesktopUI.ViewModels {
     public async Task QbInteract() {
       SessionStart();
       try {
-        // Update template list from QB
-        var templateList = await InitTemplateRefFullName();
+        // Update items list from QB
+        var itemsList = await InitItemsFullName();
         SessionEnd();
       }
       catch (Exception e) {
@@ -51,13 +51,13 @@ namespace WPFDesktopUI.ViewModels {
       }
     }
 
-    private static async Task<List<string>> InitTemplateRefFullName() {
+    private static async Task<List<string>> InitItemsFullName() {
       IQbExportController qbExportController = Factory.CreateQbExportController();
-      var templates = await Task.Run(() => {
-        return qbExportController.GetTemplateNamesList();
+      var items = await Task.Run(() => {
+        return qbExportController.GetItemNamesList();
       });
 
-      return templates;
+      return items;
     }
 
     private void SessionStart() {
