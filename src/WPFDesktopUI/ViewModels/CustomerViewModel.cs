@@ -58,10 +58,10 @@ namespace WPFDesktopUI.ViewModels {
       SessionStart();
       try {
         // Update items list from QB
-        var itemsList = await InitItemsFullName();
+        var customerList = await InitCustomersFullName();
 
         // Convert itemsList into a List where each item contains a property Name
-        var nameList = itemsList.Select(name => new NameList {Name = name}).ToList();
+        var nameList = customerList.Select(name => new NameList {Name = name}).ToList();
 
         Create(nameList);
         Cxs = Read<Customer>();
@@ -76,13 +76,13 @@ namespace WPFDesktopUI.ViewModels {
       }
     }
 
-    private static async Task<List<string>> InitItemsFullName() {
+    private static async Task<List<string>> InitCustomersFullName() {
       IQbExportController qbExportController = Factory.CreateQbExportController();
-      var items = await Task.Run(() => {
-        return qbExportController.GetItemNamesList();
+      var cxs = await Task.Run(() => {
+        return qbExportController.GetCustomerNamesList();
       });
 
-      return items;
+      return cxs;
     }
 
     private void SessionStart() {

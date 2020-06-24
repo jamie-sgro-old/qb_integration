@@ -172,6 +172,12 @@ namespace QBConnect {
       return termsNamesList;
     }
 
+    public List<string> GetCustomerNamesList() {
+      var customerQuery = new CustomerQuery(SessionManager);
+      List<string> customerNamesList = customerQuery.GetList<ICustomerRetList>();
+      return customerNamesList;
+    }
+
 
 
     /// <summary>
