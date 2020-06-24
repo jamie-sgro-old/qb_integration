@@ -15,6 +15,8 @@ using ErrHandler = WPFDesktopUI.Controllers.QbImportExceptionHandler;
 
 namespace WPFDesktopUI.ViewModels {
   public class CustomerViewModel : Screen, ICustomerViewModel<ICustomer> {
+    private ObservableCollection<Customer> _cxs;
+
     public CustomerViewModel() {
       Cxs = Read<Customer>();
     }
@@ -22,7 +24,15 @@ namespace WPFDesktopUI.ViewModels {
 
     public DataGrid CustomerDataGrid { get; set; }
 
-    public ObservableCollection<Customer> Cxs { get; set; }
+    public ObservableCollection<Customer> Cxs {
+      get => _cxs;
+      set {
+        StaticCxs = value.ToList();
+        _cxs = value;
+      }
+    }
+
+    public static List<Customer> StaticCxs { get; set; }
     public string ConsoleMessage { get; set; }
     public bool CanQbInteract { get; set; } = true;
     public bool QbProgressBarIsVisible { get; set; }
