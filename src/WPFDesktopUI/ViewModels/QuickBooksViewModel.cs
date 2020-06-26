@@ -3,9 +3,9 @@ using ErrHandler = WPFDesktopUI.Controllers.QbImportExceptionHandler;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using WPFDesktopUI.ViewModels.QuickBooks;
 using WPFDesktopUI.Models;
-using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
   public class QuickBooksViewModel : Conductor<object>, IQuickBooksViewModel {
@@ -17,9 +17,9 @@ namespace WPFDesktopUI.ViewModels {
 
     public IQuickBooksSidePaneViewModel QuickBooksSidePaneViewModel { get; }
     public string ConsoleMessage { get; set; }
-    public bool CanBtnQbImport { get; set; } = true;
+    public bool CanQbInteract { get; set; } = true;
     public bool QbProgressBarIsVisible { get; set; } = false;
-
+    public string TabHeader { get; set; } = "QuickBooks";
 
 
     public event PropertyChangedEventHandler PropertyChanged;
@@ -28,15 +28,17 @@ namespace WPFDesktopUI.ViewModels {
       QuickBooksSidePaneViewModel.OnSelected();
     }
 
-    public async Task BtnQbImport() {
+    public async Task QbInteract() {
       try {
 				SessionStart();
 
         var attr = QuickBooksSidePaneViewModel.QbspModel.Attr;
         IQuickBooksModel qbModel = Factory.CreateQuickBooksModel(attr);
 
+        var cxs = CustomerViewModel.StaticCxs;
+
         await Task.Run(() => {
-          return qbModel.QbImport(ImportViewModel.CsvData);
+          return qbModel.QbImport(ImportViewModel.CsvData, cxs);
         });
 
         ConsoleMessage = "Import has successfully completed";
@@ -48,13 +50,13 @@ namespace WPFDesktopUI.ViewModels {
 		}
 
     private void SessionStart() {
-      CanBtnQbImport = false;
+      CanQbInteract = false;
       QbProgressBarIsVisible = true;
       ConsoleMessage = "Importing, please stand by...";
     }
 
     private void SessionEnd() {
-      CanBtnQbImport = true;
+      CanQbInteract = true;
       QbProgressBarIsVisible = false;
     }
 	}

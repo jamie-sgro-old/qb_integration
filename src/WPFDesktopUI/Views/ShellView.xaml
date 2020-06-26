@@ -45,15 +45,20 @@
         </Menu>
         <TabControl cal:Message.Attach="[Event SelectionChanged]=[Action TabChange];"
                     DockPanel.Dock="Top">
-            <TabItem Header="Import"
+            <TabItem Header="{Binding ImportViewModel.TabHeader }"
                      IsSelected="{Binding TabImportIsSelected}">
                 <ContentControl x:Name="ImportViewModel" />
                 <!--<NewUserControl:ImportView/>-->
             </TabItem>
-            <TabItem Header="QuickBooks"
+            <TabItem Header="{Binding QuickBooksViewModel.TabHeader }"
                      IsSelected="{Binding TabQuickBooksIsSelected}">
                 <ContentControl x:Name="QuickBooksViewModel" />
                 <!--<NewUserControl:QuickBooksView/>-->
+            </TabItem>
+            <TabItem Header="{Binding CustomerViewModel.TabHeader }"
+                     IsSelected="{Binding TabCustomerIsSelected}">
+                <ContentControl x:Name="CustomerViewModel" />
+                <!--<NewUserControl:CustomerViewModel/>-->
             </TabItem>
         </TabControl>
     </DockPanel>

@@ -9,8 +9,11 @@ using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.Models;
 using WPFDesktopUI.Controllers;
 using WPFDesktopUI.Models;
+using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.Models.SidePaneModels.Attributes;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
+using WPFDesktopUI.Models.SidePaneModels.Interfaces;
+using WPFDesktopUI.ViewModels.Interfaces;
 using WPFDesktopUI.ViewModels.QuickBooks;
 
 namespace WPFDesktopUI.ViewModels {
@@ -28,6 +31,10 @@ namespace WPFDesktopUI.ViewModels {
 
     public static IQuickBooksSidePaneViewModel CreateQuickBooksSidePaneViewModel() {
       return new QuickBooksSidePaneViewModel();
+    }
+
+    public static ICustomerViewModel<ICustomer> CreateCustomerViewModel() {
+      return new CustomerViewModel();
     }
 
     #endregion View Models

@@ -10,6 +10,10 @@ namespace MCBusinessLogic.Controllers.Interfaces {
 
     List<string> GetTemplateNamesList();
 
+    List<string> GetItemNamesList();
+
     List<string> GetTermsNamesList();
+
+    List<string> GetCustomerNamesList();
   }
 }

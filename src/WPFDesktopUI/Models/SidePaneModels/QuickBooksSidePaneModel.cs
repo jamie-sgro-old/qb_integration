@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
+using WPFDesktopUI.Models.SidePaneModels.Interfaces;
 
 namespace WPFDesktopUI.Models {
   public class QuickBooksSidePaneModel : IQuickBooksSidePaneModel {

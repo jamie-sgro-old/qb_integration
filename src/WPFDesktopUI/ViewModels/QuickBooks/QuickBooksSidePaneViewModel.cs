@@ -8,12 +8,12 @@ using MCBusinessLogic.Controllers;
 using MCBusinessLogic.Controllers.Interfaces;
 using WPFDesktopUI.Models;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
-using WPFDesktopUI.ViewModels.Interfaces;
+using WPFDesktopUI.Models.SidePaneModels.Interfaces;
 using stn = WPFDesktopUI.Controllers.SettingsController;
 using ErrHandler = WPFDesktopUI.Controllers.QbImportExceptionHandler;
 
 namespace WPFDesktopUI.ViewModels.QuickBooks {
-  public class QuickBooksSidePaneViewModel : Screen, IMainTab, IQuickBooksSidePaneViewModel {
+  public class QuickBooksSidePaneViewModel : Screen, IQuickBooksSidePaneViewModel {
     public QuickBooksSidePaneViewModel() {
       QbspModel = Factory.CreateQuickBooksSidePaneModel();
 
@@ -66,10 +66,9 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     }
 
     public IQuickBooksSidePaneModel QbspModel { get; set; }
-    public bool CanQbExport { get; set; } = true;
+    public bool CanQbInteract { get; set; } = true;
     public bool QbProgressBarIsVisible { get; set; } = false;
     public string ConsoleMessage { get; set; } = "Please select 'Query QuickBooks' before custom lists can be generated";
-
 
     public async void OnSelected() {
       await Task.Run(() => {
@@ -89,7 +88,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       });
     }
 
-    public async void QbExport() {
+    public async Task QbInteract() {
       SessionStart();
       try {
         // Update template list from QB
@@ -111,13 +110,13 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       } catch (Exception e) {
         ConsoleMessage = ErrHandler.DelegateHandle(e);
       } finally {
-        CanQbExport = true;
+        CanQbInteract = true;
         QbProgressBarIsVisible = false;
       }
     }
 
     private void SessionStart() {
-      CanQbExport = false;
+      CanQbInteract = false;
       QbProgressBarIsVisible = true;
     }
 

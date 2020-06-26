@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.Models;
+using WPFDesktopUI.Models.CustomerModels;
+using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 using WPFDesktopUI.ViewModels;
 
@@ -17,21 +19,23 @@ namespace WPFDesktopUI.Models {
       _qbImportController = qbImportController;
     }
 
-
-
+    
+    
     private Dictionary<string, IQbAttribute> _attr { get; }
     private IQbImportController _qbImportController { get; }
 
 
 
-    public async Task QbImport(DataTable dt) {
+    public async Task QbImport(DataTable dt, List<Customer> cxList) {
       ValidateDt(dt);
 
       var csvModels = MapDataTableToModel(dt);
 
+      var appliedCsvModels = ApplyCxRules(csvModels, cxList);
+
       await Task.Run(() => {
         var qbImportController = _qbImportController;
-        qbImportController.Import(csvModels);
+        qbImportController.Import(appliedCsvModels);
       });
     }
 
@@ -77,6 +81,20 @@ namespace WPFDesktopUI.Models {
       }
 
       return convertedList.ToList();
+    }
+
+    private List<ICsvModel> ApplyCxRules(List<ICsvModel> csvModels, List<Customer> cxList) {
+      // Overwrite values based on Customer Rules
+      foreach (var cx in cxList) {
+        foreach (var row in csvModels) {
+          if (row.CustomerRefFullName == cx.Name) {
+            row.PONumber = cx.PoNumber;
+            row.TermsRefFullName = cx.TermsRefFullName;
+          }
+        }
+      }
+
+      return csvModels;
     }
   }
 }

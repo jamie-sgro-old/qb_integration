@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using MCBusinessLogic.Controllers.Interfaces;
+using MCBusinessLogic.DataAccess;
 using MCBusinessLogic.Models;
 using QBConnect;
 using QBConnect.Models;
 
 namespace MCBusinessLogic.Controllers {
-  public class QbImportController : IQbImportController 
-  {
+  public class QbImportController : IQbImportController {
     public QbImportController(string qbFilePath, Func<IClientInvoiceHeaderModel> headerFunc, Func<string, IInvoiceImporter> invoiceFunc) {
       QbFilePath = qbFilePath;
       _headerFunc = headerFunc;
