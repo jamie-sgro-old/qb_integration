@@ -51,6 +51,7 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\QuickBooksModels\GroupByTests.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\QbDateTimeAttributeTests.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\QbComboBoxTests.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\QbStringAttributeTests.cs" />
@@ -64,6 +65,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MCBusinessLogic\MCBusinessLogic.csproj">
+      <Project>{83EAEC0B-5CAF-4767-841B-21D913A8557A}</Project>
+      <Name>MCBusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QBConnect\QBConnect.csproj">
+      <Project>{370F8889-4815-4BC4-ADBF-BF305A4A41A3}</Project>
+      <Name>QBConnect</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WPFDesktopUI\WPFDesktopUI.csproj">
       <Project>{C75264BD-5136-4FB1-8857-44AC126EF9E4}</Project>
       <Name>WPFDesktopUI</Name>
