@@ -6,8 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.Models;
+using MCBusinessLogic.Models.Interfaces;
 using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
+using WPFDesktopUI.Models.QuickBooksModels;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 using WPFDesktopUI.ViewModels;
 
@@ -33,9 +35,13 @@ namespace WPFDesktopUI.Models {
 
       var appliedCsvModels = ApplyCxRules(csvModels, cxList);
 
+      var groupBy = GroupBy.GroupInvoices(appliedCsvModels);
+
+      var appendLine = AppendLine(groupBy, cxList);
+
       await Task.Run(() => {
         var qbImportController = _qbImportController;
-        qbImportController.Import(appliedCsvModels);
+        qbImportController.Import(groupBy);
       });
     }
 
@@ -83,6 +89,13 @@ namespace WPFDesktopUI.Models {
       return convertedList.ToList();
     }
 
+    /// <summary>
+    /// Overwrite various header items with constant values based on customer names
+    /// supplied in the 'Customers' tab
+    /// </summary>
+    /// <param name="csvModels"></param>
+    /// <param name="cxList"></param>
+    /// <returns></returns>
     private List<ICsvModel> ApplyCxRules(List<ICsvModel> csvModels, List<Customer> cxList) {
       // Overwrite values based on Customer Rules
       foreach (var cx in cxList) {
@@ -95,6 +108,42 @@ namespace WPFDesktopUI.Models {
       }
 
       return csvModels;
+    }
+
+    /// <summary>
+    /// Add a final line at the bottom of every invoice based on customer names
+    /// supplied in the 'Customers' tab
+    /// </summary>
+    /// <param name="csvModels"></param>
+    /// <param name="cxList"></param>
+    /// <returns></returns>
+    private List<IInvoice> AppendLine(List<IInvoice> invoices, List<Customer> cxList) {
+      // Overwrite values based on Customer Rules
+      foreach (var invoice in invoices) {
+        foreach (var cx in cxList) {
+          if (invoice.Header.CustomerRefFullName == cx.Name) {
+            if (cx.AppendLineItem1 != null) {
+              invoice.Lines.Add(new CsvModel {
+                ItemRef = cx.AppendLineItem1
+              });
+            }
+
+            if (cx.AppendLineItem2 != null) {
+              invoice.Lines.Add(new CsvModel {
+                ItemRef = cx.AppendLineItem2
+              });
+            }
+
+            if (cx.AppendLineItem3 != null) {
+              invoice.Lines.Add(new CsvModel {
+                ItemRef = cx.AppendLineItem3
+              });
+            }
+          }
+        }
+      }
+
+      return invoices;
     }
   }
 }

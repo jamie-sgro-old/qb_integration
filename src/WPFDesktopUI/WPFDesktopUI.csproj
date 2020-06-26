@@ -128,6 +128,7 @@
     <Compile Include="Models\CustomerModels\Customer.cs" />
     <Compile Include="Models\CustomerModels\Interfaces\ICustomer.cs" />
     <Compile Include="Models\CustomerModels\Interfaces\IDb.cs" />
+    <Compile Include="Models\QuickBooksModels\GroupBy.cs" />
     <Compile Include="Models\QuickBooksModels\Interfaces\IQuickBooksModel.cs" />
     <Compile Include="Models\QuickBooksModels\QuickBooksModel.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQBDropDownAttribute.cs" />

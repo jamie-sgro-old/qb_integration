@@ -15,5 +15,8 @@ namespace WPFDesktopUI.Models.CustomerModels {
     public string PoNumber { get; set; }
     public string TermsRefFullName { get; set; }
     public bool ServiceCharge { get; set; }
+    public string AppendLineItem1 { get; set; }
+    public string AppendLineItem2 { get; set; }
+    public string AppendLineItem3 { get; set; }
   }
 }

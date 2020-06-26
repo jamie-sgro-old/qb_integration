@@ -33,5 +33,8 @@ namespace MCBusinessLogic.Models {
     public string Other2 { get; set; }
 
     #endregion Line
+    public object Clone() {
+      return MemberwiseClone();
+    }
   }
 }
