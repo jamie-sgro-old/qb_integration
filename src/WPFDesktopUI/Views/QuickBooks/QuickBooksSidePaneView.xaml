@@ -91,6 +91,7 @@
                                         </TextBlock>
                                         <ComboBox ItemsSource="{Binding Value.ComboBox.ItemsSource}"
                                                   SelectedItem="{Binding Value.ComboBox.SelectedItem}"
+                                                  IsTextSearchEnabled="True"
                                                   Grid.Column="1"
                                                   Style="{StaticResource QbSidePaneValue}"
                                                   ToolTipService.ShowOnDisabled = "True"
@@ -117,6 +118,7 @@
                                         </DatePicker>
                                         <ComboBox ItemsSource="{Binding Value.DropDownComboBox.ItemsSource}"
                                                   SelectedItem="{Binding Value.DropDownComboBox.SelectedItem}"
+                                                  IsTextSearchEnabled="True"
                                                   Grid.Column="2"
                                                   Visibility="{Binding Value.HasDropDownPayload, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
                                                   Style="{StaticResource QbSidePaneValue}"

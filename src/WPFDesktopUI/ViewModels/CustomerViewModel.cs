@@ -118,7 +118,10 @@ namespace WPFDesktopUI.ViewModels {
         @"UPDATE `customer`
         SET
           PoNumber = @PoNumber,
-          TermsRefFullName = @TermsRefFullName
+          TermsRefFullName = @TermsRefFullName,
+          AppendLineItem1 = @AppendLineItem1,
+          AppendLineItem2 = @AppendLineItem2,
+          AppendLineItem3 = @AppendLineItem3
         WHERE Name = @Name;", dataList);
     }
   }
