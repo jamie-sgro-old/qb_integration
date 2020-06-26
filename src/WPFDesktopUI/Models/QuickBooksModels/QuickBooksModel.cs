@@ -8,6 +8,7 @@ using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.Models;
 using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
+using WPFDesktopUI.Models.QuickBooksModels;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 using WPFDesktopUI.ViewModels;
 
@@ -32,6 +33,8 @@ namespace WPFDesktopUI.Models {
       var csvModels = MapDataTableToModel(dt);
 
       var appliedCsvModels = ApplyCxRules(csvModels, cxList);
+
+      var groupBy = GroupBy.GroupInvoices(appliedCsvModels);
 
       await Task.Run(() => {
         var qbImportController = _qbImportController;

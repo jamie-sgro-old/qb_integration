@@ -118,11 +118,6 @@ namespace QBConnect {
       foreach (IInvoiceLineItemModel line in lineItems) {
         new LineItem(header).AddLine(line);
       }
-
-      // Add SubTotal line item
-      IORInvoiceLineAdd subTotal = header.ORInvoiceLineAddList.Append();
-
-      subTotal.InvoiceLineAdd.ItemRef.FullName.SetValue("Sub- Totals");
     }
 
 

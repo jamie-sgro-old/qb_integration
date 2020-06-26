@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace MCBusinessLogic.Models {
-  public interface IClientInvoiceHeaderModel {
+  public interface IClientInvoiceHeaderModel : ICloneable {
     string ClassRefFullName { get; set; }
     string CustomerRefFullName { get; set; }
     string TemplateRefFullName { get; set; }

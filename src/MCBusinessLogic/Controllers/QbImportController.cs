@@ -70,6 +70,7 @@ namespace MCBusinessLogic.Controllers {
         if (newPropList.Count <= 0) {
           var lineItems = MapLineItems(group.ToList());
           var mappedHeader = MapHeader(header);
+
           invoiceImporter.Import(mappedHeader, lineItems);
           continue;
         }
