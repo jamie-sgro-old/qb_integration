@@ -38,7 +38,7 @@ namespace WPFDesktopUI.Models {
 
       await Task.Run(() => {
         var qbImportController = _qbImportController;
-        qbImportController.Import(appliedCsvModels);
+        qbImportController.Import(groupBy);
       });
     }
 

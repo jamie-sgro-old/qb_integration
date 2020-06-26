@@ -13,7 +13,7 @@ namespace MCBusinessLogic.UnitTests.Controllers {
   public class QbImportControllerTests {
     [TestMethod]
     public void QbFilePath_Init_Constructed() {
-      var qbi = new QbImportController("specified in the constructor parameters", null, null);
+      var qbi = new QbImportController("specified in the constructor parameters", null);
 
       var res = qbi.QbFilePath;
 
@@ -22,7 +22,7 @@ namespace MCBusinessLogic.UnitTests.Controllers {
 
     [TestMethod]
     public void QbFilePath_OnChange_NewString() {
-      var qbi = new QbImportController("specified in the constructor parameters", null, null);
+      var qbi = new QbImportController("specified in the constructor parameters", null);
       qbi.QbFilePath = "new QbFilePath";
 
       var res = qbi.QbFilePath;
@@ -34,7 +34,7 @@ namespace MCBusinessLogic.UnitTests.Controllers {
 
     [TestMethod]
     public void MapHeader_SingleData() {
-      var qbi = new QbImportController("QbFilePath", null, null);
+      var qbi = new QbImportController("QbFilePath", null);
       var csvModel = BaseCsvModel();
 
       var res = qbi.MapHeader(csvModel);
@@ -48,7 +48,7 @@ namespace MCBusinessLogic.UnitTests.Controllers {
 
     [TestMethod]
     public void MapHeader_ExtendedInterface_MockExtensionProps_NotIncluded() {
-      var qbi = new QbImportController("QbFilePath", null, null);
+      var qbi = new QbImportController("QbFilePath", null);
       // Reflection off of this property instead of the interface would
       // fail since Mock isn't a property in IInvoiceHeaderModel
       var csvModel = new MockInvoiceHeaderModel {
@@ -68,7 +68,7 @@ namespace MCBusinessLogic.UnitTests.Controllers {
 
     [TestMethod]
     public void MapLineItems_SingleData() {
-      var qbi = new QbImportController("QbFilePath", null, null);
+      var qbi = new QbImportController("QbFilePath", null);
       var csvModels = new List<ICsvModel> {
         BaseCsvModel()
       };
@@ -84,7 +84,7 @@ namespace MCBusinessLogic.UnitTests.Controllers {
 
     [TestMethod]
     public void MapLineItems_2SameData() {
-      var qbi = new QbImportController("QbFilePath", null, null);
+      var qbi = new QbImportController("QbFilePath", null);
       var csvModels = new List<ICsvModel> {
         BaseCsvModel(),
         BaseCsvModel()
@@ -106,7 +106,7 @@ namespace MCBusinessLogic.UnitTests.Controllers {
 
     [TestMethod]
     public void MapLineItems_2DifferentData() {
-      var qbi = new QbImportController("QbFilePath", null, null);
+      var qbi = new QbImportController("QbFilePath", null);
       var csvModels = new List<ICsvModel> {
         BaseCsvModel(),
         BaseCsvModel()

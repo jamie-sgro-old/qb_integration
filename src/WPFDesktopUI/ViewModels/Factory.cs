@@ -96,7 +96,7 @@ namespace WPFDesktopUI.ViewModels {
     #region Controllers
 
     public static IQbImportController CreateQbImportController() {
-      return new QbImportController(SettingsController.QbFilePath(), CreateClientInvoiceHeaderModel, McFactory.CreateInvoiceImporter);
+      return new QbImportController(SettingsController.QbFilePath(), McFactory.CreateInvoiceImporter);
     }
 
     public static IQbExportController CreateQbExportController() {
