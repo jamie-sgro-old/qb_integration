@@ -23,6 +23,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       /*** HEADER ***/
       // Add a corresponding property to IClientInvoiceHeaderModel (and it's children)
       // Ensure a corresponding method exists in QBConnect.Classes.HeaderItem
+      // Check Preset and IPreset methods as well
 
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "CustomerRefFullName", "CUSTOMER:JOB");
       QbspModel.Attr["CustomerRefFullName"].IsMandatory = true;
@@ -51,6 +52,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       /*** LINES ***/
       // Add a corresponding property to IClientInvoiceLineItemModel (and it's children)
       // Ensure a corresponding method exists in QBConnect.Classes.LineItem
+      // Check Preset and IPreset methods as well
 
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "ItemRef", "ITEM");
       QbspModel.Attr["ItemRef"].IsMandatory = true;
@@ -97,10 +99,10 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     }
 
     /// <summary>
-    /// Try to autopopulate the selected items for the comboboxes based on what data
+    /// Try to auto-populate the selected items for the comboboxes based on what data
     /// was selected on last import (when the sqlite table was last updated)
     /// </summary>
-    /// <param name="csvHeaders">A list of all options populating the comboboxes</param>
+    /// <param name="csvHeaders">A list of all options populating the combo boxes</param>
     public void AutopopulateComboBoxes(List<string> csvHeaders = null) {
 
       if (csvHeaders == null) {

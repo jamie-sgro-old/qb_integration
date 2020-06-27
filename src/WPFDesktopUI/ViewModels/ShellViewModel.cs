@@ -42,7 +42,13 @@ namespace WPFDesktopUI.ViewModels {
       }
 		}
 
-    public void MenuItemClose() {
+    public void MenuItemSaveCustomerRules() {
+      if (!CustomerViewModel.CanBtnUpdate) return;
+			CustomerViewModel.BtnUpdate();
+    }
+
+
+		public void MenuItemClose() {
 			Application.Current.Shutdown();
 		}
 
@@ -57,6 +63,10 @@ namespace WPFDesktopUI.ViewModels {
 		public void MenuItemRestore() {
 			Application.Current.MainWindow.WindowState = WindowState.Normal;
 		}
+
+    public void MenuItemManagePresets() {
+      QuickBooksViewModel.QuickBooksSidePaneViewModel.AutopopulateComboBoxes(null);
+    }
 
 		public void MenuItemPreferences() {
 			IWindowManager manager = new WindowManager();
