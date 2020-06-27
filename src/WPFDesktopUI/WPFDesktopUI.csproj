@@ -147,6 +147,10 @@
     <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQbAttribute.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\QbComboBox.cs" />
     <Compile Include="Models\SidePaneModels\Interfaces\IQuickBooksSidePaneModel.cs" />
+    <Compile Include="Models\SidePaneModels\Presents\Interfaces\IPresetModel.cs" />
+    <Compile Include="Models\SidePaneModels\Presents\Interfaces\IPreset.cs" />
+    <Compile Include="Models\SidePaneModels\Presents\Preset.cs" />
+    <Compile Include="Models\SidePaneModels\Presents\PresetModel.cs" />
     <Compile Include="Models\SidePaneModels\QuickBooksSidePaneModel.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
