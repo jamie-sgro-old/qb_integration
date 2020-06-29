@@ -76,7 +76,7 @@
                 <ScrollViewer VerticalScrollBarVisibility="Auto" >
                     <DataGrid x:Name="CustomerDataGrid" 
                               cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding()]"
-                              ItemsSource="{Binding Cxs, Mode=TwoWay}"
+                              ItemsSource="{Binding ReactiveCollection, Mode=TwoWay}"
                               AutoGenerateColumns="True" 
                               AlternatingRowBackground="LightGray"
                               CanUserDeleteRows="False"

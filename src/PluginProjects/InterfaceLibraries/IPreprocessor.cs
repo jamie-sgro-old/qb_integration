@@ -1,7 +1,7 @@
 ﻿
 
 namespace InterfaceLibraries {
-  public interface IPreprocessor {
+  public interface IPreprocessor : IPlugin {
     string Preprocess(string dt);
   }
 }
