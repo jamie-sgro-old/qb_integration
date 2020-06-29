@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using Caliburn.Micro;
 using System.Windows;
+using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
@@ -16,7 +17,7 @@ namespace WPFDesktopUI.ViewModels {
 
 		public IImportViewModel ImportViewModel { get; }
 		public IQuickBooksViewModel QuickBooksViewModel { get; }
-		public ICustomerViewModel<ICustomer> CustomerViewModel { get; }
+		public ICustomerViewModel<Customer> CustomerViewModel { get; }
 
 		public bool TabImportIsSelected { get; set; } = true;
     public bool TabQuickBooksIsSelected { get; set; } = false;

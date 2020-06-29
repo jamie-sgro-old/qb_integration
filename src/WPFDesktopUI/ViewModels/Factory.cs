@@ -9,6 +9,7 @@ using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.Models;
 using WPFDesktopUI.Controllers;
 using WPFDesktopUI.Models;
+using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.Models.SidePaneModels.Attributes;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
@@ -34,13 +35,17 @@ namespace WPFDesktopUI.ViewModels {
       return new QuickBooksSidePaneViewModel();
     }
 
-    public static ICustomerViewModel<ICustomer> CreateCustomerViewModel() {
+    public static CustomerViewModel CreateCustomerViewModel() {
       return new CustomerViewModel();
     }
 
     #endregion View Models
 
     #region Screen Models
+
+    public static ICustomer CreateCustomer() {
+      return new Customer();
+    }
 
     public static IQuickBooksModel CreateQuickBooksModel(Dictionary<string, IQbAttribute> attr) {
       return new QuickBooksModel(attr, CreateQbImportController());
