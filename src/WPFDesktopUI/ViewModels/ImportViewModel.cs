@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
-using StaffNamePreprocessor;
+using InterfaceLibraries;
 //using WPFDesktopUI.Models.ImportModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
@@ -46,7 +46,6 @@ namespace WPFDesktopUI.ViewModels {
 
 
         foreach (Lazy<IPreprocessor, IPreprocessorMetaData> processor in _preprocessors) {
-          Console.WriteLine(processor.Metadata.Name);
           if (processor.Metadata.Name == "StaffNamePreprocessor") {
             Console.WriteLine(processor.Value.Preprocess(""));
           }

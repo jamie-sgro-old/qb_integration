@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PluginProjects", "PluginPro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffNamePreprocessor", "PluginProjects\StaffNamePreprocessor\StaffNamePreprocessor.csproj", "{7383E26D-6E26-4117-B328-6D2E126CFF1D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterfaceLibraries", "PluginProjects\InterfaceLibraries\InterfaceLibraries.csproj", "{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -237,12 +239,33 @@ Global
 		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Release|x64.Build.0 = Release|Any CPU
 		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Release|x86.ActiveCfg = Release|Any CPU
 		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Release|x86.Build.0 = Release|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Debug|ARM.Build.0 = Debug|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Debug|x64.Build.0 = Debug|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Debug|x86.Build.0 = Debug|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Release|ARM.ActiveCfg = Release|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Release|ARM.Build.0 = Release|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Release|ARM64.Build.0 = Release|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Release|x64.ActiveCfg = Release|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Release|x64.Build.0 = Release|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Release|x86.ActiveCfg = Release|Any CPU
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7383E26D-6E26-4117-B328-6D2E126CFF1D} = {01FD082C-E0F2-4673-A41B-79B0EEB46AEB}
+		{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02} = {01FD082C-E0F2-4673-A41B-79B0EEB46AEB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6998EAD5-54B7-4C45-957C-C0E56FCB77BE}
