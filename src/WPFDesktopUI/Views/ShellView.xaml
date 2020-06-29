@@ -18,7 +18,7 @@
             <MenuItem Header="_File">
                 <MenuItem Header="_Save Customer Rules"
                           x:Name="MenuItemSaveCustomerRules"
-                          InputGestureText="Ctrl+S">
+                          InputGestureText="Alt+F+S">
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="_Restore"
@@ -40,9 +40,9 @@
                 <MenuItem Command="Paste" />
             </MenuItem>
             <MenuItem Header="_Tools">
-                <MenuItem Header="_Manage Presets"
-                          x:Name="MenuItemManagePresets"/>
-                <MenuItem Header="_Show groups" IsCheckable="True" IsChecked="True" />
+                <MenuItem Header="_Restore Previous Preset"
+                          x:Name="MenuItemManagePresets"
+                          InputGestureText="Alt+T+R" />
             </MenuItem>
             <MenuItem Header="_Settings">
                 <MenuItem Header="_Preferences..."

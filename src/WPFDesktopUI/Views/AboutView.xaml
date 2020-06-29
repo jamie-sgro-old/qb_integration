@@ -8,6 +8,6 @@
         Icon="Images/icon-sangwa.ico"
         Title="About" Height="450" Width="800">
     <Grid>
-        <TextBlock Padding="20">Version: 0.3.0</TextBlock>
+        <TextBlock Padding="20">Version: 0.4.2</TextBlock>
     </Grid>
 </Window>
