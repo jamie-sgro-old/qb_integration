@@ -73,7 +73,14 @@ namespace WPFDesktopUI.ViewModels {
 
 			manager.ShowWindow(new PreferencesViewModel(), null, null);
 		}
-    public void MenuItemAbout() {
+
+    public void MenuItemPluginManager() {
+      IWindowManager manager = new WindowManager();
+
+      manager.ShowWindow(new PluginViewModel(), null, null);
+    }
+
+		public void MenuItemAbout() {
       IWindowManager manager = new WindowManager();
 
       manager.ShowWindow(new AboutViewModel(), null, null);

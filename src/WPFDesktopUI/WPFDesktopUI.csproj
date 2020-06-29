@@ -153,6 +153,7 @@
     <Compile Include="Models\SidePaneModels\Presents\Preset.cs" />
     <Compile Include="Models\SidePaneModels\Presents\PresetModel.cs" />
     <Compile Include="Models\SidePaneModels\QuickBooksSidePaneModel.cs" />
+    <Compile Include="ViewModels\PluginViewModel.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\Factory.cs" />
@@ -180,6 +181,9 @@
     </Compile>
     <Compile Include="Views\ImportView.xaml.cs">
       <DependentUpon>ImportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PluginView.xaml.cs">
+      <DependentUpon>PluginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PreferencesView.xaml.cs">
       <DependentUpon>PreferencesView.xaml</DependentUpon>
@@ -219,6 +223,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ImportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PluginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

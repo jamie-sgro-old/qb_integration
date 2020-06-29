@@ -43,6 +43,9 @@
                 <MenuItem Header="_Restore Previous Preset"
                           x:Name="MenuItemManagePresets"
                           InputGestureText="Alt+T+R" />
+                <MenuItem Header="_Plugin Manager"
+                          x:Name="MenuItemPluginManager"
+                          InputGestureText="Alt+T+P" />
             </MenuItem>
             <MenuItem Header="_Settings">
                 <MenuItem Header="_Preferences..."
