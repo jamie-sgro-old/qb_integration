@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using MCBusinessLogic.Controllers;
 using MCBusinessLogic.Controllers.Interfaces;
+using MCBusinessLogic.Models;
 using WPFDesktopUI.Models;
+using WPFDesktopUI.Models.SidePaneModels;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 using WPFDesktopUI.Models.SidePaneModels.Interfaces;
+using WPFDesktopUI.Models.SidePaneModels.Presents;
 using stn = WPFDesktopUI.Controllers.SettingsController;
 using ErrHandler = WPFDesktopUI.Controllers.QbImportExceptionHandler;
 
@@ -20,6 +23,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       /*** HEADER ***/
       // Add a corresponding property to IClientInvoiceHeaderModel (and it's children)
       // Ensure a corresponding method exists in QBConnect.Classes.HeaderItem
+      // Check Preset and IPreset methods as well
 
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "CustomerRefFullName", "CUSTOMER:JOB");
       QbspModel.Attr["CustomerRefFullName"].IsMandatory = true;
@@ -48,6 +52,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       /*** LINES ***/
       // Add a corresponding property to IClientInvoiceLineItemModel (and it's children)
       // Ensure a corresponding method exists in QBConnect.Classes.LineItem
+      // Check Preset and IPreset methods as well
 
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "ItemRef", "ITEM");
       QbspModel.Attr["ItemRef"].IsMandatory = true;
@@ -70,14 +75,14 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     public bool QbProgressBarIsVisible { get; set; } = false;
     public string ConsoleMessage { get; set; } = "Please select 'Query QuickBooks' before custom lists can be generated";
 
+    private bool _importedCsvHeaders { get; set; } = false;
+
     public async void OnSelected() {
       await Task.Run(() => {
         QbspModel.Attr["Other"].Name = stn.QbInvHasHeaderOther() ? stn.QbInvHeaderOtherName() : "OTHER";
 
-
-        var csvData = ImportViewModel.CsvData;
-        if (csvData == null) return;
-        var csvHeaders = GetCsvHeaders(csvData);
+        var csvHeaders = GetCsvHeaders();
+        if (csvHeaders == null) return;
 
         // Loop through all QbAttribute ComboBoxes in QbspModel
         foreach (var attribute in QbspModel.Attr) {
@@ -85,7 +90,42 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
           QbspModel.Attr[attribute.Key].ComboBox.ItemsSource = csvHeaders;
           QbspModel.Attr[attribute.Key].ComboBox.IsEnabled = true;
         }
+
+        if (_importedCsvHeaders == false) {
+          AutopopulateComboBoxes();
+          _importedCsvHeaders = true;
+        }
       });
+    }
+
+    /// <summary>
+    /// Try to auto-populate the selected items for the comboboxes based on what data
+    /// was selected on last import (when the sqlite table was last updated)
+    /// </summary>
+    /// <param name="csvHeaders">A list of all options populating the combo boxes</param>
+    public void AutopopulateComboBoxes(List<string> csvHeaders = null) {
+
+      if (csvHeaders == null) {
+        csvHeaders = GetCsvHeaders();
+        if (csvHeaders == null) return;
+      }
+
+      var preset = new Preset();
+      var presetModelsList = preset.Read<PresetModel>("Default");
+      if (presetModelsList.Count < 1) {
+        _importedCsvHeaders = true;
+        return;
+      }
+
+      foreach (var attribute in QbspModel.Attr) {
+        // Set default value to last imported setting
+        var presetModel = presetModelsList[0];
+
+        if (presetModel == null) continue;
+        var presetStr = presetModel.GetType().GetProperty(attribute.Key)?.GetValue(presetModel)?.ToString();
+        if (csvHeaders.Contains(presetStr) == false) continue;
+        QbspModel.Attr[attribute.Key].ComboBox.SelectedItem = presetStr;
+      }
     }
 
     public async Task QbInteract() {
@@ -156,7 +196,10 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       return terms;
     }
 
-    private static List<string> GetCsvHeaders(DataTable dt) {
+    private static List<string> GetCsvHeaders() {
+      var dt = ImportViewModel.CsvData;
+      if (dt == null) return null;
+
       string[] columnHeaders = dt?.Columns.Cast<DataColumn>()
         .Select(x => x.ColumnName)
         .ToArray();

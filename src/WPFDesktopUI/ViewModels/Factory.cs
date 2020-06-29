@@ -13,6 +13,7 @@ using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.Models.SidePaneModels.Attributes;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 using WPFDesktopUI.Models.SidePaneModels.Interfaces;
+using WPFDesktopUI.Models.SidePaneModels.Presents;
 using WPFDesktopUI.ViewModels.Interfaces;
 using WPFDesktopUI.ViewModels.QuickBooks;
 
@@ -60,6 +61,10 @@ namespace WPFDesktopUI.ViewModels {
 
     public static ICsvModel CreateCsvModel() {
       return new CsvModel();
+    }
+
+    public static IPresetModel CreatePresetModel() {
+      return new PresetModel();
     }
 
     #endregion Invoice Models

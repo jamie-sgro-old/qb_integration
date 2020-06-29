@@ -4,8 +4,11 @@ using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using MCBusinessLogic.Models;
 using WPFDesktopUI.ViewModels.QuickBooks;
 using WPFDesktopUI.Models;
+using WPFDesktopUI.Models.SidePaneModels;
+using WPFDesktopUI.Models.SidePaneModels.Presents;
 
 namespace WPFDesktopUI.ViewModels {
   public class QuickBooksViewModel : Conductor<object>, IQuickBooksViewModel {
@@ -32,7 +35,11 @@ namespace WPFDesktopUI.ViewModels {
       try {
 				SessionStart();
 
+
         var attr = QuickBooksSidePaneViewModel.QbspModel.Attr;
+
+        var preset = new Preset();
+        preset.Update(attr, "Default");
         IQuickBooksModel qbModel = Factory.CreateQuickBooksModel(attr);
 
         var cxs = CustomerViewModel.StaticCxs;

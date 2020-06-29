@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Caliburn.Micro;
 using WPFDesktopUI.Models;
@@ -10,5 +11,6 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     IQuickBooksSidePaneModel QbspModel { get; set; }
 
     event PropertyChangedEventHandler PropertyChanged;
+    void AutopopulateComboBoxes(List<string> csvHeaders);
   }
 }

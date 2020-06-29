@@ -9,9 +9,18 @@
         mc:Ignorable="d"
         Icon="Images/icon-sangwa.ico"
         Title="Invoice Importer by Sangwa" Height="600" Width="1000" MinHeight="400" MinWidth="400">
+    <Window.InputBindings>
+        <KeyBinding Command="ApplicationCommands.Save"
+                    Gesture="CTRL+R" />
+    </Window.InputBindings>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
+                <MenuItem Header="_Save Customer Rules"
+                          x:Name="MenuItemSaveCustomerRules"
+                          InputGestureText="Ctrl+S">
+                </MenuItem>
+                <Separator />
                 <MenuItem Header="_Restore"
                           x:Name="MenuItemRestore"/>
                 <MenuItem Header="_Minimize"
@@ -31,7 +40,8 @@
                 <MenuItem Command="Paste" />
             </MenuItem>
             <MenuItem Header="_Tools">
-                <MenuItem Header="_Manage users" />
+                <MenuItem Header="_Manage Presets"
+                          x:Name="MenuItemManagePresets"/>
                 <MenuItem Header="_Show groups" IsCheckable="True" IsChecked="True" />
             </MenuItem>
             <MenuItem Header="_Settings">
