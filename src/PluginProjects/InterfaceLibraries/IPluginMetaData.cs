@@ -1,10 +1,9 @@
 ﻿
 
 namespace InterfaceLibraries {
-  public interface IPreprocessorMetaData {
+  public interface IPluginMetaData {
     string Name { get; }
     string Author { get; }
     string Description { get; }
-    bool IsActive { get; }
   }
 }

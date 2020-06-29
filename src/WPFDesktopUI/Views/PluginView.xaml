@@ -14,8 +14,7 @@
                           AutoGenerateColumns="True" 
                           AlternatingRowBackground="LightGray"
                           CanUserDeleteRows="False"
-                          CanUserAddRows="False"
-                          IsReadOnly="{Binding IsReadOnly}">
+                          CanUserAddRows="False" >
                 </DataGrid>
             </ScrollViewer>
         </Grid>

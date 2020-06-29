@@ -13,7 +13,7 @@ using InterfaceLibraries;
 namespace WPFDesktopUI.ViewModels {
   public class ImportViewModel : Screen, IImportViewModel {
     [ImportMany(typeof(IPreprocessor), AllowRecomposition = true)]
-    IEnumerable<Lazy<IPreprocessor, IPreprocessorMetaData>> _preprocessors;
+    IEnumerable<Lazy<IPreprocessor, IPluginMetaData>> _preprocessors;
 
     public string CsvFilePath { get; set; }
     public DataView CsvDataView { get; set; }
@@ -43,7 +43,7 @@ namespace WPFDesktopUI.ViewModels {
         Compose();
 
 
-        foreach (Lazy<IPreprocessor, IPreprocessorMetaData> processor in _preprocessors) {
+        foreach (Lazy<IPreprocessor, IPluginMetaData> processor in _preprocessors) {
           Console.WriteLine(processor.Metadata.Name);
           if (processor.Metadata.Name == "StaffNamePreprocessor") {
             Console.WriteLine(processor.Value.Preprocess(""));

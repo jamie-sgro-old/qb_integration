@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
@@ -17,25 +18,29 @@ namespace WPFDesktopUI.ViewModels {
 
       Plugins = new ObservableCollection<IClientPlugin>();
 
-      foreach (Lazy<IPreprocessor, IPreprocessorMetaData> processor in _preprocessors) {
-        Plugins.Add(new ClientPlugin {
-          IsEnabled = false,
-          Name = processor.Metadata.Name,
-          Author = processor.Metadata.Author,
-          Description = processor.Metadata.Description
-        });
+      foreach (Lazy<IPreprocessor, IPluginMetaData> processor in _preprocessors) {
+        Plugins.Add(new ClientPlugin(false,
+          processor.Metadata.Name, 
+          processor.Metadata.Author, 
+          processor.Metadata.Description));
       }
     }
 
-    internal struct ClientPlugin : IClientPlugin {
+    internal class ClientPlugin : IClientPlugin {
+      public ClientPlugin(bool isEnabled, string name, string author, string description) {
+        IsEnabled = isEnabled;
+        Name = name;
+        Author = author;
+        Description = description;
+      }
       public bool IsEnabled { get; set; }
-      public string Name { get; set; }
-      public string Author { get; set; }
-      public string Description { get; set; }
+      public string Name { get; }
+      public string Author { get; }
+      public string Description { get;  }
     }
 
     [ImportMany(typeof(IPreprocessor), AllowRecomposition = true)]
-    IEnumerable<Lazy<IPreprocessor, IPreprocessorMetaData>> _preprocessors;
+    IEnumerable<Lazy<IPreprocessor, IPluginMetaData>> _preprocessors;
 
     public ObservableCollection<IClientPlugin> Plugins { get; set; }
 
@@ -50,8 +55,8 @@ namespace WPFDesktopUI.ViewModels {
 
   public interface IClientPlugin {
     bool IsEnabled { get; set; }
-    string Name { get; set; }
-    string Author { get; set; }
-    string Description { get; set; }
+    string Name { get; }
+    string Author { get; }
+    string Description { get; }
   }
 }
