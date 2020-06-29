@@ -9,8 +9,6 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using InterfaceLibraries;
-//using WPFDesktopUI.Models.ImportModels.Interfaces;
-using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
   public class ImportViewModel : Screen, IImportViewModel {
@@ -46,6 +44,7 @@ namespace WPFDesktopUI.ViewModels {
 
 
         foreach (Lazy<IPreprocessor, IPreprocessorMetaData> processor in _preprocessors) {
+          Console.WriteLine(processor.Metadata.Name);
           if (processor.Metadata.Name == "StaffNamePreprocessor") {
             Console.WriteLine(processor.Value.Preprocess(""));
           }
@@ -69,16 +68,6 @@ namespace WPFDesktopUI.ViewModels {
       CompositionContainer container = new CompositionContainer(catalog);
       //container.SatisfyImportsOnce(this);
       container.ComposeParts(this);
-    }
-
-    [Export(typeof(IPreprocessor))]
-    [ExportMetadata("Name", "BetaProcessor")]
-    [ExportMetadata("Author", "Jamie Sgro")]
-    [ExportMetadata("IsActive", false)]
-    public class BetaProcessor : IPreprocessor {
-      public string Preprocess(string dt) {
-        return "This is BetaProcessor.";
-      }
     }
   }
 }
