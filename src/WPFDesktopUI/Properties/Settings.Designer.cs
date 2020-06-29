@@ -94,5 +94,53 @@ namespace WPFDesktopUI.Properties {
                 this["StnQbInvHeaderOtherName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool StnQbInvHasHeaderOther1 {
+            get {
+                return ((bool)(this["StnQbInvHasHeaderOther1"]));
+            }
+            set {
+                this["StnQbInvHasHeaderOther1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Other1")]
+        public string StnQbInvHeaderOtherName1 {
+            get {
+                return ((string)(this["StnQbInvHeaderOtherName1"]));
+            }
+            set {
+                this["StnQbInvHeaderOtherName1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool StnQbInvHasHeaderOther2 {
+            get {
+                return ((bool)(this["StnQbInvHasHeaderOther2"]));
+            }
+            set {
+                this["StnQbInvHasHeaderOther2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Other2")]
+        public string StnQbInvHeaderOtherName2 {
+            get {
+                return ((string)(this["StnQbInvHeaderOtherName2"]));
+            }
+            set {
+                this["StnQbInvHeaderOtherName2"] = value;
+            }
+        }
     }
 }

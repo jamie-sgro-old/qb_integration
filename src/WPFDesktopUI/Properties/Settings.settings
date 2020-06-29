@@ -20,5 +20,17 @@
     <Setting Name="StnQbInvHeaderOtherName" Type="System.String" Scope="User">
       <Value Profile="(Default)">Other</Value>
     </Setting>
+    <Setting Name="StnQbInvHasHeaderOther1" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="StnQbInvHeaderOtherName1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Other1</Value>
+    </Setting>
+    <Setting Name="StnQbInvHasHeaderOther2" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="StnQbInvHeaderOtherName2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Other2</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
