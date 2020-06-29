@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}</ProjectGuid>
+    <ProjectGuid>{19A1F16D-4FE1-42C9-88BD-057E0FD3062F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>InterfaceLibraries</RootNamespace>
-    <AssemblyName>InterfaceLibraries</AssemblyName>
+    <RootNamespace>WeekendFinder</RootNamespace>
+    <AssemblyName>WeekendFinder</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,10 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPlugin.cs" />
-    <Compile Include="IPreprocessor.cs" />
-    <Compile Include="IPluginMetaData.cs" />
+    <Compile Include="WeekendFinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InterfaceLibraries\InterfaceLibraries.csproj">
+      <Project>{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}</Project>
+      <Name>InterfaceLibraries</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
