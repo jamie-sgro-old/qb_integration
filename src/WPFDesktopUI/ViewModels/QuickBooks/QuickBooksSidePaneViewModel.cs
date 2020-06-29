@@ -65,9 +65,11 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 
       QbspModel.AttrAdd(Factory.CreateQbDateTimeAttribute(), "ServiceDate", "SERVICE DATE");
 
-      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "Other1", "TIME IN OUT");
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(),
+        "Other1", stn.QbInvHasHeaderOther1() ? stn.QbInvHeaderOtherName1() : "OTHER1");
 
-      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "Other2", "STAFF NAME");
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(),
+        "Other2", stn.QbInvHasHeaderOther2() ? stn.QbInvHeaderOtherName2() : "OTHER2");
     }
 
     public IQuickBooksSidePaneModel QbspModel { get; set; }
@@ -80,6 +82,8 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     public async void OnSelected() {
       await Task.Run(() => {
         QbspModel.Attr["Other"].Name = stn.QbInvHasHeaderOther() ? stn.QbInvHeaderOtherName() : "OTHER";
+        QbspModel.Attr["Other1"].Name = stn.QbInvHasHeaderOther1() ? stn.QbInvHeaderOtherName1() : "OTHER1";
+        QbspModel.Attr["Other2"].Name = stn.QbInvHasHeaderOther2() ? stn.QbInvHeaderOtherName2() : "OTHER2";
 
         var csvHeaders = GetCsvHeaders();
         if (csvHeaders == null) return;
@@ -135,6 +139,10 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
         var templateList = await InitTemplateRefFullName();
         QbspModel.Attr["TemplateRefFullName"].ComboBox.ItemsSource = templateList;
         QbspModel.Attr["TemplateRefFullName"].ComboBox.IsEnabled = true;
+        // Preset the selected item if the QB preferences setting matches one of the possible item sources
+        if (templateList.Contains(stn.QbInvTemplateName())) {
+          QbspModel.Attr["TemplateRefFullName"].ComboBox.SelectedItem = stn.QbInvHasTemplate() ? stn.QbInvTemplateName() : "";
+        }
 
         // Update terms list from QB
         var termsList = await InitTermsRefFullName();
