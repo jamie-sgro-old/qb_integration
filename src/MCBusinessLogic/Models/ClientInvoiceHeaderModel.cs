@@ -19,5 +19,8 @@ namespace MCBusinessLogic.Models {
     public string ShipAddress { get; set; }
     public string PONumber { get; set; }
     public string Other { get; set; }
+    public object Clone() {
+      return MemberwiseClone();
+    }
   }
 }

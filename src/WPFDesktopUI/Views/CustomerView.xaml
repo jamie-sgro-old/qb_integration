@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="WPFDesktopUI.Views.CustomerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:local="clr-namespace:WPFDesktopUI.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Border BorderThickness="20">
+        <DockPanel>
+
+            <!-- DOCKPANEL BOTTOM-->
+
+            <Grid DockPanel.Dock="Bottom">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+
+                <!-- ROW 0 -->
+
+                <TextBox x:Name="ConsoleMessage" 
+                         Grid.Row="1"
+                         Grid.Column="0"
+                         Grid.ColumnSpan="2"
+                         TextAlignment="Center"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         IsReadOnly="True"
+                         TextWrapping="Wrap"
+                         Margin="20">
+                </TextBox>
+
+
+                <!-- ROW 1 -->
+
+                <Grid Name="QbProgressBarIsVisible"
+                      Grid.Row="2"
+                      Grid.Column="0">
+                    <ProgressBar x:Name="QbProgressBar" 
+                                 Minimum="0"
+                                 Maximum="100"
+                                 IsIndeterminate="True"
+                                 Margin="10,10"
+                             
+                    >
+                    </ProgressBar>
+                </Grid>
+
+                <Button x:Name="QbInteract"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Style="{StaticResource ButtonClose}">
+                    Query Customer List
+                </Button>
+
+                <Button x:Name="BtnUpdate"
+                        Grid.Row="2"
+                        Grid.Column="2" 
+                        Style="{StaticResource ButtonClose}">
+                    Save
+                </Button>
+            </Grid>
+
+            <!-- DOCKPANEL TOP-->
+
+            <Grid DockPanel.Dock="Top">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                    <DataGrid x:Name="CustomerDataGrid" 
+                              cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding()]"
+                              ItemsSource="{Binding Cxs, Mode=TwoWay}"
+                              AutoGenerateColumns="True" 
+                              AlternatingRowBackground="LightGray"
+                              CanUserDeleteRows="False"
+                              CanUserAddRows="False"
+                              IsReadOnly="{Binding IsReadOnly}">
+                    </DataGrid>
+                </ScrollViewer>
+            </Grid>
+        </DockPanel>
+    </Border>
+</UserControl>

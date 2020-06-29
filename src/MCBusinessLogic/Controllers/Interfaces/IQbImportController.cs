@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MCBusinessLogic.Models;
+using MCBusinessLogic.Models.Interfaces;
 using QBConnect.Models;
 
 namespace MCBusinessLogic.Controllers.Interfaces {
@@ -9,6 +10,6 @@ namespace MCBusinessLogic.Controllers.Interfaces {
 
     IInvoiceHeaderModel MapHeader(IClientInvoiceHeaderModel preHeader);
     List<IInvoiceLineItemModel> MapLineItems(List<ICsvModel> lineItems);
-    void Import(List<ICsvModel> csvModels);
+    void Import(List<IInvoice> invoices);
   }
 }

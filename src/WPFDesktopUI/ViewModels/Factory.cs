@@ -9,8 +9,12 @@ using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.Models;
 using WPFDesktopUI.Controllers;
 using WPFDesktopUI.Models;
+using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.Models.SidePaneModels.Attributes;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
+using WPFDesktopUI.Models.SidePaneModels.Interfaces;
+using WPFDesktopUI.Models.SidePaneModels.Presents;
+using WPFDesktopUI.ViewModels.Interfaces;
 using WPFDesktopUI.ViewModels.QuickBooks;
 
 namespace WPFDesktopUI.ViewModels {
@@ -28,6 +32,10 @@ namespace WPFDesktopUI.ViewModels {
 
     public static IQuickBooksSidePaneViewModel CreateQuickBooksSidePaneViewModel() {
       return new QuickBooksSidePaneViewModel();
+    }
+
+    public static ICustomerViewModel<ICustomer> CreateCustomerViewModel() {
+      return new CustomerViewModel();
     }
 
     #endregion View Models
@@ -53,6 +61,10 @@ namespace WPFDesktopUI.ViewModels {
 
     public static ICsvModel CreateCsvModel() {
       return new CsvModel();
+    }
+
+    public static IPresetModel CreatePresetModel() {
+      return new PresetModel();
     }
 
     #endregion Invoice Models
@@ -89,7 +101,7 @@ namespace WPFDesktopUI.ViewModels {
     #region Controllers
 
     public static IQbImportController CreateQbImportController() {
-      return new QbImportController(SettingsController.QbFilePath(), CreateClientInvoiceHeaderModel, McFactory.CreateInvoiceImporter);
+      return new QbImportController(SettingsController.QbFilePath(), McFactory.CreateInvoiceImporter);
     }
 
     public static IQbExportController CreateQbExportController() {

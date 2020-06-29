@@ -9,9 +9,18 @@
         mc:Ignorable="d"
         Icon="Images/icon-sangwa.ico"
         Title="Invoice Importer by Sangwa" Height="600" Width="1000" MinHeight="400" MinWidth="400">
+    <Window.InputBindings>
+        <KeyBinding Command="ApplicationCommands.Save"
+                    Gesture="CTRL+R" />
+    </Window.InputBindings>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
+                <MenuItem Header="_Save Customer Rules"
+                          x:Name="MenuItemSaveCustomerRules"
+                          InputGestureText="Alt+F+S">
+                </MenuItem>
+                <Separator />
                 <MenuItem Header="_Restore"
                           x:Name="MenuItemRestore"/>
                 <MenuItem Header="_Minimize"
@@ -31,8 +40,9 @@
                 <MenuItem Command="Paste" />
             </MenuItem>
             <MenuItem Header="_Tools">
-                <MenuItem Header="_Manage users" />
-                <MenuItem Header="_Show groups" IsCheckable="True" IsChecked="True" />
+                <MenuItem Header="_Restore Previous Preset"
+                          x:Name="MenuItemManagePresets"
+                          InputGestureText="Alt+T+R" />
             </MenuItem>
             <MenuItem Header="_Settings">
                 <MenuItem Header="_Preferences..."
@@ -45,15 +55,20 @@
         </Menu>
         <TabControl cal:Message.Attach="[Event SelectionChanged]=[Action TabChange];"
                     DockPanel.Dock="Top">
-            <TabItem Header="Import"
+            <TabItem Header="{Binding ImportViewModel.TabHeader }"
                      IsSelected="{Binding TabImportIsSelected}">
                 <ContentControl x:Name="ImportViewModel" />
                 <!--<NewUserControl:ImportView/>-->
             </TabItem>
-            <TabItem Header="QuickBooks"
+            <TabItem Header="{Binding QuickBooksViewModel.TabHeader }"
                      IsSelected="{Binding TabQuickBooksIsSelected}">
                 <ContentControl x:Name="QuickBooksViewModel" />
                 <!--<NewUserControl:QuickBooksView/>-->
+            </TabItem>
+            <TabItem Header="{Binding CustomerViewModel.TabHeader }"
+                     IsSelected="{Binding TabCustomerIsSelected}">
+                <ContentControl x:Name="CustomerViewModel" />
+                <!--<NewUserControl:CustomerViewModel/>-->
             </TabItem>
         </TabControl>
     </DockPanel>

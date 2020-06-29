@@ -98,9 +98,8 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SQLite, Version=1.0.112.1, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Core.1.0.112.2\lib\net40\System.Data.SQLite.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+    <Reference Include="System.Data.SQLite, Version=1.0.113.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.113.1\lib\net46\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Caliburn.Micro.3.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -126,6 +125,10 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\QbImportExceptionHandler.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Models\CustomerModels\Customer.cs" />
+    <Compile Include="Models\CustomerModels\Interfaces\ICustomer.cs" />
+    <Compile Include="Models\CustomerModels\Interfaces\IDb.cs" />
+    <Compile Include="Models\QuickBooksModels\GroupBy.cs" />
     <Compile Include="Models\QuickBooksModels\Interfaces\IQuickBooksModel.cs" />
     <Compile Include="Models\QuickBooksModels\QuickBooksModel.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQBDropDownAttribute.cs" />
@@ -143,14 +146,23 @@
     <Compile Include="Models\SidePaneModels\Attributes\QbStringAttribute.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQbAttribute.cs" />
     <Compile Include="Models\SidePaneModels\Attributes\QbComboBox.cs" />
-    <Compile Include="Models\SidePaneModels\Attributes\Interfaces\IQuickBooksSidePaneModel.cs" />
+    <Compile Include="Models\SidePaneModels\Interfaces\IQuickBooksSidePaneModel.cs" />
+    <Compile Include="Models\SidePaneModels\Presents\Interfaces\IPresetModel.cs" />
+    <Compile Include="Models\SidePaneModels\Presents\Interfaces\IPreset.cs" />
+    <Compile Include="Models\SidePaneModels\Presents\Preset.cs" />
+    <Compile Include="Models\SidePaneModels\Presents\PresetModel.cs" />
     <Compile Include="Models\SidePaneModels\QuickBooksSidePaneModel.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
+    <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\Factory.cs" />
+    <Compile Include="ViewModels\Interfaces\ICustomerViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IImportViewModel.cs" />
     <Compile Include="ViewModels\ImportViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\ITabComponent.cs" />
     <Compile Include="ViewModels\Interfaces\IMainTab.cs" />
+    <Compile Include="ViewModels\Interfaces\IQbInteractable.cs" />
     <Compile Include="ViewModels\Interfaces\IQuickBooksViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IShellViewModel.cs" />
     <Compile Include="ViewModels\PreferencesViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesCsvImportViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesGeneralViewModel.cs" />
@@ -161,6 +173,9 @@
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomerView.xaml.cs">
+      <DependentUpon>CustomerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ImportView.xaml.cs">
       <DependentUpon>ImportView.xaml</DependentUpon>
@@ -195,6 +210,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CustomerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -280,14 +299,14 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets'))" />
     <Error Condition="!Exists('..\packages\Fody.6.1.1\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.1.1\build\Fody.targets'))" />
     <Error Condition="!Exists('..\packages\PropertyChanged.Fody.3.2.8\build\PropertyChanged.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PropertyChanged.Fody.3.2.8\build\PropertyChanged.Fody.props'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.113.1\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.113.1\build\net46\System.Data.SQLite.Core.targets'))" />
   </Target>
   <Import Project="..\packages\Fody.6.1.1\build\Fody.targets" Condition="Exists('..\packages\Fody.6.1.1\build\Fody.targets')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.113.1\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.113.1\build\net46\System.Data.SQLite.Core.targets')" />
 </Project>

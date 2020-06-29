@@ -12,6 +12,7 @@ namespace WPFDesktopUI.ViewModels {
     public string CsvFilePath { get; set; }
     public DataView CsvDataView { get; set; }
     public static DataTable CsvData { get; set; }
+    public string TabHeader { get; set; } = "Import";
 
 
 
@@ -36,15 +37,6 @@ namespace WPFDesktopUI.ViewModels {
         // Match data structure to the UI view (this lets the user see the data)
         CsvDataView = CsvData.DefaultView;
       });
-
-
-
-      /*
-      // Import to SQLite
-      SqliteDataAccess.SaveData<CsvModel>(@"INSERT INTO csv_data
-        (Item, Quantity, StaffName, TimeInOut, ServiceDate, Rate)
-        VALUES(@Item, @Quantity, @StaffName, @TimeInOut, @ServiceDate, @Rate);", CsvData);
-      */
     }
   }
 }

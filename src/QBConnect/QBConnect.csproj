@@ -87,6 +87,7 @@
     <Compile Include="Classes\Factory.cs" />
     <Compile Include="Classes\HeaderItem.cs" />
     <Compile Include="Classes\Interfaces\IClientSessionManager.cs" />
+    <Compile Include="Classes\Query\CustomerQuery.cs" />
     <Compile Include="Classes\Query\InvoiceQuery.cs" />
     <Compile Include="Classes\Query\TermsQuery.cs" />
     <Compile Include="Classes\Rollback\AbstractRollback.cs" />

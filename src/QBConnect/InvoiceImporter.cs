@@ -118,11 +118,6 @@ namespace QBConnect {
       foreach (IInvoiceLineItemModel line in lineItems) {
         new LineItem(header).AddLine(line);
       }
-
-      // Add SubTotal line item
-      IORInvoiceLineAdd subTotal = header.ORInvoiceLineAddList.Append();
-
-      subTotal.InvoiceLineAdd.ItemRef.FullName.SetValue("Sub- Totals");
     }
 
 
@@ -154,6 +149,11 @@ namespace QBConnect {
       return templateNamesList;
     }
 
+    public List<string> GetItemNamesList() {
+      var itemQuery = new ItemQuery(SessionManager);
+      List<string> itemNamesList = itemQuery.GetList<IORItemRetList>();
+      return itemNamesList;
+    }
 
     public List<string> GetInvoiceIdList() {
       var invoiceQuery = new InvoiceQuery(SessionManager);
@@ -165,6 +165,12 @@ namespace QBConnect {
       var termsQuery = new TermsQuery(SessionManager);
       List<string> termsNamesList = termsQuery.GetList<IORTermsRetList>();
       return termsNamesList;
+    }
+
+    public List<string> GetCustomerNamesList() {
+      var customerQuery = new CustomerQuery(SessionManager);
+      List<string> customerNamesList = customerQuery.GetList<ICustomerRetList>();
+      return customerNamesList;
     }
 
 

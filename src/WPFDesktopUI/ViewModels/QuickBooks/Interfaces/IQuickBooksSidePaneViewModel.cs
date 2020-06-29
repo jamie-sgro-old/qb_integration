@@ -1,26 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Caliburn.Micro;
 using WPFDesktopUI.Models;
+using WPFDesktopUI.Models.SidePaneModels.Interfaces;
+using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels.QuickBooks {
-  public interface IQuickBooksSidePaneViewModel {
+  public interface IQuickBooksSidePaneViewModel : ITabComponent, IQbInteractable {
     IQuickBooksSidePaneModel QbspModel { get; set; }
-    bool CanQbExport { get; set; }
-    bool QbProgressBarIsVisible { get; set; }
-    string ConsoleMessage { get; set; }
-
-    void OnSelected();
-
-    /// <summary>
-    /// Executed when 'Query QuickBooks' button is pressed
-    /// Connect to QB and get all data needed to populate smart dropdowns
-    /// i.e. to decide which template to use, the user should decide from a list
-    /// of actual templates used in QB, thus the combobox needs a list of
-    /// template strings
-    /// </summary>
-    void QbExport();
 
     event PropertyChangedEventHandler PropertyChanged;
+    void AutopopulateComboBoxes(List<string> csvHeaders);
   }
 }

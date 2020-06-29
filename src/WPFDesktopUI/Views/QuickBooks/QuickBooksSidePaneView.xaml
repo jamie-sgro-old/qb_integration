@@ -27,13 +27,16 @@
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock x:Name="ConsoleMessage" 
-                           Grid.Row="1"
-                           Grid.Column="0"
-                           Grid.ColumnSpan="2"
-                           TextAlignment="Center"
-                           TextWrapping="Wrap">
-                </TextBlock>
+                <TextBox x:Name="ConsoleMessage" 
+                         Grid.Row="1"
+                         Grid.Column="0"
+                         Grid.ColumnSpan="2"
+                         TextAlignment="Center"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         IsReadOnly="True"
+                         TextWrapping="Wrap">
+                </TextBox>
 
                 <Grid Name="QbProgressBarIsVisible"
                       Grid.Row="2"
@@ -48,7 +51,7 @@
                     </ProgressBar>
                 </Grid>
 
-                <Button x:Name="QbExport"
+                <Button x:Name="QbInteract"
                         Grid.Row="2"
                         Grid.Column="1" 
                         Style="{StaticResource ButtonClose}"
@@ -88,6 +91,7 @@
                                         </TextBlock>
                                         <ComboBox ItemsSource="{Binding Value.ComboBox.ItemsSource}"
                                                   SelectedItem="{Binding Value.ComboBox.SelectedItem}"
+                                                  IsTextSearchEnabled="True"
                                                   Grid.Column="1"
                                                   Style="{StaticResource QbSidePaneValue}"
                                                   ToolTipService.ShowOnDisabled = "True"
@@ -114,6 +118,7 @@
                                         </DatePicker>
                                         <ComboBox ItemsSource="{Binding Value.DropDownComboBox.ItemsSource}"
                                                   SelectedItem="{Binding Value.DropDownComboBox.SelectedItem}"
+                                                  IsTextSearchEnabled="True"
                                                   Grid.Column="2"
                                                   Visibility="{Binding Value.HasDropDownPayload, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
                                                   Style="{StaticResource QbSidePaneValue}"
