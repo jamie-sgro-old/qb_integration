@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace WPFDesktopUI.Models.CustomerModels.Interfaces {
   public interface IDb<T> {
+
+    bool CanBtnUpdate { get; set; }
+    void BtnUpdate();
+
     void Create<T>(List<T> dataList);
 
     ObservableCollection<T> Read<T>();
