@@ -43,6 +43,8 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "ShipAddress", "SHIP ADDRESS");
 
       QbspModel.AttrAdd(Factory.CreateQbDropDownAttribute(), "TermsRefFullName", "TERMS");
+      QbspModel.Attr["TermsRefFullName"].ToolTip = "Please select 'Query QuickBooks' before" +
+                                                      " custom lists can be generated";
 
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "PONumber", "P.O. NUMBER");
 
