@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QBConnect.UnitTests", "QBCo
 EndProject
 Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "Installer Build 16299", "Installer Build 16299\Installer Build 16299.wapproj", "{1E8CDD16-D071-4073-AE6F-C9E712CBE6D9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PluginProjects", "PluginProjects", "{01FD082C-E0F2-4673-A41B-79B0EEB46AEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffNamePreprocessor", "PluginProjects\StaffNamePreprocessor\StaffNamePreprocessor.csproj", "{7383E26D-6E26-4117-B328-6D2E126CFF1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -213,9 +217,32 @@ Global
 		{1E8CDD16-D071-4073-AE6F-C9E712CBE6D9}.Release|x86.ActiveCfg = Release|x86
 		{1E8CDD16-D071-4073-AE6F-C9E712CBE6D9}.Release|x86.Build.0 = Release|x86
 		{1E8CDD16-D071-4073-AE6F-C9E712CBE6D9}.Release|x86.Deploy.0 = Release|x86
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Debug|ARM.Build.0 = Debug|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Debug|x64.Build.0 = Debug|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Debug|x86.Build.0 = Debug|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Release|ARM.ActiveCfg = Release|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Release|ARM.Build.0 = Release|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Release|ARM64.Build.0 = Release|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Release|x64.ActiveCfg = Release|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Release|x64.Build.0 = Release|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Release|x86.ActiveCfg = Release|Any CPU
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7383E26D-6E26-4117-B328-6D2E126CFF1D} = {01FD082C-E0F2-4673-A41B-79B0EEB46AEB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6998EAD5-54B7-4C45-957C-C0E56FCB77BE}
