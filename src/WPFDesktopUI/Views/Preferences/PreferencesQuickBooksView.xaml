@@ -236,15 +236,7 @@
                  Height="18" />
 
         <!-- ROW 18 -->
-        <StackPanel  Orientation="Vertical"
-                    Grid.Row="18"
-                    Grid.ColumnSpan="2"
-                    >
-            <Separator Grid.ColumnSpan="2"/>
-            <TextBlock Text="Next Setting" 
-                       Style="{StaticResource Pref1}"
-                       />
-        </StackPanel >
+
 
     </Grid>
 </UserControl>
