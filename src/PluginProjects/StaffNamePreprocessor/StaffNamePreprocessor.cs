@@ -16,7 +16,7 @@ namespace StaffNamePreprocessor
       if (dt.Columns.Contains("First Name") == false) return dt; 
       if (dt.Columns.Contains("Last Name") == false) return dt;
 
-      dt.Columns.Add("FullName", typeof(string), "First Name+'/'+Last Name");
+      dt.Columns.Add("FullName", typeof(string), "[First Name] + ' ' + [Last Name]");
       return dt;
     }
   }
