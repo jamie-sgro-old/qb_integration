@@ -9,6 +9,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using InterfaceLibraries;
+using WPFDesktopUI.Models.PluginModels;
 
 namespace WPFDesktopUI.ViewModels {
   public class ImportViewModel : Screen, IImportViewModel {
@@ -19,6 +20,7 @@ namespace WPFDesktopUI.ViewModels {
     public DataView CsvDataView { get; set; }
     public static DataTable CsvData { get; set; }
     public string TabHeader { get; set; } = "Import";
+    public string ConsoleMessage { get; set; }
 
 
 
@@ -40,19 +42,15 @@ namespace WPFDesktopUI.ViewModels {
           col.ColumnName = col.ColumnName.Replace("[", "").Replace("]", "");
         }
 
-        
 
         try {
           // Try temporary data first
           var tempData = PluginPreprocess(CsvData);
           // Then overwrite final data property if everything went error free
           CsvData = tempData;
-        } catch (Exception e) {
-          Console.WriteLine(e);
-          Console.WriteLine(e.StackTrace);
-          throw;
+        } catch (PluginException e) {
+          ConsoleMessage = e.Message;
         }
-
 
 
         // Match data structure to the UI view (this lets the user see the data)
@@ -61,6 +59,7 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     private DataTable PluginPreprocess(DataTable dt) {
+
       DataTable rtnData = null;
       // Process all IPrepocessor plugins that are enabled by the user
       var plugins = Factory.CreatePluginModel().PluginModels;
@@ -71,9 +70,18 @@ namespace WPFDesktopUI.ViewModels {
 
         if (!isEnabled) continue;
 
-        var newData = processor.Value.Preprocess(dt);
-        if (newData != null) {
-          rtnData = newData;
+        try {
+          var newData = processor.Value.Preprocess(dt);
+          if (newData != null) {
+            rtnData = newData;
+          }
+        } catch (Exception e) {
+          Console.WriteLine(e);
+          Console.WriteLine(e.StackTrace);
+          throw new PluginException("The following plugin resulted in an error: " +
+                                    processor.Metadata.Name +
+                                    ". The error report is as follows:\n" +
+                                    e.Message);
         }
       }
 
