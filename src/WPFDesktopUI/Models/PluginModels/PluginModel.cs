@@ -10,9 +10,6 @@ using WPFDesktopUI.Models.PluginModels.Interfaces;
 
 namespace WPFDesktopUI.Models.PluginModels {
   public class PluginModel : IPluginModel {
-    public PluginModel() {
-    }
-
     public void Init() {
       Compose();
 
@@ -43,7 +40,7 @@ namespace WPFDesktopUI.Models.PluginModels {
     
     internal struct pluginEssentials : IClientEssentials {
       public bool IsEnabled { get; set; }
-      public string Name { get; }
+      public string Name { get; set; }
     }
     
     internal List<ClientPlugin> GetPluginModels(IEnumerable<pluginEssentials> essentials, IEnumerable<Lazy<IPlugin, IPluginMetaData>> plugins) {

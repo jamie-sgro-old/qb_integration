@@ -107,6 +107,76 @@ namespace WPFDesktopUI.UnitTests.Models.PluginModels {
       Assert.AreEqual("Description2", res[1].Description);
     }
 
+    [TestMethod]
+    public void SingleData_FirstTrue_AndSecondFalse() {
+      var pMod = new PluginModel();
+      var ess = new List<PluginModel.pluginEssentials>();
+      ess.Add(new PluginModel.pluginEssentials {
+        IsEnabled = true,
+        Name = "Name1"
+      });
+      Compose();
+      var res = pMod.GetPluginModels(ess, _pluginsOfTwo);
+
+      Assert.IsTrue(res.Count == 2);
+      Assert.AreEqual(true,           res[0].IsEnabled);
+      Assert.AreEqual("Name1",        res[0].Name);
+      Assert.AreEqual("Author1",      res[0].Author);
+      Assert.AreEqual("Description1", res[0].Description);
+      Assert.AreEqual(false,          res[1].IsEnabled);
+      Assert.AreEqual("Name2",        res[1].Name);
+      Assert.AreEqual("Author2",      res[1].Author);
+      Assert.AreEqual("Description2", res[1].Description);
+    }
+
+    [TestMethod]
+    public void NoData_FirstFalse_SecondFalse() {
+      var pMod = new PluginModel();
+      var ess = new List<PluginModel.pluginEssentials>();
+      Compose();
+      var res = pMod.GetPluginModels(ess, _pluginsOfTwo);
+
+      Assert.IsTrue(res.Count == 2);
+      Assert.AreEqual(false,          res[0].IsEnabled);
+      Assert.AreEqual("Name1",        res[0].Name);
+      Assert.AreEqual("Author1",      res[0].Author);
+      Assert.AreEqual("Description1", res[0].Description);
+      Assert.AreEqual(false,          res[1].IsEnabled);
+      Assert.AreEqual("Name2",        res[1].Name);
+      Assert.AreEqual("Author2",      res[1].Author);
+      Assert.AreEqual("Description2", res[1].Description);
+    }
+
+    [TestMethod]
+    public void WrongData_FirstFalse_SecondFalse() {
+      var pMod = new PluginModel();
+      var ess = new List<PluginModel.pluginEssentials>();
+      ess.Add(new PluginModel.pluginEssentials {
+        IsEnabled = true,
+        Name = "NoName1"
+      });
+      ess.Add(new PluginModel.pluginEssentials {
+        IsEnabled = true,
+        Name = "NoName2"
+      });
+      ess.Add(new PluginModel.pluginEssentials {
+        IsEnabled = true,
+        Name = "NoName3"
+      });
+      Compose();
+      var res = pMod.GetPluginModels(ess, _pluginsOfTwo);
+
+      Assert.IsTrue(res.Count == 2);
+      Assert.AreEqual(false,          res[0].IsEnabled);
+      Assert.AreEqual("Name1",        res[0].Name);
+      Assert.AreEqual("Author1",      res[0].Author);
+      Assert.AreEqual("Description1", res[0].Description);
+      Assert.AreEqual(false,          res[1].IsEnabled);
+      Assert.AreEqual("Name2",        res[1].Name);
+      Assert.AreEqual("Author2",      res[1].Author);
+      Assert.AreEqual("Description2", res[1].Description);
+    }
+
 
 
     [ImportMany(typeof(IPlugin), AllowRecomposition = true)]
