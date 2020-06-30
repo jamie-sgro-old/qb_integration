@@ -35,7 +35,6 @@ namespace WPFDesktopUI.Models.PluginModels {
       Create(PluginModels);
     }
 
-    public DataGrid PluginDataGrid { get; set; }
     [ImportMany(typeof(IPreprocessor), AllowRecomposition = true)]
     private IEnumerable<Lazy<IPlugin, IPluginMetaData>> _plugins;
     public List<ClientPlugin> PluginModels { get; set; }

@@ -20,7 +20,7 @@ using WPFDesktopUI.Models.PluginModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
-  public sealed class PluginViewModel : Conductor<object>, IDataGrid<ClientPlugin>, IDbViewModel {
+  public sealed class PluginViewModel : Conductor<object>, IPluginViewModel {
     public PluginViewModel() {
       PluginModel = Factory.CreatePluginModel();
 
@@ -28,7 +28,7 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     public IPluginModel PluginModel { get; set; }
-    public DataGrid PluginDataGrid { get; set; }
+    //public DataGrid PluginDataGrid { get; set; }
     public ObservableCollection<ClientPlugin> ReactiveCollection { get; set; }
     public string Title { get; set; } = "Plugin Manager";
 

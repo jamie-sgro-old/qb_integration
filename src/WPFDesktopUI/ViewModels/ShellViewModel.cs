@@ -86,5 +86,7 @@ namespace WPFDesktopUI.ViewModels {
 
       manager.ShowWindow(new AboutViewModel(), null, null);
     }
-	}
+
+    public string Title { get; set; } = "Invoice Importer by Sangwa";
+  }
 }

@@ -161,6 +161,8 @@
     <Compile Include="Models\SidePaneModels\Presents\PresetModel.cs" />
     <Compile Include="Models\SidePaneModels\QuickBooksSidePaneModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDataGrid.cs" />
+    <Compile Include="ViewModels\Interfaces\IPluginViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IWindow.cs" />
     <Compile Include="ViewModels\PluginViewModel.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
