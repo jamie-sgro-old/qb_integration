@@ -57,7 +57,9 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     public static IPluginModel CreatePluginModel() {
-      return new PluginModel();
+      var rtn = new PluginModel();
+      rtn.Init();
+      return rtn;
     }
 
     #endregion Screen Models

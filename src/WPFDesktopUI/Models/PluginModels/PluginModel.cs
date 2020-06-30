@@ -11,20 +11,36 @@ using WPFDesktopUI.Models.PluginModels.Interfaces;
 namespace WPFDesktopUI.Models.PluginModels {
   public class PluginModel : IPluginModel {
     public PluginModel() {
+    }
+
+    public void Init() {
       Compose();
 
       var essentials = Read<pluginEssentials>().AsEnumerable();
 
+      _initialized = true;
       PluginModels = GetPluginModels(essentials, _plugins);
 
       Create(PluginModels);
     }
 
-
     [ImportMany(typeof(IPlugin), AllowRecomposition = true)]
     private IEnumerable<Lazy<IPlugin, IPluginMetaData>> _plugins;
-    public List<ClientPlugin> PluginModels { get; set; }
 
+    private List<ClientPlugin> _pluginModels;
+
+    public List<ClientPlugin> PluginModels {
+      get {
+        if (!_initialized) {
+          throw new ArgumentException(@"Property cannot be evoked before running Init();", nameof(PluginModels));
+        }
+        return _pluginModels;
+      }
+      set => _pluginModels = value;
+    }
+
+    private bool _initialized { get; set; } = false;
+    
     internal struct pluginEssentials : IClientEssentials {
       public bool IsEnabled { get; set; }
       public string Name { get; }
