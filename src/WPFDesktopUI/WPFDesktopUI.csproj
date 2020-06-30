@@ -128,11 +128,14 @@
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Models\CustomerModels\Customer.cs" />
     <Compile Include="Models\CustomerModels\Interfaces\ICustomer.cs" />
-    <Compile Include="Models\CustomerModels\Interfaces\IDb.cs" />
+    <Compile Include="Models\DbModels\Interfaces\IDbModel.cs" />
+    <Compile Include="Models\DbModels\Interfaces\IDbViewModel.cs" />
     <Compile Include="Models\PluginModels\ClientPlugin.cs" />
     <Compile Include="Models\PluginModels\Interfaces\IClientDetails.cs" />
     <Compile Include="Models\PluginModels\Interfaces\IClientEssentials.cs" />
     <Compile Include="Models\PluginModels\Interfaces\IClientPlugin.cs" />
+    <Compile Include="Models\PluginModels\Interfaces\IPluginModel.cs" />
+    <Compile Include="Models\PluginModels\PluginModel.cs" />
     <Compile Include="Models\QuickBooksModels\GroupBy.cs" />
     <Compile Include="Models\QuickBooksModels\Interfaces\IQuickBooksModel.cs" />
     <Compile Include="Models\QuickBooksModels\QuickBooksModel.cs" />

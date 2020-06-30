@@ -11,6 +11,7 @@ using WPFDesktopUI.Controllers;
 using WPFDesktopUI.Models;
 using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
+using WPFDesktopUI.Models.PluginModels;
 using WPFDesktopUI.Models.SidePaneModels.Attributes;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 using WPFDesktopUI.Models.SidePaneModels.Interfaces;
@@ -53,6 +54,10 @@ namespace WPFDesktopUI.ViewModels {
 
     public static IQuickBooksSidePaneModel CreateQuickBooksSidePaneModel() {
       return new QuickBooksSidePaneModel(CreateQbComboBox);
+    }
+
+    public static IPluginModel CreatePluginModel() {
+      return new PluginModel();
     }
 
     #endregion Screen Models
