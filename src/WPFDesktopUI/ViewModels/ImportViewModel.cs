@@ -40,33 +40,51 @@ namespace WPFDesktopUI.ViewModels {
           col.ColumnName = col.ColumnName.Replace("[", "").Replace("]", "");
         }
 
-        Compose();
+        
 
-
-        foreach (Lazy<IPreprocessor, IPluginMetaData> processor in _preprocessors) {
-          Console.WriteLine(processor.Metadata.Name);
-          if (processor.Metadata.Name == "StaffNamePreprocessor") {
-            Console.WriteLine(processor.Value.Preprocess(""));
-          }
+        try {
+          // Try temporary data first
+          var tempData = PluginPreprocess(CsvData);
+          // Then overwrite final data property if everything went error free
+          CsvData = tempData;
+        } catch (Exception e) {
+          Console.WriteLine(e);
+          Console.WriteLine(e.StackTrace);
+          throw;
         }
 
 
-        //Lazy<IPreprocessor, IPreprocessorMetaData> selectedProcessor = _preprocessors.Where(s => (string)s.Metadata.Name == "AlphaProcessor").FirstOrDefault();
-        //selectedProcessor.Value.Preprocess("null");
-        /*foreach (var preprocessor in _preprocessors) {
-          Console.WriteLine(preprocessor.Preprocess("null"));
-        }*/
 
         // Match data structure to the UI view (this lets the user see the data)
         CsvDataView = CsvData.DefaultView;
       });
     }
 
+    private DataTable PluginPreprocess(DataTable dt) {
+      DataTable rtnData = null;
+      // Process all IPrepocessor plugins that are enabled by the user
+      var plugins = Factory.CreatePluginModel().PluginModels;
+      Compose();
+      foreach (Lazy<IPreprocessor, IPluginMetaData> processor in _preprocessors) {
+        var pluginDatabaseMatch = plugins.Where(x => x.Name == processor.Metadata.Name);
+        var isEnabled = pluginDatabaseMatch.FirstOrDefault().IsEnabled;
+
+        if (!isEnabled) continue;
+
+        var newData = processor.Value.Preprocess(dt);
+        if (newData != null) {
+          rtnData = newData;
+        }
+      }
+
+      // Return newly processed data if anything changed
+      // Otherwise just provide original data
+      return rtnData ?? dt;
+    }
+
     private void Compose() {
       DirectoryCatalog catalog = new DirectoryCatalog("Plugins", "*.dll");
-      //AssemblyCatalog catalog = new AssemblyCatalog(System.Reflection.Assembly.GetExecutingAssembly());
       CompositionContainer container = new CompositionContainer(catalog);
-      //container.SatisfyImportsOnce(this);
       container.ComposeParts(this);
     }
   }

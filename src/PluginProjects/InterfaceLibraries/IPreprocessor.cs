@@ -1,7 +1,7 @@
-﻿
+﻿using System.Data;
 
 namespace InterfaceLibraries {
   public interface IPreprocessor : IPlugin {
-    string Preprocess(string dt);
+    DataTable Preprocess(DataTable dt);
   }
 }

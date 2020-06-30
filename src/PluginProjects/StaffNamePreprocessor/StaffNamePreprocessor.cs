@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Composition;
+using System.Data;
 using InterfaceLibraries;
 
 namespace StaffNamePreprocessor
@@ -10,8 +11,13 @@ namespace StaffNamePreprocessor
   [ExportMetadata("Description", "In CSV import, make new column called 'FullName' that"+
                                  " combines 'First Name' and 'Last Name' columns")]
   public class StaffNamePreprocessor : IPreprocessor {
-    public string Preprocess(string dt) {
-      return "This is StaffNamePreprocessor.";
+    public DataTable Preprocess(DataTable dt) {
+
+      if (dt.Columns.Contains("First Name") == false) return dt; 
+      if (dt.Columns.Contains("Last Name") == false) return dt;
+
+      dt.Columns.Add("FullName", typeof(string), "First Name+'/'+Last Name");
+      return dt;
     }
   }
 }

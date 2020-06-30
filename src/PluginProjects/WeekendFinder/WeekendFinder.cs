@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,8 +15,8 @@ namespace WeekendFinder
   [ExportMetadata("Author", "Jamie Sgro")]
   [ExportMetadata("Description", "In CSV import, find which rows have dates that occured on a weekend")]
   public class WeekendFinder : IPreprocessor {
-    public string Preprocess(string dt) {
-      return "This is WeekendFinder.";
+    public DataTable Preprocess(DataTable dt) {
+      return null;
     }
   }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,8 +15,8 @@ namespace OvernightSeparator
   [ExportMetadata("Author", "Jamie Sgro")]
   [ExportMetadata("Description", "In CSV import, finds shifts that span several days and separates into new rows for each day")]
   public class OvernightSeparator : IPreprocessor {
-    public string Preprocess(string dt) {
-      return "This is OvernightSeparator.";
+    public DataTable Preprocess(DataTable dt) {
+      return null;
     }
   }
 }
