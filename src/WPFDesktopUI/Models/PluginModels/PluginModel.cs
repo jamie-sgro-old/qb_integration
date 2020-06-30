@@ -4,13 +4,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using InterfaceLibraries;
 using MCBusinessLogic.DataAccess;
-using WPFDesktopUI.Models.CustomerModels.Interfaces;
-using WPFDesktopUI.Models.DbModels.Interfaces;
 using WPFDesktopUI.Models.PluginModels.Interfaces;
 
 namespace WPFDesktopUI.Models.PluginModels {
@@ -18,30 +13,36 @@ namespace WPFDesktopUI.Models.PluginModels {
     public PluginModel() {
       Compose();
 
-      PluginModels = new List<ClientPlugin>();
-
       var essentials = Read<pluginEssentials>().AsEnumerable();
 
-      foreach (Lazy<IPlugin, IPluginMetaData> plugin in _plugins) {
-        var pluginDatabaseMatch = essentials.Where(x => x.Name == plugin.Metadata.Name);
+      PluginModels = GetPluginModels(essentials, _plugins);
 
-        PluginModels.Add(new ClientPlugin(
+      Create(PluginModels);
+    }
+
+
+    [ImportMany(typeof(IPlugin), AllowRecomposition = true)]
+    private IEnumerable<Lazy<IPlugin, IPluginMetaData>> _plugins;
+    public List<ClientPlugin> PluginModels { get; set; }
+
+    internal struct pluginEssentials : IClientEssentials {
+      public bool IsEnabled { get; set; }
+      public string Name { get; }
+    }
+    
+    internal List<ClientPlugin> GetPluginModels(IEnumerable<pluginEssentials> essentials, IEnumerable<Lazy<IPlugin, IPluginMetaData>> plugins) {
+      var pluginModels = new List<ClientPlugin>();
+
+      foreach (Lazy<IPlugin, IPluginMetaData> plugin in plugins) {
+        var pluginDatabaseMatch = essentials.Where(x => x.Name == plugin.Metadata.Name);
+        pluginModels.Add(new ClientPlugin(
           pluginDatabaseMatch.FirstOrDefault().IsEnabled,
           plugin.Metadata.Name,
           plugin.Metadata.Author,
           plugin.Metadata.Description));
       }
 
-      Create(PluginModels);
-    }
-
-    [ImportMany(typeof(IPreprocessor), AllowRecomposition = true)]
-    private IEnumerable<Lazy<IPlugin, IPluginMetaData>> _plugins;
-    public List<ClientPlugin> PluginModels { get; set; }
-
-    private struct pluginEssentials : IClientEssentials {
-      public bool IsEnabled { get; set; }
-      public string Name { get; }
+      return pluginModels;
     }
 
     private void Compose() {
