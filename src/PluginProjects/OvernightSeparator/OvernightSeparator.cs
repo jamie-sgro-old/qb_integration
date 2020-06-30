@@ -9,6 +9,7 @@ using InterfaceLibraries;
 namespace OvernightSeparator
 {
   [Export(typeof(IPreprocessor))]
+  [Export(typeof(IPlugin))]
   [ExportMetadata("Name", "OvernightSeparator")]
   [ExportMetadata("Author", "Jamie Sgro")]
   [ExportMetadata("Description", "In CSV import, finds shifts that span several days and separates into new rows for each day")]

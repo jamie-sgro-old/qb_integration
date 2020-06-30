@@ -9,6 +9,7 @@ using InterfaceLibraries;
 namespace WeekendFinder
 {
   [Export(typeof(IPreprocessor))]
+  [Export(typeof(IPlugin))]
   [ExportMetadata("Name", "WeekendFinder")]
   [ExportMetadata("Author", "Jamie Sgro")]
   [ExportMetadata("Description", "In CSV import, find which rows have dates that occured on a weekend")]

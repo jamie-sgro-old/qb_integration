@@ -4,6 +4,7 @@ using InterfaceLibraries;
 namespace StaffNamePreprocessor
 {
   [Export(typeof(IPreprocessor))]
+  [Export(typeof(IPlugin))]
   [ExportMetadata("Name", "StaffNamePreprocessor")]
   [ExportMetadata("Author", "Jamie Sgro")]
   [ExportMetadata("Description", "In CSV import, make new column called 'FullName' that"+
