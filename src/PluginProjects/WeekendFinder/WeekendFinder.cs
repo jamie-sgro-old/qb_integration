@@ -13,7 +13,9 @@ namespace WeekendFinder
   [Export(typeof(IPlugin))]
   [ExportMetadata("Name", "WeekendFinder")]
   [ExportMetadata("Author", "Jamie Sgro")]
-  [ExportMetadata("Description", "In CSV import, find which rows have dates that occured on a weekend")]
+  [ExportMetadata("Description", "In CSV import, make new column called 'PositionWkd' that" +
+                                 " adds '- WKD' to data found in the 'Position' when the"+
+                                 " 'Date' column occurs on Saturday or Sunday")]
   public class WeekendFinder : IPreprocessor {
     public DataTable Preprocess(DataTable dt) {
       if (dt.Columns.Contains("Date") == false) return dt;
