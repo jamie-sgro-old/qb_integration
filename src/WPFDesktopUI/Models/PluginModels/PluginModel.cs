@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Configuration;
 using System.Linq;
+using System.Windows;
 using InterfaceLibraries;
 using MCBusinessLogic.DataAccess;
+using WPFDesktopUI.Controllers;
 using WPFDesktopUI.Models.PluginModels.Interfaces;
 
 namespace WPFDesktopUI.Models.PluginModels {
@@ -29,6 +32,7 @@ namespace WPFDesktopUI.Models.PluginModels {
     public List<ClientPlugin> PluginModels {
       get {
         if (!_initialized) {
+          log.Warn("Property cannot be evoked before running Init()");
           throw new ArgumentException(@"Property cannot be evoked before running Init();", nameof(PluginModels));
         }
         return _pluginModels;
@@ -59,21 +63,19 @@ namespace WPFDesktopUI.Models.PluginModels {
     }
 
     private void Compose() {
-      DirectoryCatalog catalog = new DirectoryCatalog("Plugins", "*.dll");
-      //AssemblyCatalog catalog = new AssemblyCatalog(System.Reflection.Assembly.GetExecutingAssembly());
-      CompositionContainer container = new CompositionContainer(catalog);
-      //container.SatisfyImportsOnce(this);
+      CompositionContainer container = PluginHelper.GetContainer();
       container.ComposeParts(this);
     }
 
     public void Create<T>(List<T> dataList) {
+      log.Debug("Writing to sql: Create");
       SqliteDataAccess.SaveData(
         @"INSERT OR IGNORE INTO `plugin` (IsEnabled, Name)
           VALUES (@IsEnabled, @Name);", dataList);
     }
 
     public ObservableCollection<T> Read<T>() {
-
+      log.Debug("Reading from sql");
       var query = "SELECT IsEnabled, Name FROM plugin";
       var list = SqliteDataAccess.LoadData<T>(query);
 
@@ -83,6 +85,7 @@ namespace WPFDesktopUI.Models.PluginModels {
     }
 
     public void Update<T>(ObservableCollection<T> dataList) {
+      log.Debug("Writing to sql: Update");
       SqliteDataAccess.SaveData(
         @"UPDATE `plugin`
         SET
@@ -90,5 +93,7 @@ namespace WPFDesktopUI.Models.PluginModels {
           Name = @Name
         WHERE Name = @Name;", dataList);
     }
+
+    private static readonly log4net.ILog log = LogHelper.GetLogger();
   }
 }

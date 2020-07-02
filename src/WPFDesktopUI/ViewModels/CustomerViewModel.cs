@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using Caliburn.Micro;
 using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.DataAccess;
+using WPFDesktopUI.Controllers;
 using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
@@ -18,10 +19,9 @@ namespace WPFDesktopUI.ViewModels {
     private ObservableCollection<Customer> _reactiveCollection;
 
     public CustomerViewModel() {
+      log.Debug("Getting Customer data from sql");
       ReactiveCollection = Read<Customer>();
     }
-
-    public DataGrid CustomerDataGrid { get; set; }
 
     public ObservableCollection<Customer> ReactiveCollection {
       get => _reactiveCollection;
@@ -57,6 +57,7 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     public async Task QbInteract() {
+      log.Info("QuickBooks interact button pressed. Data query starting");
       SessionStart();
       try {
         // Update items list from QB
@@ -71,6 +72,7 @@ namespace WPFDesktopUI.ViewModels {
       }
       catch (Exception e) {
         ConsoleMessage = ErrHandler.DelegateHandle(e);
+        log.Error(ConsoleMessage, e);
       }
       finally {
         CanQbInteract = true;
@@ -126,5 +128,7 @@ namespace WPFDesktopUI.ViewModels {
           AppendLineItem3 = @AppendLineItem3
         WHERE Name = @Name;", dataList);
     }
+
+    private static readonly log4net.ILog log = LogHelper.GetLogger();
   }
 }

@@ -9,6 +9,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using InterfaceLibraries;
+using WPFDesktopUI.Controllers;
 using WPFDesktopUI.Models.PluginModels;
 
 namespace WPFDesktopUI.ViewModels {
@@ -30,14 +31,17 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     public async Task BtnOpenCsvFile() {
+      log.Info("Importing csv file via btn");
       var fileName = FileSystemHelper.GetFilePath("CSV (Comma delimited) |*.csv");
       CsvFilePath = fileName;
       var sep = Properties.Settings.Default["StnCsvSeparation"].ToString();
 
       await Task.Run(() => {
+        log.Info("Parsing csv data");
         CsvData = CsvParser.ParseFromFile(fileName, sep);
 
         // Sanitize column headers
+        log.Debug("Sanitizing column header");
         foreach (DataColumn col in CsvData.Columns) {
           col.ColumnName = col.ColumnName.Replace("[", "").Replace("]", "");
         }
@@ -45,10 +49,12 @@ namespace WPFDesktopUI.ViewModels {
 
         try {
           // Try temporary data first
+          log.Info("Loading plugins for csv importer");
           var tempData = PluginPreprocess(CsvData);
           // Then overwrite final data property if everything went error free
           CsvData = tempData;
         } catch (PluginException e) {
+          log.Error("Plugin could not be consumed by csv importer", e);
           ConsoleMessage = e.Message;
         }
 
@@ -76,8 +82,8 @@ namespace WPFDesktopUI.ViewModels {
             rtnData = newData;
           }
         } catch (Exception e) {
-          Console.WriteLine(e);
-          Console.WriteLine(e.StackTrace);
+          log.Error("The following plugin resulted in an error: " +
+                    processor.Metadata.Name, e);
           throw new PluginException("The following plugin resulted in an error: " +
                                     processor.Metadata.Name +
                                     ". The error report is as follows:\n" +
@@ -91,9 +97,11 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     private void Compose() {
-      DirectoryCatalog catalog = new DirectoryCatalog("Plugins", "*.dll");
-      CompositionContainer container = new CompositionContainer(catalog);
+      log.Debug("Creating plugin container");
+      CompositionContainer container = PluginHelper.GetContainer();
       container.ComposeParts(this);
     }
+
+    private static readonly log4net.ILog log = LogHelper.GetLogger();
   }
 }

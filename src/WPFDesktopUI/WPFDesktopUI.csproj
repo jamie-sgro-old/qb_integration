@@ -92,6 +92,9 @@
     <Reference Include="Caliburn.Micro.Platform.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
       <HintPath>..\packages\Caliburn.Micro.3.2.0\lib\net45\Caliburn.Micro.Platform.Core.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="PropertyChanged, Version=3.2.8.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.3.2.8\lib\net40\PropertyChanged.dll</HintPath>
     </Reference>
@@ -124,6 +127,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controllers\LogHelper.cs" />
     <Compile Include="Controllers\QbImportExceptionHandler.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Models\CustomerModels\Customer.cs" />
@@ -136,6 +140,7 @@
     <Compile Include="Models\PluginModels\Interfaces\IClientPlugin.cs" />
     <Compile Include="Models\PluginModels\Interfaces\IPluginModel.cs" />
     <Compile Include="Models\PluginModels\PluginException.cs" />
+    <Compile Include="Models\PluginModels\PluginHelper.cs" />
     <Compile Include="Models\PluginModels\PluginModel.cs" />
     <Compile Include="Models\QuickBooksModels\GroupBy.cs" />
     <Compile Include="Models\QuickBooksModels\Interfaces\IQuickBooksModel.cs" />
@@ -289,8 +294,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="bin\x86\Debug\Plugins\StaffNamePreprocessor.dll" />
-    <Content Include="bin\x86\Debug\Plugins\StaffNamePreprocessor.pdb" />
+    <Content Include="bin\x86\Debug\Plugins\*.dll" />
+    <Content Include="bin\x86\Release\Plugins\*.dll" />
     <Content Include="Database\QbDb.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -323,10 +328,7 @@
   <ItemGroup>
     <Resource Include="Views\Images\icon-sangwa.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\" />
-    <Folder Include="bin\x86\Release\Plugins\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
