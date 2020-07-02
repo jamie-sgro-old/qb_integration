@@ -6,8 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WPFDesktopUI.Models.CustomerModels.Interfaces {
-  public interface IDb<T> {
+namespace WPFDesktopUI.Models.DbModels.Interfaces {
+  public interface IDbModel<T> {
+
     void Create<T>(List<T> dataList);
 
     ObservableCollection<T> Read<T>();

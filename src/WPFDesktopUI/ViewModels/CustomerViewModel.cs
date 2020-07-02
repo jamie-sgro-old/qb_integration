@@ -8,27 +8,26 @@ using System.Windows.Controls;
 using Caliburn.Micro;
 using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.DataAccess;
+using WPFDesktopUI.Controllers;
 using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 using ErrHandler = WPFDesktopUI.Controllers.QbImportExceptionHandler;
 
 namespace WPFDesktopUI.ViewModels {
-  public class CustomerViewModel : Screen, ICustomerViewModel<ICustomer> {
-    private ObservableCollection<Customer> _cxs;
+  public class CustomerViewModel : Screen, ICustomerViewModel<Customer> {
+    private ObservableCollection<Customer> _reactiveCollection;
 
     public CustomerViewModel() {
-      Cxs = Read<Customer>();
+      log.Debug("Getting Customer data from sql");
+      ReactiveCollection = Read<Customer>();
     }
-    public event PropertyChangedEventHandler PropertyChanged;
 
-    public DataGrid CustomerDataGrid { get; set; }
-
-    public ObservableCollection<Customer> Cxs {
-      get => _cxs;
+    public ObservableCollection<Customer> ReactiveCollection {
+      get => _reactiveCollection;
       set {
         StaticCxs = value.ToList();
-        _cxs = value;
+        _reactiveCollection = value;
       }
     }
 
@@ -38,15 +37,17 @@ namespace WPFDesktopUI.ViewModels {
     public bool QbProgressBarIsVisible { get; set; }
     public string TabHeader { get; set; } = "Customer";
     public bool CanBtnUpdate { get; set; } = false;
+
     
+    public event PropertyChangedEventHandler PropertyChanged;
     public void OnCellEditEnding() {
       TabHeader = TabHeader.Replace("*", "");
-      TabHeader = TabHeader + "*";
+      TabHeader += "*";
       CanBtnUpdate = true;
     }
 
     public void BtnUpdate() {
-      Update(Cxs);
+      Update(ReactiveCollection);
       TabHeader = TabHeader.Replace("*", "");
       CanBtnUpdate = false;
     }
@@ -56,6 +57,7 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     public async Task QbInteract() {
+      log.Info("QuickBooks interact button pressed. Data query starting");
       SessionStart();
       try {
         // Update items list from QB
@@ -65,11 +67,12 @@ namespace WPFDesktopUI.ViewModels {
         var nameList = customerList.Select(name => new NameList {Name = name}).ToList();
 
         Create(nameList);
-        Cxs = Read<Customer>();
+        ReactiveCollection = Read<Customer>();
         SessionEnd();
       }
       catch (Exception e) {
         ConsoleMessage = ErrHandler.DelegateHandle(e);
+        log.Error(ConsoleMessage, e);
       }
       finally {
         CanQbInteract = true;
@@ -105,11 +108,12 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     public ObservableCollection<T> Read<T>() {
+      // TODO: Make the id uppercased to match conventions
       var query = "SELECT id, * FROM customer";
-      var cxList = SqliteDataAccess.LoadData<T>(query);
+      var list = SqliteDataAccess.LoadData<T>(query);
 
       // Cast to observable collection
-      var collection = new ObservableCollection<T>(cxList);
+      var collection = new ObservableCollection<T>(list);
       return collection;
     }
 
@@ -124,5 +128,7 @@ namespace WPFDesktopUI.ViewModels {
           AppendLineItem3 = @AppendLineItem3
         WHERE Name = @Name;", dataList);
     }
+
+    private static readonly log4net.ILog log = LogHelper.GetLogger();
   }
 }
