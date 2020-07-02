@@ -293,8 +293,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="bin\x86\Debug\Plugins\StaffNamePreprocessor.dll" />
-    <Content Include="bin\x86\Debug\Plugins\StaffNamePreprocessor.pdb" />
+    <Content Include="bin\x86\Debug\Plugins\*.dll" />
+    <Content Include="bin\x86\Release\Plugins\*.dll" />
     <Content Include="Database\QbDb.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -327,10 +327,7 @@
   <ItemGroup>
     <Resource Include="Views\Images\icon-sangwa.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\" />
-    <Folder Include="bin\x86\Release\Plugins\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

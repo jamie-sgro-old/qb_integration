@@ -21,7 +21,7 @@ To create a new plugin:
 
    1. Under 'Build' select navigate to the 'Configuration:' dropdown and select '**Debug**'
       1. Overwrite the 'Output path:' for the 'Debug' configuration to the following:
-         1. ..\..\WPFDesktopUI\bin\x86\Release\Plugins\
+         1. ..\..\WPFDesktopUI\bin\x86\Debug\Plugins\
          2. Note that depending on the text editor, backslashes are made invisible, this path should have two sets of ..\
    2. Under 'Build' select navigate to the 'Configuration:' dropdown and select '**Release**'
       1. Overwrite the 'Output path:' for the 'Release' configuration to the following:

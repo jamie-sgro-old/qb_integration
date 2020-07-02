@@ -9,7 +9,7 @@
   <Identity
     Name="250da8c4-be7b-4ba8-aa56-52777d50c9f0"
     Publisher="CN=Sangwa Solutions"
-    Version="0.4.4.0" />
+    Version="0.4.19.0" />
 
   <Properties>
     <DisplayName>Installer Build 16299</DisplayName>

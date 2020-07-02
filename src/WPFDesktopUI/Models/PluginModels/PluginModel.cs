@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Configuration;
 using System.Linq;
+using System.Windows;
 using InterfaceLibraries;
 using MCBusinessLogic.DataAccess;
 using WPFDesktopUI.Models.PluginModels.Interfaces;
@@ -59,7 +61,13 @@ namespace WPFDesktopUI.Models.PluginModels {
     }
 
     private void Compose() {
-      DirectoryCatalog catalog = new DirectoryCatalog("Plugins", "*.dll");
+      #if DEBUG
+        var path = "Plugins";
+      #else
+        var path = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\x86\\Release\\Plugins";
+      #endif
+
+      DirectoryCatalog catalog = new DirectoryCatalog(path, "*.dll");
       //AssemblyCatalog catalog = new AssemblyCatalog(System.Reflection.Assembly.GetExecutingAssembly());
       CompositionContainer container = new CompositionContainer(catalog);
       //container.SatisfyImportsOnce(this);
