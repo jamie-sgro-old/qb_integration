@@ -91,14 +91,7 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     private void Compose() {
-      #if DEBUG
-        var path = "Plugins";
-      #else
-        var path = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\x86\\Release\\Plugins";
-      #endif
-
-      DirectoryCatalog catalog = new DirectoryCatalog(path, "*.dll");
-      CompositionContainer container = new CompositionContainer(catalog);
+      CompositionContainer container = PluginHelper.GetContainer();
       container.ComposeParts(this);
     }
   }
