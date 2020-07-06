@@ -35,13 +35,25 @@ namespace WPFDesktopUI.Models {
 
       var appliedCsvModels = ApplyCxRules(csvModels, cxList);
 
+      // Add replacer function for Cx
+      var a = new Dictionary<string, List<string>> {
+        {"RN", new List<string> {"Barrie Connie Thompson- PSW", "CLASS - DSW1"}}
+      };
+
+      foreach (var b in a) {
+        foreach (var c in b.Value) {
+          appliedCsvModels.Where(x => x.ItemRef == c).ToList().ForEach(x => x.ItemRef = b.Key);
+        }
+      }
+
+
       var groupBy = GroupBy.GroupInvoices(appliedCsvModels);
 
       var appendLine = AppendLine(groupBy, cxList);
 
       await Task.Run(() => {
         var qbImportController = _qbImportController;
-        qbImportController.Import(groupBy);
+        qbImportController.Import(appendLine);
       });
     }
 
@@ -111,7 +123,7 @@ namespace WPFDesktopUI.Models {
     }
 
     /// <summary>
-    /// Add a final line at the bottom of every invoice based on customer names
+    /// Add final lines at the bottom of every invoice based on customer names
     /// supplied in the 'Customers' tab
     /// </summary>
     /// <param name="csvModels"></param>
