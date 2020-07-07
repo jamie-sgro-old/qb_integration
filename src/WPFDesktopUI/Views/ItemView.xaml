@@ -31,17 +31,14 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>-->
 
-                <DataGrid x:Name="Replacer" 
+                <DataGrid x:Name="ItemReplacersDataGrid" 
                           cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding()]"
-                          ItemsSource="{Binding Replacer, Mode=TwoWay}"
+                          ItemsSource="{Binding SelectedItem, Mode=TwoWay}"
                           AutoGenerateColumns="True" 
                           AlternatingRowBackground="LightGray"
                           CanUserDeleteRows="False"
                           CanUserAddRows="False"
                           IsReadOnly="{Binding IsReadOnly}">
-                    <!--<DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Replacer}" />
-                    </DataGrid.Columns>-->
                 </DataGrid>
 
 
@@ -93,11 +90,11 @@
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
 
-                <ListView Name="ItemReplacer" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action OnKeyUp($this)]">
+                <ListView Name="UniqueReplaceWith" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action OnKeyUp($this)]">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ListViewItem >
-                                <TextBlock Text="{Binding Key}"/>
+                                <TextBlock Text="{Binding ReplaceWith}"/>
                             </ListViewItem>
                         </DataTemplate>
                     </ListView.ItemTemplate>
