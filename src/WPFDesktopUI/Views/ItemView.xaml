@@ -13,7 +13,69 @@
             <!-- DOCKPANEL BOTTOM-->
 
             <Grid DockPanel.Dock="Bottom">
+                    <!--<ItemsControl x:Name="Replacer">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                                    <StackPanel Orientation="Vertical"
+                                            VerticalAlignment="Stretch"
+                                            CanVerticallyScroll="True" >
+                                        <TextBlock Text="{Binding}"/>
+                                        <TextBox Text="{Binding}"/>
 
+
+
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>-->
+
+                <DataGrid x:Name="Replacer" 
+                          cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding()]"
+                          ItemsSource="{Binding Replacer, Mode=TwoWay}"
+                          AutoGenerateColumns="True" 
+                          AlternatingRowBackground="LightGray"
+                          CanUserDeleteRows="False"
+                          CanUserAddRows="False"
+                          IsReadOnly="{Binding IsReadOnly}">
+                    <!--<DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Replacer}" />
+                    </DataGrid.Columns>-->
+                </DataGrid>
+
+
+
+
+
+
+
+
+
+
+                    <!--<ScrollViewer VerticalScrollBarVisibility="Auto" >
+                        <DataGrid x:Name="ItemList" 
+                                  cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding()]"
+                                  ItemsSource="{Binding ItemList, Mode=TwoWay}"
+                                  AutoGenerateColumns="True" 
+                                  AlternatingRowBackground="LightGray"
+                                  CanUserDeleteRows="False"
+                                  CanUserAddRows="False"
+                                  IsReadOnly="{Binding IsReadOnly}">
+                        </DataGrid>
+                    </ScrollViewer>-->
+
+                    <!--<ScrollViewer VerticalScrollBarVisibility="Auto" >
+                    <ListBox ItemsSource="{Binding ItemList}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ScrollViewer>-->
             </Grid>
 
             <!-- DOCKPANEL TOP-->
@@ -31,11 +93,11 @@
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
 
-                <ListView Name="ItemReplacer">
+                <ListView Name="ItemReplacer" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action OnKeyUp($this)]">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <ListViewItem>
-                                    <TextBlock Text="{Binding Key}" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action OnKeyUp($this)]" />
+                            <ListViewItem >
+                                <TextBlock Text="{Binding Key}"/>
                             </ListViewItem>
                         </DataTemplate>
                     </ListView.ItemTemplate>
