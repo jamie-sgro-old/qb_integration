@@ -13,7 +13,6 @@ namespace WPFDesktopUI.Models.CustomerModels.Interfaces {
 
     string TermsRefFullName { get; set; }
 
-    bool ServiceCharge { get; set; }
     string AppendLineItem1 { get; set; }
     string AppendLineItem2 { get; set; }
     string AppendLineItem3 { get; set; }
