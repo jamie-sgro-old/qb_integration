@@ -41,7 +41,6 @@ namespace WPFDesktopUI.ViewModels {
           .Select(x => x.First())
           .ToList());
       }
-      //set => _uniqueReplaceWith = value;
     }
 
     public void OnSelected() {
