@@ -134,6 +134,8 @@
     <Compile Include="Models\CustomerModels\Interfaces\ICustomer.cs" />
     <Compile Include="Models\DbModels\Interfaces\IDbModel.cs" />
     <Compile Include="Models\DbModels\Interfaces\IDbViewModel.cs" />
+    <Compile Include="Models\ItemReplacerModels\Interfaces\IItemReplacer.cs" />
+    <Compile Include="Models\ItemReplacerModels\ItemReplacer.cs" />
     <Compile Include="Models\PluginModels\ClientPlugin.cs" />
     <Compile Include="Models\PluginModels\Interfaces\IClientDetails.cs" />
     <Compile Include="Models\PluginModels\Interfaces\IClientEssentials.cs" />
@@ -167,8 +169,10 @@
     <Compile Include="Models\SidePaneModels\Presents\PresetModel.cs" />
     <Compile Include="Models\SidePaneModels\QuickBooksSidePaneModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDataGrid.cs" />
+    <Compile Include="ViewModels\Interfaces\IItemViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IPluginViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IWindow.cs" />
+    <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\PluginViewModel.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
@@ -197,6 +201,9 @@
     </Compile>
     <Compile Include="Views\ImportView.xaml.cs">
       <DependentUpon>ImportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ItemView.xaml.cs">
+      <DependentUpon>ItemView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PluginView.xaml.cs">
       <DependentUpon>PluginView.xaml</DependentUpon>
@@ -239,6 +246,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ImportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

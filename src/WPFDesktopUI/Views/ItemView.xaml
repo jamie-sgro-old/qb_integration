@@ -13,23 +13,6 @@
             <!-- DOCKPANEL BOTTOM-->
 
             <Grid DockPanel.Dock="Bottom">
-                    <!--<ItemsControl x:Name="Replacer">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <ScrollViewer VerticalScrollBarVisibility="Auto" >
-                                    <StackPanel Orientation="Vertical"
-                                            VerticalAlignment="Stretch"
-                                            CanVerticallyScroll="True" >
-                                        <TextBlock Text="{Binding}"/>
-                                        <TextBox Text="{Binding}"/>
-
-
-
-                                    </StackPanel>
-                                </ScrollViewer>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>-->
 
                 <DataGrid x:Name="ItemReplacersDataGrid" 
                           cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding()]"
@@ -38,41 +21,12 @@
                           AlternatingRowBackground="LightGray"
                           CanUserDeleteRows="False"
                           CanUserAddRows="False"
-                          IsReadOnly="{Binding IsReadOnly}">
+                          IsReadOnly="{Binding IsReadOnly}"
+                          ToolTip="If there's a cell in the importing .csv file in the&#x0a;
+'ITEM' column that matches anything in the [ToReplace] column,&#x0a;
+replace it with the text in the [ReplaceWith] column.">
                 </DataGrid>
 
-
-
-
-
-
-
-
-
-
-                    <!--<ScrollViewer VerticalScrollBarVisibility="Auto" >
-                        <DataGrid x:Name="ItemList" 
-                                  cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding()]"
-                                  ItemsSource="{Binding ItemList, Mode=TwoWay}"
-                                  AutoGenerateColumns="True" 
-                                  AlternatingRowBackground="LightGray"
-                                  CanUserDeleteRows="False"
-                                  CanUserAddRows="False"
-                                  IsReadOnly="{Binding IsReadOnly}">
-                        </DataGrid>
-                    </ScrollViewer>-->
-
-                    <!--<ScrollViewer VerticalScrollBarVisibility="Auto" >
-                    <ListBox ItemsSource="{Binding ItemList}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </ScrollViewer>-->
             </Grid>
 
             <!-- DOCKPANEL TOP-->
@@ -99,7 +53,6 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-
 
             </Grid>
 

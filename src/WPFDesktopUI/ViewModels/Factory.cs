@@ -11,6 +11,8 @@ using WPFDesktopUI.Controllers;
 using WPFDesktopUI.Models;
 using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
+using WPFDesktopUI.Models.ItemReplacerModels;
+using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
 using WPFDesktopUI.Models.PluginModels;
 using WPFDesktopUI.Models.SidePaneModels.Attributes;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
@@ -40,6 +42,10 @@ namespace WPFDesktopUI.ViewModels {
       return new CustomerViewModel();
     }
 
+    public static IItemViewModel CreateItemViewModel() {
+      return new ItemViewModel();
+    }
+
     #endregion View Models
 
     #region Screen Models
@@ -60,6 +66,13 @@ namespace WPFDesktopUI.ViewModels {
       var rtn = new PluginModel();
       rtn.Init();
       return rtn;
+    }
+
+    public static IItemReplacer CreateItemReplacer(string replaceWith, string toReplace) {
+      return new ItemReplacer() {
+        ReplaceWith = replaceWith,
+        ToReplace = toReplace
+      };
     }
 
     #endregion Screen Models

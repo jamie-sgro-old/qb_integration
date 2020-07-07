@@ -19,6 +19,7 @@ namespace WPFDesktopUI.ViewModels {
         ImportViewModel = Factory.CreateImportViewModel();
         QuickBooksViewModel = Factory.CreateQuickBooksViewModel();
         CustomerViewModel = Factory.CreateCustomerViewModel();
+        ItemViewModel = Factory.CreateItemViewModel();
         log.Info("Constructor initialized");
       }
       catch (Exception e) {
@@ -32,15 +33,17 @@ namespace WPFDesktopUI.ViewModels {
 		public IImportViewModel ImportViewModel { get; }
 		public IQuickBooksViewModel QuickBooksViewModel { get; }
 		public ICustomerViewModel<Customer> CustomerViewModel { get; }
+		public IItemViewModel ItemViewModel { get; }
 
-		public bool TabImportIsSelected { get; set; } = true;
+    public bool TabImportIsSelected { get; set; } = true;
     public bool TabQuickBooksIsSelected { get; set; } = false;
     public bool TabCustomerIsSelected { get; set; } = false;
+    public bool TabItemIsSelected { get; set; } = false;
 
-		/// <summary>
-		/// Event triggers when a tab is selected in the ShellView
-		/// </summary>
-		public void TabChange() {
+    /// <summary>
+    /// Event triggers when a tab is selected in the ShellView
+    /// </summary>
+    public void TabChange() {
       if (TabImportIsSelected) {
         ImportViewModel.OnSelected();
 				return;
@@ -53,6 +56,11 @@ namespace WPFDesktopUI.ViewModels {
 
       if (TabCustomerIsSelected) {
         CustomerViewModel.OnSelected();
+        return;
+      }
+
+      if (TabItemIsSelected) {
+        ItemViewModel.OnSelected();
         return;
       }
 		}

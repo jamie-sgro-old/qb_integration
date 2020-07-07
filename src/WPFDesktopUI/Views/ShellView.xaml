@@ -74,6 +74,11 @@
                 <ContentControl x:Name="CustomerViewModel" />
                 <!--<NewUserControl:CustomerViewModel/>-->
             </TabItem>
+            <TabItem Header="{Binding ItemViewModel.TabHeader }"
+                     IsSelected="{Binding TabItemIsSelected}">
+                <ContentControl x:Name="ItemViewModel" />
+                <!--<NewUserControl:ItemViewModel/>-->
+            </TabItem>
         </TabControl>
     </DockPanel>
 </Window>
