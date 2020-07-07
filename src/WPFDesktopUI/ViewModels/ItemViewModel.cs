@@ -11,8 +11,14 @@ namespace WPFDesktopUI.ViewModels {
       ItemReplacers = new ObservableCollection<IItemReplacer> {
         Factory.CreateItemReplacer("PSW", "Barrie Connie Thompson- PSW"),
         Factory.CreateItemReplacer("PSW", "CLASS - PSW1"),
+        Factory.CreateItemReplacer("PSW", "Villa (PSW)"),
+        Factory.CreateItemReplacer("PSW", "Villa (PSW) Night Shift"),
         Factory.CreateItemReplacer("RN", "Barrie Connie Thompson- RN"),
-        Factory.CreateItemReplacer("RN", "CLASS - RN1")
+        Factory.CreateItemReplacer("RN", "CLASS - RN1"),
+        Factory.CreateItemReplacer("RN - WKD", "Barrie Connie Thompson- RN- Weekend"),
+        Factory.CreateItemReplacer("RN - WKD", "CLASS - RN1- Weekend"),
+        Factory.CreateItemReplacer("RN - STAT", "Barrie Connie Thompson- RN - Stat Holiday"),
+        Factory.CreateItemReplacer("RN - STAT", "CLASS - RN1 - STAT")
       };
     }
 
@@ -31,6 +37,12 @@ namespace WPFDesktopUI.ViewModels {
     public ObservableCollection<IItemReplacer> SelectedItem { get; set; }
 
     /// <summary>
+    /// A dynamic search filter that refines UniqueReplaceWith to
+    /// only show data that contains this string
+    /// </summary>
+    public string UniqueReplaceWithFilter { get; set; } = "";
+
+    /// <summary>
     /// A list of distinct values from the ReplaceWith property
     /// to populate the first datagrid / listview
     /// </summary>
@@ -39,6 +51,7 @@ namespace WPFDesktopUI.ViewModels {
         return new ObservableCollection<IItemReplacer>(ItemReplacers
           .GroupBy(x => x.ReplaceWith)
           .Select(x => x.First())
+          .Where(x => x.ReplaceWith.ToLower().Contains(UniqueReplaceWithFilter.ToLower()))
           .ToList());
       }
     }

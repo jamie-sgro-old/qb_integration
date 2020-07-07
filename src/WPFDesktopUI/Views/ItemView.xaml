@@ -34,9 +34,8 @@ replace it with the text in the [ReplaceWith] column.">
             <Grid DockPanel.Dock="Top">
 
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -44,10 +43,31 @@ replace it with the text in the [ReplaceWith] column.">
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
 
-                <ListView Name="UniqueReplaceWith" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action OnKeyUp($this)]">
+
+                <!-- SEARCH BAR -->
+                <TextBox x:Name="UniqueReplaceWithFilter"
+                         Grid.Row="0"
+                         Margin="0, 20"/>
+                <!-- WATERMARK -->
+                <TextBlock IsHitTestVisible="False" Text="Search Items" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="DarkGray">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=UniqueReplaceWithFilter}" Value="">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+
+                <ListView Name="UniqueReplaceWith" 
+                          cal:Message.Attach="[Event MouseLeftButtonUp] = [Action OnKeyUp($this)]"
+                          Grid.Row="1">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <ListViewItem >
+                            <ListViewItem IsHitTestVisible="False">
                                 <TextBlock Text="{Binding ReplaceWith}"/>
                             </ListViewItem>
                         </DataTemplate>
