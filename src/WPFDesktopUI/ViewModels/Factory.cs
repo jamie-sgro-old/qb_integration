@@ -69,10 +69,7 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     public static IItemReplacer CreateItemReplacer(string replaceWith, string toReplace) {
-      return new ItemReplacer() {
-        ReplaceWith = replaceWith,
-        ToReplace = toReplace
-      };
+      return new ItemReplacer(replaceWith, toReplace);
     }
 
     #endregion Screen Models

@@ -7,7 +7,11 @@ using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
 
 namespace WPFDesktopUI.Models.ItemReplacerModels {
   public class ItemReplacer : IItemReplacer {
-    public string ReplaceWith { get; set; }
+    public ItemReplacer(string replaceWith, string toReplace) {
+      ReplaceWith = replaceWith;
+      ToReplace = toReplace;
+    }
+    public string ReplaceWith { get; }
     public string ToReplace { get; set; }
   }
 }
