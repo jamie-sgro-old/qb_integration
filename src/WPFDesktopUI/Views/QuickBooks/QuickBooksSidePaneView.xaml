@@ -65,10 +65,11 @@
             <!-- DOCKPANEL TOP-->
 
             <Grid Grid.IsSharedSizeScope="True" DockPanel.Dock="Top" MinHeight="100" >
-                <ItemsControl x:Name="QbspModel_Attr">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+                    <ItemsControl x:Name="QbspModel_Attr">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
                                 <StackPanel Orientation="Vertical"
                                             VerticalAlignment="Stretch"
                                             CanVerticallyScroll="True" >
@@ -132,10 +133,10 @@
 
 
                                 </StackPanel>
-                            </ScrollViewer>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
                 </ItemsControl>
+                </ScrollViewer>
             </Grid>
 
 
