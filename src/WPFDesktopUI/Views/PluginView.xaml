@@ -11,23 +11,12 @@
         Height="450" Width="800">
     <Border BorderThickness="20">
         <DockPanel>
-            <Grid DockPanel.Dock="Top">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" >
-                    <DataGrid x:Name="PluginDataGrid" 
-                              cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding()]"
-                              ItemsSource="{Binding ReactiveCollection, Mode=TwoWay}"
-                              AutoGenerateColumns="True" 
-                              AlternatingRowBackground="LightGray"
-                              CanUserDeleteRows="False"
-                              CanUserAddRows="False" 
-                              MinHeight="300">
-                    </DataGrid>
-                </ScrollViewer>
-            </Grid>
 
+
+
+            <!-- DOCKPANEL BOTTOM -->
 
             <Grid DockPanel.Dock="Bottom">
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="auto" />
@@ -46,6 +35,80 @@
                     Save
                 </Button>
             </Grid>
+
+
+
+            <!-- HORIZONTAL SPLITTER -->
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+
+
+                <!-- DOCKPANEL LEFT -->
+
+                <Grid DockPanel.Dock="Left">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                        <DataGrid x:Name="PluginDataGrid" 
+                                  cal:Message.Attach="
+                                    [Event CellEditEnding]=[Action OnCellEditEnding()];
+                                    [Event SelectedCellsChanged] = [Action OnCellsChanged($this)]"
+                                  ItemsSource="{Binding ReactiveCollection, Mode=TwoWay}"
+                                  AutoGenerateColumns="False" 
+                                  AlternatingRowBackground="LightGray"
+                                  CanUserDeleteRows="False"
+                                  CanUserAddRows="False" 
+                                  MinHeight="300">
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn Header="Enable" Binding="{Binding IsEnabled, Mode=TwoWay}"/>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=OneWay}"/>
+                                <DataGridTextColumn Header="Author" Binding="{Binding Author, Mode=OneWay}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ScrollViewer>
+                </Grid>
+
+
+
+                <!-- SPLITTER -->
+
+                <GridSplitter Width="5" 
+                              Opacity="0"
+                              BorderBrush="Gray"
+                              HorizontalAlignment="Right" 
+                              VerticalAlignment="Stretch"
+                              ResizeBehavior="CurrentAndNext"/>
+
+
+
+                <!-- DOCKPANEL RIGHT -->
+
+                <Grid DockPanel.Dock="Right" Grid.Column="1">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Row="0" 
+                            BorderBrush="Gray"
+                            BorderThickness="1">
+                        <TextBlock TextWrapping="Wrap" 
+                                   Text="{Binding PluginDescription}"
+                                   Padding="20"/>
+                    </Border>
+                </Grid>
+            </Grid>
+            
         </DockPanel>
     </Border>
 </Window>
