@@ -21,7 +21,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- SEARCH BAR -->
-                <TextBox x:Name="UniqueReplaceWithFilter"
+                <TextBox x:Name="SearchBar"
                          Grid.Column="0"
                          Margin="0, 20"/>
                 <!-- WATERMARK -->
@@ -60,7 +60,7 @@
 
                 <Grid DockPanel.Dock="Left">
 
-                    <ListView Name="UniqueReplaceWith" 
+                    <ListView Name="PrimaryPane" 
                               cal:Message.Attach="[Event MouseLeftButtonUp] = [Action OnKeyUp($this)]">
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -90,7 +90,7 @@
                 <Grid DockPanel.Dock="Right" Grid.Column="1">
                     <DataGrid x:Name="ItemReplacersDataGrid" 
                               cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding()]"
-                              ItemsSource="{Binding SelectedItem, Mode=TwoWay}"
+                              ItemsSource="{Binding SecondaryPane, Mode=TwoWay}"
                               AutoGenerateColumns="True" 
                               AlternatingRowBackground="LightGray"
                               CanUserDeleteRows="False"

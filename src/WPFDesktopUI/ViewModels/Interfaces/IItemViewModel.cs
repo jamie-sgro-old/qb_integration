@@ -10,7 +10,7 @@ namespace WPFDesktopUI.ViewModels.Interfaces {
   public interface IItemViewModel<T> : IMainTab {
 
     string SearchBar { get; set; }
-    ObservableCollection<T> PrimaryPane { get; set; }
+    ObservableCollection<T> PrimaryPane { get; }
     ObservableCollection<T> SecondaryPane { get; set; }
 
 
@@ -33,11 +33,8 @@ namespace WPFDesktopUI.ViewModels.Interfaces {
     /// </summary>
     ObservableCollection<T> UniqueReplaceWith { get; }
 
-    /// <summary>
-    /// A dynamic search filter that refines UniqueReplaceWith to
-    /// only show data that contains this string
-    /// </summary>
-    string UniqueReplaceWithFilter { get; set; }
+
+    //string UniqueReplaceWithFilter { get; set; }
 
     string SelectedKey { get; set; }
 

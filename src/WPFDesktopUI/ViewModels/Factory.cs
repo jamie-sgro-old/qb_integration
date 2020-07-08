@@ -42,7 +42,7 @@ namespace WPFDesktopUI.ViewModels {
       return new CustomerViewModel();
     }
 
-    public static IItemViewModel CreateItemViewModel() {
+    public static IItemViewModel<IItemReplacer> CreateItemViewModel() {
       return new ItemViewModel();
     }
 
@@ -66,6 +66,10 @@ namespace WPFDesktopUI.ViewModels {
       var rtn = new PluginModel();
       rtn.Init();
       return rtn;
+    }
+
+    public static IItemModel CreateItemModel() {
+      return new ItemModel();
     }
 
     public static IItemReplacer CreateItemReplacer(string replaceWith, string toReplace) {

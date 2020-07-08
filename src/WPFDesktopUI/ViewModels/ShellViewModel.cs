@@ -6,6 +6,7 @@ using System.Windows;
 using WPFDesktopUI.Controllers;
 using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
+using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
@@ -33,7 +34,7 @@ namespace WPFDesktopUI.ViewModels {
 		public IImportViewModel ImportViewModel { get; }
 		public IQuickBooksViewModel QuickBooksViewModel { get; }
 		public ICustomerViewModel<Customer> CustomerViewModel { get; }
-		public IItemViewModel ItemViewModel { get; }
+		public IItemViewModel<IItemReplacer> ItemViewModel { get; }
 
     public bool TabImportIsSelected { get; set; } = true;
     public bool TabQuickBooksIsSelected { get; set; } = false;

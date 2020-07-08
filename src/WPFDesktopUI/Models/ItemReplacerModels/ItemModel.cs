@@ -8,5 +8,7 @@ using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
 namespace WPFDesktopUI.Models.ItemReplacerModels {
   public class ItemModel : IItemModel {
 
+
+    public string Filter { get; set; } = ";";
   }
 }

@@ -7,7 +7,9 @@ using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
   public class ItemViewModel : Screen, IItemViewModel<IItemReplacer> {
+
     public ItemViewModel() {
+      ItemModel = Factory.CreateItemModel();
       ItemReplacers = new ObservableCollection<IItemReplacer> {
         Factory.CreateItemReplacer("PSW", "Barrie Connie Thompson- PSW"),
         Factory.CreateItemReplacer("PSW", "CLASS - PSW1"),
@@ -24,13 +26,19 @@ namespace WPFDesktopUI.ViewModels {
 
 
 
+    public IItemModel ItemModel { get; set; }
 
+    public string SearchBar {
+      get => ItemModel.Filter;
+      set => ItemModel.Filter = value;
+    }
 
+    public ObservableCollection<IItemReplacer> PrimaryPane => UniqueReplaceWith;
 
-
-
-
-
+    public ObservableCollection<IItemReplacer> SecondaryPane {
+      get => SelectedItem;
+      set => SelectedItem = value;
+    }
 
 
     public string TabHeader { get; set; } = "Item";
@@ -38,14 +46,13 @@ namespace WPFDesktopUI.ViewModels {
     }
     public ObservableCollection<IItemReplacer> ItemReplacers { get; set; }
     public ObservableCollection<IItemReplacer> SelectedItem { get; set; }
-    public string UniqueReplaceWithFilter { get; set; } = "";
     public string SelectedKey { get; set; }
     public ObservableCollection<IItemReplacer> UniqueReplaceWith {
       get {
         return new ObservableCollection<IItemReplacer>(ItemReplacers
           .GroupBy(x => x.ReplaceWith)
           .Select(x => x.First())
-          .Where(x => x.ReplaceWith.ToLower().Contains(UniqueReplaceWithFilter.ToLower()))
+          .Where(x => x.ReplaceWith.ToLower().Contains(ItemModel.Filter.ToLower()))
           .ToList());
       }
     }
