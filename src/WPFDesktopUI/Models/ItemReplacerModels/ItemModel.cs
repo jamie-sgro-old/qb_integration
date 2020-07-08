@@ -11,7 +11,7 @@ using WPFDesktopUI.ViewModels;
 namespace WPFDesktopUI.Models.ItemReplacerModels {
   public class ItemModel : IItemModel<IItemReplacer> {
     public ItemModel() {
-      _itemReplacers = new ObservableCollection<IItemReplacer> {
+      _sourceData = new ObservableCollection<IItemReplacer> {
         Factory.CreateItemReplacer("PSW", "Barrie Connie Thompson- PSW"),
         Factory.CreateItemReplacer("PSW", "CLASS - PSW1"),
         Factory.CreateItemReplacer("PSW", "Villa (PSW)"),
@@ -25,14 +25,20 @@ namespace WPFDesktopUI.Models.ItemReplacerModels {
       };
     }
 
-    // TODO: Replace with _sourceData
-    private ObservableCollection<IItemReplacer> _itemReplacers { get; set; }
+    /// <summary>
+    /// Model containing all data used to populate this Screen / UserControl
+    /// </summary>
+    private ObservableCollection<IItemReplacer> _sourceData { get; set; }
 
-    public string SelectedKey { get; set; }
+    /// <summary>
+    /// The data of the currently selected data item / row
+    /// </summary>
+    private IItemReplacer _selectedKey { get; set; }
+
     public ObservableCollection<IItemReplacer> SelectedItem { get; set; }
 
-    public ObservableCollection<IItemReplacer> UniqueReplaceWith() {
-      return new ObservableCollection<IItemReplacer>(_itemReplacers
+    public ObservableCollection<IItemReplacer> GetUnique() {
+      return new ObservableCollection<IItemReplacer>(_sourceData
         .GroupBy(x => x.ReplaceWith)
         .Select(x => x.First())
         .Where(x => x.ReplaceWith.ToLower().Contains(Filter.ToLower()))
@@ -40,11 +46,11 @@ namespace WPFDesktopUI.Models.ItemReplacerModels {
     }
 
     public void ItemSelected(IItemReplacer selectedItem) {
-      SelectedKey = selectedItem.ReplaceWith;
+      _selectedKey = selectedItem;
 
       // Update SelectedItem
-      SelectedItem = new ObservableCollection<IItemReplacer>(_itemReplacers
-        .Where(x => x.ReplaceWith == SelectedKey)
+      SelectedItem = new ObservableCollection<IItemReplacer>(_sourceData
+        .Where(x => x.ReplaceWith == _selectedKey.ReplaceWith)
         .ToList());
     }
 

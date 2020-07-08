@@ -20,14 +20,19 @@ namespace WPFDesktopUI.Models.ItemReplacerModels.Interfaces {
     /// </summary>
     ObservableCollection<T> SelectedItem { get; set; }
 
-    string SelectedKey { get; set; }
-
     /// <summary>
     /// A list of distinct values from the ReplaceWith property
     /// to populate the primary datagrid / listview
     /// </summary>
-    ObservableCollection<T> UniqueReplaceWith();
+    ObservableCollection<T> GetUnique();
 
+    /// <summary>
+    /// Updates the SelectedItem property with a list of rows with
+    /// matching [ReplaceWith] properties
+    /// </summary>
+    /// <param name="selectedItem">
+    /// The data model that the function should attempt to match to
+    /// </param>
     void ItemSelected(IItemReplacer selectedItem);
   }
 }

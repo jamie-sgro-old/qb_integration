@@ -12,20 +12,6 @@ namespace WPFDesktopUI.ViewModels {
 
     public ItemViewModel() {
       ItemModel = Factory.CreateItemModel();
-
-      // TODO: Delete
-      /*ItemReplacers = new ObservableCollection<IItemReplacer> {
-        Factory.CreateItemReplacer("PSW", "Barrie Connie Thompson- PSW"),
-        Factory.CreateItemReplacer("PSW", "CLASS - PSW1"),
-        Factory.CreateItemReplacer("PSW", "Villa (PSW)"),
-        Factory.CreateItemReplacer("PSW", "Villa (PSW) Night Shift"),
-        Factory.CreateItemReplacer("RN", "Barrie Connie Thompson- RN"),
-        Factory.CreateItemReplacer("RN", "CLASS - RN1"),
-        Factory.CreateItemReplacer("RN - WKD", "Barrie Connie Thompson- RN- Weekend"),
-        Factory.CreateItemReplacer("RN - WKD", "CLASS - RN1- Weekend"),
-        Factory.CreateItemReplacer("RN - STAT", "Barrie Connie Thompson- RN - Stat Holiday"),
-        Factory.CreateItemReplacer("RN - STAT", "CLASS - RN1 - STAT")
-      };*/
     }
 
 
@@ -40,29 +26,17 @@ namespace WPFDesktopUI.ViewModels {
       } 
     }
 
-    public ObservableCollection<IItemReplacer> PrimaryPane => ItemModel.UniqueReplaceWith();
+    public ObservableCollection<IItemReplacer> PrimaryPane => ItemModel.GetUnique();
 
     public ObservableCollection<IItemReplacer> SecondaryPane {
       get => ItemModel.SelectedItem;
       set => ItemModel.SelectedItem = value;
     }
 
-
     public string TabHeader { get; set; } = "Item";
     public void OnSelected() {
     }
-    public ObservableCollection<IItemReplacer> ItemReplacers { get; set; }
-    //public ObservableCollection<IItemReplacer> SelectedItem { get; set; }
-    //public string SelectedKey { get; set; }
-    /*public ObservableCollection<IItemReplacer> UniqueReplaceWith {
-      get {
-        return new ObservableCollection<IItemReplacer>(ItemReplacers
-          .GroupBy(x => x.ReplaceWith)
-          .Select(x => x.First())
-          .Where(x => x.ReplaceWith.ToLower().Contains(SearchBar.ToLower()))
-          .ToList());
-      }
-    }*/
+
 
 
 
