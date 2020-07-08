@@ -6,7 +6,7 @@ using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
-  public class ItemViewModel : Screen, IItemViewModel {
+  public class ItemViewModel : Screen, IItemViewModel<IItemReplacer> {
     public ItemViewModel() {
       ItemReplacers = new ObservableCollection<IItemReplacer> {
         Factory.CreateItemReplacer("PSW", "Barrie Connie Thompson- PSW"),
@@ -24,30 +24,22 @@ namespace WPFDesktopUI.ViewModels {
 
 
 
+
+
+
+
+
+
+
+
+
     public string TabHeader { get; set; } = "Item";
-
-    /// <summary>
-    /// Model containing all data used to populate this Screen / UserControl
-    /// </summary>
+    public void OnSelected() {
+    }
     public ObservableCollection<IItemReplacer> ItemReplacers { get; set; }
-
-    /// <summary>
-    /// The data populating the bottom table editable by the user
-    /// </summary>
     public ObservableCollection<IItemReplacer> SelectedItem { get; set; }
-
-    /// <summary>
-    /// A dynamic search filter that refines UniqueReplaceWith to
-    /// only show data that contains this string
-    /// </summary>
     public string UniqueReplaceWithFilter { get; set; } = "";
-
     public string SelectedKey { get; set; }
-
-    /// <summary>
-    /// A list of distinct values from the ReplaceWith property
-    /// to populate the primary datagrid / listview
-    /// </summary>
     public ObservableCollection<IItemReplacer> UniqueReplaceWith {
       get {
         return new ObservableCollection<IItemReplacer>(ItemReplacers
@@ -58,19 +50,8 @@ namespace WPFDesktopUI.ViewModels {
       }
     }
 
-    public void OnSelected() {
-    }
 
-    /// <summary>
-    /// Fires when the top datagrid / listview is selected.
-    /// Updates the secondary datagrid with a list of rows with
-    /// matching [ReplaceWith] properties
-    /// </summary>
-    /// <param name="itemReplacerObj">
-    /// A single ItemReplacer indicating which ListViewItem was selected
-    /// If whitespace was selected instead, indicates the last selected /
-    /// currently active ListViewItem
-    /// </param>
+
     public void OnKeyUp(object itemReplacerObj) {
       var IsValidType = itemReplacerObj is IItemReplacer;
       if (!IsValidType) {
