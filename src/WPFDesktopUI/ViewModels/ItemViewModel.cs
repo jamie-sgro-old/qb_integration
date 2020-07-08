@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using Caliburn.Micro;
 using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
@@ -7,10 +8,13 @@ using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
   public class ItemViewModel : Screen, IItemViewModel<IItemReplacer> {
+    private string _type;
 
     public ItemViewModel() {
       ItemModel = Factory.CreateItemModel();
-      ItemReplacers = new ObservableCollection<IItemReplacer> {
+
+      // TODO: Delete
+      /*ItemReplacers = new ObservableCollection<IItemReplacer> {
         Factory.CreateItemReplacer("PSW", "Barrie Connie Thompson- PSW"),
         Factory.CreateItemReplacer("PSW", "CLASS - PSW1"),
         Factory.CreateItemReplacer("PSW", "Villa (PSW)"),
@@ -21,23 +25,26 @@ namespace WPFDesktopUI.ViewModels {
         Factory.CreateItemReplacer("RN - WKD", "CLASS - RN1- Weekend"),
         Factory.CreateItemReplacer("RN - STAT", "Barrie Connie Thompson- RN - Stat Holiday"),
         Factory.CreateItemReplacer("RN - STAT", "CLASS - RN1 - STAT")
-      };
+      };*/
     }
 
 
 
-    public IItemModel ItemModel { get; set; }
+    public IItemModel<IItemReplacer> ItemModel { get; set; }
 
     public string SearchBar {
       get => ItemModel.Filter;
-      set => ItemModel.Filter = value;
+      set {
+        ItemModel.Filter = value;
+        NotifyOfPropertyChange(() => PrimaryPane);
+      } 
     }
 
-    public ObservableCollection<IItemReplacer> PrimaryPane => UniqueReplaceWith;
+    public ObservableCollection<IItemReplacer> PrimaryPane => ItemModel.UniqueReplaceWith();
 
     public ObservableCollection<IItemReplacer> SecondaryPane {
-      get => SelectedItem;
-      set => SelectedItem = value;
+      get => ItemModel.SelectedItem;
+      set => ItemModel.SelectedItem = value;
     }
 
 
@@ -45,17 +52,17 @@ namespace WPFDesktopUI.ViewModels {
     public void OnSelected() {
     }
     public ObservableCollection<IItemReplacer> ItemReplacers { get; set; }
-    public ObservableCollection<IItemReplacer> SelectedItem { get; set; }
-    public string SelectedKey { get; set; }
-    public ObservableCollection<IItemReplacer> UniqueReplaceWith {
+    //public ObservableCollection<IItemReplacer> SelectedItem { get; set; }
+    //public string SelectedKey { get; set; }
+    /*public ObservableCollection<IItemReplacer> UniqueReplaceWith {
       get {
         return new ObservableCollection<IItemReplacer>(ItemReplacers
           .GroupBy(x => x.ReplaceWith)
           .Select(x => x.First())
-          .Where(x => x.ReplaceWith.ToLower().Contains(ItemModel.Filter.ToLower()))
+          .Where(x => x.ReplaceWith.ToLower().Contains(SearchBar.ToLower()))
           .ToList());
       }
-    }
+    }*/
 
 
 
@@ -67,17 +74,14 @@ namespace WPFDesktopUI.ViewModels {
 
       // Cast to KeyValuePair like Dict
       var itemReplacer = (IItemReplacer)itemReplacerObj;
-      SelectedKey = itemReplacer.ReplaceWith;
 
-      // Update SelectedItem
-      SelectedItem = new ObservableCollection<IItemReplacer>(ItemReplacers
-        .Where(x => x.ReplaceWith == SelectedKey)
-        .ToList());
-      var a = ItemReplacers;
+      // Pass to model
+      ItemModel.ItemSelected(itemReplacer);
+
+      NotifyOfPropertyChange(() => SecondaryPane);
     }
 
     public void OnCellEditEnding() {
     }
-
   }
 }

@@ -68,7 +68,7 @@ namespace WPFDesktopUI.ViewModels {
       return rtn;
     }
 
-    public static IItemModel CreateItemModel() {
+    public static IItemModel<IItemReplacer> CreateItemModel() {
       return new ItemModel();
     }
 

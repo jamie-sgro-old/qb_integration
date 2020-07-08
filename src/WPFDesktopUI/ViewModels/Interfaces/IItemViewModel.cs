@@ -25,18 +25,23 @@ namespace WPFDesktopUI.ViewModels.Interfaces {
     /// <summary>
     /// The data populating the bottom table editable by the user
     /// </summary>
-    ObservableCollection<T> SelectedItem { get; set; }
+    //ObservableCollection<T> SelectedItem { get; set; }
 
+
+    // TODO: Delete
     /// <summary>
     /// A list of distinct values from the ReplaceWith property
     /// to populate the primary datagrid / listview
     /// </summary>
-    ObservableCollection<T> UniqueReplaceWith { get; }
+    //ObservableCollection<T> UniqueReplaceWith { get; }
 
-
+    /// <summary>
+    /// A dynamic search filter that refines UniqueReplaceWith to
+    /// only show data that contains this string
+    /// </summary>
     //string UniqueReplaceWithFilter { get; set; }
 
-    string SelectedKey { get; set; }
+    //string SelectedKey { get; set; }
 
     /// <summary>
     /// Fires when the top datagrid / listview is selected.
