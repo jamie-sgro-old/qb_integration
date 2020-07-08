@@ -42,9 +42,11 @@ namespace WPFDesktopUI.ViewModels {
     /// </summary>
     public string UniqueReplaceWithFilter { get; set; } = "";
 
+    public string SelectedKey { get; set; }
+
     /// <summary>
     /// A list of distinct values from the ReplaceWith property
-    /// to populate the first datagrid / listview
+    /// to populate the primary datagrid / listview
     /// </summary>
     public ObservableCollection<IItemReplacer> UniqueReplaceWith {
       get {
@@ -61,7 +63,7 @@ namespace WPFDesktopUI.ViewModels {
 
     /// <summary>
     /// Fires when the top datagrid / listview is selected.
-    /// Updates the bottom datagrid with a list of rows with
+    /// Updates the secondary datagrid with a list of rows with
     /// matching [ReplaceWith] properties
     /// </summary>
     /// <param name="itemReplacerObj">
@@ -70,18 +72,18 @@ namespace WPFDesktopUI.ViewModels {
     /// currently active ListViewItem
     /// </param>
     public void OnKeyUp(object itemReplacerObj) {
-      var isDict = itemReplacerObj is IItemReplacer;
-      if (! isDict) {
+      var IsValidType = itemReplacerObj is IItemReplacer;
+      if (!IsValidType) {
         throw new ArgumentException(@"OnKeyUp() parameter not of type " + typeof(IItemReplacer), nameof(itemReplacerObj));
       }
 
       // Cast to KeyValuePair like Dict
       var itemReplacer = (IItemReplacer)itemReplacerObj;
-      var selectedKey = itemReplacer.ReplaceWith;
+      SelectedKey = itemReplacer.ReplaceWith;
 
       // Update SelectedItem
       SelectedItem = new ObservableCollection<IItemReplacer>(ItemReplacers
-        .Where(x => x.ReplaceWith == selectedKey)
+        .Where(x => x.ReplaceWith == SelectedKey)
         .ToList());
       var a = ItemReplacers;
     }

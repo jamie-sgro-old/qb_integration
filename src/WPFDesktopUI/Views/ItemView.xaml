@@ -10,40 +10,11 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Border BorderThickness="20">
         <DockPanel>
-            <!-- DOCKPANEL BOTTOM-->
 
-            <Grid DockPanel.Dock="Bottom">
+            <!-- DOCKPANEL TOP -->
 
-                <DataGrid x:Name="ItemReplacersDataGrid" 
-                          cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding()]"
-                          ItemsSource="{Binding SelectedItem, Mode=TwoWay}"
-                          AutoGenerateColumns="True" 
-                          AlternatingRowBackground="LightGray"
-                          CanUserDeleteRows="False"
-                          CanUserAddRows="False"
-                          IsReadOnly="{Binding IsReadOnly}"
-                          ToolTip="If there's a cell in the importing .csv file in the&#x0a;
-'ITEM' column that matches anything in the [ToReplace] column,&#x0a;
-replace it with the text in the [ReplaceWith] column.">
-                </DataGrid>
-
-            </Grid>
-
-            <!-- DOCKPANEL TOP-->
 
             <Grid DockPanel.Dock="Top">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
-
-
                 <!-- SEARCH BAR -->
                 <TextBox x:Name="UniqueReplaceWithFilter"
                          Grid.Row="0"
@@ -61,18 +32,63 @@ replace it with the text in the [ReplaceWith] column.">
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
+            </Grid>
 
-                <ListView Name="UniqueReplaceWith" 
-                          cal:Message.Attach="[Event MouseLeftButtonUp] = [Action OnKeyUp($this)]"
-                          Grid.Row="1">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ListViewItem IsHitTestVisible="False">
-                                <TextBlock Text="{Binding ReplaceWith}"/>
-                            </ListViewItem>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+
+
+            <!-- HORIZONTAL SPLITTER -->
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <!-- DOCKPANEL LEFT-->
+
+                <Grid DockPanel.Dock="Left">
+
+                    <ListView Name="UniqueReplaceWith" 
+                              cal:Message.Attach="[Event MouseLeftButtonUp] = [Action OnKeyUp($this)]">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ListViewItem IsHitTestVisible="False">
+                                    <TextBlock Text="{Binding ReplaceWith}"/>
+                                </ListViewItem>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+
+
+
+                <!-- SPLITTER -->
+
+                <GridSplitter Width="5" 
+                              Opacity="0"
+                              BorderBrush="Gray"
+                              HorizontalAlignment="Right" 
+                              VerticalAlignment="Stretch"
+                              ResizeBehavior="CurrentAndNext"/>
+
+
+
+                <!-- DOCKPANEL RIGHT-->
+
+                <Grid DockPanel.Dock="Right" Grid.Column="1">
+                    <DataGrid x:Name="ItemReplacersDataGrid" 
+                              cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding()]"
+                              ItemsSource="{Binding SelectedItem, Mode=TwoWay}"
+                              AutoGenerateColumns="True" 
+                              AlternatingRowBackground="LightGray"
+                              CanUserDeleteRows="False"
+                              CanUserAddRows="False"
+                              IsReadOnly="{Binding IsReadOnly}"
+                              ToolTip="If there's a cell in the importing .csv file in the&#x0a;
+'ITEM' column that matches anything in the [ToReplace] column,&#x0a;
+replace it with the text in the [ReplaceWith] column.">
+                    </DataGrid>
+                </Grid>
 
             </Grid>
 
