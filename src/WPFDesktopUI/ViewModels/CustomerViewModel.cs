@@ -108,8 +108,7 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     public ObservableCollection<T> Read<T>() {
-      // TODO: Make the id uppercased to match conventions
-      var query = "SELECT id, * FROM customer";
+      var query = "SELECT Id, * FROM customer";
       var list = SqliteDataAccess.LoadData<T>(query);
 
       // Cast to observable collection
