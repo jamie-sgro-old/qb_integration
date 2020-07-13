@@ -41,13 +41,7 @@ namespace WPFDesktopUI.ViewModels {
 
 
     public void OnKeyUp(object itemReplacerObj) {
-      var IsValidType = itemReplacerObj is IItemReplacer;
-      if (!IsValidType) {
-        throw new ArgumentException(@"OnKeyUp() parameter not of type " + typeof(IItemReplacer), nameof(itemReplacerObj));
-      }
-
-      // Cast to KeyValuePair like Dict
-      var itemReplacer = (IItemReplacer)itemReplacerObj;
+      var itemReplacer = SafeCast<IItemReplacer>(itemReplacerObj);
 
       // Pass to model
       ItemModel.ItemSelected(itemReplacer);
@@ -56,6 +50,28 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     public void OnCellEditEnding() {
+    }
+
+    public void BtnDelete(object itemReplacerObj) {
+      var itemReplacer = SafeCast<IItemReplacer>(itemReplacerObj);
+
+      var a = itemReplacer.ToReplace;
+      var b = itemReplacer.ReplaceWith;
+    }
+
+    /// <summary>
+    /// Try to cast variable based on generic type T.
+    /// Throws an error if the cast cannot be completed.
+    /// Used to convert XAML parameters back to the original type from MV.
+    /// </summary>
+    /// <typeparam name="T">Interface to cast to</typeparam>
+    /// <param name="obj">Parameter that needs to be cast</param>
+    /// <returns>Cast variable</returns>
+    private T SafeCast<T>(object obj) {
+      if (!(obj is T)) {
+        throw new ArgumentException(@"object parameter could not be cast to " + typeof(T), nameof(obj));
+      }
+      return (T) obj;
     }
   }
 }

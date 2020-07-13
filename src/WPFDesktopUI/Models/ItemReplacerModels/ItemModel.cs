@@ -5,11 +5,12 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPFDesktopUI.Models.DbModels.Interfaces;
 using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
 using WPFDesktopUI.ViewModels;
 
 namespace WPFDesktopUI.Models.ItemReplacerModels {
-  public class ItemModel : IItemModel<IItemReplacer> {
+  public class ItemModel : IItemModel<IItemReplacer>, IDbModel<IItemReplacer> {
     public ItemModel() {
       _sourceData = new ObservableCollection<IItemReplacer> {
         Factory.CreateItemReplacer("PSW", "Barrie Connie Thompson- PSW"),
@@ -55,5 +56,21 @@ namespace WPFDesktopUI.Models.ItemReplacerModels {
     }
 
     public string Filter { get; set; } = "";
+
+    public void Create<T>(List<T> dataList) {
+      throw new NotImplementedException();
+    }
+
+    public ObservableCollection<T> Read<T>() {
+      throw new NotImplementedException();
+    }
+
+    public void Update<T>(ObservableCollection<T> dataList) {
+      throw new NotImplementedException();
+    }
+
+    public void Destroy<T>(ObservableCollection<T> dataList) {
+      throw new NotImplementedException();
+    }
   }
 }

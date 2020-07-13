@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPFDesktopUI.Models.DbModels.Interfaces;
 
 namespace WPFDesktopUI.Models.ItemReplacerModels.Interfaces {
   public interface IItemModel<T> {

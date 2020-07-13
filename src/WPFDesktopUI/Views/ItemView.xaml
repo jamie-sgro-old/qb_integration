@@ -99,6 +99,18 @@
                               ToolTip="If there's a cell in the importing .csv file in the&#x0a;
 'ITEM' column that matches anything in the [ToReplace] column,&#x0a;
 replace it with the text in the [ReplaceWith] column.">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button
+                                            cal:Message.Attach="[Event Click]=[Action BtnDelete($this)]">
+                                            Delete
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
 
