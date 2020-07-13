@@ -14,6 +14,7 @@ using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.Models.ItemReplacerModels;
 using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
 using WPFDesktopUI.Models.PluginModels;
+using WPFDesktopUI.Models.PluginModels.Interfaces;
 using WPFDesktopUI.Models.SidePaneModels.Attributes;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 using WPFDesktopUI.Models.SidePaneModels.Interfaces;
@@ -38,7 +39,7 @@ namespace WPFDesktopUI.ViewModels {
       return new QuickBooksSidePaneViewModel();
     }
 
-    public static CustomerViewModel CreateCustomerViewModel() {
+    public static ICustomerViewModel<ICustomer> CreateCustomerViewModel() {
       return new CustomerViewModel();
     }
 
@@ -62,10 +63,14 @@ namespace WPFDesktopUI.ViewModels {
       return new QuickBooksSidePaneModel(CreateQbComboBox);
     }
 
-    public static IPluginModel CreatePluginModel() {
+    public static IPluginModel<IClientPlugin, IClientEssentials> CreatePluginModel() {
       var rtn = new PluginModel();
       rtn.Init();
       return rtn;
+    }
+
+    public static IClientPlugin CreateClientPlugin(bool isEnabled, string name, string author, string description) {
+      return new ClientPlugin(isEnabled, name, author, description);
     }
 
     public static IItemModel<IItemReplacer> CreateItemModel() {

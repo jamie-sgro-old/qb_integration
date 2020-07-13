@@ -12,8 +12,8 @@ namespace WPFDesktopUI.UnitTests.Models.PluginModels {
     [TestMethod]
     public void SingleData_true() {
       var pMod = new PluginModel();
-      var ess = new List<PluginModel.pluginEssentials>();
-      ess.Add(new PluginModel.pluginEssentials {
+      var ess = new List<PluginModel.TempPluginEssentials>();
+      ess.Add(new PluginModel.TempPluginEssentials {
         IsEnabled = true,
         Name = "Name1"
       });
@@ -30,8 +30,8 @@ namespace WPFDesktopUI.UnitTests.Models.PluginModels {
     [TestMethod]
     public void SingleData_false() {
       var pMod = new PluginModel();
-      var ess = new List<PluginModel.pluginEssentials>();
-      ess.Add(new PluginModel.pluginEssentials {
+      var ess = new List<PluginModel.TempPluginEssentials>();
+      ess.Add(new PluginModel.TempPluginEssentials {
         IsEnabled = false,
         Name = "Name1"
       });
@@ -48,12 +48,12 @@ namespace WPFDesktopUI.UnitTests.Models.PluginModels {
     [TestMethod]
     public void NewData_FirstTrue_SecondEmpty() {
       var pMod = new PluginModel();
-      var ess = new List<PluginModel.pluginEssentials>();
-      ess.Add(new PluginModel.pluginEssentials {
+      var ess = new List<PluginModel.TempPluginEssentials>();
+      ess.Add(new PluginModel.TempPluginEssentials {
         IsEnabled = true,
         Name = "Name1"
       });
-      ess.Add(new PluginModel.pluginEssentials {
+      ess.Add(new PluginModel.TempPluginEssentials {
         IsEnabled = false,
         Name = "Name2"
       });
@@ -70,8 +70,8 @@ namespace WPFDesktopUI.UnitTests.Models.PluginModels {
     [TestMethod]
     public void NullData_Empty() {
       var pMod = new PluginModel();
-      var ess = new List<PluginModel.pluginEssentials>();
-      ess.Add(new PluginModel.pluginEssentials {
+      var ess = new List<PluginModel.TempPluginEssentials>();
+      ess.Add(new PluginModel.TempPluginEssentials {
         IsEnabled = true,
         Name = "Name1"
       });
@@ -84,12 +84,12 @@ namespace WPFDesktopUI.UnitTests.Models.PluginModels {
     [TestMethod]
     public void DoubleData_FirstTrue_SecondFalse() {
       var pMod = new PluginModel();
-      var ess = new List<PluginModel.pluginEssentials>();
-      ess.Add(new PluginModel.pluginEssentials {
+      var ess = new List<PluginModel.TempPluginEssentials>();
+      ess.Add(new PluginModel.TempPluginEssentials {
         IsEnabled = true,
         Name = "Name1"
       });
-      ess.Add(new PluginModel.pluginEssentials {
+      ess.Add(new PluginModel.TempPluginEssentials {
         IsEnabled = false,
         Name = "Name2"
       });
@@ -110,8 +110,8 @@ namespace WPFDesktopUI.UnitTests.Models.PluginModels {
     [TestMethod]
     public void SingleData_FirstTrue_AndSecondFalse() {
       var pMod = new PluginModel();
-      var ess = new List<PluginModel.pluginEssentials>();
-      ess.Add(new PluginModel.pluginEssentials {
+      var ess = new List<PluginModel.TempPluginEssentials>();
+      ess.Add(new PluginModel.TempPluginEssentials {
         IsEnabled = true,
         Name = "Name1"
       });
@@ -132,7 +132,7 @@ namespace WPFDesktopUI.UnitTests.Models.PluginModels {
     [TestMethod]
     public void NoData_FirstFalse_SecondFalse() {
       var pMod = new PluginModel();
-      var ess = new List<PluginModel.pluginEssentials>();
+      var ess = new List<PluginModel.TempPluginEssentials>();
       Compose();
       var res = pMod.GetPluginModels(ess, _pluginsOfTwo);
 
@@ -150,16 +150,16 @@ namespace WPFDesktopUI.UnitTests.Models.PluginModels {
     [TestMethod]
     public void WrongData_FirstFalse_SecondFalse() {
       var pMod = new PluginModel();
-      var ess = new List<PluginModel.pluginEssentials>();
-      ess.Add(new PluginModel.pluginEssentials {
+      var ess = new List<PluginModel.TempPluginEssentials>();
+      ess.Add(new PluginModel.TempPluginEssentials {
         IsEnabled = true,
         Name = "NoName1"
       });
-      ess.Add(new PluginModel.pluginEssentials {
+      ess.Add(new PluginModel.TempPluginEssentials {
         IsEnabled = true,
         Name = "NoName2"
       });
-      ess.Add(new PluginModel.pluginEssentials {
+      ess.Add(new PluginModel.TempPluginEssentials {
         IsEnabled = true,
         Name = "NoName3"
       });

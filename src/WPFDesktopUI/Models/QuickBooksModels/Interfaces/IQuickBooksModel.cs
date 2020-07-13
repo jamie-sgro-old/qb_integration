@@ -9,6 +9,6 @@ using WPFDesktopUI.Models.CustomerModels.Interfaces;
 
 namespace WPFDesktopUI.Models {
   public interface IQuickBooksModel {
-    Task QbImport(DataTable dt, List<Customer> cxList);
+    Task QbImport(DataTable dt, List<ICustomer> cxList);
   }
 }

@@ -13,28 +13,7 @@ using WPFDesktopUI.ViewModels;
 namespace WPFDesktopUI.Models.ItemReplacerModels {
   public class ItemModel : IItemModel<IItemReplacer> {
     public ItemModel() {
-      /*_sourceData = new ObservableCollection<IItemReplacer> {
-        Factory.CreateItemReplacer("PSW", "Barrie Connie Thompson- PSW"),
-        Factory.CreateItemReplacer("PSW", "CLASS - PSW1"),
-        Factory.CreateItemReplacer("PSW", "Villa (PSW)"),
-        Factory.CreateItemReplacer("PSW", "Villa (PSW) Night Shift"),
-        Factory.CreateItemReplacer("RN", "Barrie Connie Thompson- RN"),
-        Factory.CreateItemReplacer("RN", "CLASS - RN1"),
-        Factory.CreateItemReplacer("RN - WKD", "Barrie Connie Thompson- RN- Weekend"),
-        Factory.CreateItemReplacer("RN - WKD", "CLASS - RN1- Weekend"),
-        Factory.CreateItemReplacer("RN - STAT", "Barrie Connie Thompson- RN - Stat Holiday"),
-        Factory.CreateItemReplacer("RN - STAT", "CLASS - RN1 - STAT")
-      };*/
-      _sourceData = new ObservableCollection<IItemReplacer>(TempRead());
-    }
-
-    /// <summary>
-    /// Dapper requires concrete implementations for sql queries
-    /// Essentially a private version of ItemReplacer
-    /// </summary>
-    private class TempItemReplacer : IItemReplacer {
-      public string ReplaceWith { get; }
-      public string ToReplace { get; set; }
+      _sourceData = new ObservableCollection<IItemReplacer>(Read());
     }
 
     /// <summary>
@@ -78,21 +57,21 @@ namespace WPFDesktopUI.Models.ItemReplacerModels {
           VALUES (@ReplaceWith, @ToReplace);", dataList);
     }
 
-    public ObservableCollection<IItemReplacer> TempRead() {
-      var query = "SELECT Id, * FROM item";
+    /// <summary>
+    /// Dapper requires concrete implementations for sql queries
+    /// Essentially a private version of ItemReplacer
+    /// </summary>
+    private class TempItemReplacer : IItemReplacer {
+      public string ReplaceWith { get; }
+      public string ToReplace { get; set; }
+    }
+
+    public ObservableCollection<IItemReplacer> Read() {
+      const string query = "SELECT Id, * FROM item";
       var list = SqliteDataAccess.LoadData<TempItemReplacer>(query);
 
       // Cast to observable collection
       var collection = new ObservableCollection<IItemReplacer>(list);
-      return collection;
-    }
-
-    public ObservableCollection<T> Read<T>() {
-      var query = "SELECT Id, * FROM item";
-      var list = SqliteDataAccess.LoadData<T>(query);
-
-      // Cast to observable collection
-      var collection = new ObservableCollection<T>(list);
       return collection;
     }
 

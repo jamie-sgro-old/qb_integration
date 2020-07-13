@@ -28,7 +28,7 @@ namespace WPFDesktopUI.Models {
 
 
 
-    public async Task QbImport(DataTable dt, List<Customer> cxList) {
+    public async Task QbImport(DataTable dt, List<ICustomer> cxList) {
       ValidateDt(dt);
 
       var csvModels = MapDataTableToModel(dt);
@@ -108,7 +108,7 @@ namespace WPFDesktopUI.Models {
     /// <param name="csvModels"></param>
     /// <param name="cxList"></param>
     /// <returns></returns>
-    private List<ICsvModel> ApplyCxRules(List<ICsvModel> csvModels, List<Customer> cxList) {
+    private List<ICsvModel> ApplyCxRules(List<ICsvModel> csvModels, List<ICustomer> cxList) {
       // Overwrite values based on Customer Rules
       foreach (var cx in cxList) {
         foreach (var row in csvModels) {
@@ -129,7 +129,7 @@ namespace WPFDesktopUI.Models {
     /// <param name="csvModels"></param>
     /// <param name="cxList"></param>
     /// <returns></returns>
-    private List<IInvoice> AppendLine(List<IInvoice> invoices, List<Customer> cxList) {
+    private List<IInvoice> AppendLine(List<IInvoice> invoices, List<ICustomer> cxList) {
       // Overwrite values based on Customer Rules
       foreach (var invoice in invoices) {
         foreach (var cx in cxList) {

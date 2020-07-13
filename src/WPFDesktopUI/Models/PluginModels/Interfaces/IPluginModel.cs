@@ -2,11 +2,11 @@
 using WPFDesktopUI.Models.DbModels.Interfaces;
 
 namespace WPFDesktopUI.Models.PluginModels {
-  public interface IPluginModel : IDbModel<ClientPlugin> {
+  public interface IPluginModel<T1, T2> : IDbModel<T2> {
     /// <summary>
     /// Acts as a constructor
     /// </summary>
     void Init();
-    List<ClientPlugin> PluginModels { get; set; }
+    List<T1> PluginModels { get; set; }
   }
 }

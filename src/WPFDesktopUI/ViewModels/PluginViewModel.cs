@@ -9,16 +9,16 @@ using WPFDesktopUI.Models.PluginModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
-  public sealed class PluginViewModel : Conductor<object>, IPluginViewModel {
+  public sealed class PluginViewModel : Conductor<object>, IPluginViewModel<IClientPlugin, IClientEssentials> {
     public PluginViewModel() {
       log.Debug("Querying sql and directory for plugins");
       PluginModel = Factory.CreatePluginModel();
 
-      ReactiveCollection = new ObservableCollection<ClientPlugin>(PluginModel.PluginModels);
+      ReactiveCollection = new ObservableCollection<IClientPlugin>(PluginModel.PluginModels);
     }
 
-    public IPluginModel PluginModel { get; set; }
-    public ObservableCollection<ClientPlugin> ReactiveCollection { get; set; }
+    public IPluginModel<IClientPlugin, IClientEssentials> PluginModel { get; set; }
+    public ObservableCollection<IClientPlugin> ReactiveCollection { get; set; }
     public string Title { get; set; } = "Plugin Manager";
     public string PluginDescription { get; set; } = "";
 

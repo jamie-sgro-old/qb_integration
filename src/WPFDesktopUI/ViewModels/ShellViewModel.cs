@@ -33,7 +33,7 @@ namespace WPFDesktopUI.ViewModels {
 
 		public IImportViewModel ImportViewModel { get; }
 		public IQuickBooksViewModel QuickBooksViewModel { get; }
-		public ICustomerViewModel<Customer> CustomerViewModel { get; }
+		public ICustomerViewModel<ICustomer> CustomerViewModel { get; }
 		public IItemViewModel<IItemReplacer> ItemViewModel { get; }
 
     public bool TabImportIsSelected { get; set; } = true;
