@@ -129,6 +129,10 @@ namespace WPFDesktopUI.ViewModels {
         WHERE Name = @Name;", dataList);
     }
 
+    public void Destroy<T>(ObservableCollection<T> dataList) {
+      throw new NotImplementedException();
+    }
+
     private static readonly log4net.ILog log = LogHelper.GetLogger();
   }
 }

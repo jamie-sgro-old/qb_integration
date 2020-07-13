@@ -15,5 +15,6 @@ namespace WPFDesktopUI.Models.DbModels.Interfaces {
 
     void Update<T>(ObservableCollection<T> dataList);
 
+    void Destroy<T>(ObservableCollection<T> dataList);
   }
 }
