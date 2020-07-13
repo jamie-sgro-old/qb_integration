@@ -25,6 +25,16 @@ namespace WPFDesktopUI.ViewModels.Interfaces {
     /// </param>
     void OnKeyUp(object itemReplacerObj);
 
+    /// <summary>
+    /// Add new data where the [ReplaceWith] property equals the text in
+    /// the search bar
+    /// </summary>
     void BtnAdd();
+
+    /// <summary>
+    /// Add new row to currently existing dataset based on shared
+    /// [ReplaceWith] property
+    /// </summary>
+    void BtnInsert();
   }
 }

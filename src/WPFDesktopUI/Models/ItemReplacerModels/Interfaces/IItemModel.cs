@@ -18,6 +18,11 @@ namespace WPFDesktopUI.Models.ItemReplacerModels.Interfaces {
     string Filter { get; set; }
 
     /// <summary>
+    /// The data of the currently selected data item / row
+    /// </summary>
+    IItemReplacer SelectedKey { get; }
+
+    /// <summary>
     /// The data populating the secondary table editable by the user
     /// </summary>
     ObservableCollection<T> SelectedItem { get; set; }

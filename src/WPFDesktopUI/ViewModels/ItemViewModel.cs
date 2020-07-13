@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Documents;
 using Caliburn.Micro;
+using WPFDesktopUI.Models.ItemReplacerModels;
 using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
@@ -15,8 +16,6 @@ namespace WPFDesktopUI.ViewModels {
     public ItemViewModel() {
       ItemModel = Factory.CreateItemModel();
     }
-
-
 
     public IItemModel<IItemReplacer> ItemModel { get; set; }
 
@@ -52,9 +51,22 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     public void BtnAdd() {
+      if (string.IsNullOrEmpty(SearchBar)) return;
       var itemReplacer = Factory.CreateItemReplacer(SearchBar, "");
 
       ItemModel.Create(new List<IItemReplacer>{itemReplacer});
+
+      NotifyOfPropertyChange(() => PrimaryPane);
+      NotifyOfPropertyChange(() => SecondaryPane);
+    }
+
+    public void BtnInsert() {
+      var itemReplacer = Factory.CreateItemReplacer(ItemModel.SelectedKey.ReplaceWith, "");
+
+      ItemModel.Create(new List<IItemReplacer> { itemReplacer });
+
+      NotifyOfPropertyChange(() => PrimaryPane);
+      NotifyOfPropertyChange(() => SecondaryPane);
     }
 
     public void OnCellEditEnding() {

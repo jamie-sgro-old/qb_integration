@@ -88,6 +88,16 @@
                 <!-- DOCKPANEL RIGHT-->
 
                 <Grid DockPanel.Dock="Right" Grid.Column="1">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+
                     <DataGrid x:Name="ItemReplacersDataGrid" 
                               cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding()]"
                               ItemsSource="{Binding SecondaryPane, Mode=TwoWay}"
@@ -96,6 +106,8 @@
                               CanUserDeleteRows="False"
                               CanUserAddRows="False"
                               IsReadOnly="{Binding IsReadOnly}"
+                              Grid.Row="0"
+                              Grid.ColumnSpan="2"
                               ToolTip="If there's a cell in the importing .csv file in the&#x0a;
 'ITEM' column that matches anything in the [ToReplace] column,&#x0a;
 replace it with the text in the [ReplaceWith] column.">
@@ -112,6 +124,14 @@ replace it with the text in the [ReplaceWith] column.">
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+
+
+                    <Button x:Name="BtnInsert"
+                            Grid.Row="2"
+                            Grid.Column="1" 
+                            Style="{StaticResource ButtonClose}">
+                        Add Row
+                    </Button>
                 </Grid>
 
             </Grid>

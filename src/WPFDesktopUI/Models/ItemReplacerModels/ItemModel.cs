@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MCBusinessLogic.DataAccess;
 using WPFDesktopUI.Models.DbModels.Interfaces;
 using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
 using WPFDesktopUI.ViewModels;
@@ -12,7 +13,7 @@ using WPFDesktopUI.ViewModels;
 namespace WPFDesktopUI.Models.ItemReplacerModels {
   public class ItemModel : IItemModel<IItemReplacer> {
     public ItemModel() {
-      _sourceData = new ObservableCollection<IItemReplacer> {
+      /*_sourceData = new ObservableCollection<IItemReplacer> {
         Factory.CreateItemReplacer("PSW", "Barrie Connie Thompson- PSW"),
         Factory.CreateItemReplacer("PSW", "CLASS - PSW1"),
         Factory.CreateItemReplacer("PSW", "Villa (PSW)"),
@@ -23,7 +24,17 @@ namespace WPFDesktopUI.Models.ItemReplacerModels {
         Factory.CreateItemReplacer("RN - WKD", "CLASS - RN1- Weekend"),
         Factory.CreateItemReplacer("RN - STAT", "Barrie Connie Thompson- RN - Stat Holiday"),
         Factory.CreateItemReplacer("RN - STAT", "CLASS - RN1 - STAT")
-      };
+      };*/
+      _sourceData = new ObservableCollection<IItemReplacer>(TempRead());
+    }
+
+    /// <summary>
+    /// Dapper requires concrete implementations for sql queries
+    /// Essentially a private version of ItemReplacer
+    /// </summary>
+    private class TempItemReplacer : IItemReplacer {
+      public string ReplaceWith { get; }
+      public string ToReplace { get; set; }
     }
 
     /// <summary>
@@ -31,10 +42,7 @@ namespace WPFDesktopUI.Models.ItemReplacerModels {
     /// </summary>
     private ObservableCollection<IItemReplacer> _sourceData { get; set; }
 
-    /// <summary>
-    /// The data of the currently selected data item / row
-    /// </summary>
-    private IItemReplacer _selectedKey { get; set; }
+    public IItemReplacer SelectedKey { get; private set; }
 
     public ObservableCollection<IItemReplacer> SelectedItem { get; set; }
 
@@ -47,24 +55,45 @@ namespace WPFDesktopUI.Models.ItemReplacerModels {
     }
 
     public void ItemSelected(IItemReplacer selectedItem) {
-      _selectedKey = selectedItem;
+      SelectedKey = selectedItem;
       UpdateSelectedItem();
     }
 
     public string Filter { get; set; } = "";
 
     public void Create<T>(List<T> dataList) {
+      if (!(dataList is List<IItemReplacer> itemReplacer)) {
+        throw new ArgumentException(@"dataList parameter could not be cast to " + typeof(IItemReplacer), nameof(dataList));
+      }
 
+      foreach (var item in itemReplacer) {
+        _sourceData.Add(item);
+      }
 
+      UpdateSelectedItem();
 
-      // TODO: add sql
+      // Update SQL
+      SqliteDataAccess.SaveData(
+        @"INSERT OR IGNORE INTO `item` (ReplaceWith, ToReplace)
+          VALUES (@ReplaceWith, @ToReplace);", dataList);
+    }
 
+    public ObservableCollection<IItemReplacer> TempRead() {
+      var query = "SELECT Id, * FROM item";
+      var list = SqliteDataAccess.LoadData<TempItemReplacer>(query);
+
+      // Cast to observable collection
+      var collection = new ObservableCollection<IItemReplacer>(list);
+      return collection;
     }
 
     public ObservableCollection<T> Read<T>() {
-      throw new NotImplementedException();
-      // TODO: add sql
+      var query = "SELECT Id, * FROM item";
+      var list = SqliteDataAccess.LoadData<T>(query);
 
+      // Cast to observable collection
+      var collection = new ObservableCollection<T>(list);
+      return collection;
     }
 
     public void Update<T>(ObservableCollection<T> dataList) {
@@ -75,14 +104,14 @@ namespace WPFDesktopUI.Models.ItemReplacerModels {
 
     public void Destroy<T>(ObservableCollection<T> dataList) {
       if (!(dataList is ObservableCollection<IItemReplacer> itemReplacer)) {
-        throw new ArgumentException(@"itemReplacer parameter could not be cast to " + typeof(IItemReplacer), nameof(dataList));
+        throw new ArgumentException(@"dataList parameter could not be cast to " + typeof(IItemReplacer), nameof(dataList));
       }
 
-      foreach (var datum in itemReplacer) {
+      foreach (var item in itemReplacer) {
         _sourceData
           .Remove(_sourceData
-            .Single(x => x.ToReplace == datum.ToReplace &&
-                    x.ReplaceWith == datum.ReplaceWith));
+            .Single(x => x.ToReplace == item.ToReplace &&
+                    x.ReplaceWith == item.ReplaceWith));
       }
 
       UpdateSelectedItem();
@@ -91,8 +120,11 @@ namespace WPFDesktopUI.Models.ItemReplacerModels {
     }
 
     private void UpdateSelectedItem() {
+      if (SelectedKey == null) return;
+      if (string.IsNullOrEmpty(SelectedKey?.ReplaceWith)) return;
+
       SelectedItem = new ObservableCollection<IItemReplacer>(_sourceData
-        .Where(x => x.ReplaceWith == _selectedKey.ReplaceWith)
+        .Where(x => x.ReplaceWith == SelectedKey.ReplaceWith)
         .ToList());
     }
   }
