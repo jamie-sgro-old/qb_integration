@@ -24,5 +24,7 @@ namespace WPFDesktopUI.ViewModels.Interfaces {
     /// currently active ListViewItem
     /// </param>
     void OnKeyUp(object itemReplacerObj);
+
+    void BtnAdd();
   }
 }

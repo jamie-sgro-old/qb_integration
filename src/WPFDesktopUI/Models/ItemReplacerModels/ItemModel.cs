@@ -10,7 +10,7 @@ using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
 using WPFDesktopUI.ViewModels;
 
 namespace WPFDesktopUI.Models.ItemReplacerModels {
-  public class ItemModel : IItemModel<IItemReplacer>, IDbModel<IItemReplacer> {
+  public class ItemModel : IItemModel<IItemReplacer> {
     public ItemModel() {
       _sourceData = new ObservableCollection<IItemReplacer> {
         Factory.CreateItemReplacer("PSW", "Barrie Connie Thompson- PSW"),
@@ -48,29 +48,52 @@ namespace WPFDesktopUI.Models.ItemReplacerModels {
 
     public void ItemSelected(IItemReplacer selectedItem) {
       _selectedKey = selectedItem;
-
-      // Update SelectedItem
-      SelectedItem = new ObservableCollection<IItemReplacer>(_sourceData
-        .Where(x => x.ReplaceWith == _selectedKey.ReplaceWith)
-        .ToList());
+      UpdateSelectedItem();
     }
 
     public string Filter { get; set; } = "";
 
     public void Create<T>(List<T> dataList) {
-      throw new NotImplementedException();
+
+
+
+      // TODO: add sql
+
     }
 
     public ObservableCollection<T> Read<T>() {
       throw new NotImplementedException();
+      // TODO: add sql
+
     }
 
     public void Update<T>(ObservableCollection<T> dataList) {
       throw new NotImplementedException();
+      // TODO: add sql
+
     }
 
     public void Destroy<T>(ObservableCollection<T> dataList) {
-      throw new NotImplementedException();
+      if (!(dataList is ObservableCollection<IItemReplacer> itemReplacer)) {
+        throw new ArgumentException(@"itemReplacer parameter could not be cast to " + typeof(IItemReplacer), nameof(dataList));
+      }
+
+      foreach (var datum in itemReplacer) {
+        _sourceData
+          .Remove(_sourceData
+            .Single(x => x.ToReplace == datum.ToReplace &&
+                    x.ReplaceWith == datum.ReplaceWith));
+      }
+
+      UpdateSelectedItem();
+
+      // TODO: add sql
+    }
+
+    private void UpdateSelectedItem() {
+      SelectedItem = new ObservableCollection<IItemReplacer>(_sourceData
+        .Where(x => x.ReplaceWith == _selectedKey.ReplaceWith)
+        .ToList());
     }
   }
 }

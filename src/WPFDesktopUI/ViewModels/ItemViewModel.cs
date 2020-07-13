@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Documents;
 using Caliburn.Micro;
 using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
@@ -49,14 +51,22 @@ namespace WPFDesktopUI.ViewModels {
       NotifyOfPropertyChange(() => SecondaryPane);
     }
 
+    public void BtnAdd() {
+      var itemReplacer = Factory.CreateItemReplacer(SearchBar, "");
+
+      ItemModel.Create(new List<IItemReplacer>{itemReplacer});
+    }
+
     public void OnCellEditEnding() {
     }
 
     public void BtnDelete(object itemReplacerObj) {
       var itemReplacer = SafeCast<IItemReplacer>(itemReplacerObj);
 
-      var a = itemReplacer.ToReplace;
-      var b = itemReplacer.ReplaceWith;
+      ItemModel.Destroy(new ObservableCollection<IItemReplacer>{ itemReplacer });
+
+      NotifyOfPropertyChange(() => PrimaryPane);
+      NotifyOfPropertyChange(() => SecondaryPane);
     }
 
     /// <summary>

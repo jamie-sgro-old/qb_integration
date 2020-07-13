@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 using WPFDesktopUI.Models.DbModels.Interfaces;
 
 namespace WPFDesktopUI.Models.ItemReplacerModels.Interfaces {
-  public interface IItemModel<T> {
+  public interface IItemModel<T> : IDbModel<T> {
+
 
     /// <summary>
     /// A dynamic search filter that refines UniqueReplaceWith to
@@ -17,7 +18,7 @@ namespace WPFDesktopUI.Models.ItemReplacerModels.Interfaces {
     string Filter { get; set; }
 
     /// <summary>
-    /// The data populating the bottom table editable by the user
+    /// The data populating the secondary table editable by the user
     /// </summary>
     ObservableCollection<T> SelectedItem { get; set; }
 

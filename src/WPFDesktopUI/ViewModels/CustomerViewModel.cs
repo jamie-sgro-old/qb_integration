@@ -31,6 +31,9 @@ namespace WPFDesktopUI.ViewModels {
       }
     }
 
+    /// <summary>
+    /// A static version of ReactiveCollection to be called from other classes (tabs)
+    /// </summary>
     public static List<Customer> StaticCxs { get; set; }
     public string ConsoleMessage { get; set; }
     public bool CanQbInteract { get; set; } = true;
