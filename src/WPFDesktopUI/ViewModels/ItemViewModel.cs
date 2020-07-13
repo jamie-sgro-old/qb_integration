@@ -42,6 +42,7 @@ namespace WPFDesktopUI.ViewModels {
 
 
     public void OnKeyUp(object itemReplacerObj) {
+      if (itemReplacerObj == null) return;
       var itemReplacer = SafeCast<IItemReplacer>(itemReplacerObj);
 
       // Pass to model
@@ -69,10 +70,16 @@ namespace WPFDesktopUI.ViewModels {
       NotifyOfPropertyChange(() => SecondaryPane);
     }
 
-    public void OnCellEditEnding() {
+    public void OnCellEditEnding(object itemReplacerObj) {
+      if (itemReplacerObj == null) return;
+      var itemReplacer = SafeCast<IItemReplacer>(itemReplacerObj);
+
+      // Update SQL database with user changes
+      ItemModel.Update(new ObservableCollection<IItemReplacer> { itemReplacer });
     }
 
     public void BtnDelete(object itemReplacerObj) {
+      if (itemReplacerObj == null) return;
       var itemReplacer = SafeCast<IItemReplacer>(itemReplacerObj);
 
       ItemModel.Destroy(new ObservableCollection<IItemReplacer>{ itemReplacer });

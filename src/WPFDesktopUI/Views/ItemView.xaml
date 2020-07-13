@@ -99,7 +99,7 @@
                     </Grid.ColumnDefinitions>
 
                     <DataGrid x:Name="ItemReplacersDataGrid" 
-                              cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding()]"
+                              cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding($this)]"
                               ItemsSource="{Binding SecondaryPane, Mode=TwoWay}"
                               AutoGenerateColumns="True" 
                               AlternatingRowBackground="LightGray"

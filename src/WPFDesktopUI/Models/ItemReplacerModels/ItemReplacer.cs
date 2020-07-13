@@ -11,6 +11,8 @@ namespace WPFDesktopUI.Models.ItemReplacerModels {
       ReplaceWith = replaceWith;
       ToReplace = toReplace;
     }
+
+    public double Id { get; }
     public string ReplaceWith { get; }
     public string ToReplace { get; set; }
   }

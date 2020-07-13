@@ -45,16 +45,14 @@ namespace WPFDesktopUI.Models.ItemReplacerModels {
         throw new ArgumentException(@"dataList parameter could not be cast to " + typeof(IItemReplacer), nameof(dataList));
       }
 
-      foreach (var item in itemReplacer) {
-        _sourceData.Add(item);
-      }
-
-      UpdateSelectedItem();
-
       // Update SQL
       SqliteDataAccess.SaveData(
         @"INSERT OR IGNORE INTO `item` (ReplaceWith, ToReplace)
           VALUES (@ReplaceWith, @ToReplace);", dataList);
+
+      _sourceData = new ObservableCollection<IItemReplacer>(Read());
+
+      UpdateSelectedItem();
     }
 
     /// <summary>
@@ -62,6 +60,7 @@ namespace WPFDesktopUI.Models.ItemReplacerModels {
     /// Essentially a private version of ItemReplacer
     /// </summary>
     private class TempItemReplacer : IItemReplacer {
+      public double Id { get; }
       public string ReplaceWith { get; }
       public string ToReplace { get; set; }
     }
@@ -89,7 +88,8 @@ namespace WPFDesktopUI.Models.ItemReplacerModels {
       foreach (var item in itemReplacer) {
         _sourceData
           .Remove(_sourceData
-            .Single(x => x.ToReplace == item.ToReplace &&
+            .Single(x => x.Id == item.Id &&
+                    x.ToReplace == item.ToReplace &&
                     x.ReplaceWith == item.ReplaceWith));
       }
 

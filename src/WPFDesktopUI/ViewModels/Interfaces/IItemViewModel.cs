@@ -26,6 +26,12 @@ namespace WPFDesktopUI.ViewModels.Interfaces {
     void OnKeyUp(object itemReplacerObj);
 
     /// <summary>
+    /// Event that triggers when the WPF datagrid cells have been edited by the user.
+    /// </summary>
+    /// <param name="itemReplacerObj"></param>
+    void OnCellEditEnding(object itemReplacerObj);
+
+    /// <summary>
     /// Add new data where the [ReplaceWith] property equals the text in
     /// the search bar
     /// </summary>
