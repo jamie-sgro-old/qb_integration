@@ -7,6 +7,7 @@ using Caliburn.Micro;
 using MCBusinessLogic.Controllers;
 using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.Models;
+using WPFDesktopUI.Controllers;
 using WPFDesktopUI.Models;
 using WPFDesktopUI.Models.SidePaneModels;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
@@ -110,7 +111,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     /// </summary>
     /// <param name="csvHeaders">A list of all options populating the combo boxes</param>
     public void AutopopulateComboBoxes(List<string> csvHeaders = null) {
-
+      log.Debug("Loading presets for QBDP ComboBoxes");
       if (csvHeaders == null) {
         csvHeaders = GetCsvHeaders();
         if (csvHeaders == null) return;
@@ -135,6 +136,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     }
 
     public async Task QbInteract() {
+      log.Info("QuickBooks interact button pressed. Data query starting");
       SessionStart();
       try {
         // Update template list from QB
@@ -152,12 +154,12 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
         if (dropAttr != null) {
           dropAttr.DropDownComboBox.ItemsSource = termsList;
           dropAttr.DropDownComboBox.IsEnabled = true;
-
         }
 
 
         SessionEnd();
       } catch (Exception e) {
+        log.Error("QB Query threw and exception", e);
         ConsoleMessage = ErrHandler.DelegateHandle(e);
       } finally {
         CanQbInteract = true;
@@ -171,6 +173,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
     }
 
     private void SessionEnd() {
+      log.Debug("Query successfully completed");
       ConsoleMessage = "Query successfully completed";
     }
 
@@ -223,5 +226,7 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       finalList.Insert(0, "");
       return finalList;
     }
+
+    private static readonly log4net.ILog log = LogHelper.GetLogger();
   }
 }

@@ -9,6 +9,7 @@ using MCBusinessLogic.Models;
 using MCBusinessLogic.Models.Interfaces;
 using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
+using WPFDesktopUI.Models.ItemReplacerModels;
 using WPFDesktopUI.Models.QuickBooksModels;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 using WPFDesktopUI.ViewModels;
@@ -28,20 +29,22 @@ namespace WPFDesktopUI.Models {
 
 
 
-    public async Task QbImport(DataTable dt, List<Customer> cxList) {
+    public async Task QbImport(DataTable dt, List<ICustomer> cxList) {
       ValidateDt(dt);
 
       var csvModels = MapDataTableToModel(dt);
 
       var appliedCsvModels = ApplyCxRules(csvModels, cxList);
 
-      var groupBy = GroupBy.GroupInvoices(appliedCsvModels);
+      var replacedCsvModels = ApplyItemReplacement(appliedCsvModels);
+      
+      var groupBy = GroupBy.GroupInvoices(replacedCsvModels);
 
       var appendLine = AppendLine(groupBy, cxList);
 
       await Task.Run(() => {
         var qbImportController = _qbImportController;
-        qbImportController.Import(groupBy);
+        qbImportController.Import(appendLine);
       });
     }
 
@@ -96,7 +99,7 @@ namespace WPFDesktopUI.Models {
     /// <param name="csvModels"></param>
     /// <param name="cxList"></param>
     /// <returns></returns>
-    private List<ICsvModel> ApplyCxRules(List<ICsvModel> csvModels, List<Customer> cxList) {
+    private List<ICsvModel> ApplyCxRules(List<ICsvModel> csvModels, List<ICustomer> cxList) {
       // Overwrite values based on Customer Rules
       foreach (var cx in cxList) {
         foreach (var row in csvModels) {
@@ -111,13 +114,35 @@ namespace WPFDesktopUI.Models {
     }
 
     /// <summary>
-    /// Add a final line at the bottom of every invoice based on customer names
+    /// Overwrite cells in the ItemRef column if there's a matching string
+    /// in the Items tab (ItemViewModel / ItemModel) inside the ItemModel._sourceData.ToReplace.
+    /// Convert that matching data to the corresponding data from the
+    /// ItemModel._sourceData.ReplaceWith property
+    /// </summary>
+    /// <param name="csvModels"></param>
+    /// <returns>Dataset with replaced Items</returns>
+    private List<ICsvModel> ApplyItemReplacement(List<ICsvModel> csvModels) {
+      // Get Item names to replace
+      var itemReplacers = ItemModel.StaticRead();
+
+      // Convert Item names from the [ToReplace] property to the [ReplaceWith] property
+      foreach (var item in itemReplacers) {
+        csvModels
+          .Where(x => x.ItemRef == item.ToReplace).ToList()
+          .ForEach(x => x.ItemRef = item.ReplaceWith);
+      }
+
+      return csvModels;
+    }
+
+    /// <summary>
+    /// Add final lines at the bottom of every invoice based on customer names
     /// supplied in the 'Customers' tab
     /// </summary>
     /// <param name="csvModels"></param>
     /// <param name="cxList"></param>
     /// <returns></returns>
-    private List<IInvoice> AppendLine(List<IInvoice> invoices, List<Customer> cxList) {
+    private List<IInvoice> AppendLine(List<IInvoice> invoices, List<ICustomer> cxList) {
       // Overwrite values based on Customer Rules
       foreach (var invoice in invoices) {
         foreach (var cx in cxList) {

@@ -9,7 +9,12 @@ using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.Models;
 using WPFDesktopUI.Controllers;
 using WPFDesktopUI.Models;
+using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
+using WPFDesktopUI.Models.ItemReplacerModels;
+using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
+using WPFDesktopUI.Models.PluginModels;
+using WPFDesktopUI.Models.PluginModels.Interfaces;
 using WPFDesktopUI.Models.SidePaneModels.Attributes;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 using WPFDesktopUI.Models.SidePaneModels.Interfaces;
@@ -38,9 +43,17 @@ namespace WPFDesktopUI.ViewModels {
       return new CustomerViewModel();
     }
 
+    public static IItemViewModel<IItemReplacer> CreateItemViewModel() {
+      return new ItemViewModel();
+    }
+
     #endregion View Models
 
     #region Screen Models
+
+    public static ICustomer CreateCustomer() {
+      return new Customer();
+    }
 
     public static IQuickBooksModel CreateQuickBooksModel(Dictionary<string, IQbAttribute> attr) {
       return new QuickBooksModel(attr, CreateQbImportController());
@@ -48,6 +61,24 @@ namespace WPFDesktopUI.ViewModels {
 
     public static IQuickBooksSidePaneModel CreateQuickBooksSidePaneModel() {
       return new QuickBooksSidePaneModel(CreateQbComboBox);
+    }
+
+    public static IPluginModel<IClientPlugin, IClientEssentials> CreatePluginModel() {
+      var rtn = new PluginModel();
+      rtn.Init();
+      return rtn;
+    }
+
+    public static IClientPlugin CreateClientPlugin(bool isEnabled, string name, string author, string description) {
+      return new ClientPlugin(isEnabled, name, author, description);
+    }
+
+    public static IItemModel<IItemReplacer> CreateItemModel() {
+      return new ItemModel();
+    }
+
+    public static IItemReplacer CreateItemReplacer(string replaceWith, string toReplace) {
+      return new ItemReplacer(replaceWith, toReplace);
     }
 
     #endregion Screen Models

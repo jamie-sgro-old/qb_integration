@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using WPFDesktopUI.ViewModels.Interfaces;
 using WPFDesktopUI.ViewModels.Preferences;
 
 namespace WPFDesktopUI.ViewModels {
-  public sealed class PreferencesViewModel : Conductor<object> {
+  public sealed class PreferencesViewModel : Conductor<object>, IWindow {
 
     #region Button
 
@@ -77,5 +78,6 @@ namespace WPFDesktopUI.ViewModels {
 
     #endregion Factory
 
+    public string Title { get; set; } = "Preferences";
   }
 }

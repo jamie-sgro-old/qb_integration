@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:WPFDesktopUI.Views"
         mc:Ignorable="d"
         Icon="Images/icon-sangwa.ico"
-        Title="About" Height="450" Width="800">
+        Title="{Binding Title, Mode=TwoWay}"
+        Height="450" Width="800">
     <Grid>
-        <TextBlock Padding="20">Version: 0.4.2</TextBlock>
+        <TextBlock Padding="20">Version: 0.5.2</TextBlock>
     </Grid>
 </Window>
