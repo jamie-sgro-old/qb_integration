@@ -72,6 +72,8 @@ namespace WPFDesktopUI.ViewModels {
       Compose();
       foreach (Lazy<IPreprocessor, IPluginMetaData> processor in _preprocessors) {
         var pluginDatabaseMatch = plugins.Where(x => x.Name == processor.Metadata.Name);
+        if (!pluginDatabaseMatch.Any()) continue;
+
         var isEnabled = pluginDatabaseMatch.FirstOrDefault().IsEnabled;
 
         if (!isEnabled) continue;

@@ -50,7 +50,7 @@ namespace WPFDesktopUI.Models.PluginModels {
         var pluginDatabaseMatch = essentials.Where(x => x.Name == plugin.Metadata.Name);
 
         pluginModels.Add(Factory.CreateClientPlugin(
-          pluginDatabaseMatch.FirstOrDefault().IsEnabled,
+          pluginDatabaseMatch.FirstOrDefault()?.IsEnabled ?? false,
           plugin.Metadata.Name,
           plugin.Metadata.Author,
           plugin.Metadata.Description));
