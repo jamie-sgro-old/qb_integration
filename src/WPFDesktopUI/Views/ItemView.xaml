@@ -96,18 +96,19 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid x:Name="ItemReplacersDataGrid" 
+                    <DataGrid x:Name="ItemReplacersDataGrid"
                               cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding($this)]"
-                              ItemsSource="{Binding SecondaryPane, Mode=TwoWay}"
+                              ItemsSource="{Binding SecondaryPane, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               AutoGenerateColumns="True" 
                               AlternatingRowBackground="LightGray"
                               CanUserDeleteRows="False"
                               CanUserAddRows="False"
                               IsReadOnly="{Binding IsReadOnly}"
                               Grid.Row="0"
-                              Grid.ColumnSpan="2"
+                              Grid.ColumnSpan="3"
                               ToolTip="If there's a cell in the importing .csv file in the&#x0a;
 'ITEM' column that matches anything in the [ToReplace] column,&#x0a;
 replace it with the text in the [ReplaceWith] column.">
@@ -131,6 +132,13 @@ replace it with the text in the [ReplaceWith] column.">
                             Grid.Column="1" 
                             Style="{StaticResource ButtonClose}">
                         Add Row
+                    </Button>
+
+                    <Button x:Name="BtnUpdate"
+                            Grid.Row="2"
+                            Grid.Column="2" 
+                            Style="{StaticResource ButtonClose}">
+                        Save
                     </Button>
                 </Grid>
 

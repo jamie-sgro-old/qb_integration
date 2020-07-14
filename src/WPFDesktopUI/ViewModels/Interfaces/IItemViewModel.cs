@@ -4,11 +4,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPFDesktopUI.Models.DbModels.Interfaces;
 using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels.Interfaces {
-  public interface IItemViewModel<T> : IMainTab {
-
+  public interface IItemViewModel<T> : IMainTab, IDbViewModel {
+    IItemModel<IItemReplacer> ItemModel { get; set; }
     string SearchBar { get; set; }
     ObservableCollection<T> PrimaryPane { get; }
     ObservableCollection<T> SecondaryPane { get; set; }
@@ -42,5 +43,17 @@ namespace WPFDesktopUI.ViewModels.Interfaces {
     /// [ReplaceWith] property
     /// </summary>
     void BtnInsert();
+
+    /// <summary>
+    /// Send all unsaved changes to model
+    /// </summary>
+    void Update();
+
+    /// <summary>
+    /// Event that triggers when the user pressed the 'Delete' button in the Datagrid row
+    /// </summary>
+    /// <param name="itemReplacerObj">Data in the current row</param>
+    void BtnDelete(object itemReplacerObj);
+
   }
 }

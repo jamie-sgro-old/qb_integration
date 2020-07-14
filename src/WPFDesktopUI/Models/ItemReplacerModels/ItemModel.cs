@@ -75,9 +75,12 @@ namespace WPFDesktopUI.Models.ItemReplacerModels {
     }
 
     public void Update<T>(ObservableCollection<T> dataList) {
-      throw new NotImplementedException();
-      // TODO: add sql
-
+      SqliteDataAccess.SaveData(
+        @"UPDATE `item`
+        SET
+          ReplaceWith = @ReplaceWith,
+          ToReplace = @ToReplace
+        WHERE Id = @Id;", dataList);
     }
 
     public void Destroy<T>(ObservableCollection<T> dataList) {
@@ -95,7 +98,9 @@ namespace WPFDesktopUI.Models.ItemReplacerModels {
 
       UpdateSelectedItem();
 
-      // TODO: add sql
+      SqliteDataAccess.SaveData(
+        @"DELETE FROM `item`
+        WHERE Id = @Id;;", dataList);
     }
 
     private void UpdateSelectedItem() {

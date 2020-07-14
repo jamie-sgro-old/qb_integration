@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Documents;
 using Caliburn.Micro;
-using WPFDesktopUI.Models.ItemReplacerModels;
 using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
@@ -15,9 +14,17 @@ namespace WPFDesktopUI.ViewModels {
 
     public ItemViewModel() {
       ItemModel = Factory.CreateItemModel();
+      _backlog = new HashSet<IItemReplacer>();
     }
 
+    /// <summary>
+    /// A list of rows with unsaved changes.
+    /// </summary>
+    private HashSet<IItemReplacer> _backlog { get; set; }
+
     public IItemModel<IItemReplacer> ItemModel { get; set; }
+    public bool CanBtnUpdate { get; set; } = false;
+
 
     public string SearchBar {
       get => ItemModel.Filter;
@@ -52,6 +59,9 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     public void BtnAdd() {
+      // First save any unsaved changes
+      BtnUpdate();
+
       if (string.IsNullOrEmpty(SearchBar)) return;
       var itemReplacer = Factory.CreateItemReplacer(SearchBar, "");
 
@@ -62,6 +72,9 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     public void BtnInsert() {
+      // First save any unsaved changes
+      BtnUpdate();
+
       var itemReplacer = Factory.CreateItemReplacer(ItemModel.SelectedKey.ReplaceWith, "");
 
       ItemModel.Create(new List<IItemReplacer> { itemReplacer });
@@ -74,8 +87,25 @@ namespace WPFDesktopUI.ViewModels {
       if (itemReplacerObj == null) return;
       var itemReplacer = SafeCast<IItemReplacer>(itemReplacerObj);
 
+      _backlog.Add(itemReplacer);
+
+      TabHeader = TabHeader.Replace("*", "");
+      TabHeader += "*";
+      CanBtnUpdate = true;
+    }
+
+    public void Update() {
+      if (_backlog.Count <= 0) return;
+
       // Update SQL database with user changes
-      ItemModel.Update(new ObservableCollection<IItemReplacer> { itemReplacer });
+      ItemModel.Update(new ObservableCollection<IItemReplacer>(_backlog));
+      _backlog.Clear();
+    }
+
+    public void BtnUpdate() {
+      Update();
+      TabHeader = TabHeader.Replace("*", "");
+      CanBtnUpdate = false;
     }
 
     public void BtnDelete(object itemReplacerObj) {
