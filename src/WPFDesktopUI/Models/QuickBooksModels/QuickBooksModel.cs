@@ -9,6 +9,7 @@ using MCBusinessLogic.Models;
 using MCBusinessLogic.Models.Interfaces;
 using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
+using WPFDesktopUI.Models.ItemReplacerModels;
 using WPFDesktopUI.Models.QuickBooksModels;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 using WPFDesktopUI.ViewModels;
@@ -35,19 +36,9 @@ namespace WPFDesktopUI.Models {
 
       var appliedCsvModels = ApplyCxRules(csvModels, cxList);
 
-      // Add replacer function for Cx
-      var a = new Dictionary<string, List<string>> {
-        {"RN", new List<string> {"Barrie Connie Thompson- PSW", "CLASS - DSW1"}}
-      };
-
-      foreach (var b in a) {
-        foreach (var c in b.Value) {
-          appliedCsvModels.Where(x => x.ItemRef == c).ToList().ForEach(x => x.ItemRef = b.Key);
-        }
-      }
-
-
-      var groupBy = GroupBy.GroupInvoices(appliedCsvModels);
+      var replacedCsvModels = ApplyItemReplacement(appliedCsvModels);
+      
+      var groupBy = GroupBy.GroupInvoices(replacedCsvModels);
 
       var appendLine = AppendLine(groupBy, cxList);
 
@@ -117,6 +108,28 @@ namespace WPFDesktopUI.Models {
             row.TermsRefFullName = cx.TermsRefFullName;
           }
         }
+      }
+
+      return csvModels;
+    }
+
+    /// <summary>
+    /// Overwrite cells in the ItemRef column if there's a matching string
+    /// in the Items tab (ItemViewModel / ItemModel) inside the ItemModel._sourceData.ToReplace.
+    /// Convert that matching data to the corresponding data from the
+    /// ItemModel._sourceData.ReplaceWith property
+    /// </summary>
+    /// <param name="csvModels"></param>
+    /// <returns>Dataset with replaced Items</returns>
+    private List<ICsvModel> ApplyItemReplacement(List<ICsvModel> csvModels) {
+      // Get Item names to replace
+      var itemReplacers = ItemModel.StaticRead();
+
+      // Convert Item names from the [ToReplace] property to the [ReplaceWith] property
+      foreach (var item in itemReplacers) {
+        csvModels
+          .Where(x => x.ItemRef == item.ToReplace).ToList()
+          .ForEach(x => x.ItemRef = item.ReplaceWith);
       }
 
       return csvModels;
