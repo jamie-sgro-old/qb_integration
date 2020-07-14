@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace WPFDesktopUI.Models.ItemReplacerModels.Interfaces {
   public interface IItemReplacer {
+    double Id { get; }
     string ReplaceWith { get; }
     string ToReplace { get; set; }
   }

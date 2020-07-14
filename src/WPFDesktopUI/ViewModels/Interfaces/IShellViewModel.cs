@@ -6,7 +6,7 @@ namespace WPFDesktopUI.ViewModels {
   public interface IShellViewModel : IWindow {
     IImportViewModel ImportViewModel { get; }
     IQuickBooksViewModel QuickBooksViewModel { get; }
-    ICustomerViewModel<Customer> CustomerViewModel { get; }
+    ICustomerViewModel<ICustomer> CustomerViewModel { get; }
     bool TabImportIsSelected { get; set; }
     bool TabQuickBooksIsSelected { get; set; }
     bool TabCustomerIsSelected { get; set; }

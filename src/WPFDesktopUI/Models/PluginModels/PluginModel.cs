@@ -10,13 +10,14 @@ using InterfaceLibraries;
 using MCBusinessLogic.DataAccess;
 using WPFDesktopUI.Controllers;
 using WPFDesktopUI.Models.PluginModels.Interfaces;
+using WPFDesktopUI.ViewModels;
 
 namespace WPFDesktopUI.Models.PluginModels {
-  public class PluginModel : IPluginModel {
+  public class PluginModel : IPluginModel<IClientPlugin, IClientEssentials> {
     public void Init() {
       Compose();
 
-      var essentials = Read<pluginEssentials>().AsEnumerable();
+      var essentials = Read().AsEnumerable();
 
       _initialized = true;
       PluginModels = GetPluginModels(essentials, _plugins);
@@ -27,9 +28,9 @@ namespace WPFDesktopUI.Models.PluginModels {
     [ImportMany(typeof(IPlugin), AllowRecomposition = true)]
     private IEnumerable<Lazy<IPlugin, IPluginMetaData>> _plugins;
 
-    private List<ClientPlugin> _pluginModels;
+    private List<IClientPlugin> _pluginModels;
 
-    public List<ClientPlugin> PluginModels {
+    public List<IClientPlugin> PluginModels {
       get {
         if (!_initialized) {
           log.Warn("Property cannot be evoked before running Init()");
@@ -41,18 +42,14 @@ namespace WPFDesktopUI.Models.PluginModels {
     }
 
     private bool _initialized { get; set; } = false;
-    
-    internal struct pluginEssentials : IClientEssentials {
-      public bool IsEnabled { get; set; }
-      public string Name { get; set; }
-    }
-    
-    internal List<ClientPlugin> GetPluginModels(IEnumerable<pluginEssentials> essentials, IEnumerable<Lazy<IPlugin, IPluginMetaData>> plugins) {
-      var pluginModels = new List<ClientPlugin>();
+
+    internal List<IClientPlugin> GetPluginModels(IEnumerable<IClientEssentials> essentials, IEnumerable<Lazy<IPlugin, IPluginMetaData>> plugins) {
+      var pluginModels = new List<IClientPlugin>();
 
       foreach (Lazy<IPlugin, IPluginMetaData> plugin in plugins) {
         var pluginDatabaseMatch = essentials.Where(x => x.Name == plugin.Metadata.Name);
-        pluginModels.Add(new ClientPlugin(
+
+        pluginModels.Add(Factory.CreateClientPlugin(
           pluginDatabaseMatch.FirstOrDefault().IsEnabled,
           plugin.Metadata.Name,
           plugin.Metadata.Author,
@@ -74,13 +71,22 @@ namespace WPFDesktopUI.Models.PluginModels {
           VALUES (@IsEnabled, @Name);", dataList);
     }
 
-    public ObservableCollection<T> Read<T>() {
+    /// <summary>
+    /// Dapper requires concrete implementations for sql queries
+    /// Essentially a private version of PluginEssentials
+    /// </summary>
+    internal class TempPluginEssentials : IClientEssentials {
+      public bool IsEnabled { get; set; }
+      public string Name { get; internal set; }
+    }
+
+    public ObservableCollection<IClientEssentials> Read() {
       log.Debug("Reading from sql");
-      var query = "SELECT IsEnabled, Name FROM plugin";
-      var list = SqliteDataAccess.LoadData<T>(query);
+      const string query = "SELECT IsEnabled, Name FROM plugin";
+      var list = SqliteDataAccess.LoadData<TempPluginEssentials>(query);
 
       // Cast to observable collection
-      var collection = new ObservableCollection<T>(list);
+      var collection = new ObservableCollection<IClientEssentials>(list);
       return collection;
     }
 
@@ -92,6 +98,10 @@ namespace WPFDesktopUI.Models.PluginModels {
           IsEnabled = @IsEnabled,
           Name = @Name
         WHERE Name = @Name;", dataList);
+    }
+
+    public void Destroy<T>(ObservableCollection<T> dataList) {
+      throw new NotImplementedException();
     }
 
     private static readonly log4net.ILog log = LogHelper.GetLogger();

@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using WPFDesktopUI.Models.DbModels.Interfaces;
 using WPFDesktopUI.Models.PluginModels;
+using WPFDesktopUI.Models.PluginModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels.Interfaces {
-  public interface IPluginViewModel : IDataGrid<ClientPlugin>, IDbViewModel, IWindow {
-    IPluginModel PluginModel { get; set; }
+  public interface IPluginViewModel<T1, T2> : IDataGrid<T1>, IDbViewModel, IWindow {
+    IPluginModel<T1, T2> PluginModel { get; set; }
   }
 }

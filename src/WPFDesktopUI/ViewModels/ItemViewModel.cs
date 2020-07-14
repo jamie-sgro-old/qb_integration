@@ -1,93 +1,136 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows.Documents;
 using Caliburn.Micro;
 using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
-  public class ItemViewModel : Screen, IItemViewModel {
+  public class ItemViewModel : Screen, IItemViewModel<IItemReplacer> {
+    private string _type;
+
     public ItemViewModel() {
-      ItemReplacers = new ObservableCollection<IItemReplacer> {
-        Factory.CreateItemReplacer("PSW", "Barrie Connie Thompson- PSW"),
-        Factory.CreateItemReplacer("PSW", "CLASS - PSW1"),
-        Factory.CreateItemReplacer("PSW", "Villa (PSW)"),
-        Factory.CreateItemReplacer("PSW", "Villa (PSW) Night Shift"),
-        Factory.CreateItemReplacer("RN", "Barrie Connie Thompson- RN"),
-        Factory.CreateItemReplacer("RN", "CLASS - RN1"),
-        Factory.CreateItemReplacer("RN - WKD", "Barrie Connie Thompson- RN- Weekend"),
-        Factory.CreateItemReplacer("RN - WKD", "CLASS - RN1- Weekend"),
-        Factory.CreateItemReplacer("RN - STAT", "Barrie Connie Thompson- RN - Stat Holiday"),
-        Factory.CreateItemReplacer("RN - STAT", "CLASS - RN1 - STAT")
-      };
+      ItemModel = Factory.CreateItemModel();
+      _backlog = new HashSet<IItemReplacer>();
     }
 
+    /// <summary>
+    /// A list of rows with unsaved changes.
+    /// </summary>
+    private HashSet<IItemReplacer> _backlog { get; set; }
 
+    public IItemModel<IItemReplacer> ItemModel { get; set; }
+    public bool CanBtnUpdate { get; set; } = false;
+
+
+    public string SearchBar {
+      get => ItemModel.Filter;
+      set {
+        ItemModel.Filter = value;
+        NotifyOfPropertyChange(() => PrimaryPane);
+      } 
+    }
+
+    public ObservableCollection<IItemReplacer> PrimaryPane => ItemModel.GetUnique();
+
+    public ObservableCollection<IItemReplacer> SecondaryPane {
+      get => ItemModel.SelectedItem;
+      set => ItemModel.SelectedItem = value;
+    }
 
     public string TabHeader { get; set; } = "Item";
-
-    /// <summary>
-    /// Model containing all data used to populate this Screen / UserControl
-    /// </summary>
-    public ObservableCollection<IItemReplacer> ItemReplacers { get; set; }
-
-    /// <summary>
-    /// The data populating the bottom table editable by the user
-    /// </summary>
-    public ObservableCollection<IItemReplacer> SelectedItem { get; set; }
-
-    /// <summary>
-    /// A dynamic search filter that refines UniqueReplaceWith to
-    /// only show data that contains this string
-    /// </summary>
-    public string UniqueReplaceWithFilter { get; set; } = "";
-
-    /// <summary>
-    /// A list of distinct values from the ReplaceWith property
-    /// to populate the first datagrid / listview
-    /// </summary>
-    public ObservableCollection<IItemReplacer> UniqueReplaceWith {
-      get {
-        return new ObservableCollection<IItemReplacer>(ItemReplacers
-          .GroupBy(x => x.ReplaceWith)
-          .Select(x => x.First())
-          .Where(x => x.ReplaceWith.ToLower().Contains(UniqueReplaceWithFilter.ToLower()))
-          .ToList());
-      }
-    }
-
     public void OnSelected() {
     }
 
-    /// <summary>
-    /// Fires when the top datagrid / listview is selected.
-    /// Updates the bottom datagrid with a list of rows with
-    /// matching [ReplaceWith] properties
-    /// </summary>
-    /// <param name="itemReplacerObj">
-    /// A single ItemReplacer indicating which ListViewItem was selected
-    /// If whitespace was selected instead, indicates the last selected /
-    /// currently active ListViewItem
-    /// </param>
+
+
+
     public void OnKeyUp(object itemReplacerObj) {
-      var isDict = itemReplacerObj is IItemReplacer;
-      if (! isDict) {
-        throw new ArgumentException(@"OnKeyUp() parameter not of type " + typeof(IItemReplacer), nameof(itemReplacerObj));
+      if (itemReplacerObj == null) return;
+      var itemReplacer = SafeCast<IItemReplacer>(itemReplacerObj);
+
+      // Pass to model
+      ItemModel.ItemSelected(itemReplacer);
+
+      NotifyOfPropertyChange(() => SecondaryPane);
+    }
+
+    public void BtnAdd() {
+      // First save any unsaved changes
+      BtnUpdate();
+
+      if (string.IsNullOrEmpty(SearchBar)) return;
+      var itemReplacer = Factory.CreateItemReplacer(SearchBar, "");
+
+      ItemModel.Create(new List<IItemReplacer>{itemReplacer});
+
+      NotifyOfPropertyChange(() => PrimaryPane);
+      NotifyOfPropertyChange(() => SecondaryPane);
+    }
+
+    public void BtnInsert() {
+      // First save any unsaved changes
+      BtnUpdate();
+
+      var itemReplacer = Factory.CreateItemReplacer(ItemModel.SelectedKey.ReplaceWith, "");
+
+      ItemModel.Create(new List<IItemReplacer> { itemReplacer });
+
+      NotifyOfPropertyChange(() => PrimaryPane);
+      NotifyOfPropertyChange(() => SecondaryPane);
+    }
+
+    public void OnCellEditEnding(object itemReplacerObj) {
+      if (itemReplacerObj == null) return;
+      var itemReplacer = SafeCast<IItemReplacer>(itemReplacerObj);
+
+      _backlog.Add(itemReplacer);
+
+      TabHeader = TabHeader.Replace("*", "");
+      TabHeader += "*";
+      CanBtnUpdate = true;
+    }
+
+    public void Update() {
+      if (_backlog.Count <= 0) return;
+
+      // Update SQL database with user changes
+      ItemModel.Update(new ObservableCollection<IItemReplacer>(_backlog));
+      _backlog.Clear();
+    }
+
+    public void BtnUpdate() {
+      Update();
+      TabHeader = TabHeader.Replace("*", "");
+      CanBtnUpdate = false;
+    }
+
+    public void BtnDelete(object itemReplacerObj) {
+      if (itemReplacerObj == null) return;
+      var itemReplacer = SafeCast<IItemReplacer>(itemReplacerObj);
+
+      ItemModel.Destroy(new ObservableCollection<IItemReplacer>{ itemReplacer });
+
+      NotifyOfPropertyChange(() => PrimaryPane);
+      NotifyOfPropertyChange(() => SecondaryPane);
+    }
+
+    /// <summary>
+    /// Try to cast variable based on generic type T.
+    /// Throws an error if the cast cannot be completed.
+    /// Used to convert XAML parameters back to the original type from MV.
+    /// </summary>
+    /// <typeparam name="T">Interface to cast to</typeparam>
+    /// <param name="obj">Parameter that needs to be cast</param>
+    /// <returns>Cast variable</returns>
+    private T SafeCast<T>(object obj) {
+      if (!(obj is T)) {
+        throw new ArgumentException(@"object parameter could not be cast to " + typeof(T), nameof(obj));
       }
-
-      // Cast to KeyValuePair like Dict
-      var itemReplacer = (IItemReplacer)itemReplacerObj;
-      var selectedKey = itemReplacer.ReplaceWith;
-
-      // Update SelectedItem
-      SelectedItem = new ObservableCollection<IItemReplacer>(ItemReplacers
-        .Where(x => x.ReplaceWith == selectedKey)
-        .ToList());
-      var a = ItemReplacers;
+      return (T) obj;
     }
-
-    public void OnCellEditEnding() {
-    }
-
   }
 }

@@ -11,9 +11,10 @@ namespace WPFDesktopUI.Models.DbModels.Interfaces {
 
     void Create<T>(List<T> dataList);
 
-    ObservableCollection<T> Read<T>();
+    ObservableCollection<T> Read();
 
     void Update<T>(ObservableCollection<T> dataList);
 
+    void Destroy<T>(ObservableCollection<T> dataList);
   }
 }

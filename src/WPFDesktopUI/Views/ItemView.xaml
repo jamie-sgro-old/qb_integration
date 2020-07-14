@@ -10,43 +10,19 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Border BorderThickness="20">
         <DockPanel>
-            <!-- DOCKPANEL BOTTOM-->
 
-            <Grid DockPanel.Dock="Bottom">
+            <!-- DOCKPANEL TOP -->
 
-                <DataGrid x:Name="ItemReplacersDataGrid" 
-                          cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding()]"
-                          ItemsSource="{Binding SelectedItem, Mode=TwoWay}"
-                          AutoGenerateColumns="True" 
-                          AlternatingRowBackground="LightGray"
-                          CanUserDeleteRows="False"
-                          CanUserAddRows="False"
-                          IsReadOnly="{Binding IsReadOnly}"
-                          ToolTip="If there's a cell in the importing .csv file in the&#x0a;
-'ITEM' column that matches anything in the [ToReplace] column,&#x0a;
-replace it with the text in the [ReplaceWith] column.">
-                </DataGrid>
-
-            </Grid>
-
-            <!-- DOCKPANEL TOP-->
 
             <Grid DockPanel.Dock="Top">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-
                 <!-- SEARCH BAR -->
-                <TextBox x:Name="UniqueReplaceWithFilter"
-                         Grid.Row="0"
+                <TextBox x:Name="SearchBar"
+                         Grid.Column="0"
                          Margin="0, 20"/>
                 <!-- WATERMARK -->
                 <TextBlock IsHitTestVisible="False" Text="Search Items" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="DarkGray">
@@ -62,17 +38,109 @@ replace it with the text in the [ReplaceWith] column.">
                     </TextBlock.Style>
                 </TextBlock>
 
-                <ListView Name="UniqueReplaceWith" 
-                          cal:Message.Attach="[Event MouseLeftButtonUp] = [Action OnKeyUp($this)]"
-                          Grid.Row="1">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ListViewItem IsHitTestVisible="False">
-                                <TextBlock Text="{Binding ReplaceWith}"/>
-                            </ListViewItem>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <Button x:Name="BtnAdd"
+                        Margin="10,20"
+                        Grid.Column="1" 
+                        Style="{StaticResource ButtonClose}">
+                    Add
+                </Button>
+            </Grid>
+
+
+
+            <!-- HORIZONTAL SPLITTER -->
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <!-- DOCKPANEL LEFT-->
+
+                <Grid DockPanel.Dock="Left">
+
+                    <ListView Name="PrimaryPane" 
+                              cal:Message.Attach="[Event MouseLeftButtonUp] = [Action OnKeyUp($this)]">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ListViewItem IsHitTestVisible="False">
+                                    <TextBlock Text="{Binding ReplaceWith}"/>
+                                </ListViewItem>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+
+
+
+                <!-- SPLITTER -->
+
+                <GridSplitter Width="5" 
+                              Opacity="0"
+                              BorderBrush="Gray"
+                              HorizontalAlignment="Right" 
+                              VerticalAlignment="Stretch"
+                              ResizeBehavior="CurrentAndNext"/>
+
+
+
+                <!-- DOCKPANEL RIGHT-->
+
+                <Grid DockPanel.Dock="Right" Grid.Column="1">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid x:Name="ItemReplacersDataGrid"
+                              cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding($this)]"
+                              ItemsSource="{Binding SecondaryPane, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              AutoGenerateColumns="True" 
+                              AlternatingRowBackground="LightGray"
+                              CanUserDeleteRows="False"
+                              CanUserAddRows="False"
+                              IsReadOnly="{Binding IsReadOnly}"
+                              Grid.Row="0"
+                              Grid.ColumnSpan="3"
+                              ToolTip="If there's a cell in the importing .csv file in the&#x0a;
+'ITEM' column that matches anything in the [ToReplace] column,&#x0a;
+replace it with the text in the [ReplaceWith] column.">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button
+                                            cal:Message.Attach="[Event Click]=[Action BtnDelete($this)]">
+                                            Delete
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+
+                    <Button x:Name="BtnInsert"
+                            Grid.Row="2"
+                            Grid.Column="1" 
+                            Style="{StaticResource ButtonClose}">
+                        Add Row
+                    </Button>
+
+                    <Button x:Name="BtnUpdate"
+                            Grid.Row="2"
+                            Grid.Column="2" 
+                            Style="{StaticResource ButtonClose}">
+                        Save
+                    </Button>
+                </Grid>
 
             </Grid>
 
