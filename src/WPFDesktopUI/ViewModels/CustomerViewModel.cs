@@ -33,7 +33,7 @@ namespace WPFDesktopUI.ViewModels {
     /// <summary>
     /// A static version of ReactiveCollection to be called from other classes (tabs)
     /// </summary>
-    public static List<ICustomer> StaticCxs { get; set; }
+    public static List<ICustomer> StaticCxs { get; private set; }
     public string ConsoleMessage { get; set; }
     public bool CanQbInteract { get; set; } = true;
     public bool QbProgressBarIsVisible { get; set; }
