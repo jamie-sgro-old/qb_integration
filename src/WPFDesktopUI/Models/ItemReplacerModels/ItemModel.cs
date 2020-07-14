@@ -66,6 +66,10 @@ namespace WPFDesktopUI.Models.ItemReplacerModels {
     }
 
     public ObservableCollection<IItemReplacer> Read() {
+      return StaticRead();
+    }
+
+    public static ObservableCollection<IItemReplacer> StaticRead() {
       const string query = "SELECT Id, * FROM item";
       var list = SqliteDataAccess.LoadData<TempItemReplacer>(query);
 
