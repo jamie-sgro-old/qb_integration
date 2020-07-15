@@ -96,7 +96,7 @@ namespace WPFDesktopUI.ViewModels {
 			IWindowManager manager = new WindowManager();
 
       try {
-        manager.ShowWindow(new PreferencesViewModel(), null, null);
+        manager.ShowDialog(new PreferencesViewModel(), null, null);
       } catch (Exception e) {
         MessageBox.Show("An unexpected error occured.\nPlease consult the log file for more info.", "Error",
           MessageBoxButton.OK, MessageBoxImage.Error);
@@ -109,7 +109,7 @@ namespace WPFDesktopUI.ViewModels {
       IWindowManager manager = new WindowManager();
 
       try {
-        manager.ShowWindow(new PluginViewModel(), null, null);
+        manager.ShowDialog(new PluginViewModel(), null, null);
 
       } catch (Exception e) {
         MessageBox.Show("An unexpected error occured.\nPlease consult the log file for more info.", "Error",
@@ -123,7 +123,7 @@ namespace WPFDesktopUI.ViewModels {
       IWindowManager manager = new WindowManager();
 
       try {
-        manager.ShowWindow(new AboutViewModel(), null, null);
+        manager.ShowDialog(new AboutViewModel(), null, null);
       } catch (Exception e) {
         MessageBox.Show("An unexpected error occured.\nPlease consult the log file for more info.", "Error",
           MessageBoxButton.OK, MessageBoxImage.Error);
