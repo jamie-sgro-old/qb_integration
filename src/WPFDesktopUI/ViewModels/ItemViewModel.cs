@@ -24,6 +24,8 @@ namespace WPFDesktopUI.ViewModels {
 
     public IItemModel<IItemReplacer> ItemModel { get; set; }
     public bool CanBtnUpdate { get; set; } = false;
+    public bool CanBtnInsert => SecondaryPane != null;
+    public bool CanBtnAdd => !string.IsNullOrEmpty(SearchBar);
 
 
     public string SearchBar {
@@ -56,6 +58,7 @@ namespace WPFDesktopUI.ViewModels {
       ItemModel.ItemSelected(itemReplacer);
 
       NotifyOfPropertyChange(() => SecondaryPane);
+      NotifyOfPropertyChange(() => CanBtnInsert);
     }
 
     public void BtnAdd() {
@@ -71,7 +74,10 @@ namespace WPFDesktopUI.ViewModels {
       NotifyOfPropertyChange(() => SecondaryPane);
     }
 
+
     public void BtnInsert() {
+      if (ItemModel.SelectedKey == null) return;
+
       // First save any unsaved changes
       BtnUpdate();
 
