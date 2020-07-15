@@ -15,7 +15,7 @@ using ErrHandler = WPFDesktopUI.Controllers.QbImportExceptionHandler;
 
 namespace WPFDesktopUI.ViewModels {
   public class CustomerViewModel : Screen, ICustomerViewModel<ICustomer> {
-    private ObservableCollection<ICustomer> _reactiveCollection;
+    private ObservableCollection<ICustomer> _reactiveCollection = new ObservableCollection<ICustomer>();
 
     public CustomerViewModel() {
       log.Debug("Getting Customer data from sql");
@@ -23,12 +23,18 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     public ObservableCollection<ICustomer> ReactiveCollection {
-      get => _reactiveCollection;
+      get {
+        return new ObservableCollection<ICustomer>(_reactiveCollection
+          .Where(x => x.Name.ToLower().Contains(SearchBar.ToLower()))
+          .ToList());
+      }
       set {
         StaticCxs = value.ToList();
         _reactiveCollection = value;
       }
     }
+
+    public string SearchBar { get; set; } = "";
 
     /// <summary>
     /// A static version of ReactiveCollection to be called from other classes (tabs)
