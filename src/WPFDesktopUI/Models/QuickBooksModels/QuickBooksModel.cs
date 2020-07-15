@@ -104,8 +104,8 @@ namespace WPFDesktopUI.Models {
       foreach (var cx in cxList) {
         foreach (var row in csvModels) {
           if (row.CustomerRefFullName == cx.Name) {
-            row.PONumber = cx.PoNumber;
-            row.TermsRefFullName = cx.TermsRefFullName;
+            row.PONumber = cx.PoNumber ?? row.PONumber;
+            row.TermsRefFullName = cx.TermsRefFullName ?? row.TermsRefFullName;
           }
         }
       }
