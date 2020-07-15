@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using Caliburn.Micro;
 using System.Windows;
 using WPFDesktopUI.Controllers;
-using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
 using WPFDesktopUI.ViewModels.Interfaces;

@@ -73,7 +73,40 @@
             <!-- DOCKPANEL TOP-->
 
             <Grid DockPanel.Dock="Top">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- SEARCH BAR -->
+                <TextBox x:Name="SearchBar"
+                         Grid.Row="0"
+                         Grid.Column="0"
+                         MinWidth="150"
+                         Margin="0, 20"/>
+                <!-- WATERMARK -->
+                <TextBlock IsHitTestVisible="False" Text="Search Items" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="DarkGray"
+                           Grid.Row="0"
+                           Grid.Column="0">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=SearchBar}" Value="">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              Grid.Row="1"
+                              Grid.ColumnSpan="2">
                     <DataGrid x:Name="CustomerDataGrid" 
                               cal:Message.Attach="[Event CellEditEnding]=[Action OnCellEditEnding()]"
                               ItemsSource="{Binding ReactiveCollection, Mode=TwoWay}"
