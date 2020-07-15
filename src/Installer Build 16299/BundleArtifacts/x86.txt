@@ -1,6 +1,6 @@
-MainPackage=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Installer Build 16299\bin\x86\Release\Installer Build 16299_0.5.9.0_x86.appx
-SymbolPackage=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Installer Build 16299\obj\x86\Release\Symbols\Installer Build 16299_0.5.9.0_x86.appxsym
-ResourcePack=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Installer Build 16299\bin\x86\Release\Installer Build 16299_0.5.9.0_scale-100.appx
-ResourcePack=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Installer Build 16299\bin\x86\Release\Installer Build 16299_0.5.9.0_scale-125.appx
-ResourcePack=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Installer Build 16299\bin\x86\Release\Installer Build 16299_0.5.9.0_scale-150.appx
-ResourcePack=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Installer Build 16299\bin\x86\Release\Installer Build 16299_0.5.9.0_scale-400.appx
+MainPackage=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Installer Build 16299\bin\x86\Release\Installer Build 16299_0.6.1.0_x86.appx
+SymbolPackage=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Installer Build 16299\obj\x86\Release\Symbols\Installer Build 16299_0.6.1.0_x86.appxsym
+ResourcePack=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Installer Build 16299\bin\x86\Release\Installer Build 16299_0.6.1.0_scale-100.appx
+ResourcePack=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Installer Build 16299\bin\x86\Release\Installer Build 16299_0.6.1.0_scale-125.appx
+ResourcePack=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Installer Build 16299\bin\x86\Release\Installer Build 16299_0.6.1.0_scale-150.appx
+ResourcePack=D:\Users\Jamie\Documents\Code\NX - Nexim Healthcare\01 - Invoicing\qb_integration\src\Installer Build 16299\bin\x86\Release\Installer Build 16299_0.6.1.0_scale-400.appx
