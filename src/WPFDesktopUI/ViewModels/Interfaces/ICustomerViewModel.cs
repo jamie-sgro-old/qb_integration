@@ -5,5 +5,7 @@ using WPFDesktopUI.Models.DbModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels.Interfaces {
   public interface ICustomerViewModel<T> : IMainTab, IQbInteractable, IDbModel<T>, IDbViewModel, IDataGrid<T> {
+    string SearchBar { get; set; }
+
   }
 }

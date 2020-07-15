@@ -30,7 +30,7 @@
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Visibility" Value="Collapsed"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Text, ElementName=UniqueReplaceWithFilter}" Value="">
+                                <DataTrigger Binding="{Binding Text, ElementName=SearchBar}" Value="">
                                     <Setter Property="Visibility" Value="Visible"/>
                                 </DataTrigger>
                             </Style.Triggers>
