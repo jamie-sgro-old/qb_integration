@@ -127,6 +127,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controllers\DbController.cs" />
     <Compile Include="Controllers\LogHelper.cs" />
     <Compile Include="Controllers\QbImportExceptionHandler.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
