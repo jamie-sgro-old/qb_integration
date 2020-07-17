@@ -36,6 +36,25 @@ namespace WPFDesktopUI.Controllers {
 	          'IsEnabled'	INTEGER NOT NULL,
 	          'Name'	TEXT NOT NULL UNIQUE
           );
+          CREATE TABLE IF NOT EXISTS 'csv_data' (
+	          'Id'	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	          'Preset'	TEXT NOT NULL,
+	          'ItemRef'	TEXT,
+	          'ORRatePriceLevelRate'	TEXT,
+	          'Quantity'	TEXT,
+	          'Desc'	TEXT,
+	          'Other1'	TEXT,
+	          'Other2'	TEXT,
+	          'CustomerRefFullName'	TEXT,
+	          'ClassRefFullName'	TEXT,
+	          'TemplateRefFullName'	TEXT,
+	          'TxnDate'	TEXT,
+	          'BillAddress'	TEXT,
+	          'ShipAddress'	TEXT,
+	          'TermsRefFullName'	TEXT,
+	          'PONumber'	TEXT,
+	          'Other'	TEXT
+          );
           PRAGMA user_version = 1;");
     }
 
