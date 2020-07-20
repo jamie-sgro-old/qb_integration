@@ -29,22 +29,10 @@
                  DockPanel.Dock="Left"
                  Margin="10">
 
-            <!-- GENERAL -->
-
-            <ListBoxItem Name="General"
-                         IsSelected="True">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Selected">
-                        <cal:ActionMessage MethodName="General">
-                        </cal:ActionMessage>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                General
-            </ListBoxItem>
-
             <!-- CSVIMPORT -->
 
-            <ListBoxItem Name="CsvImport">
+            <ListBoxItem Name="CsvImport"
+                         IsSelected="True">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Selected">
                         <cal:ActionMessage MethodName="CsvImport">
@@ -64,19 +52,6 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 QuickBooks
-            </ListBoxItem>
-            
-            <!-- NEXTITEM -->
-            
-            <ListBoxItem>
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Selected">
-                        <cal:ActionMessage MethodName="NextItem">
-                            <!--<cal:Parameter Value="{Binding ElementName=Name, Path=Text}" />-->
-                        </cal:ActionMessage>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                NextItem
             </ListBoxItem>
 
             <!-- DEFAULT -->
