@@ -52,10 +52,6 @@ namespace WPFDesktopUI.ViewModels {
 
     #region Factory
 
-    public void General() {
-        ActivateItem(new PreferencesGeneralViewModel());
-    }
-
     public void CsvImport() {
       ActivateItem(new PreferencesCsvImportViewModel());
     }
@@ -65,15 +61,7 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     public void Default() {
-      ActivateItem(new PreferencesGeneralViewModel());
-    }
-
-    public bool CanNextItem() {
-      return false;
-    }
-
-    public void NextItem() {
-      throw new NotImplementedException();
+      ActivateItem(new PreferencesCsvImportViewModel());
     }
 
     #endregion Factory

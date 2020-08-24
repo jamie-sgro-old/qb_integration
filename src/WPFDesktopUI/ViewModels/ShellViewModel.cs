@@ -16,6 +16,8 @@ namespace WPFDesktopUI.ViewModels {
 		public ShellViewModel() {
       try {
         log.Info("Constructor initializing");
+        DbController.UpdateDataBase();
+        log.Debug("Checking for DB updates");
         ImportViewModel = Factory.CreateImportViewModel();
         QuickBooksViewModel = Factory.CreateQuickBooksViewModel();
         CustomerViewModel = Factory.CreateCustomerViewModel();

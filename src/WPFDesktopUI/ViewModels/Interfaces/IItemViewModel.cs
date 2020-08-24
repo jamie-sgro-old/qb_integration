@@ -14,6 +14,8 @@ namespace WPFDesktopUI.ViewModels.Interfaces {
     ObservableCollection<T> PrimaryPane { get; }
     ObservableCollection<T> SecondaryPane { get; set; }
 
+    bool CanBtnInsert { get; }
+    bool CanBtnAdd { get; }
 
 
     /// <summary>
@@ -37,6 +39,7 @@ namespace WPFDesktopUI.ViewModels.Interfaces {
     /// the search bar
     /// </summary>
     void BtnAdd();
+
 
     /// <summary>
     /// Add new row to currently existing dataset based on shared
