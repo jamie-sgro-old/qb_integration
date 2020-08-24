@@ -27,6 +27,7 @@ namespace WPFDesktopUI.Models.SidePaneModels.Presents {
       dataList.ShipAddress = attr["ShipAddress"].ComboBox.SelectedItem;
       dataList.TermsRefFullName = attr["TermsRefFullName"].ComboBox.SelectedItem;
       dataList.PONumber = attr["PONumber"].ComboBox.SelectedItem;
+      dataList.PONumber = attr["FOB"].ComboBox.SelectedItem;
       dataList.Other = attr["Other"].ComboBox.SelectedItem;
 
       SqliteDataAccess.SaveData(

@@ -155,6 +155,7 @@ namespace MCBusinessLogic.UnitTests.Controllers {
     public string BillAddress { get; set; }
     public string ShipAddress { get; set; }
     public string PONumber { get; set; }
+    public string FOB { get; set; }
     public string Other { get; set; }
     public string Mock { get; set; }
     public object Clone() {

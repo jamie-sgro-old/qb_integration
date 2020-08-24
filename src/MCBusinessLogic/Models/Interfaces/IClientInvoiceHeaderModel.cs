@@ -10,6 +10,7 @@ namespace MCBusinessLogic.Models {
     string BillAddress { get; set; }
     string ShipAddress { get; set; }
     string PONumber { get; set; }
+    string FOB { get; set; }
     string Other { get; set; }
   }
 }
