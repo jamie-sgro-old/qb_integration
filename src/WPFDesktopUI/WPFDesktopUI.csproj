@@ -190,7 +190,6 @@
     <Compile Include="ViewModels\Interfaces\IShellViewModel.cs" />
     <Compile Include="ViewModels\PreferencesViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesCsvImportViewModel.cs" />
-    <Compile Include="ViewModels\Preferences\PreferencesGeneralViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesQuickBooksViewModel.cs" />
     <Compile Include="ViewModels\QuickBooksViewModel.cs" />
     <Compile Include="ViewModels\QuickBooks\Interfaces\IQuickBooksSidePaneViewModel.cs" />
@@ -216,9 +215,6 @@
     </Compile>
     <Compile Include="Views\Preferences\PreferencesCsvImportView.xaml.cs">
       <DependentUpon>PreferencesCsvImportView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Preferences\PreferencesGeneralView.xaml.cs">
-      <DependentUpon>PreferencesGeneralView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Preferences\PreferencesQuickBooksView.xaml.cs">
       <DependentUpon>PreferencesQuickBooksView.xaml</DependentUpon>
@@ -265,10 +261,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Preferences\PreferencesCsvImportView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Preferences\PreferencesGeneralView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

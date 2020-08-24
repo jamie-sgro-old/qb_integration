@@ -31,6 +31,18 @@ namespace WPFDesktopUI {
     }
 
     protected override void OnStartup(object sender, StartupEventArgs e) {
+      // Update user file-save location to program data
+      var environmentVariables = System.Environment.GetEnvironmentVariables();
+      var programData = environmentVariables["ALLUSERSPROFILE"];
+      AppDomain.CurrentDomain.SetData("DataDirectory", programData);
+
+      // Add folders to save files to
+      var logFilePath = System.IO.Path.Combine(programData.ToString(), "Sangwa Solutions/Invoice Importer by Sangwa/Logs");
+      System.IO.Directory.CreateDirectory(logFilePath);
+      var dbFilePath = System.IO.Path.Combine(programData.ToString(), "Sangwa Solutions/Invoice Importer by Sangwa/Database");
+      System.IO.Directory.CreateDirectory(dbFilePath);
+
+
       DisplayRootViewFor<ShellViewModel>();
     }
 
