@@ -119,14 +119,16 @@ namespace QBConnect.Classes {
     private string Other1 {
       set {
         if (value != null) {
-          Line.InvoiceLineAdd.Other1.SetValue(value);
+          var limtedValue = MaxLength(value, 29);
+          Line.InvoiceLineAdd.Other1.SetValue(limtedValue);
         }
       }
     }
     private string Other2 {
       set {
         if (value != null) {
-          Line.InvoiceLineAdd.Other2.SetValue(value);
+          var limtedValue = MaxLength(value, 29);
+          Line.InvoiceLineAdd.Other2.SetValue(limtedValue);
         }
       }
     }
@@ -199,6 +201,20 @@ namespace QBConnect.Classes {
       ServiceDate =                   lineItem.ServiceDate;
       TaxAmount =                     lineItem.TaxAmount;
       UnitOfMeasure =                 lineItem.UnitOfMeasure;
+    }
+
+    /// <summary>
+    /// Takes a long string, and returns a shortened version of that string 
+    /// with ellipsis where the cutoff occured
+    /// </summary>
+    /// <param name="payload">String to be reduced</param>
+    /// <param name="limit">Max number of characters allowed for string</param>
+    /// <returns>String with the right side cut off at the limit mark</returns>
+    private static string MaxLength(string payload, int limit) {
+      if (payload.Length <= limit) return payload;
+
+      var ellipsis = "...";
+      return payload.Substring(0, limit - ellipsis.Length) + ellipsis;
     }
 
     #endregion Methods
