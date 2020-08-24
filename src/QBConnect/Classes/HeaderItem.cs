@@ -114,6 +114,11 @@ namespace QBConnect.Classes {
         Header.TermsRef.ListID.SetValue(headerData.TermsRefListID);
       }
 
+      // FOB Header Box
+      if (headerData.FOB != null) {
+        Header.FOB.SetValue(headerData.FOB);
+      }
+
       // Header Other
       if (headerData.Other != null) {
         Header.Other.SetValue(headerData.Other);

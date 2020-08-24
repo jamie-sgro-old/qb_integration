@@ -49,6 +49,8 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
 
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "PONumber", "P.O. NUMBER");
 
+      QbspModel.AttrAdd(Factory.CreateQbStringAttribute(), "FOB", "FOB");
+
       QbspModel.AttrAdd(Factory.CreateQbStringAttribute(),
         "Other", stn.QbInvHasHeaderOther() ? stn.QbInvHeaderOtherName() : "OTHER");
 

@@ -266,6 +266,12 @@ namespace QBConnect.Models {
     public string ShipAddress { get; set; }
 
     /// <summary>
+    /// QuickBooks uses the term FOB, “freight on board,” to indicate the place from 
+    /// which the product is shipped. The FOB has no accounting implications.
+    /// </summary>
+    public string FOB { get; set; }
+
+    /// <summary>
     /// Other, Other1, and Other2 are standard QuickBooks custom fields available to
     /// transactions. The Other field is a transaction-level field, like the FOB field,
     /// PO Number field, and so forth. This field appears only once for the transaction:
