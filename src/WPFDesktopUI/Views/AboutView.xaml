@@ -8,7 +8,43 @@
         Icon="Images/icon-sangwa.ico"
         Title="{Binding Title, Mode=TwoWay}"
         Height="450" Width="800">
-    <Grid>
-        <TextBlock Padding="20">Version: 0.6.0</TextBlock>
-    </Grid>
+    <Border BorderThickness="20">
+        <DockPanel>
+
+
+        <Grid DockPanel.Dock="Top">
+            <StackPanel>
+                <TextBlock>Invoice Importer by Sangwa</TextBlock>
+                <TextBlock>Version: 0.6.6</TextBlock>
+                <TextBlock>Copyright © 2020 Sangwa Solutions Incorporated</TextBlock>
+                <TextBlock>All rights reserved</TextBlock>
+            </StackPanel>
+        </Grid>
+
+        <!-- DOCKPANEL BOTTOM -->
+
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"  />
+                <ColumnDefinition Width="auto"  />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="1"
+                       Grid.Column="0"
+                       TextWrapping="Wrap">Warning: This computer program is protected by copyright law and international treaties. Unauthorized reproduction or distribution of this program, or any portion of it, may result in severe civil and criminal penalties, and will be prosecuted to the maximum extent possible under the law.</TextBlock>
+
+
+            <Button x:Name="BtnClose"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Style="{StaticResource ButtonClose}">
+                Close
+            </Button>
+        </Grid>
+        </DockPanel>
+    </Border>
 </Window>
