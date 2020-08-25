@@ -59,6 +59,13 @@ namespace WPFDesktopUI.Controllers {
     }
 
     private static void Update_2() {
+      SqliteDataAccess.SaveData(
+        @"ALTER TABLE customer
+            ADD Class TEXT;
+          PRAGMA user_version = 2;");
+		}
+
+    private static void Update_3() {
       throw new NotImplementedException();
     }
 
@@ -69,7 +76,8 @@ namespace WPFDesktopUI.Controllers {
       var userVersion = GetUserVersion<double>();
 
       if (userVersion < 1) Update_1();
-      //if (userVersion < 2) Update_2();
+      if (userVersion < 2) Update_2();
+      //if (userVersion < 3) Update_3();
     }
   }
 }
