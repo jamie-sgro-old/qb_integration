@@ -123,6 +123,7 @@ namespace WPFDesktopUI.ViewModels {
       public string Name { get; }
       public string PoNumber { get; set; }
       public string TermsRefFullName { get; set; }
+      public string Class { get; set; }
       public string AppendLineItem1 { get; set; }
       public string AppendLineItem2 { get; set; }
       public string AppendLineItem3 { get; set; }
@@ -143,6 +144,7 @@ namespace WPFDesktopUI.ViewModels {
         SET
           PoNumber = @PoNumber,
           TermsRefFullName = @TermsRefFullName,
+          Class = @Class,
           AppendLineItem1 = @AppendLineItem1,
           AppendLineItem2 = @AppendLineItem2,
           AppendLineItem3 = @AppendLineItem3
