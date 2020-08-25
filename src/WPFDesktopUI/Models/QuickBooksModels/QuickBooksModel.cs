@@ -103,10 +103,11 @@ namespace WPFDesktopUI.Models {
       // Overwrite values based on Customer Rules
       foreach (var cx in cxList) {
         foreach (var row in csvModels) {
-          if (row.CustomerRefFullName == cx.Name) {
-            row.PONumber = cx.PoNumber ?? row.PONumber;
-            row.TermsRefFullName = cx.TermsRefFullName ?? row.TermsRefFullName;
-          }
+          if (row.CustomerRefFullName != cx.Name) continue;
+
+          row.PONumber = cx.PoNumber ?? row.PONumber;
+          row.TermsRefFullName = cx.TermsRefFullName ?? row.TermsRefFullName;
+          row.ClassRefFullName = cx.Class ?? row.ClassRefFullName;
         }
       }
 
