@@ -5,19 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using InterfaceLibraries;
+using MCBusinessLogic.Models.Interfaces;
 
-namespace SumQuantityToFOB {
-  [Export(typeof(IPreprocessor))]
+namespace SumQuantityToFob {
+  [Export(typeof(IAfterGroupBy))]
   [Export(typeof(IPlugin))]
-  [ExportMetadata("Name", "SumQuantityToFOB")]
+  [ExportMetadata("Name", "SumQuantityToFob")]
   [ExportMetadata("Author", "Jamie Sgro")]
   [ExportMetadata("Description", "After data has been grouped into separate invoices," +
                                  " modify the FOB header box to equal the sum of all" +
                                  " quantities in the line item section for each invoice")]
-  public class SumQuantityToFOB : IAfterGroupBy<Invoice> {
-    public List<Invoice> ModifyGrouped(List<Invoice> groupBy) {
+  public class SumQuantityToFob : IAfterGroupBy {
+    public List<IInvoice> ModifyGrouped(List<IInvoice> groupBy) {
       Console.WriteLine("The plugin was accessed correct;y");
-      throw new NotImplementedException();
 
       foreach (var group in groupBy) {
         double? qty = 0;
@@ -28,8 +28,9 @@ namespace SumQuantityToFOB {
 
         group.Header.FOB = qty.ToString();
       }
-    }
 
+      return groupBy;
+    }
   }
 
   public class Invoice {

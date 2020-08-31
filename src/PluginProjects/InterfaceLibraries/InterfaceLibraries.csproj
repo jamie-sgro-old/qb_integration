@@ -67,5 +67,11 @@
     <Compile Include="IPluginMetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MCBusinessLogic\MCBusinessLogic.csproj">
+      <Project>{83EAEC0B-5CAF-4767-841B-21D913A8557A}</Project>
+      <Name>MCBusinessLogic</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

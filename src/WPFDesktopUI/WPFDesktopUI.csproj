@@ -145,6 +145,7 @@
     <Compile Include="Models\PluginModels\Interfaces\IClientPlugin.cs" />
     <Compile Include="Models\PluginModels\Interfaces\IPluginModel.cs" />
     <Compile Include="Models\PluginModels\PluginException.cs" />
+    <Compile Include="Models\PluginModels\PluginHandler.cs" />
     <Compile Include="Models\PluginModels\PluginHelper.cs" />
     <Compile Include="Models\PluginModels\PluginModel.cs" />
     <Compile Include="Models\QuickBooksModels\GroupBy.cs" />

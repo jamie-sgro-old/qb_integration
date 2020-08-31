@@ -62,10 +62,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SumQuantityToFOB.cs" />
+    <Compile Include="SumQuantityToFob.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\MCBusinessLogic\MCBusinessLogic.csproj">
+      <Project>{83EAEC0B-5CAF-4767-841B-21D913A8557A}</Project>
+      <Name>MCBusinessLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InterfaceLibraries\InterfaceLibraries.csproj">
       <Project>{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}</Project>
       <Name>InterfaceLibraries</Name>
