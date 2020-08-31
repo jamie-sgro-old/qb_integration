@@ -65,29 +65,25 @@ namespace WPFDesktopUI.ViewModels {
     }
 
     private DataTable PluginPreprocess(DataTable dt) {
-
       DataTable rtnData = null;
-      // Process all IPrepocessor plugins that are enabled by the user
+
+      // Process all plugins that are enabled by the user
       var plugins = Factory.CreatePluginModel().PluginModels;
+
       Compose();
-      foreach (Lazy<IPreprocessor, IPluginMetaData> processor in _preprocessors) {
-        var pluginDatabaseMatch = plugins.Where(x => x.Name == processor.Metadata.Name);
-        if (!pluginDatabaseMatch.Any()) continue;
+      var relevantPlugins = PluginHandler<IPreprocessor>.GetRelevantPlugins(_preprocessors);
 
-        var isEnabled = pluginDatabaseMatch.FirstOrDefault().IsEnabled;
-
-        if (!isEnabled) continue;
-
+      foreach (Lazy<IPreprocessor, IPluginMetaData> relevantPlugin in relevantPlugins) {
         try {
-          var newData = processor.Value.Preprocess(dt);
+          var newData = relevantPlugin.Value.Preprocess(dt);
           if (newData != null) {
             rtnData = newData;
           }
         } catch (Exception e) {
           log.Error("The following plugin resulted in an error: " +
-                    processor.Metadata.Name, e);
+                    relevantPlugin.Metadata.Name, e);
           throw new PluginException("The following plugin resulted in an error: " +
-                                    processor.Metadata.Name +
+                                    relevantPlugin.Metadata.Name +
                                     ". The error report is as follows:\n" +
                                     e.Message);
         }
