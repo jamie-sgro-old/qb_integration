@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B206BB54-940D-4B48-B88B-F3F63E00593E}</ProjectGuid>
+    <ProjectGuid>{17141B38-E9EF-4478-86F0-A4B66C56E191}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SumQuantityToFOB</RootNamespace>
-    <AssemblyName>SumQuantityToFOB</AssemblyName>
+    <RootNamespace>SumQuantityToFob</RootNamespace>
+    <AssemblyName>SumQuantityToFob</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -66,11 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MCBusinessLogic\MCBusinessLogic.csproj">
-      <Project>{83EAEC0B-5CAF-4767-841B-21D913A8557A}</Project>
-      <Name>MCBusinessLogic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PluginProjects\InterfaceLibraries\InterfaceLibraries.csproj">
+    <ProjectReference Include="..\InterfaceLibraries\InterfaceLibraries.csproj">
       <Project>{3EC19AE5-CF3C-4B18-A79B-3EA38B073C02}</Project>
       <Name>InterfaceLibraries</Name>
     </ProjectReference>

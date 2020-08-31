@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SumQuantityToFOB")]
+[assembly: AssemblyTitle("SumQuantityToFob")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SumQuantityToFOB")]
+[assembly: AssemblyProduct("SumQuantityToFob")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b206bb54-940d-4b48-b88b-f3f63e00593e")]
+[assembly: Guid("17141b38-e9ef-4478-86f0-a4b66c56e191")]
 
 // Version information for an assembly consists of the following four values:
 //
