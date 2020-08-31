@@ -40,6 +40,8 @@ namespace WPFDesktopUI.Models {
       
       var groupBy = GroupBy.GroupInvoices(replacedCsvModels);
 
+      // TODO: Add plugin processor here:
+
       var appendLine = AppendLine(groupBy, cxList);
 
       await Task.Run(() => {

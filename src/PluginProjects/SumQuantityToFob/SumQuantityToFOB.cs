@@ -18,16 +18,29 @@ namespace SumQuantityToFOB {
     public List<Invoice> ModifyGrouped(List<Invoice> groupBy) {
       Console.WriteLine("The plugin was accessed correct;y");
       throw new NotImplementedException();
+
+      foreach (var group in groupBy) {
+        double? qty = 0;
+        foreach (var line in group.Lines) {
+          if (line.Quantity == null) continue;
+          qty += line.Quantity;
+        }
+
+        group.Header.FOB = qty.ToString();
+      }
     }
 
   }
 
   public class Invoice {
-    struct Header {
-      public string FOB { get; set; }
-    }
-    struct Lines {
-      public double? Quantity { get; set; }
-    }
+    public Header Header { get; set; }
+    public List<Lines> Lines { get; set; }
+
+  }
+  public class Header {
+    public string FOB { get; set; }
+  }
+  public class Lines {
+    public double? Quantity { get; set; }
   }
 }
