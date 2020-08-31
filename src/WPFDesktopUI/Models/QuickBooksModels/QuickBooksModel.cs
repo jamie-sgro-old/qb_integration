@@ -105,9 +105,9 @@ namespace WPFDesktopUI.Models {
         foreach (var row in csvModels) {
           if (row.CustomerRefFullName != cx.Name) continue;
 
-          row.PONumber = cx.PoNumber ?? row.PONumber;
-          row.TermsRefFullName = cx.TermsRefFullName ?? row.TermsRefFullName;
-          row.ClassRefFullName = cx.Class ?? row.ClassRefFullName;
+          row.PONumber = String.IsNullOrEmpty(cx.PoNumber) ? row.PONumber : cx.PoNumber;
+          row.TermsRefFullName = String.IsNullOrEmpty(cx.TermsRefFullName) ? row.TermsRefFullName : cx.TermsRefFullName;
+          row.ClassRefFullName = String.IsNullOrEmpty(cx.Class) ? row.ClassRefFullName : cx.Class;
         }
       }
 
