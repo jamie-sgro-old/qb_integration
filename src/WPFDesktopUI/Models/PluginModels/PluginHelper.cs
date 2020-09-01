@@ -7,6 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace WPFDesktopUI.Models.PluginModels {
+  /// <summary>
+  /// Searches for and curates a list of all .dll files in
+  /// the designated plugin location both in debug and release mode
+  /// </summary>
   public static class PluginHelper {
     public static CompositionContainer GetContainer() {
       #if DEBUG
