@@ -13,7 +13,7 @@ namespace OvernightSeparator
   [Export(typeof(IPlugin))]
   [ExportMetadata("Name", "OvernightSeparator")]
   [ExportMetadata("Author", "Jamie Sgro")]
-  [ExportMetadata("Description", "In CSV import, finds shifts that span several days and separates into new rows for each day")]
+  [ExportMetadata("Description", "[Be Advised this plugin has deprecated and should not be implemented.] In CSV import, finds shifts that span several days and separates into new rows for each day")]
   public class OvernightSeparator : IPreprocessor {
     public DataTable Preprocess(DataTable dt) {
       return null;

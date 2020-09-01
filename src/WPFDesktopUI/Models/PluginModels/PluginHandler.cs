@@ -8,8 +8,8 @@ using WPFDesktopUI.Controllers;
 using WPFDesktopUI.ViewModels;
 
 namespace WPFDesktopUI.Models.PluginModels {
-  public static class PluginHandler<T> {
-    public static IEnumerable<Lazy<T, IPluginMetaData>> GetRelevantPlugins(IEnumerable<Lazy<T, IPluginMetaData>> dlls) {
+  public abstract class PluginHandler<T> {
+    public IEnumerable<Lazy<T, IPluginMetaData>> GetRelevantPlugins(IEnumerable<Lazy<T, IPluginMetaData>> dlls) {
       if (dlls == null) {
         throw new NullReferenceException("Could not import data from null dll input. " +
                                          "Did you forget to Compose() first or LazyImport " +
@@ -33,5 +33,13 @@ namespace WPFDesktopUI.Models.PluginModels {
 
       return relevantPlugins;
     }
+
+    public void Compose() {
+      log.Debug("Creating plugin container");
+      CompositionContainer container = PluginHelper.GetContainer();
+      container.ComposeParts(this);
+    }
+
+    private static readonly log4net.ILog log = LogHelper.GetLogger();
   }
 }

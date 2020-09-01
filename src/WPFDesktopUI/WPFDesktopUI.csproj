@@ -135,6 +135,8 @@
     <Compile Include="Models\CustomerModels\Interfaces\ICustomer.cs" />
     <Compile Include="Models\DbModels\Interfaces\IDbModel.cs" />
     <Compile Include="Models\DbModels\Interfaces\IDbViewModel.cs" />
+    <Compile Include="Models\ImportModels\ImportModel.cs" />
+    <Compile Include="Models\ImportModels\Interfaces\IImportModel.cs" />
     <Compile Include="Models\ItemReplacerModels\Interfaces\IItemModel.cs" />
     <Compile Include="Models\ItemReplacerModels\Interfaces\IItemReplacer.cs" />
     <Compile Include="Models\ItemReplacerModels\ItemModel.cs" />

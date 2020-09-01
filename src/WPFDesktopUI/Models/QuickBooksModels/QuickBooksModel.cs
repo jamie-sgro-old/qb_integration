@@ -20,7 +20,7 @@ using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 using WPFDesktopUI.ViewModels;
 
 namespace WPFDesktopUI.Models {
-  public class QuickBooksModel : IQuickBooksModel {
+  public class QuickBooksModel : PluginHandler<IAfterGroupBy>, IQuickBooksModel {
     public QuickBooksModel(Dictionary<string, IQbAttribute> attr, IQbImportController qbImportController) {
       _attr = attr;
       _qbImportController = qbImportController;
@@ -30,7 +30,7 @@ namespace WPFDesktopUI.Models {
     private IQbImportController _qbImportController { get; }
 
     [ImportMany(typeof(IAfterGroupBy), AllowRecomposition = true)]
-    IEnumerable<Lazy<IAfterGroupBy, IPluginMetaData>> _afterGroupBys;
+    new IEnumerable<Lazy<IAfterGroupBy, IPluginMetaData>> _pluginList;
 
 
 
@@ -45,9 +45,9 @@ namespace WPFDesktopUI.Models {
       
       var groupBy = GroupBy.GroupInvoices(replacedCsvModels);
 
-      var tempData = PluginPreprocess(groupBy);
+      var pluginData = PluginPreprocess(groupBy);
 
-      var appendLine = AppendLine(groupBy, cxList);
+      var appendLine = AppendLine(pluginData, cxList);
 
       await Task.Run(() => {
         var qbImportController = _qbImportController;
@@ -146,11 +146,8 @@ namespace WPFDesktopUI.Models {
     private List<IInvoice> PluginPreprocess(List<IInvoice> invoices) {
       List<IInvoice> rtnData = null;
 
-      // Process all plugins that are enabled by the user
-      var plugins = Factory.CreatePluginModel().PluginModels;
-
       Compose();
-      var relevantPlugins = PluginHandler<IAfterGroupBy>.GetRelevantPlugins(_afterGroupBys);
+      var relevantPlugins = GetRelevantPlugins(_pluginList);
 
       foreach (Lazy<IAfterGroupBy, IPluginMetaData> relevantPlugin in relevantPlugins) {
         try {
@@ -207,12 +204,6 @@ namespace WPFDesktopUI.Models {
       }
 
       return invoices;
-    }
-
-    private void Compose() {
-      log.Debug("Creating plugin container");
-      CompositionContainer container = PluginHelper.GetContainer();
-      container.ComposeParts(this);
     }
 
     private static readonly log4net.ILog log = LogHelper.GetLogger();
