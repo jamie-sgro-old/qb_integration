@@ -135,6 +135,8 @@
     <Compile Include="Models\CustomerModels\Interfaces\ICustomer.cs" />
     <Compile Include="Models\DbModels\Interfaces\IDbModel.cs" />
     <Compile Include="Models\DbModels\Interfaces\IDbViewModel.cs" />
+    <Compile Include="Models\ImportModels\ImportModel.cs" />
+    <Compile Include="Models\ImportModels\Interfaces\IImportModel.cs" />
     <Compile Include="Models\ItemReplacerModels\Interfaces\IItemModel.cs" />
     <Compile Include="Models\ItemReplacerModels\Interfaces\IItemReplacer.cs" />
     <Compile Include="Models\ItemReplacerModels\ItemModel.cs" />
@@ -145,6 +147,7 @@
     <Compile Include="Models\PluginModels\Interfaces\IClientPlugin.cs" />
     <Compile Include="Models\PluginModels\Interfaces\IPluginModel.cs" />
     <Compile Include="Models\PluginModels\PluginException.cs" />
+    <Compile Include="Models\PluginModels\PluginHandler.cs" />
     <Compile Include="Models\PluginModels\PluginHelper.cs" />
     <Compile Include="Models\PluginModels\PluginModel.cs" />
     <Compile Include="Models\QuickBooksModels\GroupBy.cs" />

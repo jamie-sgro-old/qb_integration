@@ -104,7 +104,7 @@ namespace WPFDesktopUI.Models.ItemReplacerModels {
 
       SqliteDataAccess.SaveData(
         @"DELETE FROM `item`
-        WHERE Id = @Id;;", dataList);
+        WHERE Id = @Id;", dataList);
     }
 
     private void UpdateSelectedItem() {

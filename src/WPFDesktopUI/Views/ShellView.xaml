@@ -64,11 +64,6 @@
                 <ContentControl x:Name="ImportViewModel" />
                 <!--<NewUserControl:ImportView/>-->
             </TabItem>
-            <TabItem Header="{Binding QuickBooksViewModel.TabHeader }"
-                     IsSelected="{Binding TabQuickBooksIsSelected}">
-                <ContentControl x:Name="QuickBooksViewModel" />
-                <!--<NewUserControl:QuickBooksView/>-->
-            </TabItem>
             <TabItem Header="{Binding CustomerViewModel.TabHeader }"
                      IsSelected="{Binding TabCustomerIsSelected}">
                 <ContentControl x:Name="CustomerViewModel" />
@@ -78,6 +73,11 @@
                      IsSelected="{Binding TabItemIsSelected}">
                 <ContentControl x:Name="ItemViewModel" />
                 <!--<NewUserControl:ItemViewModel/>-->
+            </TabItem>
+            <TabItem Header="{Binding QuickBooksViewModel.TabHeader }"
+                     IsSelected="{Binding TabQuickBooksIsSelected}">
+                <ContentControl x:Name="QuickBooksViewModel" />
+                <!--<NewUserControl:QuickBooksView/>-->
             </TabItem>
         </TabControl>
     </DockPanel>

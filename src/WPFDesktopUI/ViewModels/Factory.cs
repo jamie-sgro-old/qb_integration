@@ -55,6 +55,10 @@ namespace WPFDesktopUI.ViewModels {
       return new Customer();
     }
 
+    public static ICustomer CreateCustomer(string name) {
+      return new Customer(name);
+    }
+
     public static IQuickBooksModel CreateQuickBooksModel(Dictionary<string, IQbAttribute> attr) {
       return new QuickBooksModel(attr, CreateQbImportController());
     }

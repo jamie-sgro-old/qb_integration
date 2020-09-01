@@ -1,31 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using InterfaceLibraries;
 using MCBusinessLogic.Controllers.Interfaces;
 using MCBusinessLogic.Models;
 using MCBusinessLogic.Models.Interfaces;
+using WPFDesktopUI.Controllers;
 using WPFDesktopUI.Models.CustomerModels;
 using WPFDesktopUI.Models.CustomerModels.Interfaces;
 using WPFDesktopUI.Models.ItemReplacerModels;
+using WPFDesktopUI.Models.PluginModels;
 using WPFDesktopUI.Models.QuickBooksModels;
 using WPFDesktopUI.Models.SidePaneModels.Attributes.Interfaces;
 using WPFDesktopUI.ViewModels;
 
 namespace WPFDesktopUI.Models {
-  public class QuickBooksModel : IQuickBooksModel
-  {
+  public class QuickBooksModel : PluginHandler<IAfterGroupBy>, IQuickBooksModel {
     public QuickBooksModel(Dictionary<string, IQbAttribute> attr, IQbImportController qbImportController) {
       _attr = attr;
       _qbImportController = qbImportController;
     }
 
-    
-    
     private Dictionary<string, IQbAttribute> _attr { get; }
     private IQbImportController _qbImportController { get; }
+
+    [ImportMany(typeof(IAfterGroupBy), AllowRecomposition = true)]
+    new IEnumerable<Lazy<IAfterGroupBy, IPluginMetaData>> _pluginList;
 
 
 
@@ -40,7 +45,9 @@ namespace WPFDesktopUI.Models {
       
       var groupBy = GroupBy.GroupInvoices(replacedCsvModels);
 
-      var appendLine = AppendLine(groupBy, cxList);
+      var pluginData = PluginPreprocess(groupBy);
+
+      var appendLine = AppendLine(pluginData, cxList);
 
       await Task.Run(() => {
         var qbImportController = _qbImportController;
@@ -103,10 +110,11 @@ namespace WPFDesktopUI.Models {
       // Overwrite values based on Customer Rules
       foreach (var cx in cxList) {
         foreach (var row in csvModels) {
-          if (row.CustomerRefFullName == cx.Name) {
-            row.PONumber = cx.PoNumber ?? row.PONumber;
-            row.TermsRefFullName = cx.TermsRefFullName ?? row.TermsRefFullName;
-          }
+          if (row.CustomerRefFullName != cx.Name) continue;
+
+          row.PONumber = String.IsNullOrEmpty(cx.PoNumber) ? row.PONumber : cx.PoNumber;
+          row.TermsRefFullName = String.IsNullOrEmpty(cx.TermsRefFullName) ? row.TermsRefFullName : cx.TermsRefFullName;
+          row.ClassRefFullName = String.IsNullOrEmpty(cx.Class) ? row.ClassRefFullName : cx.Class;
         }
       }
 
@@ -133,6 +141,33 @@ namespace WPFDesktopUI.Models {
       }
 
       return csvModels;
+    }
+
+    private List<IInvoice> PluginPreprocess(List<IInvoice> invoices) {
+      List<IInvoice> rtnData = null;
+
+      Compose();
+      var relevantPlugins = GetRelevantPlugins(_pluginList);
+
+      foreach (Lazy<IAfterGroupBy, IPluginMetaData> relevantPlugin in relevantPlugins) {
+        try {
+          var newData = relevantPlugin.Value.ModifyGrouped(invoices);
+          if (newData != null) {
+            rtnData = newData;
+          }
+        } catch (Exception e) {
+          log.Error("The following plugin resulted in an error: " +
+                    relevantPlugin.Metadata.Name, e);
+          throw new PluginException("The following plugin resulted in an error: " +
+                                    relevantPlugin.Metadata.Name +
+                                    ". The error report is as follows:\n" +
+                                    e.Message);
+        }
+      }
+
+      // Return newly processed data if anything changed
+      // Otherwise just provide original data
+      return rtnData ?? invoices;
     }
 
     /// <summary>
@@ -170,5 +205,7 @@ namespace WPFDesktopUI.Models {
 
       return invoices;
     }
+
+    private static readonly log4net.ILog log = LogHelper.GetLogger();
   }
 }
