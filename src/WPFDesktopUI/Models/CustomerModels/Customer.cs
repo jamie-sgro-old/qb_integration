@@ -10,8 +10,14 @@ using WPFDesktopUI.Models.CustomerModels.Interfaces;
 
 namespace WPFDesktopUI.Models.CustomerModels {
   public class Customer : ICustomer {
-    public string Name { get; }
+    public Customer() {
+    }
 
+    public Customer(string name) {
+      Name = name;
+    }
+
+    public string Name { get; }
     public string PoNumber { get; set; }
     public string TermsRefFullName { get; set; }
     public string Class { get; set; }
