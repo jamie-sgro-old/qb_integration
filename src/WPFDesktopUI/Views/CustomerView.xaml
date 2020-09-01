@@ -104,6 +104,15 @@
                     </TextBlock.Style>
                 </TextBlock>
 
+                <Button x:Name="BtnAdd"
+                        Margin="10,20"
+                        Grid.Column="1" 
+                        MaxWidth="50"
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource ButtonClose}">
+                    Add
+                </Button>
+
                 <ScrollViewer VerticalScrollBarVisibility="Auto"
                               Grid.Row="1"
                               Grid.ColumnSpan="2">
@@ -115,6 +124,18 @@
                               CanUserDeleteRows="False"
                               CanUserAddRows="False"
                               IsReadOnly="{Binding IsReadOnly}">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button
+                                            cal:Message.Attach="[Event Click]=[Action BtnDelete($this)]">
+                                            Delete
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
                     </DataGrid>
                 </ScrollViewer>
             </Grid>
