@@ -31,25 +31,30 @@ namespace WPFDesktopUI.Models.SidePaneModels.Presents {
       dataList.Other = attr["Other"].ComboBox.SelectedItem;
 
       SqliteDataAccess.SaveData(
-        @"UPDATE `csv_data`
-        SET
-          Preset = @Preset,
-          ItemRef = @ItemRef,
-          ORRatePriceLevelRate = @ORRatePriceLevelRate,
-          Quantity = @Quantity,
-          Desc = @Desc,
-          Other1 = @Other1,
-          Other2 = @Other2,
-          CustomerRefFullName = @CustomerRefFullName,
-          ClassRefFullName = @ClassRefFullName,
-          TemplateRefFullName = @TemplateRefFullName,
-          TxnDate = @TxnDate,
-          BillAddress = @BillAddress,
-          ShipAddress = @ShipAddress,
-          TermsRefFullName = @TermsRefFullName,
-          PONumber = @PONumber,
-          Other = @Other
-        WHERE Preset = @Preset;", dataList);
+        @"INSERT OR REPLACE INTO `csv_data`
+          (Id, Preset, ItemRef, ORRatePriceLevelRate,
+           Quantity, Desc, Other1, Other2, CustomerRefFullName,
+           ClassRefFullName, TemplateRefFullName, TxnDate,
+           BillAddress, ShipAddress, TermsRefFullName, PONumber, Other) 
+        VALUES (
+	        (select Id from `csv_data` where Preset = @Preset),
+          @Preset,
+          @ItemRef,
+          @ORRatePriceLevelRate,
+          @Quantity,
+          @Desc,
+          @Other1,
+          @Other2,
+          @CustomerRefFullName,
+          @ClassRefFullName,
+          @TemplateRefFullName,
+          @TxnDate,
+          @BillAddress,
+          @ShipAddress,
+          @TermsRefFullName,
+          @PONumber,
+          @Other
+        );", dataList);
     }
 
     public List<T> Read<T>(string preset) {
