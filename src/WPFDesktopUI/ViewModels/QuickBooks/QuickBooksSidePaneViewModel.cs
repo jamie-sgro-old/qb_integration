@@ -137,6 +137,29 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
       }
     }
 
+    private string GetTemplateAutoPop(List<string> templateList) {
+      // Try to autopop combobox selected item based on the template used in last run
+      var preset = new Preset();
+      var presetModelsList = preset.Read<PresetModel>("Default");
+      if (presetModelsList.Count >= 1) {
+        var tryTempName = presetModelsList[0]?.TemplateRefFullName;
+        if (tryTempName != null) {
+          if (templateList.Contains(tryTempName)) {
+            return tryTempName;
+          }
+        }
+      }
+
+      // Preset the selected item if the QB preferences setting matches one of the possible item sources
+      if (stn.QbInvHasTemplate()) {
+        if (templateList.Contains(stn.QbInvTemplateName())) {
+          return stn.QbInvTemplateName();
+        }
+      }
+
+      return "";
+    }
+
     public async Task QbInteract() {
       log.Info("QuickBooks interact button pressed. Data query starting");
       SessionStart();
@@ -145,13 +168,12 @@ namespace WPFDesktopUI.ViewModels.QuickBooks {
         var templateList = await InitTemplateRefFullName();
         QbspModel.Attr["TemplateRefFullName"].ComboBox.ItemsSource = templateList;
         QbspModel.Attr["TemplateRefFullName"].ComboBox.IsEnabled = true;
-        // Preset the selected item if the QB preferences setting matches one of the possible item sources
-        if (templateList.Contains(stn.QbInvTemplateName())) {
-          QbspModel.Attr["TemplateRefFullName"].ComboBox.SelectedItem = stn.QbInvHasTemplate() ? stn.QbInvTemplateName() : "";
-        }
+
+        // Try to autopopulate combobox selected item
+        QbspModel.Attr["TemplateRefFullName"].ComboBox.SelectedItem = GetTemplateAutoPop(templateList);
 
         // Update terms list from QB
-        var termsList = await InitTermsRefFullName();
+          var termsList = await InitTermsRefFullName();
         IQBDropDownAttribute dropAttr = (QbspModel.Attr["TermsRefFullName"] as IQBDropDownAttribute);
         if (dropAttr != null) {
           dropAttr.DropDownComboBox.ItemsSource = termsList;
