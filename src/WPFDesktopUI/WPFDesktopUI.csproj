@@ -137,9 +137,10 @@
     <Compile Include="Models\DbModels\Interfaces\IDbViewModel.cs" />
     <Compile Include="Models\ImportModels\ImportModel.cs" />
     <Compile Include="Models\ImportModels\Interfaces\IImportModel.cs" />
-    <Compile Include="Models\ItemReplacerModels\Interfaces\IItemModel.cs" />
+    <Compile Include="Models\ItemReplacerModels\Interfaces\ISearchReplaceModel.cs" />
     <Compile Include="Models\ItemReplacerModels\Interfaces\IItemReplacer.cs" />
     <Compile Include="Models\ItemReplacerModels\ItemModel.cs" />
+    <Compile Include="Models\ItemReplacerModels\SearchReplaceModel.cs" />
     <Compile Include="Models\ItemReplacerModels\ItemReplacer.cs" />
     <Compile Include="Models\PluginModels\ClientPlugin.cs" />
     <Compile Include="Models\PluginModels\Interfaces\IClientDetails.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="ViewModels\QuickBooksViewModel.cs" />
     <Compile Include="ViewModels\QuickBooks\Interfaces\IQuickBooksSidePaneViewModel.cs" />
     <Compile Include="ViewModels\QuickBooks\QuickBooksSidePaneViewModel.cs" />
+    <Compile Include="ViewModels\SearchReplaceViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>

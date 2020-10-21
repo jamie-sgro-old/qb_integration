@@ -77,7 +77,7 @@ namespace WPFDesktopUI.ViewModels {
       return new ClientPlugin(isEnabled, name, author, description);
     }
 
-    public static IItemModel<IItemReplacer> CreateItemModel() {
+    public static ISearchReplaceModel<IItemReplacer> CreateItemModel() {
       return new ItemModel();
     }
 

@@ -130,8 +130,8 @@ namespace WPFDesktopUI.Models {
     /// <param name="csvModels"></param>
     /// <returns>Dataset with replaced Items</returns>
     private List<ICsvModel> ApplyItemReplacement(List<ICsvModel> csvModels) {
-      // Get Item names to replace
-      var itemReplacers = ItemModel.StaticRead();
+      // Get Item names to replace (doesn't have to 'new-up' since it's a static read (no state interaction))
+      var itemReplacers = SearchReplaceModel.StaticRead("item");
 
       // Convert Item names from the [ToReplace] property to the [ReplaceWith] property
       foreach (var item in itemReplacers) {
