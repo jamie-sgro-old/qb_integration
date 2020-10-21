@@ -74,6 +74,11 @@
                 <ContentControl x:Name="ItemViewModel" />
                 <!--<NewUserControl:ItemViewModel/>-->
             </TabItem>
+            <TabItem Header="{Binding AddressViewModel.TabHeader }"
+                     IsSelected="{Binding TabAddressIsSelected}">
+                <ContentControl x:Name="AddressViewModel" />
+                <!--<NewUserControl:ItemViewModel/>-->
+            </TabItem>
             <TabItem Header="{Binding QuickBooksViewModel.TabHeader }"
                      IsSelected="{Binding TabQuickBooksIsSelected}">
                 <ContentControl x:Name="QuickBooksViewModel" />

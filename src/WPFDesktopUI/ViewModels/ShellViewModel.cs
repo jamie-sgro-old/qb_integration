@@ -22,6 +22,7 @@ namespace WPFDesktopUI.ViewModels {
         QuickBooksViewModel = Factory.CreateQuickBooksViewModel();
         CustomerViewModel = Factory.CreateCustomerViewModel();
         ItemViewModel = Factory.CreateItemViewModel();
+        AddressViewModel = Factory.CreateAddressViewModel();
         log.Info("Constructor initialized");
       }
       catch (Exception e) {
@@ -36,11 +37,13 @@ namespace WPFDesktopUI.ViewModels {
 		public IQuickBooksViewModel QuickBooksViewModel { get; }
 		public ICustomerViewModel<ICustomer> CustomerViewModel { get; }
 		public IItemViewModel<IItemReplacer> ItemViewModel { get; }
+		public IItemViewModel<IItemReplacer> AddressViewModel { get; }
 
     public bool TabImportIsSelected { get; set; } = true;
     public bool TabQuickBooksIsSelected { get; set; } = false;
     public bool TabCustomerIsSelected { get; set; } = false;
     public bool TabItemIsSelected { get; set; } = false;
+    public bool TabAddressIsSelected { get; set; } = false;
 
     /// <summary>
     /// Event triggers when a tab is selected in the ShellView
@@ -65,7 +68,12 @@ namespace WPFDesktopUI.ViewModels {
         ItemViewModel.OnSelected();
         return;
       }
-		}
+
+      if (TabAddressIsSelected) {
+        AddressViewModel.OnSelected();
+        return;
+      }
+    }
 
     public void MenuItemSaveCustomerRules() {
       if (!CustomerViewModel.CanBtnUpdate) return;

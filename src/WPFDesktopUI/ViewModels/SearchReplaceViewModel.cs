@@ -37,7 +37,7 @@ namespace WPFDesktopUI.ViewModels {
       set => SearchReplaceModel.SelectedItem = value;
     }
 
-    public string TabHeader { get; set; } = "Item";
+    public abstract string TabHeader { get; set; }
     public void OnSelected() {
     }
 

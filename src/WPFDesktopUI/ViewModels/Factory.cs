@@ -47,6 +47,10 @@ namespace WPFDesktopUI.ViewModels {
       return new ItemViewModel();
     }
 
+    public static IItemViewModel<IItemReplacer> CreateAddressViewModel() {
+      return new AddressViewModel();
+    }
+
     #endregion View Models
 
     #region Screen Models
@@ -79,6 +83,10 @@ namespace WPFDesktopUI.ViewModels {
 
     public static ISearchReplaceModel<IItemReplacer> CreateItemModel() {
       return new ItemModel();
+    }
+
+    public static ISearchReplaceModel<IItemReplacer> CreateAddressModel() {
+      return new AddressModel();
     }
 
     public static IItemReplacer CreateItemReplacer(string replaceWith, string toReplace) {
