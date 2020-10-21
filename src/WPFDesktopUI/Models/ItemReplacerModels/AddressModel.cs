@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
 
 namespace WPFDesktopUI.Models.ItemReplacerModels {
-  internal class ItemModel : SearchReplaceModel {
-    public ItemModel() {
-      _tableName = "item";
+  internal class AddressModel : SearchReplaceModel {
+    public AddressModel() {
+      _tableName = "address";
       _sourceData = new ObservableCollection<IItemReplacer>(Read());
     }
 

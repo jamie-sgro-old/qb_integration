@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Windows.Documents;
-using Caliburn.Micro;
+using System.Text;
+using System.Threading.Tasks;
 using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
-using WPFDesktopUI.ViewModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels {
-  public class ItemViewModel : SearchReplaceViewModel {
-
-    public ItemViewModel() {
-      TabHeader = "Item";
-      SearchReplaceModel = Factory.CreateItemModel();
+  public class AddressViewModel : SearchReplaceViewModel{
+    public AddressViewModel() {
+      TabHeader = "Address";
+      SearchReplaceModel = Factory.CreateAddressModel();
       _backlog = new HashSet<IItemReplacer>();
     }
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using WPFDesktopUI.Models.DbModels.Interfaces;
 
 namespace WPFDesktopUI.Models.ItemReplacerModels.Interfaces {
-  public interface IItemModel<T> : IDbModel<T> {
+  public interface ISearchReplaceModel<T> : IDbModel<T> {
 
 
     /// <summary>

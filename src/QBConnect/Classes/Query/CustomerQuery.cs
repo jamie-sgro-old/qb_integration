@@ -27,7 +27,7 @@ namespace QBConnect.Classes.Query {
       for (var i = 0; i < customerRetList.Count; i++) {
         var cx = customerRetList.GetAt(i);
 
-        // Get all possible term types
+        // Get all possible customer name types
         var name = cx?.Name.GetValue();
 
         if (name == null) continue;

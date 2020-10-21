@@ -15,8 +15,8 @@
         <Grid DockPanel.Dock="Top">
             <StackPanel>
                 <TextBlock>Invoice Importer by Sangwa</TextBlock>
-                <TextBlock>Version: 0.7.0</TextBlock>
-                <TextBlock>Copyright © 2020 Sangwa Solutions Incorporated</TextBlock>
+                    <TextBlock><Run Text="Version: 0.8.0"/></TextBlock>
+                    <TextBlock>Copyright © 2020 Sangwa Solutions Incorporated</TextBlock>
                 <TextBlock>All rights reserved</TextBlock>
             </StackPanel>
         </Grid>

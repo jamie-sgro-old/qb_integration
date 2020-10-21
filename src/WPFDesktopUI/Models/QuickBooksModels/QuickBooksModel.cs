@@ -41,9 +41,11 @@ namespace WPFDesktopUI.Models {
 
       var appliedCsvModels = ApplyCxRules(csvModels, cxList);
 
-      var replacedCsvModels = ApplyItemReplacement(appliedCsvModels);
-      
-      var groupBy = GroupBy.GroupInvoices(replacedCsvModels);
+      var itemReplacedCsvModels = ApplyItemReplacement(appliedCsvModels);
+
+      var adrsReplacedCsvModels = ApplyAddressReplacement(itemReplacedCsvModels);
+
+      var groupBy = GroupBy.GroupInvoices(adrsReplacedCsvModels);
 
       var pluginData = PluginPreprocess(groupBy);
 
@@ -123,21 +125,35 @@ namespace WPFDesktopUI.Models {
 
     /// <summary>
     /// Overwrite cells in the ItemRef column if there's a matching string
-    /// in the Items tab (ItemViewModel / ItemModel) inside the ItemModel._sourceData.ToReplace.
+    /// in the Items tab (ItemViewModel / ItemModel) inside the item table in sqlite db.
     /// Convert that matching data to the corresponding data from the
-    /// ItemModel._sourceData.ReplaceWith property
+    /// ReplaceWith property
     /// </summary>
     /// <param name="csvModels"></param>
     /// <returns>Dataset with replaced Items</returns>
     private List<ICsvModel> ApplyItemReplacement(List<ICsvModel> csvModels) {
-      // Get Item names to replace
-      var itemReplacers = ItemModel.StaticRead();
+      // Get Item names to replace (doesn't have to 'new-up' since it's a static read (no state interaction))
+      var itemReplacers = SearchReplaceModel.StaticRead("item");
 
       // Convert Item names from the [ToReplace] property to the [ReplaceWith] property
       foreach (var item in itemReplacers) {
         csvModels
           .Where(x => x.ItemRef == item.ToReplace).ToList()
           .ForEach(x => x.ItemRef = item.ReplaceWith);
+      }
+
+      return csvModels;
+    }
+
+    private List<ICsvModel> ApplyAddressReplacement(List<ICsvModel> csvModels) {
+      // Get Item names to replace (doesn't have to 'new-up' since it's a static read (no state interaction))
+      var itemReplacers = SearchReplaceModel.StaticRead("address");
+
+      // Convert Item names from the [ToReplace] property to the [ReplaceWith] property
+      foreach (var item in itemReplacers) {
+        csvModels
+          .Where(x => x.ShipAddress == item.ToReplace).ToList()
+          .ForEach(x => x.ShipAddress = item.ReplaceWith);
       }
 
       return csvModels;

@@ -9,7 +9,7 @@ using WPFDesktopUI.Models.ItemReplacerModels.Interfaces;
 
 namespace WPFDesktopUI.ViewModels.Interfaces {
   public interface IItemViewModel<T> : IMainTab, IDbViewModel {
-    IItemModel<IItemReplacer> ItemModel { get; set; }
+    ISearchReplaceModel<IItemReplacer> SearchReplaceModel { get; set; }
     string SearchBar { get; set; }
     ObservableCollection<T> PrimaryPane { get; }
     ObservableCollection<T> SecondaryPane { get; set; }

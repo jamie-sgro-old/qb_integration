@@ -25,6 +25,13 @@ namespace QBConnect.Classes {
 
       for (var i = 0; i < templateRetList.Count; i++) {
         var template = templateRetList.GetAt(i);
+
+        // Skip inactive templates (we only want a current list)
+        if (template.IsActive != null) {
+          var isActive = (bool)template.IsActive.GetValue();
+          if (!isActive) continue;
+        }
+
         var name = (string)template.Name.GetValue();
 
         names.Add(name);

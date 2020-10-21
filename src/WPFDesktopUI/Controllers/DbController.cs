@@ -66,6 +66,16 @@ namespace WPFDesktopUI.Controllers {
 		}
 
     private static void Update_3() {
+      SqliteDataAccess.SaveData(
+        @"CREATE TABLE IF NOT EXISTS 'address' (
+	        'Id'	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	        'ReplaceWith'	TEXT NOT NULL,
+	        'ToReplace'	TEXT NOT NULL
+        );
+        PRAGMA user_version = 3;");
+    }
+
+    private static void Update_4() {
       throw new NotImplementedException();
     }
 
@@ -77,7 +87,8 @@ namespace WPFDesktopUI.Controllers {
 
       if (userVersion < 1) Update_1();
       if (userVersion < 2) Update_2();
-      //if (userVersion < 3) Update_3();
+      if (userVersion < 3) Update_3();
+      //if (userVersion < 4) Update_4();
     }
   }
 }
