@@ -137,9 +137,11 @@
     <Compile Include="Models\DbModels\Interfaces\IDbViewModel.cs" />
     <Compile Include="Models\ImportModels\ImportModel.cs" />
     <Compile Include="Models\ImportModels\Interfaces\IImportModel.cs" />
-    <Compile Include="Models\ItemReplacerModels\Interfaces\IItemModel.cs" />
+    <Compile Include="Models\ItemReplacerModels\AddressModel.cs" />
+    <Compile Include="Models\ItemReplacerModels\Interfaces\ISearchReplaceModel.cs" />
     <Compile Include="Models\ItemReplacerModels\Interfaces\IItemReplacer.cs" />
     <Compile Include="Models\ItemReplacerModels\ItemModel.cs" />
+    <Compile Include="Models\ItemReplacerModels\SearchReplaceModel.cs" />
     <Compile Include="Models\ItemReplacerModels\ItemReplacer.cs" />
     <Compile Include="Models\PluginModels\ClientPlugin.cs" />
     <Compile Include="Models\PluginModels\Interfaces\IClientDetails.cs" />
@@ -174,6 +176,7 @@
     <Compile Include="Models\SidePaneModels\Presents\Preset.cs" />
     <Compile Include="Models\SidePaneModels\Presents\PresetModel.cs" />
     <Compile Include="Models\SidePaneModels\QuickBooksSidePaneModel.cs" />
+    <Compile Include="ViewModels\AddressViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDataGrid.cs" />
     <Compile Include="ViewModels\Interfaces\IItemViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IPluginViewModel.cs" />
@@ -197,9 +200,13 @@
     <Compile Include="ViewModels\QuickBooksViewModel.cs" />
     <Compile Include="ViewModels\QuickBooks\Interfaces\IQuickBooksSidePaneViewModel.cs" />
     <Compile Include="ViewModels\QuickBooks\QuickBooksSidePaneViewModel.cs" />
+    <Compile Include="ViewModels\SearchReplaceViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddressView.xaml.cs">
+      <DependentUpon>AddressView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CustomerView.xaml.cs">
       <DependentUpon>CustomerView.xaml</DependentUpon>
@@ -240,6 +247,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddressView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
